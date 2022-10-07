@@ -1,0 +1,103 @@
+#include <stdio.h>
+#include <windows.h>
+#include <math.h>
+HANDLE console; // HANDLE: resource control용 자료형
+
+void setBlock(COORD point) {
+	SetConsoleCursorPosition(console, point);
+	printf("■");
+}
+
+int drawCircle(COORD pivot) {
+
+	int r = 15;
+
+	for (short y = -r; y <= r; y++) {
+		short x = (short)(sqrt(r * r - y * y) + 0.5);
+
+		COORD point = { pivot.X + (x * 2) , pivot.Y * 2 + y };
+		setBlock(point);
+
+		point.X =  pivot.X  - (x * 2);
+        pivot.Y =  pivot.Y * 2 + y;
+		setBlock(point);
+	}
+	
+	return 1;
+}
+int drawRectangle(COORD pivot) {
+
+	for (short i = -5; i < 5; i++) {
+
+		for (short j = -5; j < 5; j++) {
+
+			if (i != -5 && i != 4 && j != -5 && j != 4) {
+
+				continue;
+
+			}
+
+			COORD point = { pivot.X + (i*2) , pivot.Y + j };
+
+			setBlock(point);
+
+		}
+
+	}
+
+	return 1;
+}
+int drawTriangle(COORD pivot) {
+
+	for (short i = 0; i < 5; i++) {
+
+		short horizonIDX = 3 - i;
+
+		for (short j = 0; j < (i + 1) * 2 - 1; j++) {
+
+			COORD point = { pivot.X + (horizonIDX++) * 2, pivot.Y + i };
+
+			setBlock(point);
+
+		}
+
+	}
+
+	return 1;
+}
+int main() {
+
+	console = GetStdHandle(STD_OUTPUT_HANDLE); //표준콘솔출력의 핸들반환
+
+	COORD circlePivot = { 60,30 };
+
+	printf("1 : rectangle, 2 : circle, 3 : triangle\n");
+
+	int n; scanf(" %d", &n);
+
+	if (n == 1) {
+
+		drawRectangle(circlePivot);
+
+	}
+
+	else if (n == 2) {
+
+		drawCircle(circlePivot);
+
+	}
+
+	else if (n == 3) {
+
+		drawTriangle(circlePivot);
+
+	}
+
+	else {
+
+		printf("wrong Number!\n");
+
+	}
+
+	return 0;
+}
