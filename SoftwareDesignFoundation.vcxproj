@@ -143,6 +143,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c" />
+    <ClCompile Include="Point.c" />
+    <ClCompile Include="Rect.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Point.h" />
+    <ClInclude Include="Rect.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
