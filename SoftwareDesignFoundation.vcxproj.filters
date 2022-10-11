@@ -30,6 +30,9 @@
     <ClCompile Include="Point.c">
       <Filter>소스 파일\Shapes</Filter>
     </ClCompile>
+    <ClCompile Include="Screen.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Draw.txt">
@@ -42,6 +45,9 @@
     </ClInclude>
     <ClInclude Include="Point.h">
       <Filter>헤더 파일\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

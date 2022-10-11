@@ -145,10 +145,12 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="Point.c" />
     <ClCompile Include="Rect.c" />
+    <ClCompile Include="Screen.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Point.h" />
     <ClInclude Include="Rect.h" />
+    <ClInclude Include="Screen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
