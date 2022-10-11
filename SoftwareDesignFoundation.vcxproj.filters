@@ -13,15 +13,35 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="헤더 파일\Shapes">
+      <UniqueIdentifier>{909cd90a-aa24-4577-807b-4c612f4f4862}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Shapes">
+      <UniqueIdentifier>{2798ec20-2243-4c74-aca3-43e23364f598}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SoftwareDesignFoundation.c">
+    <ClCompile Include="main.c">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.c">
+      <Filter>소스 파일\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Point.c">
+      <Filter>소스 파일\Shapes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Draw.txt">
       <Filter>소스 파일</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Rect.h">
+      <Filter>헤더 파일\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>헤더 파일\Shapes</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
