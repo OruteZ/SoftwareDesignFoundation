@@ -1,5 +1,7 @@
 #pragma once
 
+#include<windows.h>
+
 static int g_nScreenIndex;
 static HANDLE g_hScreen[2];
 

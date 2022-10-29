@@ -40,3 +40,8 @@ double Point_distance(Point* point_a, Point* point_b)
 	double delta_y = point_b->y - point_a->y;
 	return sqrt(delta_x * delta_x + delta_y * delta_y);
 }
+
+double Point_magnitude(Point* point)
+{
+	return sqrt(point->x * point->x + point->y * point->y);
+}

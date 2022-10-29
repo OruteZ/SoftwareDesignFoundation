@@ -4,35 +4,19 @@
 #include <time.h>
 #include <process.h>
 #include <malloc.h>
-
-#define FramePerSecond 60
+#include "Screen.h"
+#include "FramePerSecond.h"
 
 HANDLE console; // HANDLE: resource control용 자료형
 
 double deltaTime;
 
 double _timeCountForCheckBPM = 0;
+const int FramePerSecond = 60;
 
 int BPM = 120;
 
-clock_t FPSCurTime, FPSOldTime;
-int FrameCnt;
-int FPSForPrint;
-
-void setBlock(COORD point) {
-	SetConsoleCursorPosition(console, point);
-	printf("■");
-}
-
-void deleteBlock(COORD point) {
-    SetConsoleCursorPosition(console, point);
-    printf("  ");
-}
-
-void printNum(COORD point, int number) {
-    SetConsoleCursorPosition(console, point);
-    printf_s("%d", number);
-}
+FPSData* fps_data;
 
 unsigned _stdcall Thread_PlaySound(void* arg) {
     Beep(3000, 100);
@@ -43,9 +27,6 @@ void BPMCall() {
     COORD point = { 3, 3 };
 
     _beginthreadex(NULL, 0, Thread_PlaySound, 0, 0, NULL);
-
-    if (a == 1) setBlock(point);
-    else deleteBlock(point);
 
     a = 1 - a;
 }
@@ -62,16 +43,23 @@ void UpdateBPM() {
     }
 }
 
+void WaitRender(clock_t old_time) {
+    clock_t cur_time;
+    while (1) {
+        cur_time = clock();
 
+        deltaTime = cur_time - old_time;
+        if (deltaTime > FramePerSecond) break;
+    }
+}
 
 
 void Init()
 {
     console = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    FrameCnt = 0;
-    FPSForPrint = 0;
-    FPSOldTime = clock();
+    ScreenInit();
+    FPSData_init(&fps_data);
 }
 
 void Update()
@@ -81,17 +69,13 @@ void Update()
 
 void Render()
 {
-    FrameCnt++;
-    FPSCurTime = clock();
-    if (FPSCurTime - FPSOldTime >= 1000)
-    {
-        FPSOldTime = clock();
-        FPSForPrint = FrameCnt;
-        FrameCnt = 0;
-    }
+    ScreenClear();
+    FPSData_Draw(&fps_data);
 
-    COORD point = { 1,1 };
-    printNum(point, FPSForPrint);
+    if (a == 1) ScreenPrint(1, 2, "a");
+    else ScreenPrint(1, 2, " ");
+
+    ScreenFlipping();
 }
 
 void Release()
@@ -108,15 +92,7 @@ int main()
         OldTime = clock();
         Update();
         Render();
-
-        while (1)
-        {
-            CurTime = clock();
-            deltaTime = CurTime - OldTime;
-            if (deltaTime > 1000 / FramePerSecond) {
-                break;
-            }
-        }
+        WaitRender(OldTime);
     }
     Release();
     return 0;

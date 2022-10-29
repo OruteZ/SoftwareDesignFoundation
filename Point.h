@@ -17,3 +17,4 @@ void Point_add(Point* point, Point* _point);
 void Point_sub(Point* point, Point* _point);
 void Point_mul(Point* point, double factor);
 double Point_distance(Point* point_a, Point* point_b);
+double Point_magnitude(Point* point);
