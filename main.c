@@ -7,6 +7,8 @@
 #include "Screen.h"
 #include "FramePerSecond.h"
 
+#pragma warning(disable:4996)
+
 HANDLE console; // HANDLE: resource control용 자료형
 
 double deltaTime;
@@ -53,6 +55,49 @@ void WaitRender(clock_t old_time) {
     }
 }
 
+//Test Code---------------------------------------------
+double T_before, T_after, T;
+char* T_buffer;
+double D;
+char* D_buffer;
+char* Error_buffer;
+void Test_init() {
+    T_before = clock();
+    T_buffer = (char*)malloc(sizeof(char) * 100);
+
+    D = 0;
+    D_buffer = (char*)malloc(sizeof(char) * 100);
+
+    Error_buffer = (char*)malloc(sizeof(char) * 100);
+}
+
+void Test_Update() {
+    T_after = clock();
+    T = T_after - T_before;
+
+
+    D += deltaTime;
+}
+
+void Test_Render() {
+    sprintf(T_buffer, "%.4f", T/1000);
+    ScreenPrint(1, 5, T_buffer);
+
+    sprintf(D_buffer, "%.4f", D / 1000);
+    ScreenPrint(1, 6, D_buffer);
+
+    sprintf(Error_buffer, "%.10f", (T - D) / 1000);
+    ScreenPrint(1, 7, Error_buffer);
+}
+
+void Test_Realese() {
+    free(T_buffer);
+    free(D_buffer);
+    free(Error_buffer);
+}
+
+//Test End----------------------------------------------
+
 
 void Init()
 {
@@ -60,11 +105,15 @@ void Init()
 
     ScreenInit();
     FPSData_init(&fps_data);
+
+    Test_init();
 }
 
 void Update()
 {
     UpdateBPM();
+
+    Test_Update();
 }
 
 void Render()
@@ -74,12 +123,15 @@ void Render()
 
     if (a == 1) ScreenPrint(1, 2, "a");
     else ScreenPrint(1, 2, " ");
+    Test_Render();
 
     ScreenFlipping();
+
 }
 
 void Release()
 {
+    Test_Realese();
 }
 
 int main()
