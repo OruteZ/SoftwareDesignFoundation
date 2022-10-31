@@ -5,6 +5,12 @@
 #include"Point.h"
 #include"Screen.h"
 
+//for test
+#include<conio.h>
+
+BOOLEAN isHit;
+//----
+
 typedef struct _HeartBeatObject {
 	short* note;
 	int BPM;
@@ -23,6 +29,7 @@ void HeartBeat_render();
 void HeartBeat_release();
 
 void HeartBeat_move_note();
+void HeartBeat_reload_buffer();
 
 int HeartBeat_is_note_beaten();
 
