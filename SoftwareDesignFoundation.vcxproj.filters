@@ -19,6 +19,12 @@
     <Filter Include="소스 파일\Shapes">
       <UniqueIdentifier>{2798ec20-2243-4c74-aca3-43e23364f598}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\World">
+      <UniqueIdentifier>{543a166b-8960-4096-abab-37d4233a325a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\World">
+      <UniqueIdentifier>{d6788bc3-bd47-48b5-9819-6414d067e657}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -35,6 +41,9 @@
     </ClCompile>
     <ClCompile Include="FramePerSecond.c">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="World.c">
+      <Filter>소스 파일\World</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +63,9 @@
     </ClInclude>
     <ClInclude Include="FramePerSecond.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>헤더 파일\World</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
