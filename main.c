@@ -6,7 +6,6 @@
 #include <malloc.h>
 #include "Screen.h"
 #include "FramePerSecond.h"
-#include "HeartBeat.h"
 
 #pragma warning(disable:4996)
 
@@ -108,20 +107,23 @@ void Init()
     FPSData_init(&fps_data);
 
     Test_init();
-    HeartBeat_init();
 }
 
 void Update()
 {
+    UpdateBPM();
+
     Test_Update();
-    HeartBeat_update(deltaTime);
 }
 
 void Render()
 {
     ScreenClear();
     FPSData_Draw(&fps_data);
-    HeartBeat_render();
+
+    if (a == 1) ScreenPrint(1, 2, "a");
+    else ScreenPrint(1, 2, " ");
+    Test_Render();
 
     ScreenFlipping();
 
@@ -129,7 +131,6 @@ void Render()
 
 void Release()
 {
-    HeartBeat_release();
     Test_Realese();
 }
 
