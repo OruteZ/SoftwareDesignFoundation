@@ -1,4 +1,5 @@
 #include <Windows.h>
+#include "Keyboard.h"
 
 #define KEY_DOWN_STATE (0x8000)
 #define KEY_UP_STATE (0x0000)
