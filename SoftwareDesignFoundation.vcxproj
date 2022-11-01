@@ -148,6 +148,7 @@
     <ClCompile Include="Rect.c" />
     <ClCompile Include="Screen.c" />
     <ClCompile Include="World.c" />
+    <ClCompile Include="World001.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FramePerSecond.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Rect.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="World.h" />
+    <ClInclude Include="World001.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

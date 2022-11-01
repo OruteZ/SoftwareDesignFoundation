@@ -1,12 +1,20 @@
 #pragma once
 
-#include <Windows.h>
 #include "Point.h"
 
-
+typedef unsigned char BOOLEAN;
 // 2차원 배열의 각 요소를 "타일" 이라고 부르기로 한다.
 // 타일은 1바이트 정수다.
-typedef unsigned char TILE;
+typedef unsigned char Tile;
+
+typedef struct _World {
+	Tile* grid;
+
+	int width;
+	int height;
+} World;
+
+
 
 
 
@@ -19,17 +27,17 @@ typedef unsigned char TILE;
 
 
 // 기본
-#define DEFAULT (0b00000000)
+#define FLAG_DEFAULT (0b00000000)
 // 몸(플레이어, 몬스터)과 충돌하는 타일인가?
-#define COLLIDE_WITH_BODY (0b00000001)
+#define FLAG_COLLIDE_WITH_BODY (0b00000001)
 // 물리 공격(근접 공격, 화살 등의 투척형 원거리 공격)과 충돌하는 타일인가?
-#define COLLIDE_WITH_PHYSICAL_ATTACK (0b00000010)
+#define FLAG_COLLIDE_WITH_PHYSICAL_ATTACK (0b00000010)
 // 이 타일이 시야를 방해하는가?
-#define OPAQUE (0b00001000)
+#define FLAG_OPAQUE (0b00001000)
 // 피해(타입 A)를 주는 타일인가? 지금은 함정에 이 Flag가 사용된다.
-#define HAZARD_TYPE_A (0b00010000)
+#define FLAG_HAZARD_TYPE_A (0b00010000)
 // 목적지 타일인가?
-#define GOAL (0b01000000)
+#define FLAG_GOAL (0b01000000)
 
 
 
@@ -42,16 +50,54 @@ typedef unsigned char TILE;
 // #define UNUSED_2 (0b10000000)
 
 // 몸이 통과 할 수 없는데 피해(타입 A)를 주는 타일은 말도 안되는 타일이기 때문에 오류 리턴용 정의되지 않은 타일로 한다.
-// 사용 예시) GetTile(Point) & UNDEFINED_TILE == UNDEFINED_TILE 가 TRUE 라면 오류가 반환된 것이다.
-#define UNDEFINED_TILE		(DEFAULT | COLLIDE_WITH_BODY | HAZARD_TYPE_A)
+// 사용 예시) GetTile(Point) == UNDEFINED_TILE 가 TRUE 라면 오류가 반환된 것이다.
+//#define UNDEFINED_TILE		(FLAG_DEFAULT | FLAG_COLLIDE_WITH_BODY | FLAG_HAZARD_TYPE_A)
+#define UNDEFINED_TILE	0b00010001
 
 // 땅 타일.				몸 통과 가능. 공격 통과 가능. 시야 확보됨.
-#define GROUND				(DEFAULT)
+//#define GROUND			(FLAG_DEFAULT)
+#define GROUND			0b00000000
 // 벽 타일.				몸 통과 못함. 공격 통과 못함. 시야 막힘.
-#define WALL				(DEFAULT | COLLIDE_WITH_BODY | COLLIDE_WITH_PHYSICAL_ATTACK | OPAQUE)
+//#define WALL			(FLAG_DEFAULT | FLAG_COLLIDE_WITH_BODY | FLAG_COLLIDE_WITH_PHYSICAL_ATTACK | FLAG_OPAQUE)
+#define WALL			0b00001011
 // 구덩이 타일.			몸 통과 못함. 공격 통과 가능. 시야 확보됨.
-#define PIT					(DEFAULT | COLLIDE_WITH_BODY)
+//#define PIT				(FLAG_DEFAULT | FLAG_COLLIDE_WITH_BODY)
+#define PIT				0b00000001
 // 함정 타일.				몸 통과 가능. 공격 통과 가능. 시야 확보됨.			피해(타입 A).
-#define TRAP				(DEFAULT | HAZARD_TYPE_A)
+//#define TRAP			(FLAG_DEFAULT | FLAG_HAZARD_TYPE_A)
+#define TRAP			0b00010000
 // 내려가는 계단 타일.		몸 통과 가능. 공격 통과 가능. 시야 확보됨.			목적지 타일.
-#define DOWNSTAIRS			(DEFAULT | GOAL)
+//#define DOWNSTAIRS		(FLAG_DEFAULT | FLAG_GOAL)
+#define DOWNSTAIRS		0b01000000
+
+
+
+// 새로운 World를 생성한다.
+World* CreateWorld(const int width, const int height);
+// World의 위 아래를 뒤집는다.
+// 텍스트 파일을 이용해 맵을 설계할때는 화면에 보이는 대로 설계하고 데이터는 뒤집기 위해 있는 함수다. 초기화 단계에서 각 맵을 한번씩만 뒤집어 주면 된다.
+void FlipWorld(World* world);
+// 현재의 World를 바꾼다.
+void SetCurrentWorld(World* world);
+
+// 지금 World의 width height에 Point가 포함되는지 확인
+BOOLEAN IsPointValidInCurrentWorld(Point p);
+
+// Point에 위치한 타일을 가져오기.
+Tile GetTile(const Point p);
+
+// 사용되지 않는다.
+// Point에 위치한 타일을 가져오기.
+// Point가 World의 width, height 범위 내인지 확인을 하지 않는다.
+// 대량으로 타일을 읽을 필요가 있을 때만 쓸 것.
+//Tile GetTileUnchecked(const Point p);
+
+// Point에 타일을 바꾸기.
+// 성공 여부를 BOOLEAN 리턴 한다.
+BOOLEAN SetTile(const Point p, const Tile tile);
+
+// 사용되지 않는다.
+// Point에 타일을 바꾸기.
+// Point가 World의 width, height 범위 내인지 확인을 하지 않는다.
+// 대량으로 타일을 바꿀 때만 쓸 것.
+//void SetTileUnchecked(const Point p, const Tile tile);
