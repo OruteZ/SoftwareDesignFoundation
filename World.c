@@ -17,23 +17,23 @@ World* CreateWorld(const int width, const int height) {
 	return world;
 }
 
-void swapTile(Tile* a, Tile* b) {
-	Tile tempTile = *a;
-	*a = *b;
-	*b = tempTile;
-}
-Tile* GetTilePointerOfWorld(World* world, const Point p) {
-	return world->grid + p.y * world->height + p.x;
-}
-void FlipWorld(World* world) {
-	for (int i = 0; i < world->height / 2; i++) {
-		for (int j = 0; j < world->width; j++) {
-			Point origin = {.y = i, .x = j};
-			Point mirrored = {.y = world->height - 1 - i, .x = j};
-			swapTile(GetTilePointerOfWorld(world, origin), GetTilePointerOfWorld(world, mirrored));
-		}
-	}
-}
+//void swapTile(Tile* a, Tile* b) {
+//	Tile tempTile = *a;
+//	*a = *b;
+//	*b = tempTile;
+//}
+//Tile* GetTilePointerOfWorld(World* world, const Point p) {
+//	return world->grid + p.y * world->height + p.x;
+//}
+//void FlipWorld(World* world) {
+//	for (int i = 0; i < world->height / 2; i++) {
+//		for (int j = 0; j < world->width; j++) {
+//			Point origin = {.y = i, .x = j};
+//			Point mirrored = {.y = world->height - 1 - i, .x = j};
+//			swapTile(GetTilePointerOfWorld(world, origin), GetTilePointerOfWorld(world, mirrored));
+//		}
+//	}
+//}
 
 World* current_world = NULL;
 void SetCurrentWorld(World* world) {

@@ -74,9 +74,12 @@ typedef struct _World {
 
 // 새로운 World를 생성한다.
 World* CreateWorld(const int width, const int height);
+
+// 필요가 없었다.
 // World의 위 아래를 뒤집는다.
 // 텍스트 파일을 이용해 맵을 설계할때는 화면에 보이는 대로 설계하고 데이터는 뒤집기 위해 있는 함수다. 초기화 단계에서 각 맵을 한번씩만 뒤집어 주면 된다.
-void FlipWorld(World* world);
+//void FlipWorld(World* world);
+
 // 현재의 World를 바꾼다.
 void SetCurrentWorld(World* world);
 
