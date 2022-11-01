@@ -142,6 +142,7 @@
     <Text Include="Draw.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EntityInfo.c" />
     <ClCompile Include="FramePerSecond.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="Point.c" />
