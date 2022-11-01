@@ -19,6 +19,12 @@
     <Filter Include="소스 파일\Shapes">
       <UniqueIdentifier>{2798ec20-2243-4c74-aca3-43e23364f598}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\IO">
+      <UniqueIdentifier>{d877dbc8-74d9-4ae7-9533-c8dbdc243424}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\IO">
+      <UniqueIdentifier>{bfda35c0-9dc0-43f7-929e-5a2a0a02b26f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -36,8 +42,8 @@
     <ClCompile Include="FramePerSecond.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="HeartBeat.c">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Keyboard.c">
+      <Filter>소스 파일\IO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -58,8 +64,8 @@
     <ClInclude Include="FramePerSecond.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="HeartBeat.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Keyboard.h">
+      <Filter>헤더 파일\IO</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
