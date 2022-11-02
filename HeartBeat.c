@@ -85,7 +85,7 @@ void HeartBeat_move_note()
 
 	if (last_node_point <= size - 4) {
 		heart_beat->note[size - 1] = 1;
-		_beginthreadex(NULL, 0, Thread_PlaySound, 0, 0, NULL);
+		//_beginthreadex(NULL, 0, Thread_PlaySound, 0, 0, NULL);
 	}
 
 	else heart_beat->note[size - 1] = 0;
@@ -112,13 +112,24 @@ void HeartBeat_reset()
 
 int HeartBeat_is_note_beaten()
 {
-	if (heart_beat->note[0] == 1) {
-		heart_beat->note[0] = 0;
-		return 1;
+	double time_per_beat = (((double)60 * 1000) / (double)heart_beat->BPM);
+
+	int note_position;
+	for (int i = 0; i < heart_beat->note_size; i++) {
+		if (heart_beat->note[i] == 1) {
+			note_position = i;
+			break;
+		}
 	}
-	else {
-		return 0;
-	}
+	if (note_position > 1) return 0;
+
+	heart_beat->note[note_position] = 0;
+
+	double correct_time = time_per_beat * note_position;
+	double time_differece = abs(correct_time - heart_beat->time_to_check_tempo);
+	
+	if (time_differece < time_per_beat / 2) return 1;
+	else return 0;
 }
 
 void HeartBeat_set_BPM(int BPM)
