@@ -150,6 +150,7 @@
     <ClCompile Include="Screen.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EntityInfo.h" />
     <ClInclude Include="FramePerSecond.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Rect.h" />

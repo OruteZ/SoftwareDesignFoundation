@@ -58,5 +58,8 @@
     <ClInclude Include="FramePerSecond.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="EntityInfo.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
