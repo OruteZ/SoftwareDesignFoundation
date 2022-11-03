@@ -1,7 +1,6 @@
 #pragma once
 #include<stdio.h>
 
-meleeEnemy CreateMeleeEnemy(Point p);
-arrowEnemy CreateArrowEnemy(Point p);
-bombEnemy CreateBombEnemy(Point p);
-void CreatePlayer(Point p);
+MeleeEnemy* CreateMeleeEnemy(Point p);
+RangeEnemy* CreateArrowEnemy(Point p);
+BombEnemy CreateBombEnemy(Point p);
