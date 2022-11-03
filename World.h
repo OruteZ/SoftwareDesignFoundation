@@ -42,7 +42,7 @@ typedef struct _World {
 
 
 // 혹시 나중에 물리 공격이 아닌 다른 공격 타입이 생긴다면 사용할 타일 Flag.
-// #define COLLIDE_WITH_MAGICAL_ATTACK (0b00000100)
+// #define FLAG_COLLIDE_WITH_MAGICAL_ATTACK (0b00000100)
 
 // 안쓰고 있어서 나중에 추가할 때 사용할 수 있는 타일 Flags.
 // Also future proofing

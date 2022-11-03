@@ -50,7 +50,52 @@ Tile grid[] = {
 	P P P P P P P P P P P P P P P P P P P P W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W 
 	P P P P P P P P P P P P P P P P P P P P W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W 
 	P P P P P P P P P P P P P P P P P P P P W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W 
-	P P P P P P P P P P P P P P P P P P P P W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W 
+	P P P P P P P P P P P P P P P P P P P P W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W G G G W W G G G W G G G G G W W W W W W W W W W W W W W W W W W W W W 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P P P P P P P P P P P P P P P P P P W P P P P P P P P P P P P P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P P P P P P P P P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P P P P P P P P P P P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P P P P P P P P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P P P P P P P P P P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P P P P P P P P P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P P P P P P P P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P P P P P P P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P P P P P P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P P P P P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P P P P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P P P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P W W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P W P P P P P P P P P P P P P P W P P W W W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P W P P P P P P P P P P P P P P W P P P P W W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P W P P P P P P P P P P P P P P W P P P P P W W W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P 
+	P P P P P P P P P P P P P P P P P P P P W W P P P P P P P P P P P P P P W P P P P P P P W W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P P P 
+	P P P P P P P P P P P P P P P P P P P P W P P P P P P P P P P P P P P P W W P P P P P P P W W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P 
+	P P P P P P P P P P P P P P P P P P P W W P P P P P P P P P P P P P P P P W P P P P P P P P W W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P P 
+	P P P P P P P P P P P P P P P P P P W W P P P P P P P P P P P P P P P P P W P P P P P P P P P W W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P 
+	P P P P P P P P P P P P P P P P P W W P P P P P P P P P P P P P P P P P P W P P P P P P P P P P W W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P 
+	P P P P P P P P P P P P P P P W W W P P P P P P P P P P P P P P P P P P P W P P P P P P P P P P P W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P 
+	P P P P P P P P P P P P W W W W P P P P P P P P P P P P P P P P P P P P P W P P P P P P P P P P P W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P 
+	P P P P P P P P P P P W W P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P P P P P P P W W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P 
+	P P P P P P P P P W W W P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P P P P P P P P W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P 
+	P P P P P P P W W W P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P P P P P P P P W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P 
+	P P P P P P W W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P P P P P P P P W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P 
+	P P P P P P W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P P P P P P P P P P P W W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P 
+	P P P P P W W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P P P P P P P P P P W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P 
+	P P P P P W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P P P P P P P P P P W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P 
+	P P P P P W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P P P P P P P P P P W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P P 
+	P P P P P W W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W P P P P P P P P P P P P P P W W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W P P P P 
+	P P P P P P W W W P P P P P P P P P P P P P P P P P P P P P P P P P W W W P P P P P P P P P P P P P P P W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W W P P P P P 
+	P P P P P P P P W W W W W W P P P P P P P P P P P P P P P P P P P W W P P P P P P P P P P P P P P P P P W W W W W W W W W W P P P P P P P P P P P P P P P P P P P W W P P P P P P P 
+	P P P P P P P P P P P P P W W W W P P P P P P P P P P P P P P W W W P P P P P P P P P P P P P P P P P P P P P P P P P P P W W W W W W W W W W P P P P P P P W W W W P P P P P P P P 
+	P P P P P P P P P P P P P P P P W W W W W W W W W W W W W W W W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P W W W W W W W W W P P P P P P P P P P P 
+	P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P 
 };
 
 World* world001;

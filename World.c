@@ -39,6 +39,9 @@ World* current_world = NULL;
 void SetCurrentWorld(World* world) {
 	current_world = world;
 }
+World* GetCurrentWorld() {
+	return current_world;
+}
 
 
 
