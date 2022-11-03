@@ -1,6 +1,9 @@
 #include "Point.h"
 #include "EntityInfo.h"
 
+#define PLAYER_DEFAULT_HP (100)
+#
+
 //부모 몬스터 구조체
 typedef struct Enemy
 {
@@ -10,14 +13,14 @@ typedef struct Enemy
 	double attackDelay;//공격 쿨타임
 	Point memory;//몬스터가 기억할 플레이어의 위치
 	Point pos; //몬스터의 위치
-}Enemy;
+} Enemy;
 
 
 //근거리 몬스터 구조체
 typedef struct MeleeEnemy
 {
 	Enemy enemy;
-}MeleeEnemy;
+} MeleeEnemy;
 
 //원거리 몬스터 구조체
 typedef struct RangeEnemy
@@ -25,14 +28,14 @@ typedef struct RangeEnemy
 	Enemy enemy;
 	Point rangePos; // 원거리 공격 투사체의 위치
 	int rangeSpeed; //투사체 속도
-}RangeEnemy;
+} RangeEnemy;
 
 //자폭 몬스터 구조체
 typedef struct BombEnemy
 {
 	Enemy enemy;
 
-}BombEnemy;
+} BombEnemy;
 
 //플레이어 구조체
 typedef struct Player
@@ -43,7 +46,7 @@ typedef struct Player
 	int moveSpeed; 
 	double attackDelay;
 	//아이템 추가 시 아이템 유무 확인할 bool 또는 enum 번수 선언
-}Player;
+} Player;
 
 
 //근접 몬스터 생성
@@ -109,12 +112,12 @@ BombEnemy *CreateBombEnemy(Point p)
 Player* CreatePlayer(Point p)
 {
 	Player* player;
-	player.hp = 100;
-	player.meleeDamage = 15;
-	player.attackDelay = 1.5f;
-	player.moveSpeed = 500;
+	player->hp = 100;
+	player->meleeDamage = 15;
+	player->attackDelay = 1.5f;
+	player->moveSpeed = 500;
 	//초기위치 인자로 받아서 캐릭터 생성
 
-	player.pos.x = p.x;
-	player.pos.y = p.y;
+	player->pos.x = p.x;
+	player->pos.y = p.y;
 }
