@@ -42,21 +42,6 @@
     <ClCompile Include="FramePerSecond.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="EntityInfo.c">
-      <Filter>소스 파일\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.c">
-      <Filter>소스 파일\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Mortal.c">
-      <Filter>소스 파일\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyMelee.c">
-      <Filter>소스 파일\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.c">
-      <Filter>소스 파일\Entity</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Draw.txt">
@@ -76,9 +61,6 @@
     <ClInclude Include="FramePerSecond.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="EntityInfo.h">
-      <Filter>헤더 파일\Entity</Filter>
-    </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>헤더 파일\Entity</Filter>
     </ClInclude>
@@ -89,6 +71,15 @@
       <Filter>헤더 파일\Entity</Filter>
     </ClInclude>
     <ClInclude Include="MeleeEnemy.h">
+      <Filter>헤더 파일\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Archer.h">
+      <Filter>헤더 파일\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="BomberEnemy.h">
+      <Filter>헤더 파일\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="ExperienceOrb.h">
       <Filter>헤더 파일\Entity</Filter>
     </ClInclude>
   </ItemGroup>

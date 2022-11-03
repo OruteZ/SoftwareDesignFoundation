@@ -1,14 +1,15 @@
 #pragma once
 
-#include "Point.h"
 #include "Entity.h"
 
 typedef struct _Mortal
 {
-	Entity base;
+	union {
+		Entity entity;
+	} base;
 
 	int hp;
 	int baseDamage;
-	double attackDelay;
+	double attackCooldown;
 	double moveSpeed;
 } Mortal;

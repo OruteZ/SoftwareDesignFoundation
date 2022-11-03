@@ -2,9 +2,11 @@
 
 #include "Mortal.h"
 
-typedef struct _MeleeEnemy {
+typedef struct _ArcherEmemy {
 	union {
 		Entity entity;
 		Mortal mortal;
 	} base;
-} MeleeEnemy;
+
+	double arrowSpeed;
+} ArcherEnemy;
