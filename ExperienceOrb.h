@@ -2,10 +2,10 @@
 
 #include "Entity.h"
 
-typedef struct _Resource {
+typedef struct _ExperienceOrb {
 	union {
 		Entity entity;
 	} base;
 
 	int value;
-} Resource;
+} ExperienceOrb;
