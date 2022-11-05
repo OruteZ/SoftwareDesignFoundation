@@ -42,6 +42,9 @@
     <ClCompile Include="FramePerSecond.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="EntityCreate.c">
+      <Filter>소스 파일\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Draw.txt">
