@@ -150,7 +150,7 @@
     <ClCompile Include="Screen.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Archer.h" />
+    <ClInclude Include="ArcherEnemy.h" />
     <ClInclude Include="BomberEnemy.h" />
     <ClInclude Include="ExperienceOrb.h" />
     <ClInclude Include="MeleeEnemy.h" />

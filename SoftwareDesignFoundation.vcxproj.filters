@@ -76,7 +76,7 @@
     <ClInclude Include="MeleeEnemy.h">
       <Filter>헤더 파일\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Archer.h">
+    <ClInclude Include="ArcherEnemy.h">
       <Filter>헤더 파일\Entity</Filter>
     </ClInclude>
     <ClInclude Include="BomberEnemy.h">
