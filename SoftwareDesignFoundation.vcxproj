@@ -142,15 +142,18 @@
     <Text Include="Draw.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EntityCreate.c" />
+    <ClCompile Include="CreateArcherEnemy.c" />
+    <ClCompile Include="CreateBomberEnemy.c" />
+    <ClCompile Include="CreatePlayer.c" />
     <ClCompile Include="FramePerSecond.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="CreateMeleeEnemy.c" />
     <ClCompile Include="Point.c" />
     <ClCompile Include="Rect.c" />
     <ClCompile Include="Screen.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Archer.h" />
+    <ClInclude Include="ArcherEnemy.h" />
     <ClInclude Include="BomberEnemy.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="MeleeEnemy.h" />
