@@ -152,7 +152,7 @@
   <ItemGroup>
     <ClInclude Include="Archer.h" />
     <ClInclude Include="BomberEnemy.h" />
-    <ClInclude Include="ExperienceOrb.h" />
+    <ClInclude Include="Resource.h" />
     <ClInclude Include="MeleeEnemy.h" />
     <ClInclude Include="Mortal.h" />
     <ClInclude Include="Entity.h" />

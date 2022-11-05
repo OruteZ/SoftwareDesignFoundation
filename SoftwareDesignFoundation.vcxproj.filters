@@ -82,7 +82,7 @@
     <ClInclude Include="BomberEnemy.h">
       <Filter>헤더 파일\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="ExperienceOrb.h">
+    <ClInclude Include="Resource.h">
       <Filter>헤더 파일\Entity</Filter>
     </ClInclude>
   </ItemGroup>
