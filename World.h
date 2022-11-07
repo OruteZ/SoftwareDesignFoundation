@@ -75,13 +75,9 @@ typedef struct _World {
 // 새로운 World를 생성한다.
 World* CreateWorld(const int width, const int height);
 
-// 필요가 없었다.
-// World의 위 아래를 뒤집는다.
-// 텍스트 파일을 이용해 맵을 설계할때는 화면에 보이는 대로 설계하고 데이터는 뒤집기 위해 있는 함수다. 초기화 단계에서 각 맵을 한번씩만 뒤집어 주면 된다.
-//void FlipWorld(World* world);
-
 // 현재의 World를 바꾼다.
 void SetCurrentWorld(World* world);
+World* GetCurrentWorld();
 
 // 지금 World의 width height에 Point가 포함되는지 확인
 BOOLEAN IsPointValidInCurrentWorld(Point p);
@@ -89,18 +85,6 @@ BOOLEAN IsPointValidInCurrentWorld(Point p);
 // Point에 위치한 타일을 가져오기.
 Tile GetTile(const Point p);
 
-// 사용되지 않는다.
-// Point에 위치한 타일을 가져오기.
-// Point가 World의 width, height 범위 내인지 확인을 하지 않는다.
-// 대량으로 타일을 읽을 필요가 있을 때만 쓸 것.
-//Tile GetTileUnchecked(const Point p);
-
 // Point에 타일을 바꾸기.
 // 성공 여부를 BOOLEAN 리턴 한다.
 BOOLEAN SetTile(const Point p, const Tile tile);
-
-// 사용되지 않는다.
-// Point에 타일을 바꾸기.
-// Point가 World의 width, height 범위 내인지 확인을 하지 않는다.
-// 대량으로 타일을 바꿀 때만 쓸 것.
-//void SetTileUnchecked(const Point p, const Tile tile);
