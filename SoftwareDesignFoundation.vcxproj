@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Text Include="Characters that have width of 2.txt" />
     <Text Include="Draw.txt" />
   </ItemGroup>
   <ItemGroup>

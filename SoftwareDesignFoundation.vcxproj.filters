@@ -25,6 +25,9 @@
     <Filter Include="헤더 파일\IO">
       <UniqueIdentifier>{bfda35c0-9dc0-43f7-929e-5a2a0a02b26f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Camera">
+      <UniqueIdentifier>{3cf9de44-98fa-4579-908f-5a2a3c20873c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -52,6 +55,9 @@
   <ItemGroup>
     <Text Include="Draw.txt">
       <Filter>소스 파일</Filter>
+    </Text>
+    <Text Include="Characters that have width of 2.txt">
+      <Filter>헤더 파일\Camera</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
