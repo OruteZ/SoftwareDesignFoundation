@@ -25,6 +25,12 @@
     <Filter Include="소스 파일\Entity">
       <UniqueIdentifier>{82d5f3b5-446c-4455-80cc-09f80c0d11c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\ADT">
+      <UniqueIdentifier>{fb06b99f-7907-4d82-a981-a900d1d542e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\ADT">
+      <UniqueIdentifier>{92d3df97-47e2-405a-a8dd-2117cce0bf6c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -53,6 +59,9 @@
     </ClCompile>
     <ClCompile Include="CreatePlayer.c">
       <Filter>소스 파일\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadTree.c">
+      <Filter>소스 파일\ADT</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
