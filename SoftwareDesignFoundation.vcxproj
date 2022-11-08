@@ -142,12 +142,12 @@
     <Text Include="Draw.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CreateArcherEnemy.c" />
-    <ClCompile Include="CreateBomberEnemy.c" />
-    <ClCompile Include="CreatePlayer.c" />
+    <ClCompile Include="ArcherEnemy.c" />
+    <ClCompile Include="BomberEnemy.c" />
+    <ClCompile Include="Player.c" />
     <ClCompile Include="FramePerSecond.c" />
     <ClCompile Include="main.c" />
-    <ClCompile Include="CreateMeleeEnemy.c" />
+    <ClCompile Include="MeleeEnemy.c" />
     <ClCompile Include="Point.c" />
     <ClCompile Include="Rect.c" />
     <ClCompile Include="Screen.c" />

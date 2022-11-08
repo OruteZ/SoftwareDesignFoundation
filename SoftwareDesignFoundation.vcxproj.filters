@@ -42,16 +42,16 @@
     <ClCompile Include="FramePerSecond.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CreateMeleeEnemy.c">
+    <ClCompile Include="MeleeEnemy.c">
       <Filter>소스 파일\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="CreateArcherEnemy.c">
+    <ClCompile Include="ArcherEnemy.c">
       <Filter>소스 파일\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="CreateBomberEnemy.c">
+    <ClCompile Include="BomberEnemy.c">
       <Filter>소스 파일\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="CreatePlayer.c">
+    <ClCompile Include="Player.c">
       <Filter>소스 파일\Entity</Filter>
     </ClCompile>
   </ItemGroup>
