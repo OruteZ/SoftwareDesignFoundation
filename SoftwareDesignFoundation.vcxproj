@@ -147,12 +147,14 @@
     <ClCompile Include="Point.c" />
     <ClCompile Include="Rect.c" />
     <ClCompile Include="Screen.c" />
+    <ClCompile Include="Vector.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FramePerSecond.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="Screen.h" />
+    <ClInclude Include="Vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
