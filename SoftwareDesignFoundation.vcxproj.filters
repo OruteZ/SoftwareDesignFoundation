@@ -60,6 +60,9 @@
     <ClCompile Include="CreatePlayer.c">
       <Filter>소스 파일\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="Vector.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="QuadTree.c">
       <Filter>소스 파일\ADT</Filter>
     </ClCompile>
@@ -102,6 +105,9 @@
     </ClInclude>
     <ClInclude Include="ExperienceOrb.h">
       <Filter>헤더 파일\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
