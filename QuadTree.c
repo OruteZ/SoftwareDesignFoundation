@@ -7,6 +7,7 @@
 
 #include "Entity.h"
 
+typedef int VECTOR_PLACEHOLDER;
 typedef struct _QuadTree {
 	Rect boundary;
 	Entity* contained_entity;
@@ -78,5 +79,31 @@ void QuadTreeInsert(QuadTree* tree, Entity* entity) {
 	QuadTreeInsert(tree->se, entity);
 }
 
-//Vector* QuadTreeDump(QuadTree* tree);
-//Vector* QuadTreeQuery
+VECTOR_PLACEHOLDER* QuadTreeDump(QuadTree* tree) {
+	if (tree == NULL) return;
+	if (tree->contained_entity == NULL) {
+		VECTOR_PLACEHOLDER vector;
+		vector_add(vector ,QuadTreeDump(tree->nw));
+		vector_add(vector ,QuadTreeDump(tree->ne));
+		vector_add(vector ,QuadTreeDump(tree->sw));
+		vector_add(vector ,QuadTreeDump(tree->se));
+	}
+}
+VECTOR_PLACEHOLDER* QuadTreeQuery(QuadTree* tree, Rect area) {
+	if (!Rect_is_intersecting_Rect(&area, &tree->boundary)) return NULL; // does not intersect!
+
+	if (Rect_is_containing_Rect(&area, &tree->boundary)) return QuadTreeDump(tree); // fully contains!
+	
+	// intersects!
+	VECTOR_PLACEHOLDER vector;
+	if (tree->nw == NULL) {
+		vector_add(vector, QuadTreeQuery(tree->nw, area));
+		vector_add(vector, QuadTreeQuery(tree->ne, area));
+		vector_add(vector, QuadTreeQuery(tree->sw, area));
+		vector_add(vector, QuadTreeQuery(tree->se, area));
+	}
+	if (RectContainsPoint(area, tree->contained_entity->pos)) {
+		vector_add(vector, tree->contained_entity);
+	}
+	return vector;
+}
