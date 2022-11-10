@@ -22,7 +22,7 @@ QuadTree* CreateQuadTree(Rect boundary) {
 	QuadTree* tree = (QuadTree*)malloc(sizeof(QuadTree));
 
 	tree->boundary = boundary;
-	tree->element = NULL;
+	tree->contained_entity = NULL;
 
 	tree->nw = NULL;
 	tree->ne = NULL;
@@ -90,9 +90,9 @@ VECTOR_PLACEHOLDER* QuadTreeDump(QuadTree* tree) {
 	}
 }
 VECTOR_PLACEHOLDER* QuadTreeQuery(QuadTree* tree, Rect area) {
-	if (!Rect_is_intersecting_Rect(&area, &tree->boundary)) return NULL; // does not intersect!
+	if (!RectIsIntersectingRect(&area, &tree->boundary)) return NULL; // does not intersect!
 
-	if (Rect_is_containing_Rect(&area, &tree->boundary)) return QuadTreeDump(tree); // fully contains!
+	if (RectIsContainingRect(&area, &tree->boundary)) return QuadTreeDump(tree); // fully contains!
 	
 	// intersects!
 	VECTOR_PLACEHOLDER vector;
