@@ -19,6 +19,12 @@
     <Filter Include="소스 파일\Shapes">
       <UniqueIdentifier>{2798ec20-2243-4c74-aca3-43e23364f598}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Entity">
+      <UniqueIdentifier>{622f6986-277c-47e0-99e0-debccf693b81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Entity">
+      <UniqueIdentifier>{82d5f3b5-446c-4455-80cc-09f80c0d11c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -35,6 +41,18 @@
     </ClCompile>
     <ClCompile Include="FramePerSecond.c">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateMeleeEnemy.c">
+      <Filter>소스 파일\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateArcherEnemy.c">
+      <Filter>소스 파일\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateBomberEnemy.c">
+      <Filter>소스 파일\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CreatePlayer.c">
+      <Filter>소스 파일\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Vector.c">
       <Filter>소스 파일</Filter>
@@ -57,6 +75,27 @@
     </ClInclude>
     <ClInclude Include="FramePerSecond.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>헤더 파일\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Mortal.h">
+      <Filter>헤더 파일\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>헤더 파일\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeEnemy.h">
+      <Filter>헤더 파일\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="ArcherEnemy.h">
+      <Filter>헤더 파일\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="BomberEnemy.h">
+      <Filter>헤더 파일\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="ExperienceOrb.h">
+      <Filter>헤더 파일\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Vector.h">
       <Filter>헤더 파일</Filter>

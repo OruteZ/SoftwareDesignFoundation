@@ -2,130 +2,97 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
-#define VECTOR_INIT_CAPACITY 6
-#define UNDEFINE -1
-#define SUCCESS 0
+#define VECTOR_MINIMUM_SIZE 6
 
-
-
-int vectorTotal(vector* v)
-{
-	int totalCount = UNDEFINE;
-	if (v)
-	{
-		totalCount = v->vectorList.total;
+Vector* CreateVector() {
+	Vector* vector = (Vector*)malloc(sizeof(Vector));
+	vector->entities = (Entity*)malloc(sizeof(Entity) * VECTOR_MINIMUM_SIZE);
+	vector->length = 0;
+	vector->size = VECTOR_MINIMUM_SIZE;
+	return vector;
+}
+void DeleteVector(Vector* vector) {
+	free(vector->entities);
+	free(vector);
+}
+void DeepDeleteVector(Vector* vector) {
+	for (int i = 0; i < vector->length; i++) {
+		free(vector->entities[i]);
 	}
-	return totalCount;
+	DeleteVector(vector);
 }
 
-int vectorResize(vector* v, int capacity)
-{
-	int status = UNDEFINE;
-	if (v)
-	{
-		void** items = realloc(v->vectorList.items, sizeof(void*) * capacity);
-		if (items)
-		{
-			v->vectorList.items = items;
-			v->vectorList.capacity = capacity;
-			status = SUCCESS;
-		}
-	}
-	return status;
+
+
+
+
+void VectorExpand(Vector* vector) {
+	vector->size *= 2;
+	vector->entities = (Entity*)realloc(vector->entities, sizeof(Entity) * vector->size);
+}
+void TryVectorExpand(Vector* vector) {
+	if (vector->size <= vector->length) VectorExpand(vector);
+}
+void VectorShrink(Vector* vector) {
+	vector->size /= 2;
+	vector->entities = (Entity*)realloc(vector->entities, sizeof(Entity) * vector->size);
+}
+void TryVectorShrink(Vector* vector) {
+	if (VECTOR_MINIMUM_SIZE < vector->size && vector->length < vector->size / 3) VectorShrink(vector);
 }
 
-int vectorPushBack(vector* v, void* item)
-{
-	int status = UNDEFINE;
-	if (v)
-	{
-		if (v->vectorList.capacity == v->vectorList.total)
-		{
-			status = vectorResize(v, v->vectorList.capacity * 2);
-			if (status != UNDEFINE)
-			{
-				v->vectorList.items[v->vectorList.total++] = item;
-			}
-		}
-		else
-		{
-			v->vectorList.items[v->vectorList.total++] = item;
-			status = SUCCESS;
-		}
-	}
-	return status;
+
+
+
+
+bool CheckIndexRange(Vector* vector, const int index) {
+	if (0 <= index && index < vector->length) return true;
+	else return false;
 }
 
-int vectorSet(vector* v, int index, void* item)
-{
-	int status = UNDEFINE;
-	if (v)
-	{
-		if ((index >= 0) && (index < v->vectorList.total))
-		{
-			v->vectorList.items[index] = item;
-			status = SUCCESS;
-		}
-	}
-	return status;
+void VectorInsert(Vector* vector, const Entity* entity) {
+	TryVectorExpand(vector);
+	vector->entities[vector->length++] = entity;
 }
-
-int* vectorGet(vector* v, int index)
-{
-	void* readData = NULL;
-	if (v)
-	{
-		if ((index >= 0) && (index < v->vectorList.total))
-		{
-			readData = v->vectorList.items[index];
-		}
-	}
-	return readData;
+void VectorDeleteUnstable(Vector* vector, const int index) {
+	if (!CheckIndexRange(vector, index)) return;
+	vector->length--;
+	if(0 < vector->length) vector->entities[index] = vector->entities[vector->length];
+	TryVectorShrink(vector);
 }
-
-int vectorDelete(vector* v, int index)
-{
-	int status = UNDEFINE;
-	int i = 0;
-	if (v)
-	{
-		if ((index < 0) || (index >= v->vectorList.total))
-			return status;
-	}
-
-	v->vectorList.items[index] = NULL;
-
-	for (i = index; (i < v->vectorList.total - 1); ++i)
-	{
-		vectorResize(v, v->vectorList.capacity / 2);
-	}
-	return status;
+void VectorDeepDeleteUnstable(Vector* vector, const int index) {
+	if (!CheckIndexRange(vector, index)) return;
+	free(vector->entities[index]);
+	vector->length--;
+	if(0 < vector->length) vector->entities[index] = vector->entities[vector->length]; // same as VectorDeleteUnstable
+	TryVectorShrink(vector);
 }
-
-int vectorFree(vector* v)
-{
-	int status = UNDEFINE;
-	if (v)
-	{
-		free(v->vectorList.items);
-		v->vectorList.items = NULL;
-		status = SUCCESS;
+void VectorDelete(Vector* vector, const int index) {
+	if (!CheckIndexRange(vector, index)) return;
+	vector->entities[index] = NULL;
+	vector->length--;
+	for (int i = index; i < vector->length; i++) { // shift every other entity
+		vector->entities[i] = vector->entities[i + 1];
 	}
-	return status;
+	TryVectorShrink(vector);
 }
-
-void vector_init(vector* v)
-{
-	v->pfVectorTotal = vectorTotal;
-	v->pfVectorResize = vectorResize;
-	v->pfVectorAdd = vectorPushBack;
-	v->pfVectorSet = vectorSet;
-	v->pfVectorGet = vectorGet;
-	v->pfVectorFree = vectorFree;
-	v->pfVectorDelete = vectorDelete;
-	v->vectorList.capacity = VECTOR_INIT_CAPACITY;
-	v->vectorList.total = 0;
-	v->vectorList.items = malloc(sizeof(void*) * v->vectorList.capacity);
+void VectorDeepDelete(Vector* vector, const int index) {
+	if (!CheckIndexRange(vector, index)) return;
+	free(vector->entities[index]);
+	vector->entities[index] = NULL; // same as VectorDelete
+	vector->length--;
+	for (int i = index; i < vector->length; i++) { // shift every other entity
+		vector->entities[i] = vector->entities[i + 1];
+	}
+	TryVectorShrink(vector);
+}
+Vector* VectorMerge(Vector* vectorA, Vector* vectorB) {
+	for (int i = 0; i < vectorB->length; i++) {
+		VectorInsert(vectorA, vectorB->entities[i]);
+	}
+	DeleteVector(vectorB);
+	return vectorA;
 }
 
