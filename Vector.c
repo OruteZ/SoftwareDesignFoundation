@@ -48,6 +48,7 @@ void TryVectorShrink(Vector* vector) {
 
 
 bool CheckIndexRange(Vector* vector, const int index) {
+	if (vector == NULL) return false;
 	if (0 <= index && index < vector->length) return true;
 	else return false;
 }
@@ -89,10 +90,19 @@ void VectorDeepDelete(Vector* vector, const int index) {
 	TryVectorShrink(vector);
 }
 Vector* VectorMerge(Vector* vectorA, Vector* vectorB) {
-	for (int i = 0; i < vectorB->length; i++) {
-		VectorInsert(vectorA, vectorB->entities[i]);
+	if (vectorA->length < vectorB->length) {
+		for (int i = 0; i < vectorA->length; i++) {
+			VectorInsert(vectorB, vectorA->entities[i]);
+		}
+		DeleteVector(vectorA);
+		return vectorB;
 	}
-	DeleteVector(vectorB);
-	return vectorA;
+	else {
+		for (int i = 0; i < vectorB->length; i++) {
+			VectorInsert(vectorA, vectorB->entities[i]);
+		}
+		DeleteVector(vectorB);
+		return vectorA;
+	}
 }
 

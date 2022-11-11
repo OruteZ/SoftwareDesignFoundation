@@ -164,6 +164,7 @@
     <ClInclude Include="FramePerSecond.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="QuadTree.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Vector.h" />
