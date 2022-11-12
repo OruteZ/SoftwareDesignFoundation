@@ -142,21 +142,32 @@
     <Text Include="Draw.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CreateArcherEnemy.c" />
+    <ClCompile Include="CreateBomberEnemy.c" />
+    <ClCompile Include="CreatePlayer.c" />
     <ClCompile Include="FramePerSecond.c" />
-    <ClCompile Include="HeartBeat.c" />
-    <ClCompile Include="Keyboard.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="CreateMeleeEnemy.c" />
     <ClCompile Include="Point.c" />
+    <ClCompile Include="QuadTree.c" />
     <ClCompile Include="Rect.c" />
     <ClCompile Include="Screen.c" />
+    <ClCompile Include="Vector.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArcherEnemy.h" />
+    <ClInclude Include="BomberEnemy.h" />
+    <ClInclude Include="ExperienceOrb.h" />
+    <ClInclude Include="MeleeEnemy.h" />
+    <ClInclude Include="Mortal.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="FramePerSecond.h" />
-    <ClInclude Include="HeartBeat.h" />
-    <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="QuadTree.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="Screen.h" />
+    <ClInclude Include="Vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
