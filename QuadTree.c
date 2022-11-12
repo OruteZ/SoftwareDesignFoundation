@@ -29,6 +29,16 @@ QuadTree* CreateQuadTree(Rect boundary) {
 	tree->sw = NULL;
 	tree->se = NULL;
 }
+void DeleteQuadTree(QuadTree* tree) {
+	if (tree->nw != NULL) {
+		DeleteQuadTree(tree->nw);
+		DeleteQuadTree(tree->ne);
+		DeleteQuadTree(tree->sw);
+		DeleteQuadTree(tree->se);
+	}
+
+	free(tree);
+}
 
 void QuadTreeSubdivide(QuadTree* tree) {
 	int x = tree->boundary.x;
