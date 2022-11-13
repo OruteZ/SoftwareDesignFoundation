@@ -16,7 +16,7 @@ void DeleteRect(Rect* rect) {
 }
 Rect* DuplicateRect(Rect* rect)
 {
-	return Rect_new(rect->x, rect->y, rect->width, rect->height);
+	return CreateRect(rect->x, rect->y, rect->width, rect->height);
 }
 
 bool RectIsIntersectingRect(Rect* rect_a, Rect* rect_b) {

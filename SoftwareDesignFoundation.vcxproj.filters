@@ -66,6 +66,21 @@
     <ClCompile Include="Vector.c">
       <Filter>소스 파일\ADT</Filter>
     </ClCompile>
+    <ClCompile Include="Update.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Init.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Render.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Console.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Draw.txt">
@@ -111,6 +126,18 @@
     </ClInclude>
     <ClInclude Include="QuadTree.h">
       <Filter>헤더 파일\ADT</Filter>
+    </ClInclude>
+    <ClInclude Include="Init.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Update.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Render.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

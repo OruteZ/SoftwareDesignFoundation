@@ -8,15 +8,7 @@
 #include "Entity.h"
 #include "Vector.h"
 
-typedef struct _QuadTree {
-	Rect boundary;
-	Entity* contained_entity;
-
-	struct _QuadTree* nw;
-	struct _QuadTree* ne;
-	struct _QuadTree* sw;
-	struct _QuadTree* se;
-} QuadTree;
+#include "QuadTree.h"
 
 QuadTree* CreateQuadTree(Rect boundary) {
 	QuadTree* tree = (QuadTree*)malloc(sizeof(QuadTree));

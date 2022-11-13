@@ -3,7 +3,7 @@
 
 Player* CreatePlayer(Point p)
 {
-	Player* player;
+	Player* player = (Player*)malloc(sizeof(Player));
 	player->base.entity.type = _Player;
 	player->base.entity.pos.x = p.x;
 	player->base.entity.pos.y = p.y;

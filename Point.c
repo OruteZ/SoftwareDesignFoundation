@@ -16,7 +16,7 @@ void DeletePoint(Point* point)
 }
 Point* DuplicatePoint(Point* point)
 {
-	return Point_new(point->x, point->y);
+	return CreatePoint(point->x, point->y);
 }
 
 void PointAdd(Point* point, Point* _point)

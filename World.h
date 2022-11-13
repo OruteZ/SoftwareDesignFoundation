@@ -74,6 +74,8 @@ typedef struct _World {
 
 // 새로운 World를 생성한다.
 World* CreateWorld(const int width, const int height);
+// World를 제거한다.
+void DeleteWorld(World* world);
 
 // 현재의 World를 바꾼다.
 void SetCurrentWorld(World* world);

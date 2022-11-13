@@ -16,6 +16,9 @@ World* CreateWorld(const int width, const int height) {
 	world->grid = NULL;
 	return world;
 }
+void DeleteWorld(World* world) {
+	free(world);
+}
 
 World* current_world = NULL;
 void SetCurrentWorld(World* world) {
