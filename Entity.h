@@ -10,7 +10,7 @@ enum EntityType {
 	_MeleeEnemy,
 	_ArcherEnemy,
 	_BomberEnemy,
-	_Experience,
+	_ExperienceOrb,
 	_ParticleEffect
 };
 
