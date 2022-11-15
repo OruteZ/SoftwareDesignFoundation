@@ -1,5 +1,5 @@
 #include "Rect.h"
-
+#include "Point.h"
 Rect* CreateRect(int _x, int _y, int _width, int _height) {
 	Rect* rect = (Rect*)malloc(sizeof(Rect));
 	if (rect == NULL) return NULL;
@@ -31,5 +31,12 @@ bool RectIsContainingRect(Rect* rect_a, Rect* rect_b) {
 		rect_b->x + rect_b->width <= rect_a->x + rect_a->width &&
 		rect_a->y <= rect_b->y &&
 		rect_b->y + rect_b->height <= rect_a->y + rect_a->height) return true;
+	else return false;
+}
+bool RectContainsPoint(Rect *rect, Point point) {
+	if (rect->x <= point.x && point.x < rect->x + rect->width &&
+		rect->y <= point.y && point.y < rect->y + rect->height) {
+		return true;
+	}
 	else return false;
 }

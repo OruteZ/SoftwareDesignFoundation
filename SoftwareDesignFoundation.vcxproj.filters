@@ -34,6 +34,9 @@
     <Filter Include="소스 파일\Attack">
       <UniqueIdentifier>{54791b7e-ea42-453f-9d02-67b20f582900}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Attack">
+      <UniqueIdentifier>{b9c554cb-15ff-4a06-a130-6fe358f5606f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -78,14 +81,26 @@
     <ClCompile Include="Render.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Console.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Time.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="MeleeAttack.c">
+    <ClCompile Include="StartMeleeAttack.c">
       <Filter>소스 파일\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Release.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="World.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="World001.c">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -101,9 +116,6 @@
       <Filter>헤더 파일\Shapes</Filter>
     </ClInclude>
     <ClInclude Include="Screen.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="FramePerSecond.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
@@ -144,6 +156,27 @@
     </ClInclude>
     <ClInclude Include="Time.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Release.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="World001.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Direction.h">
+      <Filter>헤더 파일\ADT</Filter>
+    </ClInclude>
+    <ClInclude Include="StartMeleeAttack.h">
+      <Filter>헤더 파일\Attack</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
