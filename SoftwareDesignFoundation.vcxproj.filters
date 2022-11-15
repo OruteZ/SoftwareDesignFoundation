@@ -25,6 +25,12 @@
     <Filter Include="소스 파일\Entity">
       <UniqueIdentifier>{82d5f3b5-446c-4455-80cc-09f80c0d11c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\ADT">
+      <UniqueIdentifier>{fb06b99f-7907-4d82-a981-a900d1d542e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\ADT">
+      <UniqueIdentifier>{92d3df97-47e2-405a-a8dd-2117cce0bf6c}</UniqueIdentifier>
+    </Filter>
     <Filter Include="소스 파일\Attack">
       <UniqueIdentifier>{54791b7e-ea42-453f-9d02-67b20f582900}</UniqueIdentifier>
     </Filter>
@@ -56,6 +62,27 @@
     </ClCompile>
     <ClCompile Include="Player.c">
       <Filter>소스 파일\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadTree.c">
+      <Filter>소스 파일\ADT</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector.c">
+      <Filter>소스 파일\ADT</Filter>
+    </ClCompile>
+    <ClCompile Include="Update.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Init.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Render.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Console.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.c">
+      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="MeleeAttack.c">
       <Filter>소스 파일\Attack</Filter>
@@ -99,6 +126,24 @@
     </ClInclude>
     <ClInclude Include="ExperienceOrb.h">
       <Filter>헤더 파일\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>헤더 파일\ADT</Filter>
+    </ClInclude>
+    <ClInclude Include="QuadTree.h">
+      <Filter>헤더 파일\ADT</Filter>
+    </ClInclude>
+    <ClInclude Include="Init.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Update.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Render.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

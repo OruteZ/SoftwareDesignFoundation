@@ -9,12 +9,12 @@ typedef struct _Point {
 	int y;
 } Point;
 
-Point* Point_new(int _x, int _y);
-void Point_delete(Point* point);
-Point* Point_duplicate(Point* point);
+Point* CreatePoint(int _x, int _y);
+void DeletePoint(Point* point);
+Point* DuplicatePoint(Point* point);
 
-void Point_add(Point* point, Point* _point);
-void Point_sub(Point* point, Point* _point);
-void Point_mul(Point* point, double factor);
-double Point_distance(Point* point_a, Point* point_b);
-double Point_magnitude(Point* point);
+void PointAdd(Point* point, Point* _point);
+void PointSub(Point* point, Point* _point);
+void PointMul(Point* point, double factor);
+double PointDistance(Point* point_a, Point* point_b);
+double PointMagnitude(Point* point);

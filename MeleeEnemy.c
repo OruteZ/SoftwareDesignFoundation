@@ -2,7 +2,7 @@
 #include "MeleeEnemy.h"
 MeleeEnemy* CreateMeleeEnemy(Point p)
 {
-	MeleeEnemy* meleeEnemy;
+	MeleeEnemy* meleeEnemy = (MeleeEnemy*)malloc(sizeof(MeleeEnemy));
 	meleeEnemy->base.entity.type = _MeleeEnemy;
 	meleeEnemy->base.entity.pos.x = p.x;
 	meleeEnemy->base.entity.pos.y = p.y;
