@@ -25,6 +25,9 @@
     <Filter Include="소스 파일\Entity">
       <UniqueIdentifier>{82d5f3b5-446c-4455-80cc-09f80c0d11c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Attack">
+      <UniqueIdentifier>{54791b7e-ea42-453f-9d02-67b20f582900}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -53,6 +56,9 @@
     </ClCompile>
     <ClCompile Include="Player.c">
       <Filter>소스 파일\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeAttack.c">
+      <Filter>소스 파일\Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

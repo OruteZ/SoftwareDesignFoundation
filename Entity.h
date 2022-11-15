@@ -14,6 +14,13 @@ enum EntityType {
 	_ParticleEffect
 };
 
+enum EnemyStatus{
+	_Idle,
+	_IsMove,
+	_IsAttack,
+	_DelayAttack
+};
+
 typedef struct _Entity {
 	enum EntityType type;
 	Point pos;

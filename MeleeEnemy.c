@@ -10,5 +10,7 @@ MeleeEnemy* CreateMeleeEnemy(Point p)
 	meleeEnemy->base.mortal.baseDamage = 15;
 	meleeEnemy->base.mortal.hp = 40;
 	meleeEnemy->base.mortal.moveSpeed = 1.0f;
+	meleeEnemy->base.mortal.attackRange =
+		Rect_new(meleeEnemy->base.entity.pos.x - 1, meleeEnemy->base.entity.pos.y, 4, 3);
 	return meleeEnemy;
 }

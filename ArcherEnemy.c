@@ -11,5 +11,7 @@ ArcherEnemy* CreateArcherEnemy(Point p)
 	archerEnemy->base.mortal.hp = 30;
 	archerEnemy->base.mortal.moveSpeed = 2.0f;
 	archerEnemy->arrowSpeed = 0.5f;
+	archerEnemy->base.mortal.attackRange =
+		Rect_new(archerEnemy->base.entity.pos.x - 1, archerEnemy->base.entity.pos.y, 10, 2);
 	return archerEnemy;
 }

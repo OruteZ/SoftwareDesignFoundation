@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Entity.h"
-
+#include "Rect.h"
 typedef struct _Mortal
 {
 	union {
@@ -12,4 +12,5 @@ typedef struct _Mortal
 	int baseDamage;
 	double attackCooldown;
 	double moveSpeed;
+	Rect *attackRange;
 } Mortal;

@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="ArcherEnemy.c" />
     <ClCompile Include="BomberEnemy.c" />
+    <ClCompile Include="MeleeAttack.c" />
     <ClCompile Include="Player.c" />
     <ClCompile Include="FramePerSecond.c" />
     <ClCompile Include="main.c" />

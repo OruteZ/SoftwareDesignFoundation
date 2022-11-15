@@ -11,6 +11,7 @@ BomberEnemy* CreateBomberEnemy(Point p)
 	bomberEnemy->base.mortal.baseDamage = 50;
 	bomberEnemy->base.mortal.hp = 30;
 	bomberEnemy->base.mortal.moveSpeed = 0.5f;
-	bomberEnemy->blastRadius = 3.0f; //폭발 범위 미정
+	bomberEnemy->base.mortal.attackRange =
+		Rect_new(bomberEnemy->base.entity.pos.x - 3, bomberEnemy->base.entity.pos.y, 6, 3); // 3x3 정사각형
 	return bomberEnemy;
 }
