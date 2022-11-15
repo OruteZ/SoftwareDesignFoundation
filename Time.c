@@ -3,13 +3,11 @@
 // if tps is less than 20, time slows down.
 #define DELTA_TIME_MAX (0.05)
 
-typedef struct _GameTime {
+struct {
 	clock_t clock_ticks;
 	double time;
 	double deltaTime;
-} GameTime;
-
-GameTime Time;
+} Time;
 
 void InitTime() {
 	Time.clock_ticks = clock();
