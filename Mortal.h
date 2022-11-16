@@ -13,4 +13,5 @@ typedef struct _Mortal
 	double attackCooldown;
 	double moveSpeed;
 	Rect *attackRange;
+	Rect* playerSearchRange;
 } Mortal;

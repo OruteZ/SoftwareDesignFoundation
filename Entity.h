@@ -13,7 +13,13 @@ enum EntityType {
 	_ExperienceOrb,
 	_ParticleEffect
 };
-
+enum Direction
+{
+	east,
+	west,
+	south,
+	north
+};
 enum EnemyStatus{
 	_Idle,
 	_IsMove,
@@ -23,5 +29,7 @@ enum EnemyStatus{
 
 typedef struct _Entity {
 	enum EntityType type;
+	enum Direction direction;
+	enum EnemyState enemyState;
 	Point pos;
 } Entity;
