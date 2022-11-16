@@ -146,6 +146,7 @@
     <ClCompile Include="Keyboard.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="CreateMeleeEnemy.c" />
+    <ClCompile Include="Player.c" />
     <ClCompile Include="Point.c" />
     <ClCompile Include="QuadTree.c" />
     <ClCompile Include="Rect.c" />

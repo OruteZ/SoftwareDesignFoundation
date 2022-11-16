@@ -45,9 +45,6 @@
     <ClCompile Include="Screen.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="FramePerSecond.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CreateMeleeEnemy.c">
       <Filter>소스 파일\Entity</Filter>
     </ClCompile>
@@ -75,17 +72,27 @@
     <ClCompile Include="Render.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Console.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Time.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Draw.txt">
+    <ClCompile Include="Game.c">
       <Filter>소스 파일</Filter>
-    </Text>
+    </ClCompile>
+    <ClCompile Include="Keyboard.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Release.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="World.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="World001.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Rect.h">
@@ -95,9 +102,6 @@
       <Filter>헤더 파일\Shapes</Filter>
     </ClInclude>
     <ClInclude Include="Screen.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="FramePerSecond.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
@@ -137,6 +141,21 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Time.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Release.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="World001.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
