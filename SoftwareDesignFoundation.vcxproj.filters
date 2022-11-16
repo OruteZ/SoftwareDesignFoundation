@@ -31,11 +31,11 @@
     <Filter Include="헤더 파일\ADT">
       <UniqueIdentifier>{92d3df97-47e2-405a-a8dd-2117cce0bf6c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일\Attack">
-      <UniqueIdentifier>{b9c554cb-15ff-4a06-a130-6fe358f5606f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Attack&amp;Move">
       <UniqueIdentifier>{54791b7e-ea42-453f-9d02-67b20f582900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Move&amp;Attack">
+      <UniqueIdentifier>{b9c554cb-15ff-4a06-a130-6fe358f5606f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -84,9 +84,6 @@
     <ClCompile Include="Time.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ReadyMeleeAttack.c">
-      <Filter>소스 파일\Attack&amp;Move</Filter>
-    </ClCompile>
     <ClCompile Include="Game.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -102,10 +99,13 @@
     <ClCompile Include="World001.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="StartMeleeAttack.c">
+    <ClCompile Include="StartAttack.c">
       <Filter>소스 파일\Attack&amp;Move</Filter>
     </ClCompile>
     <ClCompile Include="EnemyMove.c">
+      <Filter>소스 파일\Attack&amp;Move</Filter>
+    </ClCompile>
+    <ClCompile Include="FinishAttack.c">
       <Filter>소스 파일\Attack&amp;Move</Filter>
     </ClCompile>
   </ItemGroup>
@@ -178,8 +178,11 @@
     <ClInclude Include="World001.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="MoveAndAttack.h">
-      <Filter>헤더 파일\Attack</Filter>
+    <ClInclude Include="EnemyMove.h">
+      <Filter>헤더 파일\Move&amp;Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="StartAttack.h">
+      <Filter>헤더 파일\Move&amp;Attack</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

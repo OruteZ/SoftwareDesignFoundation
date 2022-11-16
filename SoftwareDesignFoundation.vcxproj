@@ -145,7 +145,7 @@
     <ClCompile Include="ArcherEnemy.c" />
     <ClCompile Include="BomberEnemy.c" />
     <ClCompile Include="EnemyMove.c" />
-    <ClCompile Include="ReadyMeleeAttack.c" />
+    <ClCompile Include="FinishAttack.c" />
     <ClCompile Include="Player.c" />
     <ClCompile Include="FramePerSecond.c" />
     <ClCompile Include="Game.c" />
@@ -159,7 +159,7 @@
     <ClCompile Include="Render.c" />
     <ClCompile Include="Screen.c" />
     <ClCompile Include="Init.c" />
-    <ClCompile Include="StartMeleeAttack.c" />
+    <ClCompile Include="StartAttack.c" />
     <ClCompile Include="Time.c" />
     <ClCompile Include="Update.c" />
     <ClCompile Include="Vector.c" />
@@ -183,7 +183,8 @@
     <ClInclude Include="Release.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="Screen.h" />
-    <ClInclude Include="MoveAndAttack.h" />
+    <ClInclude Include="EnemyMove.h" />
+    <ClInclude Include="StartAttack.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Update.h" />
     <ClInclude Include="Vector.h" />

@@ -12,6 +12,7 @@ ArcherEnemy* CreateArcherEnemy(Point p)
 	archerEnemy->base.mortal.moveSpeed = 2.0f;
 	archerEnemy->arrowSpeed = 0.5f;
 	archerEnemy->base.mortal.playerSearchRange =
-		Rect_new(archerEnemy->base.entity.pos.x - 30, archerEnemy->base.entity.pos.y - 30, 60, 60);
+		CreateRect(archerEnemy->base.entity.pos.x - 30, archerEnemy->base.entity.pos.y - 30, 60, 60);
+	archerEnemy->base.mortal.attackRange = NULL;
 	return archerEnemy;
 }

@@ -11,6 +11,7 @@ MeleeEnemy* CreateMeleeEnemy(Point p)
 	meleeEnemy->base.mortal.hp = 40;
 	meleeEnemy->base.mortal.moveSpeed = 1.0;
 	meleeEnemy->base.mortal.playerSearchRange =
-		Rect_new(meleeEnemy->base.entity.pos.x - 10, meleeEnemy->base.entity.pos.y - 10, 20, 20);
+		CreateRect(meleeEnemy->base.entity.pos.x - 10, meleeEnemy->base.entity.pos.y - 10, 20, 20);
+	meleeEnemy->base.mortal.attackRange = NULL;
 	return meleeEnemy;
 }
