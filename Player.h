@@ -27,6 +27,8 @@ typedef struct _Player {
 
 void PlayerMove(direction dir);
 
-void PlayerAttack() {
+void UpdatePlayer();
 
-}
+void PlayerAttack();
+
+Point GetPlayerPos();

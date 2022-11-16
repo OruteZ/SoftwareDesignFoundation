@@ -5,7 +5,7 @@
 #include"Point.h"
 #include"Screen.h"
 #include"KeyBoard.h"
-
+#include <stdio.h> 
 
 //for test
 #include <process.h>
@@ -26,25 +26,25 @@ typedef struct _HeartBeatObject {
 
 HeartBeat* heart_beat;
 
-void HeartBeat_init();
-void HeartBeat_update(double delta_time);
-void HeartBeat_render();
-void HeartBeat_release();
+void InitHeartBeat();
+void UpdateHeartBeat(double delta_time);
+void RenderHeartBeat();
+void RealeseHeartBeat();
 
-void HeartBeat_reset();
+void ResetNote();
 
-void HeartBeat_move_note();
-void HeartBeat_reload_buffer();
+void MoveNote();
+void ReloadHeartBeatBuffer();
 
-int HeartBeat_is_note_beaten();
+int IsNoteBeaten();
 
 
-void HeartBeat_set_BPM(int BPM);
-int HeartBeat_get_BPM();
+void SetBPM(int BPM);
+int GetBPM();
 
-short* HeartBeat_get_note_information();
+short* GetNoteInfo();
 
-int HeartBeat_get_combo();
+int GetCombo();
 
 unsigned _stdcall Thread_PlaySound(void* arg);
 

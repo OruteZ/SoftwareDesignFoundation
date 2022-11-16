@@ -93,6 +93,9 @@
     <ClCompile Include="Player.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="HeartBeat.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Rect.h">
@@ -156,6 +159,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="World001.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="HeartBeat.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
