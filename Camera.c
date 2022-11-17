@@ -12,15 +12,24 @@ int _cameraHeightInGame = 9;
 Rect CameraRectInGame;
 Rect CameraRectInCanvas;
 
+const char enemyChar = "ee";
+
 void InitCamera()
 {
 	CameraRectInGame.height = _cameraHeightInGame;
 	CameraRectInGame.width = _cameraWidthInGame;
+
+	CameraRectInCanvas.height = _cameraHeightInGame;
+	CameraRectInCanvas.width = 2 * _cameraWidthInGame;
 }
 
 Point IngamePosition_to_CanvasPosition(Point pos)
 {
+	Point result;
+	result.x = CameraRectInCanvas.x + pos.x * 2;
+	result.y = CameraRectInCanvas.y + (CameraRectInCanvas.height - pos.y);
 
+	return result;
 }
 
 void PrintWorld()
