@@ -7,7 +7,6 @@
 #include "Game.h"
 #include "Time.h"
 
-
 Player* _player;
 
 Player* CreatePlayer(Point p)
@@ -76,10 +75,10 @@ void PlayerAttack()
 	Rect* attack_rect = NULL;
 	Point player_pos = _player->base.entity.pos;
 
-	if (_player->headed_direction == Up) attack_rect = CreateRect(player_pos.x-1, player_pos.y-1, 2, 0);
-	if (_player->headed_direction == Down) attack_rect = CreateRect(player_pos.x-1, player_pos.y+1, 2, 0);
-	if (_player->headed_direction == Left) attack_rect = CreateRect(player_pos.x-1, player_pos.y-1, 0, 2);
-	if (_player->headed_direction == Right) attack_rect = CreateRect(player_pos.x+1, player_pos.y-1, 0, 2);
+	if (_player->headed_direction == Up) attack_rect = CreateRect(player_pos.x-1, player_pos.y-1, 3, 1);
+	if (_player->headed_direction == Down) attack_rect = CreateRect(player_pos.x-1, player_pos.y+1, 3, 1);
+	if (_player->headed_direction == Left) attack_rect = CreateRect(player_pos.x-1, player_pos.y-1, 1, 3);
+	if (_player->headed_direction == Right) attack_rect = CreateRect(player_pos.x+1, player_pos.y-1, 1, 3);
 
 	Vector* hitted_enemys = QuadTreeQuery(mortalsTree, *attack_rect);
 
