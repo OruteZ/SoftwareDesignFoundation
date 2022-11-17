@@ -72,15 +72,15 @@ void PlayerAttack()
 {
 	if (!_canPlayerAttack) return;
 
-	Rect* attack_rect = NULL;
-	Point player_pos = _player->base.entity.pos;
+	Rect* attackRect = NULL;
+	Point playerPos = _player->base.entity.pos;
 
-	if (_player->headed_direction == Up) attack_rect = CreateRect(player_pos.x-1, player_pos.y-1, 3, 1);
-	if (_player->headed_direction == Down) attack_rect = CreateRect(player_pos.x-1, player_pos.y+1, 3, 1);
-	if (_player->headed_direction == Left) attack_rect = CreateRect(player_pos.x-1, player_pos.y-1, 1, 3);
-	if (_player->headed_direction == Right) attack_rect = CreateRect(player_pos.x+1, player_pos.y-1, 1, 3);
+	if (_player->headed_direction == Up) attackRect = CreateRect(playerPos.x-1, playerPos.y-1, 3, 1);
+	if (_player->headed_direction == Down) attackRect = CreateRect(playerPos.x-1, playerPos.y+1, 3, 1);
+	if (_player->headed_direction == Left) attackRect = CreateRect(playerPos.x-1, playerPos.y-1, 1, 3);
+	if (_player->headed_direction == Right) attackRect = CreateRect(playerPos.x+1, playerPos.y-1, 1, 3);
 
-	Vector* hitted_enemys = QuadTreeQuery(mortalsTree, *attack_rect);
+	Vector* hitted_enemys = QuadTreeQuery(mortalsTree, *attackRect);
 
 	int len = hitted_enemys->length;
 	for (int i = 0; i < len; i++) 
@@ -96,7 +96,7 @@ void PlayerAttack()
 	}
 
 	DeleteVector(hitted_enemys);
-	DeleteRect(attack_rect);
+	DeleteRect(attackRect);
 
 	_canPlayerAttack = FALSE;
 	_playerAttackCooldown = _player->base.mortal.attackCooldown;
