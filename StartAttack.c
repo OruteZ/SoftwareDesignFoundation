@@ -27,7 +27,7 @@ double StartBomberAttack(BomberEnemy* bomberEnemy)
 	double BomberAttackTime = 0;
 	if ((RectContainsPoint(bomberEnemy->base.mortal.attackRange, player->base.entity.pos)))
 	{
-		bomberEnemy->base.entity.enemyState =Attack
+		bomberEnemy->base.entity.enemyState = Attack;
 		BomberAttackTime = Time.time + bomberEnemy->base.mortal.attackCooldown;
 		return BomberAttackTime;
 	}
