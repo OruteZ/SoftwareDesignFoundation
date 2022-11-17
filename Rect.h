@@ -16,3 +16,4 @@ Rect* DuplicateRect(Rect* rect);
 
 bool RectIsIntersectingRect(Rect* rect_a, Rect* rect_b);
 bool RectIsContainingRect(Rect* rect_a, Rect* rect_b);
+bool RectContainsPoint(Rect *rect, Point point);

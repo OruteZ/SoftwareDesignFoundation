@@ -31,6 +31,12 @@
     <Filter Include="헤더 파일\ADT">
       <UniqueIdentifier>{92d3df97-47e2-405a-a8dd-2117cce0bf6c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Attack&amp;Move">
+      <UniqueIdentifier>{54791b7e-ea42-453f-9d02-67b20f582900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Move&amp;Attack">
+      <UniqueIdentifier>{b9c554cb-15ff-4a06-a130-6fe358f5606f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -45,16 +51,19 @@
     <ClCompile Include="Screen.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CreateMeleeEnemy.c">
+    <ClCompile Include="FramePerSecond.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeEnemy.c">
       <Filter>소스 파일\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="CreateArcherEnemy.c">
+    <ClCompile Include="ArcherEnemy.c">
       <Filter>소스 파일\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="CreateBomberEnemy.c">
+    <ClCompile Include="BomberEnemy.c">
       <Filter>소스 파일\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="CreatePlayer.c">
+    <ClCompile Include="Player.c">
       <Filter>소스 파일\Entity</Filter>
     </ClCompile>
     <ClCompile Include="QuadTree.c">
@@ -90,12 +99,23 @@
     <ClCompile Include="World001.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Player.c">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="StartAttack.c">
+      <Filter>소스 파일\Attack&amp;Move</Filter>
     </ClCompile>
-    <ClCompile Include="HeartBeat.c">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="SetAttackRange.c">
+      <Filter>소스 파일\Attack&amp;Move</Filter>
     </ClCompile>
+    <ClCompile Include="FinishAttack.c">
+      <Filter>소스 파일\Attack&amp;Move</Filter>
+    </ClCompile>
+    <ClCompile Include="Mortal.c">
+      <Filter>소스 파일\Entity</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Draw.txt">
+      <Filter>소스 파일</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Rect.h">
@@ -161,8 +181,11 @@
     <ClInclude Include="World001.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="HeartBeat.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="SetAttackRange.h">
+      <Filter>헤더 파일\Move&amp;Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="StartAttack.h">
+      <Filter>헤더 파일\Move&amp;Attack</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

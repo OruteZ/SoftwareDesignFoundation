@@ -7,6 +7,4 @@ typedef struct _BomberEmemy {
 		Entity entity;
 		Mortal mortal;
 	} base;
-
-	double blastRadius;
 } BomberEnemy;
