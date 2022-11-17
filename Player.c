@@ -37,6 +37,8 @@ double _playerAttackCooldown;
 BOOL _canPlayerMove = TRUE;
 double _playerMoveCooldown;
 
+void CalculatePlayerCooldown();
+
 void UpdatePlayer() {
 	if (_player == NULL) return;
 
@@ -104,14 +106,6 @@ void PlayerAttack()
 
 Point GetPlayerPos() { return _player->base.entity.pos; }
 
-void CalculatePlayerCooldown()
-{
-	_playerAttackCooldown -= Time.deltaTime;
-	_playerMoveCooldown -= Time.deltaTime;
-
-	if (_playerAttackCooldown < 0) _canPlayerAttack = TRUE;
-	if (_playerMoveCooldown < 0) _canPlayerMove = TRUE;
-}
 
 void PlayerOnHit(int damage)
 {
@@ -119,6 +113,15 @@ void PlayerOnHit(int damage)
 	if (_player->base.mortal.hp <= 0) {
 		// gameover;
 	}
+}
+
+void CalculatePlayerCooldown()
+{
+	_playerAttackCooldown -= Time.deltaTime;
+	_playerMoveCooldown -= Time.deltaTime;
+
+	if (_playerAttackCooldown < 0) _canPlayerAttack = TRUE;
+	if (_playerMoveCooldown < 0) _canPlayerMove = TRUE;
 }
 
 

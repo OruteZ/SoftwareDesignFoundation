@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "World.h"
 #include "QuadTree.h"
+#include "Screen.h"
 
 int _cameraWidthInGame = 11;
 int _cameraHeightInGame = 9;
@@ -12,7 +13,8 @@ int _cameraHeightInGame = 9;
 Rect CameraRectInGame;
 Rect CameraRectInCanvas;
 
-const char enemyChar = "ee";
+const char enemyChar[] = "ee";
+const char playerChar[] = "pp";
 
 void InitCamera()
 {
@@ -40,8 +42,17 @@ void PrintWorld()
 void PrintMortal()
 {
 	Vector* mortalsToPrint = QuadTreeQuery(mortalsTree, CameraRectInGame);
-	
+	Point printPos;
 
+	int len = mortalsToPrint->length;
+	for (int i = 0; i < len; i++) {
+		Mortal* m = mortalsToPrint->entities[i];
+
+		printPos = IngamePosition_to_CanvasPosition(m->base.entity.pos);
+
+		if (m->base.entity.type == _Player) ScreenPrint(printPos.x, printPos.y, playerChar);
+		else ScreenPrint(printPos.x, printPos.y, enemyChar);
+	}
 
 	DeleteVector(mortalsToPrint);
 }
