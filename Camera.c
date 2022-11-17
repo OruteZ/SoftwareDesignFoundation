@@ -9,12 +9,14 @@
 int _cameraWidth = 11;
 int _cameraHeight = 9;
 
-Rect CameraRect;
+Rect CameraRectInGame;
+
+Rect CameraRectInCanvas;
 
 void InitCamera()
 {
-	CameraRect.height = _cameraHeight;
-	CameraRect.width = _cameraWidth;
+	CameraRectInGame.height = _cameraHeight;
+	CameraRectInGame.width = _cameraWidth;
 }
 
 void PrintWorld()
@@ -24,7 +26,11 @@ void PrintWorld()
 
 void PrintMortal()
 {
+	Vector* mortalsToPrint = QuadTreeQuery(mortalsTree, CameraRectInGame);
+	
 
+
+	DeleteVector(mortalsToPrint);
 }
 
 void PrintExpOrb()
@@ -35,16 +41,16 @@ void SetCameraPoint()
 {
 	Point playerPos = GetPlayerPos();
 
-	CameraRect.x = playerPos.x - (_cameraWidth / 2);
-	CameraRect.y = playerPos.y - (_cameraHeight / 2);
+	CameraRectInGame.x = playerPos.x - (_cameraWidth / 2);
+	CameraRectInGame.y = playerPos.y - (_cameraHeight / 2);
 
-	if (CameraRect.x < 0) CameraRect.x = 0;
-	if (CameraRect.y < 0) CameraRect.y = 0;
+	if (CameraRectInGame.x < 0) CameraRectInGame.x = 0;
+	if (CameraRectInGame.y < 0) CameraRectInGame.y = 0;
 
 	World* worldInfo = GetCurrentWorld();
 	int worldWidth = worldInfo->width;
 	int worldHeight = worldInfo->height;
 
-	if (CameraRect.x + CameraRect.width >= worldWidth) CameraRect.x = worldWidth - _cameraWidth;
-	if (CameraRect.y + CameraRect.height >= worldHeight) CameraRect.y = worldHeight - _cameraHeight;
+	if (CameraRectInGame.x + CameraRectInGame.width >= worldWidth) CameraRectInGame.x = worldWidth - _cameraWidth;
+	if (CameraRectInGame.y + CameraRectInGame.height >= worldHeight) CameraRectInGame.y = worldHeight - _cameraHeight;
 }
