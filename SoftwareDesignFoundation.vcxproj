@@ -143,9 +143,11 @@
     <ClCompile Include="CreateBomberEnemy.c" />
     <ClCompile Include="CreatePlayer.c" />
     <ClCompile Include="Game.c" />
+    <ClCompile Include="HeartBeat.c" />
     <ClCompile Include="Keyboard.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="CreateMeleeEnemy.c" />
+    <ClCompile Include="Player.c" />
     <ClCompile Include="Point.c" />
     <ClCompile Include="QuadTree.c" />
     <ClCompile Include="Rect.c" />
@@ -164,6 +166,7 @@
     <ClInclude Include="BomberEnemy.h" />
     <ClInclude Include="ExperienceOrb.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="HeartBeat.h" />
     <ClInclude Include="Init.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="MeleeEnemy.h" />
