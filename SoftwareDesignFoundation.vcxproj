@@ -148,7 +148,6 @@
     <ClCompile Include="FinishAttack.c" />
     <ClCompile Include="Mortal.c" />
     <ClCompile Include="Player.c" />
-    <ClCompile Include="FramePerSecond.c" />
     <ClCompile Include="Game.c" />
     <ClCompile Include="Keyboard.c" />
     <ClCompile Include="main.c" />

@@ -20,7 +20,7 @@ enum Direction
 	south,
 	north
 };
-enum EnemyStatus{
+enum EnemyState{
 	Idle,
 	Move,
 	Attack,
