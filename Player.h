@@ -32,3 +32,5 @@ void UpdatePlayer();
 void PlayerAttack();
 
 Point GetPlayerPos();
+
+void GetDamage(const int damage);

@@ -114,8 +114,12 @@ void CalculatePlayerCooldown()
 	if (_playerMoveCooldown < 0) _canPlayerMove = TRUE;
 }
 
-void PlayerOnHit()
+void PlayerOnHit(int damage)
 {
-	
+	_player->base.mortal.hp -= damage;
+	if (_player->base.mortal.hp <= 0) {
+		// gameover;
+	}
 }
+
 
