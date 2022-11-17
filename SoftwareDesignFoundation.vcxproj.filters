@@ -102,7 +102,7 @@
     <ClCompile Include="StartAttack.c">
       <Filter>소스 파일\Attack&amp;Move</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyMove.c">
+    <ClCompile Include="SetAttackRange.c">
       <Filter>소스 파일\Attack&amp;Move</Filter>
     </ClCompile>
     <ClCompile Include="FinishAttack.c">
@@ -181,7 +181,7 @@
     <ClInclude Include="World001.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyMove.h">
+    <ClInclude Include="SetAttackRange.h">
       <Filter>헤더 파일\Move&amp;Attack</Filter>
     </ClInclude>
     <ClInclude Include="StartAttack.h">

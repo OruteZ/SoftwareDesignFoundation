@@ -144,7 +144,7 @@
   <ItemGroup>
     <ClCompile Include="ArcherEnemy.c" />
     <ClCompile Include="BomberEnemy.c" />
-    <ClCompile Include="EnemyMove.c" />
+    <ClCompile Include="SetAttackRange.c" />
     <ClCompile Include="FinishAttack.c" />
     <ClCompile Include="Mortal.c" />
     <ClCompile Include="Player.c" />
@@ -184,7 +184,7 @@
     <ClInclude Include="Release.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="Screen.h" />
-    <ClInclude Include="EnemyMove.h" />
+    <ClInclude Include="SetAttackRange.h" />
     <ClInclude Include="StartAttack.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Update.h" />
