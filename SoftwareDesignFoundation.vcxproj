@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.c" />
     <ClCompile Include="CreateArcherEnemy.c" />
     <ClCompile Include="CreateBomberEnemy.c" />
     <ClCompile Include="CreatePlayer.c" />
@@ -164,6 +165,7 @@
   <ItemGroup>
     <ClInclude Include="ArcherEnemy.h" />
     <ClInclude Include="BomberEnemy.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="ExperienceOrb.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="HeartBeat.h" />
