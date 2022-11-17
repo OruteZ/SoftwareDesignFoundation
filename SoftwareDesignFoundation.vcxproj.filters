@@ -108,6 +108,9 @@
     <ClCompile Include="FinishAttack.c">
       <Filter>소스 파일\Attack&amp;Move</Filter>
     </ClCompile>
+    <ClCompile Include="Mortal.c">
+      <Filter>소스 파일\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Draw.txt">

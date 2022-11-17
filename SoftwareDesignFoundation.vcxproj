@@ -146,6 +146,7 @@
     <ClCompile Include="BomberEnemy.c" />
     <ClCompile Include="EnemyMove.c" />
     <ClCompile Include="FinishAttack.c" />
+    <ClCompile Include="Mortal.c" />
     <ClCompile Include="Player.c" />
     <ClCompile Include="FramePerSecond.c" />
     <ClCompile Include="Game.c" />

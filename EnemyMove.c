@@ -7,11 +7,6 @@ void MeleeEnemyMove(MeleeEnemy* meleeEnemy)
 	Point meleeEnemyPos = meleeEnemy->base.entity.pos;
 	if (RectContainsPoint(meleeEnemy->base.mortal.playerSearchRange, player->base.entity.pos))
 	{
-		//move MeleeEnemy
-
-
-
-
 		//make MeleeAttackRange - 3x4
 		if (playerPos.x>= meleeEnemyPos.x)
 		{
@@ -34,9 +29,6 @@ void ArcherEnemyMove(ArcherEnemy* archerEnemy)
 	Point archerEnemyPos = archerEnemy->base.entity.pos;
 	if (RectContainsPoint(archerEnemy->base.mortal.playerSearchRange, player->base.entity.pos))
 	{
-		//move ArcherEnemy
-		
-
 		//make ArcherAttackRange - 14x1
 
 		if (archerEnemy->base.mortal.attackRange != NULL)
@@ -82,7 +74,8 @@ void BomberEnemyMove(BomberEnemy* bomberEnemy)
 	Point bomberEnemyPos = bomberEnemy->base.entity.pos;
 	if (RectContainsPoint(bomberEnemy->base.mortal.playerSearchRange, player->base.entity.pos))
 	{
-		//move actions
-
+		//make bomberAttackRange
+		bomberEnemy->base.mortal.attackRange =
+			CreateRect(bomberEnemy->base.entity.pos.x - 3, bomberEnemy->base.entity.pos.y - 3, 6, 6);
 	}
 }

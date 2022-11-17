@@ -13,7 +13,6 @@ BomberEnemy* CreateBomberEnemy(Point p)
 	bomberEnemy->base.mortal.moveSpeed = 0.5f;
 	bomberEnemy->base.mortal.playerSearchRange =
 		CreateRect(bomberEnemy->base.entity.pos.x -20, bomberEnemy->base.entity.pos.y - 20, 40, 40);
-	bomberEnemy->base.mortal.attackRange = 
-		CreateRect(bomberEnemy->base.entity.pos.x - 3, bomberEnemy->base.entity.pos.y - 3, 6, 6);
+	bomberEnemy->base.mortal.attackRange = NULL;
 	return bomberEnemy;
 }

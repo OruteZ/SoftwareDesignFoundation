@@ -21,10 +21,9 @@ enum Direction
 	north
 };
 enum EnemyStatus{
-	_Idle,
-	_IsMove,
-	_IsAttack,
-	_DelayAttack
+	Idle,
+	Move,
+	Attack,
 };
 
 typedef struct _Entity {
