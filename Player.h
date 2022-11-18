@@ -33,4 +33,4 @@ void PlayerAttack();
 
 Point GetPlayerPos();
 
-void GetDamage(const int damage);
+void PlayerOnHit(int damage);

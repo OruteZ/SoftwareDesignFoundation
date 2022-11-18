@@ -31,10 +31,10 @@
     <Filter Include="헤더 파일\ADT">
       <UniqueIdentifier>{92d3df97-47e2-405a-a8dd-2117cce0bf6c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Attack&amp;Move">
+    <Filter Include="소스 파일\EnemyAttack">
       <UniqueIdentifier>{54791b7e-ea42-453f-9d02-67b20f582900}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일\Move&amp;Attack">
+    <Filter Include="헤더 파일\EnemyAttack">
       <UniqueIdentifier>{b9c554cb-15ff-4a06-a130-6fe358f5606f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -96,14 +96,11 @@
     <ClCompile Include="World001.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="StartAttack.c">
-      <Filter>소스 파일\Attack&amp;Move</Filter>
+    <ClCompile Include="EnemyAttack.c">
+      <Filter>소스 파일\EnemyAttack</Filter>
     </ClCompile>
     <ClCompile Include="SetAttackRange.c">
-      <Filter>소스 파일\Attack&amp;Move</Filter>
-    </ClCompile>
-    <ClCompile Include="FinishAttack.c">
-      <Filter>소스 파일\Attack&amp;Move</Filter>
+      <Filter>소스 파일\EnemyAttack</Filter>
     </ClCompile>
     <ClCompile Include="Mortal.c">
       <Filter>소스 파일\Entity</Filter>
@@ -179,10 +176,10 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="SetAttackRange.h">
-      <Filter>헤더 파일\Move&amp;Attack</Filter>
+      <Filter>헤더 파일\EnemyAttack</Filter>
     </ClInclude>
-    <ClInclude Include="StartAttack.h">
-      <Filter>헤더 파일\Move&amp;Attack</Filter>
+    <ClInclude Include="EnemyAttack.h">
+      <Filter>헤더 파일\EnemyAttack</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
