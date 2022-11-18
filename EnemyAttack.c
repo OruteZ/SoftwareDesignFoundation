@@ -24,11 +24,11 @@ void CalculateRangeAttackCooldown(ArcherEnemy* archerEnemy) //원거리 몬스터만 설
 	}
 }
 
-void CalculateRangeAttackCooldown(BomberEnemy* bomberEnemy) //원거리 몬스터만 설정, 투사체는 추후에.
+void CalculateBomberAttackCooldown(BomberEnemy* bomberEnemy) 
 {
-	archerAttackCooldown -= Time.deltaTime;
+	bomberAttackCooldown -= Time.deltaTime;
 
-	if (archerAttackCooldown > 0)
+	if (bomberAttackCooldown > 0)
 	{
 		bomberEnemy->base.entity.enemyState = Attack;
 	}
