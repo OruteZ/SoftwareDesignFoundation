@@ -15,3 +15,6 @@ typedef struct _Mortal
 	Rect *attackRange;
 	Rect* playerSearchRange;
 } Mortal;
+
+void MortalMove(Mortal* mortal, Point direction);
+void EnemyMortalOnHit(Mortal* mortal, int playerDamage);

@@ -15,3 +15,11 @@ void MortalMove(Mortal *mortal, Point direction)
 	}
 	DeleteVector(vector);
 }
+void EnemyMortalOnHit(Mortal* mortal, int playerDamage)
+{
+	mortal->hp -= playerDamage;
+	if (mortal->hp <= 0)
+	{
+		//Delete Enemy, free Enemy
+	}
+}
