@@ -2,13 +2,6 @@
 
 #include "Mortal.h"
 
-typedef enum _MoveDirection {
-	Left,
-	Right,
-	Up,
-	Down
-} direction;
-
 typedef struct _Player {
 	union {
 		Entity entity;
@@ -19,13 +12,13 @@ typedef struct _Player {
 	int exp;
 	int level;
 
-	direction headed_direction;
+	Point headed_direction;
 
 	int attack_width;
 	int attack_height;
 } Player;
 
-void PlayerMove(direction dir);
+void PlayerMove(Point dir);
 
 void UpdatePlayer();
 
