@@ -32,12 +32,11 @@ bool RectIsContainingRect(Rect* rect_a, Rect* rect_b) {
 		rect_b->y + rect_b->height <= rect_a->y + rect_a->height) return true;
 	else return false;
 }
-bool RectContainsPoint(Rect* rect, Point _point)
+bool RectContainsPoint(Rect* rect, Point* _point)
 {
-	if (rect->x <= _point.x && _point.x < rect->x + rect->width &&
-		rect->y <= _point.y && _point.y < rect->y + rect->height) {
+	if (rect->x <= _point->x && _point->x < rect->x + rect->width &&
+		rect->y <= _point->y && _point->y < rect->y + rect->height) {
 		return true;
 	}
 	else return false;
-	return false;
 }
