@@ -9,6 +9,18 @@ typedef enum _MoveDirection {
 	Down
 } direction;
 
+struct {
+	Point north;
+	Point south;
+	Point east;
+	Point west;
+} Direction = {
+	.north = {.x = 0 , .y = 1},
+	.south = {.x = 0 , .y = -1},
+	.east = {.x = 1 , .y = 0},
+	.west = {.x = -1 , .y = 0}
+};
+
 typedef struct _Player {
 	union {
 		Entity entity;
