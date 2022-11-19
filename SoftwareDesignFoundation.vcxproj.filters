@@ -125,14 +125,10 @@
     </ClCompile>
     <ClCompile Include="SetBomberAttackRange.c">
       <Filter>소스 파일\BomberEnemy</Filter>
+    </ClCompile>
     <ClCompile Include="Enemy.c">
       <Filter>소스 파일\Entity</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Draw.txt">
-      <Filter>소스 파일</Filter>
-    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Rect.h">
