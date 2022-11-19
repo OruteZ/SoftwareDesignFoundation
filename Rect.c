@@ -1,5 +1,4 @@
 #include "Rect.h"
-
 Rect* CreateRect(int _x, int _y, int _width, int _height) {
 	Rect* rect = (Rect*)malloc(sizeof(Rect));
 	if (rect == NULL) return NULL;
@@ -16,7 +15,7 @@ void DeleteRect(Rect* rect) {
 }
 Rect* DuplicateRect(Rect* rect)
 {
-	return Rect_new(rect->x, rect->y, rect->width, rect->height);
+	return CreateRect(rect->x, rect->y, rect->width, rect->height);
 }
 
 bool RectIsIntersectingRect(Rect* rect_a, Rect* rect_b) {
@@ -32,4 +31,13 @@ bool RectIsContainingRect(Rect* rect_a, Rect* rect_b) {
 		rect_a->y <= rect_b->y &&
 		rect_b->y + rect_b->height <= rect_a->y + rect_a->height) return true;
 	else return false;
+}
+bool RectContainsPoint(Rect* rect, Point _point)
+{
+	if (rect->x <= _point.x && _point.x < rect->x + rect->width &&
+		rect->y <= _point.y && _point.y < rect->y + rect->height) {
+		return true;
+	}
+	else return false;
+	return false;
 }

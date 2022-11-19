@@ -3,7 +3,7 @@
 
 BomberEnemy* CreateBomberEnemy(Point p)
 {
-	BomberEnemy* bomberEnemy;
+	BomberEnemy* bomberEnemy = (BomberEnemy*)malloc(sizeof(BomberEnemy));
 	bomberEnemy->base.entity.type = _BomberEnemy;
 	bomberEnemy->base.entity.pos.x = p.x;
 	bomberEnemy->base.entity.pos.y = p.y;
@@ -11,6 +11,8 @@ BomberEnemy* CreateBomberEnemy(Point p)
 	bomberEnemy->base.mortal.baseDamage = 50;
 	bomberEnemy->base.mortal.hp = 30;
 	bomberEnemy->base.mortal.moveSpeed = 0.5f;
-	bomberEnemy->blastRadius = 3.0f; //폭발 범위 미정
+	bomberEnemy->base.mortal.playerSearchRange =
+		CreateRect(bomberEnemy->base.entity.pos.x -20, bomberEnemy->base.entity.pos.y - 20, 40, 40);
+	bomberEnemy->base.mortal.attackRange = NULL;
 	return bomberEnemy;
 }

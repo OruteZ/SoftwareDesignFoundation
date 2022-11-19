@@ -2,7 +2,7 @@
 #include "ArcherEnemy.h"
 ArcherEnemy* CreateArcherEnemy(Point p)
 {
-	ArcherEnemy* archerEnemy;
+	ArcherEnemy* archerEnemy = (ArcherEnemy*)malloc(sizeof(ArcherEnemy));
 	archerEnemy->base.entity.type = _ArcherEnemy;
 	archerEnemy->base.entity.pos.x = p.x;
 	archerEnemy->base.entity.pos.y = p.y;
@@ -11,5 +11,8 @@ ArcherEnemy* CreateArcherEnemy(Point p)
 	archerEnemy->base.mortal.hp = 30;
 	archerEnemy->base.mortal.moveSpeed = 2.0f;
 	archerEnemy->arrowSpeed = 0.5f;
+	archerEnemy->base.mortal.playerSearchRange =
+		CreateRect(archerEnemy->base.entity.pos.x - 30, archerEnemy->base.entity.pos.y - 30, 60, 60);
+	archerEnemy->base.mortal.attackRange = NULL;
 	return archerEnemy;
 }

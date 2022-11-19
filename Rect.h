@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
+#include "Point.h"
 
 typedef struct _Rect {
 	int x;
@@ -16,3 +17,4 @@ Rect* DuplicateRect(Rect* rect);
 
 bool RectIsIntersectingRect(Rect* rect_a, Rect* rect_b);
 bool RectIsContainingRect(Rect* rect_a, Rect* rect_b);
+bool RectContainsPoint(Rect *rect, Point _point);

@@ -31,10 +31,67 @@
     <Filter Include="헤더 파일\ADT">
       <UniqueIdentifier>{92d3df97-47e2-405a-a8dd-2117cce0bf6c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Attack&amp;Move">
+      <UniqueIdentifier>{54791b7e-ea42-453f-9d02-67b20f582900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Move&amp;Attack">
+      <UniqueIdentifier>{b9c554cb-15ff-4a06-a130-6fe358f5606f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game">
+      <UniqueIdentifier>{e3dbf27a-ed2d-4185-abc9-827ee88efdb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\IO">
+      <UniqueIdentifier>{cf18a352-4ec5-4d17-b61a-c2b0b8025bf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\World">
+      <UniqueIdentifier>{9c77468b-3b29-4c62-bdc3-8eea366154fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\IO">
+      <UniqueIdentifier>{f60719c1-ee3c-4897-831b-151e7931cbae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Game">
+      <UniqueIdentifier>{c4102785-9341-47a3-81ee-895ab3cb968e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\World">
+      <UniqueIdentifier>{639ab6a8-00e2-4403-b717-c0058e8baae3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.c">
+    <ClCompile Include="Init.c">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="_main.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Release.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Render.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Update.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ArcherEnemy.c">
+      <Filter>소스 파일\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="BomberEnemy.c">
+      <Filter>소스 파일\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.c">
+      <Filter>소스 파일\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.c">
+      <Filter>소스 파일\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.c">
+      <Filter>소스 파일\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="HeartBeat.c">
+      <Filter>소스 파일\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector.c">
+      <Filter>소스 파일\ADT</Filter>
     </ClCompile>
     <ClCompile Include="Rect.c">
       <Filter>소스 파일\Shapes</Filter>
@@ -42,60 +99,55 @@
     <ClCompile Include="Point.c">
       <Filter>소스 파일\Shapes</Filter>
     </ClCompile>
-    <ClCompile Include="Screen.c">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="StartAttack.c">
+      <Filter>소스 파일\Attack&amp;Move</Filter>
     </ClCompile>
-    <ClCompile Include="FramePerSecond.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CreateMeleeEnemy.c">
-      <Filter>소스 파일\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="CreateArcherEnemy.c">
-      <Filter>소스 파일\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="CreateBomberEnemy.c">
-      <Filter>소스 파일\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="CreatePlayer.c">
-      <Filter>소스 파일\Entity</Filter>
+    <ClCompile Include="SetAttackRange.c">
+      <Filter>소스 파일\Attack&amp;Move</Filter>
     </ClCompile>
     <ClCompile Include="QuadTree.c">
       <Filter>소스 파일\ADT</Filter>
     </ClCompile>
-    <ClCompile Include="Vector.c">
-      <Filter>소스 파일\ADT</Filter>
+    <ClCompile Include="Entity.c">
+      <Filter>소스 파일\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeEnemy.c">
+      <Filter>소스 파일\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.c">
+      <Filter>소스 파일\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Mortal.c">
+      <Filter>소스 파일\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Screen.c">
+      <Filter>소스 파일\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="FinishAttack.c">
+      <Filter>소스 파일\Attack&amp;Move</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.c">
+      <Filter>소스 파일\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="World.c">
+      <Filter>소스 파일\World</Filter>
+    </ClCompile>
+    <ClCompile Include="World001.c">
+      <Filter>소스 파일\World</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Draw.txt">
-      <Filter>소스 파일</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Rect.h">
-      <Filter>헤더 파일\Shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="Point.h">
-      <Filter>헤더 파일\Shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="Screen.h">
+    <ClInclude Include="Init.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="FramePerSecond.h">
+    <ClInclude Include="Release.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>헤더 파일\Entity</Filter>
+    <ClInclude Include="Render.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Mortal.h">
-      <Filter>헤더 파일\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>헤더 파일\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="MeleeEnemy.h">
-      <Filter>헤더 파일\Entity</Filter>
+    <ClInclude Include="Update.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="ArcherEnemy.h">
       <Filter>헤더 파일\Entity</Filter>
@@ -103,14 +155,62 @@
     <ClInclude Include="BomberEnemy.h">
       <Filter>헤더 파일\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="ExperienceOrb.h">
-      <Filter>헤더 파일\Entity</Filter>
+    <ClInclude Include="World.h">
+      <Filter>헤더 파일\World</Filter>
+    </ClInclude>
+    <ClInclude Include="World001.h">
+      <Filter>헤더 파일\World</Filter>
     </ClInclude>
     <ClInclude Include="Vector.h">
       <Filter>헤더 파일\ADT</Filter>
     </ClInclude>
     <ClInclude Include="QuadTree.h">
       <Filter>헤더 파일\ADT</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeEnemy.h">
+      <Filter>헤더 파일\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="HeartBeat.h">
+      <Filter>헤더 파일\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>헤더 파일\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>헤더 파일\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="ExperienceOrb.h">
+      <Filter>헤더 파일\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>헤더 파일\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Mortal.h">
+      <Filter>헤더 파일\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>헤더 파일\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SetAttackRange.h">
+      <Filter>헤더 파일\Move&amp;Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="StartAttack.h">
+      <Filter>헤더 파일\Move&amp;Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>헤더 파일\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>헤더 파일\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>헤더 파일\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>헤더 파일\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>헤더 파일\Shapes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

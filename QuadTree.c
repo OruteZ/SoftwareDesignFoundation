@@ -8,15 +8,8 @@
 #include "Entity.h"
 #include "Vector.h"
 
-typedef struct _QuadTree {
-	Rect boundary;
-	Entity* contained_entity;
-
-	struct _QuadTree* nw;
-	struct _QuadTree* ne;
-	struct _QuadTree* sw;
-	struct _QuadTree* se;
-} QuadTree;
+#include "QuadTree.h"
+#include "Rect.h"
 
 QuadTree* CreateQuadTree(Rect boundary) {
 	QuadTree* tree = (QuadTree*)malloc(sizeof(QuadTree));
@@ -66,15 +59,8 @@ void QuadTreeSubdivide(QuadTree* tree) {
 	tree->contained_entity = NULL;
 }
 
-bool RectContainsPoint(Rect rect, Point point) {
-	if (rect.x <= point.x && point.x < rect.x + rect.width &&
-		rect.y <= point.y && point.y < rect.y + rect.height) {
-		return true;
-	}
-	else return false;
-}
 void QuadTreeInsert(QuadTree* tree, Entity* entity) {
-	if (!RectContainsPoint(tree->boundary, entity->pos)) return; // does not contain!
+	if (!RectContainsPoint(&tree->boundary, entity->pos)) return; // does not contain!
 
 	if (tree->contained_entity == NULL && tree->nw == NULL) return tree->contained_entity = entity;
 
@@ -121,7 +107,7 @@ Vector* QuadTreeQuery(QuadTree* tree, Rect area) {
 		vector = VectorMerge(vector, QuadTreeQuery(tree->se, area));
 	}
 	vector = CreateVector();
-	if (RectContainsPoint(area, tree->contained_entity->pos)) {
+	if (RectContainsPoint(&area, tree->contained_entity->pos)) {
 		VectorInsert(vector, tree->contained_entity);
 	}
 	return vector;
