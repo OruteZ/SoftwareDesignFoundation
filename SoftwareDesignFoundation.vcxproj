@@ -143,8 +143,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArcherEnemy.c" />
+    <ClCompile Include="ArcherEnemyAttack.c" />
     <ClCompile Include="BomberEnemy.c" />
-    <ClCompile Include="SetAttackRange.c" />
+    <ClCompile Include="BomberEnemyAttack.c" />
+    <ClCompile Include="MeleeEnemyAttack.c" />
     <ClCompile Include="Enemy.c" />
     <ClCompile Include="Player.c" />
     <ClCompile Include="Game.c" />
@@ -158,7 +160,9 @@
     <ClCompile Include="Render.c" />
     <ClCompile Include="Screen.c" />
     <ClCompile Include="Init.c" />
-    <ClCompile Include="EnemyAttack.c" />
+    <ClCompile Include="SetBomberAttackRange.c" />
+    <ClCompile Include="SetMeleeAttackRange.c" />
+    <ClCompile Include="SetArcherAttackRange.c" />
     <ClCompile Include="Time.c" />
     <ClCompile Include="Update.c" />
     <ClCompile Include="Vector.c" />
@@ -167,12 +171,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArcherEnemy.h" />
+    <ClInclude Include="ArcherEnemyAttack.h" />
     <ClInclude Include="BomberEnemy.h" />
+    <ClInclude Include="BomberEnemyAttack.h" />
     <ClInclude Include="ExperienceOrb.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Init.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="MeleeEnemy.h" />
+    <ClInclude Include="MeleeEnemyAttack.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Player.h" />
@@ -182,8 +189,9 @@
     <ClInclude Include="Release.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="Screen.h" />
-    <ClInclude Include="SetAttackRange.h" />
-    <ClInclude Include="EnemyAttack.h" />
+    <ClInclude Include="SetArcherAttackRange.h" />
+    <ClInclude Include="SetBomberAttackRange.h" />
+    <ClInclude Include="SetMeleeAttackRange.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Update.h" />
     <ClInclude Include="Vector.h" />

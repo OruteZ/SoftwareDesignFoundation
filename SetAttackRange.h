@@ -5,6 +5,6 @@
 #include "Time.h"
 #include "Game.h"
 #include "Rect.h"
-void MeleeEnemyMove(MeleeEnemy* meleeEnemy);
-void ArcherEnemyMove(ArcherEnemy* archerEnemy);
-void BomberEnemyMove(BomberEnemy* bomberEnemy);
+void SetMeleeAttackRange(MeleeEnemy* meleeEnemy);
+void SetRangeAttackRange(ArcherEnemy* archerEnemy);
+void SetBomberAttackRange(BomberEnemy* bomberEnemy);
