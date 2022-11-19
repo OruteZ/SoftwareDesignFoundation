@@ -1,19 +1,19 @@
 #pragma once
 
-#include "Mortal.h"
+#include "Entity.h"
 
 typedef struct _Player {
 	union {
 		Entity entity;
-		Mortal mortal;
 	} base;
+	Point facing;
 
-	// data about unique abilities!
-	int exp;
+	int hp;
+
 	int level;
+	int exp;
 
-	Point headed_direction;
-
+	int base_damage;
 	int attack_width;
 	int attack_height;
 } Player;

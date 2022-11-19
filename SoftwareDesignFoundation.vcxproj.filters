@@ -102,7 +102,7 @@
     <ClCompile Include="SetAttackRange.c">
       <Filter>소스 파일\EnemyAttack</Filter>
     </ClCompile>
-    <ClCompile Include="Mortal.c">
+    <ClCompile Include="Enemy.c">
       <Filter>소스 파일\Entity</Filter>
     </ClCompile>
   </ItemGroup>
@@ -124,7 +124,7 @@
     <ClInclude Include="Entity.h">
       <Filter>헤더 파일\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Mortal.h">
+    <ClInclude Include="Enemy.h">
       <Filter>헤더 파일\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">

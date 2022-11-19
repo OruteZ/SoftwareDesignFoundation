@@ -1,4 +1,5 @@
 #include <time.h>
+#include "Game.h"
 
 // if tps is less than 20, time slows down.
 #define DELTA_TIME_MAX (0.05)
@@ -9,10 +10,18 @@ struct {
 	double deltaTime;
 } Time;
 
+struct {
+	double time;
+	double deltaTime;
+} GameTime;
+
 void InitTime() {
 	Time.clock_ticks = clock();
 	Time.time = 0;
-	Time.deltaTime;
+	Time.deltaTime = 0;
+
+	GameTime.time = 0;
+	GameTime.deltaTime = 0;
 }
 void UpdateTime() {
 	clock_t clock_ticks = clock();
@@ -23,4 +32,14 @@ void UpdateTime() {
 
 	Time.time += parsedDelta;
 	Time.deltaTime = parsedDelta;
+
+	if (GameState == Dungeon) {
+		GameTime.time += parsedDelta;
+		GameTime.deltaTime = parsedDelta;
+	}
 }
+void ResetGameTime(){
+	GameTime.time = 0;
+	GameTime.deltaTime = 0;
+}
+
