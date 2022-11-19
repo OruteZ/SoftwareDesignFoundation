@@ -31,17 +31,8 @@
     <Filter Include="헤더 파일\ADT">
       <UniqueIdentifier>{92d3df97-47e2-405a-a8dd-2117cce0bf6c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일\MeleeEnemy">
-      <UniqueIdentifier>{86be919e-8129-4882-a12d-734e921c88bb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\MeleeEnemy">
       <UniqueIdentifier>{54791b7e-ea42-453f-9d02-67b20f582900}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="헤더 파일\ArcherEnemy">
-      <UniqueIdentifier>{fc817a77-a2ee-43a4-9bc3-5fed22e14b87}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="헤더 파일\BomberEnemy">
-      <UniqueIdentifier>{43161205-98cc-4226-b1fb-3d9788aea777}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\BomberEnemy">
       <UniqueIdentifier>{d76d626f-6602-46bc-a8f1-adbca302f2b9}</UniqueIdentifier>
@@ -193,24 +184,6 @@
     </ClInclude>
     <ClInclude Include="World001.h">
       <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="MeleeEnemyAttack.h">
-      <Filter>헤더 파일\MeleeEnemy</Filter>
-    </ClInclude>
-    <ClInclude Include="SetMeleeAttackRange.h">
-      <Filter>헤더 파일\MeleeEnemy</Filter>
-    </ClInclude>
-    <ClInclude Include="SetArcherAttackRange.h">
-      <Filter>헤더 파일\ArcherEnemy</Filter>
-    </ClInclude>
-    <ClInclude Include="ArcherEnemyAttack.h">
-      <Filter>헤더 파일\ArcherEnemy</Filter>
-    </ClInclude>
-    <ClInclude Include="SetBomberAttackRange.h">
-      <Filter>헤더 파일\BomberEnemy</Filter>
-    </ClInclude>
-    <ClInclude Include="BomberEnemyAttack.h">
-      <Filter>헤더 파일\BomberEnemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
