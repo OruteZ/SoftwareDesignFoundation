@@ -18,7 +18,6 @@ typedef struct _Enemy
 	EnemyState state;
 
 	double moveSpeed;
-	double moveCooldown;
 	double lastMoved;
 
 	int hp;

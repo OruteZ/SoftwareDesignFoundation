@@ -1,4 +1,5 @@
-#include "SetArcherAttackRange.h"
+#include "ArcherEnemy.h"
+
 void SetArcherAttackRange(ArcherEnemy* archerEnemy)
 {
 	Point playerPos = player->base.entity.pos;
