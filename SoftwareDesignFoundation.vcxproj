@@ -140,10 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ArcherEnemy.c" />
-    <ClCompile Include="ArcherEnemyAttack.c" />
     <ClCompile Include="BomberEnemy.c" />
-    <ClCompile Include="BomberEnemyAttack.c" />
-    <ClCompile Include="MeleeEnemyAttack.c" />
     <ClCompile Include="Enemy.c" />
     <ClCompile Include="Player.c" />
     <ClCompile Include="Game.c" />
@@ -157,9 +154,6 @@
     <ClCompile Include="Render.c" />
     <ClCompile Include="Screen.c" />
     <ClCompile Include="Init.c" />
-    <ClCompile Include="SetBomberAttackRange.c" />
-    <ClCompile Include="SetMeleeAttackRange.c" />
-    <ClCompile Include="SetArcherAttackRange.c" />
     <ClCompile Include="Time.c" />
     <ClCompile Include="Update.c" />
     <ClCompile Include="Vector.c" />
