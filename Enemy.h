@@ -5,8 +5,8 @@
 
 typedef enum EnemyState{
 	Idle,
-	Move,
-	Attack,
+	Moving,
+	Attacking,
 } EnemyState;
 
 typedef struct _Enemy
