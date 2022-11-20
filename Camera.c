@@ -1,6 +1,6 @@
 #include "Game.h"
 #include "Rect.h"
-#include<stdio.h>
+#include <stdio.h>
 #include "Camera.h"
 #include "Player.h"
 #include "World.h"

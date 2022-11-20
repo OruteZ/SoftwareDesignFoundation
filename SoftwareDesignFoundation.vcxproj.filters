@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
-    <Filter Include="Source Files\Game">
-      <UniqueIdentifier>{a22fefb6-b91f-4e32-95c3-d5d5d1922365}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\ADT">
-      <UniqueIdentifier>{83e5e41c-10c0-4329-a832-65f8ed2ee2d2}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArcherEnemy.c">
