@@ -13,6 +13,7 @@
 
 QuadTree* CreateQuadTree(Rect boundary) {
 	QuadTree* tree = (QuadTree*)malloc(sizeof(QuadTree));
+	if (tree == NULL) exit(-1);
 
 	tree->boundary = boundary;
 	tree->contained_entity = NULL;
@@ -60,7 +61,7 @@ void QuadTreeSubdivide(QuadTree* tree) {
 }
 
 void QuadTreeInsert(QuadTree* tree, Entity* entity) {
-	if (!RectContainsPoint(&tree->boundary, entity->pos)) return; // does not contain!
+	if (!RectContainsPoint(&tree->boundary, &entity->pos)) return; // does not contain!
 
 	if (tree->contained_entity == NULL && tree->nw == NULL) return tree->contained_entity = entity;
 
@@ -106,7 +107,7 @@ Vector* QuadTreeQuery(QuadTree* tree, Rect area) {
 		vector = VectorMerge(vector, QuadTreeQuery(tree->sw, area));
 		vector = VectorMerge(vector, QuadTreeQuery(tree->se, area));
 	}
-	if (RectContainsPoint(&area, tree->contained_entity->pos)) {
+	if (RectContainsPoint(&area, &tree->contained_entity->pos)) {
 		VectorInsert(vector, tree->contained_entity);
 	}
 	return vector;

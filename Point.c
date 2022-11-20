@@ -15,7 +15,7 @@ const struct {
 Point* CreatePoint(int _x, int _y)
 {
 	Point* point = (Point*)malloc(sizeof(Point));
-	if (point == NULL) return NULL;
+	if (point == NULL) exit(-1);
 	point->x = _x;
 	point->y = _y;
 
