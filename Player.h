@@ -1,31 +1,24 @@
 #pragma once
 
-#include "Mortal.h"
-
-typedef enum _MoveDirection {
-	Left,
-	Right,
-	Up,
-	Down
-} direction;
+#include "Entity.h"
 
 typedef struct _Player {
 	union {
 		Entity entity;
-		Mortal mortal;
 	} base;
+	Point facing;
 
-	// data about unique abilities!
-	int exp;
+	int hp;
+
 	int level;
+	int exp;
 
-	direction headed_direction;
-
+	int base_damage;
 	int attack_width;
 	int attack_height;
 } Player;
 
-void PlayerMove(direction dir);
+void PlayerMove(Point dir);
 
 void UpdatePlayer();
 
@@ -33,4 +26,4 @@ void PlayerAttack();
 
 Point GetPlayerPos();
 
-void GetDamage(const int damage);
+void PlayerOnHit(int damage);

@@ -1,9 +1,16 @@
 #pragma once
-#include "Mortal.h"
+
+#include "Entity.h"
+#include "Enemy.h"
 
 typedef struct _MeleeEnemy {
 	union {
 		Entity entity;
-		Mortal mortal;
+		Enemy enemy;
 	} base;
 } MeleeEnemy;
+
+void CalculateMeleeAttackCooldown(MeleeEnemy* meleeEnemy);
+void MeleeEnemyAttack(MeleeEnemy* meleeEnemy);
+void SetMeleeAttackRange(MeleeEnemy* meleeEnemy);
+

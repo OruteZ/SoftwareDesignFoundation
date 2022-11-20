@@ -1,12 +1,18 @@
 #pragma once
 
-#include "Mortal.h"
+#include "Entity.h"
+#include "Enemy.h"
 
 typedef struct _ArcherEmemy {
 	union {
 		Entity entity;
-		Mortal mortal;
+		Enemy enemy;
 	} base;
 
 	double arrowSpeed;
 } ArcherEnemy;
+
+void CalculateRangeAttackCooldown(ArcherEnemy* archerEnemy);
+void ArcherEnemyAttack(ArcherEnemy* archerEnemy);
+void SetArcherAttackRange(ArcherEnemy* archerEnemy);
+
