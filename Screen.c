@@ -5,6 +5,12 @@
 int g_nScreenIndex = 0;
 HANDLE g_hScreen[2];
 
+#ifdef DEBUG
+HANDLE* ScreenReturnBufferHandles_Unsafe() {
+	return g_hScreen;
+}
+#endif
+
 void ScreenInit()
 {
 	CONSOLE_CURSOR_INFO cci;
