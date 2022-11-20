@@ -8,9 +8,9 @@
 enum _GameState GameState = Menu;
 
 Player* player;
-Vector* mortals;
+Vector* enemies;
 Vector* expOrbs;
 
-QuadTree* mortalsTree;
+QuadTree* enemiesTree;
 QuadTree* expOrbsTree;
 

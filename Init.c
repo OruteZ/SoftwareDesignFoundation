@@ -23,6 +23,6 @@ void Init()
 
     // Vectors
     // todo: player = CreatePlayer();
-    mortals = CreateVector();
+    enemies = CreateVector();
     expOrbs = CreateVector();
 }

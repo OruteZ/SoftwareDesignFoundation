@@ -89,7 +89,7 @@ void PlayerAttack()
 	if (_player->headed_direction == Left) attackRect = CreateRect(playerPos.x-1, playerPos.y-1, 1, 3);
 	if (_player->headed_direction == Right) attackRect = CreateRect(playerPos.x+1, playerPos.y-1, 1, 3);
 
-	Vector* hitted_enemys = QuadTreeQuery(mortalsTree, *attackRect);
+	Vector* hitted_enemys = QuadTreeQuery(enemiesTree, *attackRect);
 
 	int len = hitted_enemys->length;
 	for (int i = 0; i < len; i++) 

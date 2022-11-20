@@ -41,7 +41,7 @@ void PrintWorld()
 
 void PrintMortal()
 {
-	Vector* mortalsToPrint = QuadTreeQuery(mortalsTree, CameraRectInGame);
+	Vector* mortalsToPrint = QuadTreeQuery(enemiesTree, CameraRectInGame);
 	Point printPos;
 
 	int len = mortalsToPrint->length;
