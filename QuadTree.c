@@ -76,37 +76,36 @@ void QuadTreeInsert(QuadTree* tree, Entity* entity) {
 }
 
 Vector* QuadTreeDump(QuadTree* tree) {
-	if (tree == NULL) return NULL;
+	Vector* vector = CreateVector();
+	if (tree == NULL) return vector;
 
-	Vector* vector;
 	if (tree->nw != NULL) {
-		vector = QuadTreeDump(tree->nw);
+		vector = VectorMerge(vector, QuadTreeDump(tree->nw));
 		vector = VectorMerge(vector, QuadTreeDump(tree->ne));
 		vector = VectorMerge(vector, QuadTreeDump(tree->sw));
 		vector = VectorMerge(vector, QuadTreeDump(tree->se));
 	}
 	
-	vector = CreateVector();
 	if (tree->contained_entity != NULL) {
 		VectorInsert(vector, tree->contained_entity);
 	}
 	return vector;
 }
 Vector* QuadTreeQuery(QuadTree* tree, Rect area) {
-	if (tree == NULL) return NULL;
+	Vector* vector;
+	if (tree == NULL) return CreateVector();
 	if (!RectIsIntersectingRect(&area, &tree->boundary)) return CreateVector(); // does not intersect!
 
 	if (RectIsContainingRect(&area, &tree->boundary)) return QuadTreeDump(tree); // fully contains!
 	
 	// intersects!
-	Vector* vector;
+	vector = CreateVector();
 	if (tree->nw != NULL) {
-		vector = QuadTreeQuery(tree->nw, area);
+		vector = VectorMerge(vector, QuadTreeQuery(tree->nw, area));
 		vector = VectorMerge(vector, QuadTreeQuery(tree->ne, area));
 		vector = VectorMerge(vector, QuadTreeQuery(tree->sw, area));
 		vector = VectorMerge(vector, QuadTreeQuery(tree->se, area));
 	}
-	vector = CreateVector();
 	if (RectContainsPoint(&area, tree->contained_entity->pos)) {
 		VectorInsert(vector, tree->contained_entity);
 	}
