@@ -14,9 +14,9 @@ enum _GameState {
 extern enum _GameState GameState;
 
 extern Player* player;
-extern Vector* mortals;
+extern Vector* enemies;
 extern Vector* expOrbs;
 
-extern QuadTree* mortalsTree;
+extern QuadTree* enemiesTree;
 extern QuadTree* expOrbsTree;
 

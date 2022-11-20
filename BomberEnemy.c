@@ -7,12 +7,10 @@ BomberEnemy* CreateBomberEnemy(Point p)
 	bomberEnemy->base.entity.type = _BomberEnemy;
 	bomberEnemy->base.entity.pos.x = p.x;
 	bomberEnemy->base.entity.pos.y = p.y;
-	bomberEnemy->base.mortal.attackCooldown = 0;
-	bomberEnemy->base.mortal.baseDamage = 50;
-	bomberEnemy->base.mortal.hp = 30;
-	bomberEnemy->base.mortal.moveSpeed = 0.5f;
-	bomberEnemy->base.mortal.playerSearchRange =
-		CreateRect(bomberEnemy->base.entity.pos.x -20, bomberEnemy->base.entity.pos.y - 20, 40, 40);
-	bomberEnemy->base.mortal.attackRange = NULL;
+	bomberEnemy->base.enemy.attackDelay = 1;
+	bomberEnemy->base.enemy.baseDamage = 50;
+	bomberEnemy->base.enemy.hp = 30;
+	bomberEnemy->base.enemy.moveSpeed = 0.5f;
+	bomberEnemy->base.enemy.detectionRadius = 15;
 	return bomberEnemy;
 }
