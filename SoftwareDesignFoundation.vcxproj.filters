@@ -123,6 +123,9 @@
     <ClCompile Include="Rect.c">
       <Filter>Source Files\ADT\Shapes</Filter>
     </ClCompile>
+    <ClCompile Include="Particle.c">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Init.h">
@@ -196,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Header Files\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -114,6 +114,7 @@
     <ClCompile Include="Init.c" />
     <ClCompile Include="Keyboard.c" />
     <ClCompile Include="MeleeEnemy.c" />
+    <ClCompile Include="Particle.c" />
     <ClCompile Include="Player.c" />
     <ClCompile Include="Point.c" />
     <ClCompile Include="QuadTree.c" />
@@ -141,6 +142,7 @@
     <ClInclude Include="Init.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="MeleeEnemy.h" />
+    <ClInclude Include="Particle.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="QuadTree.h" />
