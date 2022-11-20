@@ -1,6 +1,6 @@
 #include "Game.h"
 #include "Rect.h"
-#include <stdio.h>
+#include<stdio.h>
 #include "Camera.h"
 #include "Player.h"
 #include "World.h"
@@ -8,14 +8,17 @@
 #include "Screen.h"
 #include "Enemy.h"
 
-int _cameraWidthInGame = 11;
-int _cameraHeightInGame = 9;	
+int _cameraWidthInGame = 25;
+int _cameraHeightInGame = 19;
 
 Rect CameraRectInGame;
 Rect CameraRectInCanvas;
 
 const char enemyChar[] = "ee";
 const char playerChar[] = "pp";
+const char wallChar[] = "WW";
+
+Point IngamePosition_to_CanvasPosition(Point pos);
 
 void InitCamera()
 {
@@ -24,20 +27,31 @@ void InitCamera()
 
 	CameraRectInCanvas.height = _cameraHeightInGame;
 	CameraRectInCanvas.width = 2 * _cameraWidthInGame;
+
+	CameraRectInCanvas.x = 7;
+	CameraRectInCanvas.y = 7;
 }
 
 Point IngamePosition_to_CanvasPosition(Point pos)
 {
 	Point result;
-	result.x = CameraRectInCanvas.x + pos.x * 2;
-	result.y = CameraRectInCanvas.y + (CameraRectInCanvas.height - pos.y);
-
+	result.x = CameraRectInCanvas.x + (pos.x - CameraRectInGame.x) * 2;
+	result.y = CameraRectInCanvas.x + (pos.y - CameraRectInGame.y);
 	return result;
 }
 
 void PrintWorld()
 {
-	//2중 for문으로 돌면서 싹 출력
+	for (int dx = 0; dx < CameraRectInGame.width; dx++) {
+		for (int dy = 0; dy < CameraRectInGame.height; dy++) {
+			int x = CameraRectInGame.x + dx;
+			int y = CameraRectInGame.y + dy;
+			Point p = { x, y };
+			Point q = IngamePosition_to_CanvasPosition(p);
+
+			if (GetTile(p) == WALL) ScreenPrint(q.x, q.y, wallChar);
+		}
+	}
 }
 
 void PrintEnemies()
@@ -54,6 +68,15 @@ void PrintEnemies()
 	}
 
 	DeleteVector(enemiesToPrint);
+}
+
+void PrintPlayer()
+{
+	Point playerPos = player->base.entity.pos;
+	if (RectContainsPoint(&CameraRectInGame, &playerPos)) {
+		Point printPos = IngamePosition_to_CanvasPosition(playerPos);
+		ScreenPrint(printPos.x, printPos.y, playerChar);
+	}
 }
 
 void PrintExpOrb()
@@ -76,4 +99,12 @@ void SetCameraPoint()
 
 	if (CameraRectInGame.x + CameraRectInGame.width >= worldWidth) CameraRectInGame.x = worldWidth - _cameraWidthInGame;
 	if (CameraRectInGame.y + CameraRectInGame.height >= worldHeight) CameraRectInGame.y = worldHeight - _cameraHeightInGame;
+}
+
+void RenderCamera()
+{
+	SetCameraPoint();
+	PrintWorld();
+	PrintEnemies();
+	PrintPlayer();
 }
