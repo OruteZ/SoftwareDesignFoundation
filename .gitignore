@@ -33,8 +33,7 @@ bld/
 [Ll]og/
 [Ll]ogs/
 
-/*.user
-/*.filter
+SoftwareDesignFoundation.vcxproj.filters
 
 
 # Visual Studio 2015/2017 cache/options directory
