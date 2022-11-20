@@ -6,9 +6,10 @@
 #include "World.h"
 #include "QuadTree.h"
 #include "Screen.h"
+#include "Enemy.h"
 
 int _cameraWidthInGame = 11;
-int _cameraHeightInGame = 9;
+int _cameraHeightInGame = 9;	
 
 Rect CameraRectInGame;
 Rect CameraRectInCanvas;
@@ -39,22 +40,20 @@ void PrintWorld()
 	//2중 for문으로 돌면서 싹 출력
 }
 
-void PrintMortal()
+void PrintEnemies()
 {
-	Vector* mortalsToPrint = QuadTreeQuery(enemiesTree, CameraRectInGame);
+	Vector* enemiesToPrint = QuadTreeQuery(enemiesTree, CameraRectInGame);
 	Point printPos;
 
-	int len = mortalsToPrint->length;
+	int len = enemiesToPrint->length;
 	for (int i = 0; i < len; i++) {
-		Mortal* m = mortalsToPrint->entities[i];
+		Enemy* e = enemiesToPrint->entities[i];
 
-		printPos = IngamePosition_to_CanvasPosition(m->base.entity.pos);
-
-		if (m->base.entity.type == _Player) ScreenPrint(printPos.x, printPos.y, playerChar);
-		else ScreenPrint(printPos.x, printPos.y, enemyChar);
+		printPos = IngamePosition_to_CanvasPosition(e->base.entity.pos);
+		ScreenPrint(printPos.x, printPos.y, enemyChar);
 	}
 
-	DeleteVector(mortalsToPrint);
+	DeleteVector(enemiesToPrint);
 }
 
 void PrintExpOrb()

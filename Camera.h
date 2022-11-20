@@ -4,7 +4,7 @@
 #include "Rect.h"
 
 void PrintWorld();
-void PrintMortal();
+void PrintEnemies();
 void PrintExpOrb();
 
 void SetCameraPoint();
