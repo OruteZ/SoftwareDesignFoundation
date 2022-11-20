@@ -13,51 +13,45 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{028de2b2-cf81-43bd-9fa0-f91e57c32c23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ADT">
+      <UniqueIdentifier>{1c3a50c8-712a-436a-a982-25bf115b8ed4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity">
+      <UniqueIdentifier>{37174d45-a823-4b06-b462-0b205ed833ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World">
+      <UniqueIdentifier>{2329e0c2-41d0-4f14-863d-a48e14e98131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO">
+      <UniqueIdentifier>{e73df6a4-1432-42bd-8b07-3b680f0394cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{13ee0ba7-70c3-4f10-9f6f-08e18623590d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ADT\Shapes">
+      <UniqueIdentifier>{17d0dadb-5621-43c6-8a0a-c348e24b1eef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ADT">
+      <UniqueIdentifier>{7ff9ca1e-0257-4f28-b6ac-58b06627514b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ADT\Shapes">
+      <UniqueIdentifier>{12d79f59-24d1-478e-a2ff-c15c809b8eba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity">
+      <UniqueIdentifier>{8e951aa5-9151-477c-8966-d3e2ef611523}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\IO">
+      <UniqueIdentifier>{f5c7afb8-7621-49e4-8bae-91632a0878bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\World">
+      <UniqueIdentifier>{44622124-4a3a-44aa-b459-cb0be9793513}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ArcherEnemy.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BomberEnemy.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Debug.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HeartBeat.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Init.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Keyboard.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MeleeEnemy.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Point.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QuadTree.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Rect.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Release.c">
@@ -66,75 +60,72 @@
     <ClCompile Include="Render.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Screen.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Time.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Update.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="World.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="World001.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="_main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Game.c">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.c">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadTree.c">
+      <Filter>Source Files\ADT</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.c">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeEnemy.c">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="ArcherEnemy.c">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="BomberEnemy.c">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.c">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.c">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.c">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="HeartBeat.c">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="World.c">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="World001.c">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector.c">
+      <Filter>Source Files\ADT</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.c">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Screen.c">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.c">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Point.c">
+      <Filter>Source Files\ADT\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.c">
+      <Filter>Source Files\ADT\Shapes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ArcherEnemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BomberEnemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Debug.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ExperienceOrb.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HeartBeat.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Init.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Keyboard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MeleeEnemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Point.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QuadTree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Rect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Release.h">
@@ -143,23 +134,68 @@
     <ClInclude Include="Render.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Screen.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Time.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Update.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Vector.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\Game</Filter>
     </ClInclude>
-    <ClInclude Include="World.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="ArcherEnemy.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="BomberEnemy.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Header Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="World001.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>Header Files\ADT</Filter>
+    </ClInclude>
+    <ClInclude Include="QuadTree.h">
+      <Filter>Header Files\ADT</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>Header Files\ADT\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>Header Files\ADT\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeEnemy.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="HeartBeat.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="ExperienceOrb.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\IO</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
