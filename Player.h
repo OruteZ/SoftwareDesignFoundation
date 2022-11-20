@@ -24,8 +24,6 @@ void PlayerMove(Point dir);
 
 void UpdatePlayer();
 
-void PlayerAttack();
-
 Point GetPlayerPos();
 
 void PlayerOnHit(int damage);

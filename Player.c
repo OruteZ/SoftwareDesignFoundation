@@ -6,29 +6,30 @@
 #include "Rect.h"
 #include "Game.h"
 #include "Time.h"
+#include "Enemy.h"
 
-Player* _player;
+Player* player;
 
 Player* CreatePlayer(Point p)
 {
-	Player* player = (Player*)malloc(sizeof(Player));
+	Player* _player = (Player*)malloc(sizeof(Player));
 
-	player->base.entity.type = _Player;
-	player->base.entity.pos.x = p.x;
-	player->base.entity.pos.y = p.y;
+	_player->base.entity.type = _Player;
+	_player->base.entity.pos.x = p.x;
+	_player->base.entity.pos.y = p.y;
 
-	player->attackSpeed = 1.0f;
-	player->baseDamage = 20;
-	player->hp = 100;
-	player->moveSpeed = 2.0f;
+	_player->attackSpeed = 1.0f;
+	_player->baseDamage = 20;
+	_player->hp = 100;
+	_player->moveSpeed = 2.0f;
 
-	player->exp = 0;
-	player->level = 0;
-	player->facing = Direction.north;
+	_player->exp = 0;
+	_player->level = 0;
+	_player->facing = Direction.north;
 
-	player->attackHeight = 0;
-	player->attackWidth = 2;
-	return player;
+	_player->attackHeight = 0;
+	_player->attackWidth = 2;
+	return _player;
 }
 
 BOOL _canPlayerAttack = TRUE;
@@ -47,8 +48,7 @@ void CalculatePlayerCooldown()
 }
 
 void UpdatePlayer() {
-	if (_player == NULL) return;
-
+	if (player == NULL) return;
 
 	if (GetKeyDown('W')) PlayerMove(Direction.south);
 	if (GetKeyDown('A')) PlayerMove(Direction.west);
@@ -64,60 +64,83 @@ void PlayerMove(Point dir)
 {
 	if (!_canPlayerMove) return;
 
-	Point destPos = _player->base.entity.pos;
+	Point destPos = player->base.entity.pos;
 	PointAdd(&destPos, &dir);
 
 	if (GetTile(destPos) & FLAG_COLLIDE_WITH_BODY) return;
 
-	_player->base.entity.pos = destPos;
-	_player->facing = destPos;
+	player->base.entity.pos = destPos;
+	player->facing = destPos;
 
 	_canPlayerMove = FALSE;
-	_playerMoveCooldown = 1 / (_player->moveSpeed);
+	_playerMoveCooldown = 1 / (player->moveSpeed);
+}
+
+Rect CreatePlayerAttackRect(Point middle, Point direction) {
+	Rect result;
+	if (direction.x == 0) { //상하 공격 -> 가로라인
+		result.x = middle.x - (player->attackWidth / 2);
+		result.y = middle.y - (player->attackHeight / 2);
+
+		result.height = player->attackHeight;
+		result.width = player->attackWidth;
+	}
+
+	else { //좌우공격 -> 세로라인
+		result.x = middle.x - (player->attackHeight / 2);
+		result.y = middle.y - (player->attackWidth / 2);
+
+		result.height = player->attackWidth;
+		result.width = player->attackHeight;
+	}
+
+	return result;
 }
 
 void PlayerAttack()
 {
 	if (!_canPlayerAttack) return;
 
-	Rect* attackRect = NULL;
-	Point playerPos = _player->base.entity.pos;
+	Point attackPoint = player->base.entity.pos;
+	PointAdd(&attackPoint, &player->facing);
 
-	if (_player->facing == Direction.south) attackRect = CreateRect(playerPos.x-1, playerPos.y-1, 3, 1);
-	if (_player->facing == Direction.north) attackRect = CreateRect(playerPos.x-1, playerPos.y+1, 3, 1);
-	if (_player->facing == Left) attackRect = CreateRect(playerPos.x-1, playerPos.y-1, 1, 3);
-	if (_player->headed_direction == Right) attackRect = CreateRect(playerPos.x+1, playerPos.y-1, 1, 3);
+	Rect attackRect = CreatePlayerAttackRect(attackPoint, player->facing);
 
-	Vector* hitted_enemys = QuadTreeQuery(enemiesTree, *attackRect);
+	/* 차후 쿼드트리 사용시 변경
+	Vector* hitted_enemys = QuadTreeQuery(enemiesTree, attackRect);
 
 	int len = hitted_enemys->length;
 	for (int i = 0; i < len; i++) 
 	{
-		Mortal* e = (Mortal*)(hitted_enemys->entities)[i];
+		Enemy* e = (Enemy*)(hitted_enemys->entities)[i];
 
 		if (e->base.entity.type != _Player)
 		{
-			Mortal* m = (Mortal*)e;
-
 			// m -> getDamage(); -> 임시
 		}
 	}
 
 	DeleteVector(hitted_enemys);
-	DeleteRect(attackRect);
+	*/
+
+	int len = enemies->length;
+	for (int i = 0; i < len; i++) {
+		Enemy* e = enemies->entities[i];
+		if (RectContainsPoint(&attackRect, &e->base.entity.pos)) {
+			//EnemyOnHit();
+		}
+	}
 
 	_canPlayerAttack = FALSE;
-	_playerAttackCooldown = _player->base.mortal.attackCooldown;
+	_playerAttackCooldown = 1 - (player->attackSpeed);
 }
 
-Point GetPlayerPos() { return _player->base.entity.pos; }
-
-
+Point GetPlayerPos() { return player->base.entity.pos; }
 
 void PlayerOnHit(int damage)
 {
-	_player->base.mortal.hp -= damage;
-	if (_player->base.mortal.hp <= 0) {
+	player->hp -= damage;
+	if (player->hp <= 0) {
 		// gameover;
 	}
 }
