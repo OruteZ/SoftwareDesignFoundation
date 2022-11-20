@@ -4,8 +4,9 @@
 // if tps is less than 20, time slows down.
 #define DELTA_TIME_MAX (0.05)
 
+clock_t clock_ticks;
+
 struct {
-	clock_t clock_ticks;
 	double time;
 	double deltaTime;
 } Time;
@@ -16,7 +17,7 @@ struct {
 } GameTime;
 
 void InitTime() {
-	Time.clock_ticks = clock();
+	clock_ticks = clock();
 	Time.time = 0;
 	Time.deltaTime = 0;
 
@@ -24,9 +25,9 @@ void InitTime() {
 	GameTime.deltaTime = 0;
 }
 void UpdateTime() {
-	clock_t clock_ticks = clock();
-	clock_t delta = clock_ticks - Time.clock_ticks;
-	Time.clock_ticks = clock_ticks;
+	clock_t clock_ticks_now = clock();
+	clock_t delta = clock_ticks_now - clock_ticks;
+	clock_ticks = clock_ticks_now;
 	double parsedDelta = (double)delta / CLOCKS_PER_SEC;
 	parsedDelta = parsedDelta < DELTA_TIME_MAX ? parsedDelta : DELTA_TIME_MAX;
 
@@ -38,8 +39,7 @@ void UpdateTime() {
 		GameTime.deltaTime = parsedDelta;
 	}
 }
-void ResetGameTime(){
+void ResetGameTime() {
 	GameTime.time = 0;
 	GameTime.deltaTime = 0;
 }
-

@@ -6,8 +6,14 @@
 
 #include "Game.h"
 
+#ifdef DEBUG
+#include "Debug.h"
+#endif 
 void Init()
 {
+#ifdef DEBUG
+    DebugInit();
+#endif
     ScreenInit();
     InitTime();
     InitializeKeyboard();

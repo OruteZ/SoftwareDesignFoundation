@@ -1,6 +1,9 @@
 #pragma once
 
+#ifdef DEBUG
 #include<Windows.h>
+HANDLE* ScreenReturnBufferHandles_Unsafe();
+#endif
 
 void ScreenInit();
 void ScreenFlipping();
