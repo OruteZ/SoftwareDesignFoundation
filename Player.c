@@ -17,17 +17,17 @@ Player* CreatePlayer(Point p)
 	player->base.entity.pos.x = p.x;
 	player->base.entity.pos.y = p.y;
 
-	player->base.mortal.attackCooldown = 1.0f;
-	player->base.mortal.baseDamage = 20;
-	player->base.mortal.hp = 100;
-	player->base.mortal.moveSpeed = 2.0f;
+	player->attackSpeed = 1.0f;
+	player->baseDamage = 20;
+	player->hp = 100;
+	player->moveSpeed = 2.0f;
 
 	player->exp = 0;
 	player->level = 0;
-	player->headed_direction = Up;
+	player->facing = Direction.north;
 
-	player->attack_height = 0;
-	player->attack_width = 2;
+	player->attackHeight = 0;
+	player->attackWidth = 2;
 	return player;
 }
 
@@ -49,32 +49,31 @@ void CalculatePlayerCooldown()
 void UpdatePlayer() {
 	if (_player == NULL) return;
 
-	if (GetKeyDown("W")) PlayerMove(Up);
-	if (GetKeyDown("S")) PlayerMove(Down);
-	if (GetKeyDown("D")) PlayerMove(Right);
-	if (GetKeyDown("A")) PlayerMove(Left);
+
+	if (GetKeyDown('W')) PlayerMove(Direction.south);
+	if (GetKeyDown('A')) PlayerMove(Direction.west);
+	if (GetKeyDown('S')) PlayerMove(Direction.north);
+	if (GetKeyDown('D')) PlayerMove(Direction.east);
 
 	if (GetKeyDown("VK_SPACE")) PlayerAttack();
 
 	CalculatePlayerCooldown();
 }
 
-void PlayerMove(direction dir)
+void PlayerMove(Point dir)
 {
 	if (!_canPlayerMove) return;
 
-	int dy[4] = {0, 0, -1, 1};
-	int dx[4] = {-1, 1, 0, 0};
+	Point destPos = _player->base.entity.pos;
+	PointAdd(&destPos, &dir);
 
-	Point destination_position = _player->base.entity.pos;
+	if (GetTile(destPos) & FLAG_COLLIDE_WITH_BODY) return;
 
-	if (GetTile(destination_position) & FLAG_COLLIDE_WITH_BODY) return;
-
-	_player->base.entity.pos = destination_position;
-	_player->headed_direction = dir;
+	_player->base.entity.pos = destPos;
+	_player->facing = destPos;
 
 	_canPlayerMove = FALSE;
-	_playerMoveCooldown = 1 / (_player->base.mortal.moveSpeed);
+	_playerMoveCooldown = 1 / (_player->moveSpeed);
 }
 
 void PlayerAttack()
@@ -84,9 +83,9 @@ void PlayerAttack()
 	Rect* attackRect = NULL;
 	Point playerPos = _player->base.entity.pos;
 
-	if (_player->headed_direction == Up) attackRect = CreateRect(playerPos.x-1, playerPos.y-1, 3, 1);
-	if (_player->headed_direction == Down) attackRect = CreateRect(playerPos.x-1, playerPos.y+1, 3, 1);
-	if (_player->headed_direction == Left) attackRect = CreateRect(playerPos.x-1, playerPos.y-1, 1, 3);
+	if (_player->facing == Direction.south) attackRect = CreateRect(playerPos.x-1, playerPos.y-1, 3, 1);
+	if (_player->facing == Direction.north) attackRect = CreateRect(playerPos.x-1, playerPos.y+1, 3, 1);
+	if (_player->facing == Left) attackRect = CreateRect(playerPos.x-1, playerPos.y-1, 1, 3);
 	if (_player->headed_direction == Right) attackRect = CreateRect(playerPos.x+1, playerPos.y-1, 1, 3);
 
 	Vector* hitted_enemys = QuadTreeQuery(enemiesTree, *attackRect);

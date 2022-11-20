@@ -13,9 +13,11 @@ typedef struct _Player {
 	int level;
 	int exp;
 
-	int base_damage;
-	int attack_width;
-	int attack_height;
+	int baseDamage;
+	int attackWidth;
+	int attackHeight;
+	double attackSpeed; // attack per second;
+	double moveSpeed; // block per second;
 } Player;
 
 void PlayerMove(Point dir);
