@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "Time.h"
 #include "Enemy.h"
+#include "Debug.h"
 
 Player* player;
 
@@ -120,6 +121,10 @@ void PlayerAttack()
 
 	_canPlayerAttack = FALSE;
 	_playerAttackCooldown = 1 - (player->attackSpeed);
+
+#ifdef DEBUG
+	DebugPrint("Player Attacked");
+#endif
 }
 
 void UpdatePlayer() {
@@ -130,7 +135,7 @@ void UpdatePlayer() {
 	if (GetKeyDown('S')) PlayerMove(Direction.north);
 	if (GetKeyDown('D')) PlayerMove(Direction.east);
 
-	if (GetKeyDown("VK_SPACE")) PlayerAttack();
+	if (GetKeyDown(VK_SPACE)) PlayerAttack();
 
 	CalculatePlayerCooldown();
 }

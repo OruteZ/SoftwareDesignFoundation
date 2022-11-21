@@ -15,6 +15,8 @@ void ScreenInit()
 {
 	CONSOLE_CURSOR_INFO cci;
 
+	system("mode con:cols=200 lines=100");
+
 	// 화면 버퍼 2개를 만든다.
 	g_hScreen[0] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
 	g_hScreen[1] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);

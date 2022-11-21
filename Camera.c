@@ -36,7 +36,9 @@ Point IngamePosition_to_CanvasPosition(Point pos)
 {
 	Point result;
 	result.x = CameraRectInCanvas.x + (pos.x - CameraRectInGame.x) * 2;
+	//result.y = CameraRectInCanvas.y + (CameraRectInCanvas.height - (pos.y - CameraRectInGame.y));
 	result.y = CameraRectInCanvas.x + (pos.y - CameraRectInGame.y);
+
 	return result;
 }
 
@@ -50,6 +52,7 @@ void PrintWorld()
 			Point q = IngamePosition_to_CanvasPosition(p);
 
 			if (GetTile(p) == WALL) ScreenPrint(q.x, q.y, wallChar);
+			else ScreenPrint(q.x, q.y, "  ");
 		}
 	}
 }
@@ -81,6 +84,10 @@ void PrintPlayer()
 
 void PrintExpOrb()
 {
+}
+
+void PrintParticles() {
+	
 }
 
 void SetCameraPoint()

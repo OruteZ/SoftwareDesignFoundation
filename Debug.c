@@ -8,7 +8,7 @@
 #include "Screen.h"
 
 // NEVER BE LESS THAN OR EQUAL TO 25
-#define DEBUG_STARTING_LINE 25
+#define DEBUG_STARTING_LINE 26
 #define DEBUG_MAX_LINES 20
 
 int current_debug_line = 0;
