@@ -53,6 +53,6 @@ void Update() {
 	UpdatePlayer();
 
 #ifdef DEBUG
-	//if (GetKeyDown('K')) DebugPrint("D Pressed!, %d", rand());
+	//DebugPrint("%d %d", player->facing.x, player->facing.y);
 #endif
 }

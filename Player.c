@@ -8,6 +8,7 @@
 #include "Time.h"
 #include "Enemy.h"
 #include "Debug.h"
+#include "Particle.h"
 
 Player* player;
 
@@ -19,10 +20,10 @@ Player* CreatePlayer(Point spawnPoint)
 	_player->base.entity.pos.x = spawnPoint.x;
 	_player->base.entity.pos.y = spawnPoint.y;
 
-	_player->attackSpeed = 1.0f;
+	_player->attackSpeed = 10.0f;
 	_player->baseDamage = 20;
 	_player->hp = 100;
-	_player->moveSpeed = 2.0f;
+	_player->moveSpeed = 12.0f;
 
 	_player->exp = 0;
 	_player->level = 0;
@@ -58,7 +59,7 @@ void PlayerMove(Point dir)
 	if (GetTile(destPos) & FLAG_COLLIDE_WITH_BODY) return;
 
 	player->base.entity.pos = destPos;
-	player->facing = destPos;
+	player->facing = dir;
 
 	_canPlayerMove = FALSE;
 	_playerMoveCooldown = 1 / (player->moveSpeed);
@@ -91,8 +92,14 @@ void PlayerAttack()
 
 	Point attackPoint = player->base.entity.pos;
 	PointAdd(&attackPoint, &player->facing);
+#ifdef DEBUG
+	DebugPrint("Player Attack, %d %d", attackPoint.x, attackPoint.y);
+#endif 
+
 
 	Rect attackRect = CreatePlayerAttackRect(attackPoint, player->facing);
+	CreateParticle(player->facing, attackPoint, AttackParticleType);
+
 
 	/* 차후 쿼드트리 사용시 변경
 	Vector* hitted_enemys = QuadTreeQuery(enemiesTree, attackRect);
@@ -130,10 +137,10 @@ void PlayerAttack()
 void UpdatePlayer() {
 	if (player == NULL) return;
 
-	if (GetKeyDown('W')) PlayerMove(Direction.south);
-	if (GetKeyDown('A')) PlayerMove(Direction.west);
-	if (GetKeyDown('S')) PlayerMove(Direction.north);
-	if (GetKeyDown('D')) PlayerMove(Direction.east);
+	if (GetKey('W')) PlayerMove(Direction.south);
+	if (GetKey('A')) PlayerMove(Direction.west);
+	if (GetKey('S')) PlayerMove(Direction.north);
+	if (GetKey('D')) PlayerMove(Direction.east);
 
 	if (GetKeyDown(VK_SPACE)) PlayerAttack();
 

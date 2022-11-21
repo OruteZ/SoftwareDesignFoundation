@@ -7,6 +7,7 @@
 #include "QuadTree.h"
 #include "Screen.h"
 #include "Enemy.h"
+#include "Particle.h"
 
 int _cameraWidthInGame = 25;
 int _cameraHeightInGame = 19;
@@ -59,18 +60,16 @@ void PrintWorld()
 
 void PrintEnemies()
 {
-	Vector* enemiesToPrint = QuadTreeQuery(enemiesTree, CameraRectInGame);
 	Point printPos;
 
-	int len = enemiesToPrint->length;
+	int len = enemies->length;
 	for (int i = 0; i < len; i++) {
-		Enemy* e = enemiesToPrint->entities[i];
+		Enemy* e = (Enemy*)enemies->entities[i];
+		if (!RectContainsPoint(&CameraRectInGame, &e->base.entity.pos)) continue;
 
 		printPos = IngamePosition_to_CanvasPosition(e->base.entity.pos);
 		ScreenPrint(printPos.x, printPos.y, enemyChar);
 	}
-
-	DeleteVector(enemiesToPrint);
 }
 
 void PrintPlayer()
@@ -87,7 +86,24 @@ void PrintExpOrb()
 }
 
 void PrintParticles() {
-	
+	Point printPos;
+
+	int len = particles->length;
+	for (int i = 0; i < len; i++) {
+		Particle* p = (Particle*)particles->entities[i];
+		if (!RectIsIntersectingRect(&CameraRectInGame, &p->particleRect)) continue;
+
+		for (int y = 0; y < p->particleRect.height; y++) {
+			for (int x = 0; x < p->particleRect.width; x++) {
+				Point inGamePos = { p->particleRect.x + x, p->particleRect.y + y };
+				if (!RectContainsPoint(&CameraRectInGame, &inGamePos)) continue;
+
+				printPos = IngamePosition_to_CanvasPosition(inGamePos);
+				if (p->particleImage[y][x] == ' ') ScreenPrint(printPos.x, printPos.y, "  ");
+				else ScreenPrint(printPos.x, printPos.y, "¢Â");
+			}
+		}
+	}
 }
 
 void SetCameraPoint()
@@ -114,4 +130,5 @@ void RenderCamera()
 	PrintWorld();
 	PrintEnemies();
 	PrintPlayer();
+	PrintParticles();
 }

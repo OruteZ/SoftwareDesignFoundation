@@ -5,8 +5,8 @@
 
 //AttackParticle에 관한 함수 및 고정 상수, 모든 Rect의 기본 direction은 north, 기본좌표는 0으로 고정한다.
 const Rect _baseAttackParticleRect = { 0,0,3,1 };
-const double _AttackParticleUpdateTime = 0.1f;
-const double _AttackParticleDuration = 0.3f;
+const double _AttackParticleUpdateTime = 0.05f;
+const double _AttackParticleDuration = 0.15f;
 const char _AttackParticleChar = '◈';
 void InitAttackParticleRect(Particle* particle, Point direction) {
 	if (direction.x == 0) { //위 아래 바라보는 방향 -> 범위 변함 없음
@@ -19,8 +19,8 @@ void InitAttackParticleRect(Particle* particle, Point direction) {
 	}
 }
 void UpdateAttackParticle(Particle* particle) {
-	particle->nowTime += GameTime.deltaTime;
-	if (particle->nowTime >= _AttackParticleDuration) return true;
+	particle->nowTime += Time.deltaTime;
+	if (particle->nowTime >= _AttackParticleDuration) return;
 	
 	int index = (int)(particle->nowTime / _AttackParticleUpdateTime);
 
@@ -41,7 +41,7 @@ void UpdateAttackParticle(Particle* particle) {
 	}
 }
 bool IsAttackParticleFinished(Particle* particle) {
-	return (bool)particle->nowTime >= _AttackParticleDuration;
+	return (bool)(particle->nowTime >= _AttackParticleDuration);
 }
 
 void CreateParticle(Point direction, Point point, ParticleType type)
@@ -49,9 +49,15 @@ void CreateParticle(Point direction, Point point, ParticleType type)
 	Particle* particle = (Particle*)malloc(sizeof(Particle));
 	if (particle == NULL) exit(-1);
 
+	switch (type) {
+	case AttackParticleType:
+		InitAttackParticleRect(particle, direction);
+		break;
+	}
+
 	Point startPoint = {
-		point.x - particle->particleRect.width / 2,
-		point.y - particle->particleRect.height / 2
+		point.x - (particle->particleRect.width / 2),
+		point.y - (particle->particleRect.height / 2)
 	};
 
 	particle->base.entity.pos = startPoint;
@@ -64,16 +70,20 @@ void CreateParticle(Point direction, Point point, ParticleType type)
 	particle->particleType = type;
 	particle->facing = direction;
 
-	switch (type) {
-	case AttackParticleType:
-		InitAttackParticleRect(particle, direction);
-		break;
-	}
-
 	particle->particleImage = (char**)malloc(sizeof(char*) * particle->particleRect.height);
 	for (int i = 0; i < particle->particleRect.height; i++) {
 		particle->particleImage[i] = (char*)malloc(sizeof(char*) * particle->particleRect.width);
 	}
+	for (int i = 0; i < particle->particleRect.height; i++) {
+		for (int j = 0; j < particle->particleRect.width; j++) {
+			particle->particleImage[i][j] = ' ';
+		}
+	}
+
+
+#ifdef DEBUG
+	DebugPrint("Print particle : %d %d ", particle->particleRect.x, particle->particleRect.y);
+#endif
 
 	VectorInsert(particles, (Entity*)particle);
 }
