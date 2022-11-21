@@ -38,7 +38,7 @@ BOOLEAN IsPointValidInCurrentWorld(Point p) {
 	else return FALSE;
 }
 Tile* GetTilePointer(const Point p) {
-	return current_world->grid + p.y * current_world->height + p.x;
+	return current_world->grid + p.y * current_world->width + p.x;
 }
 
 
