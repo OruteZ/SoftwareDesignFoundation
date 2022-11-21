@@ -7,6 +7,8 @@
 #include "Game.h"
 #include "Player.h"
 #include "Camera.h"
+#include "Enemy.h"
+#include "MeleeEnemy.h"
 
 #ifdef DEBUG
 #include "Debug.h"
@@ -32,4 +34,8 @@ void Init()
     enemies = CreateVector();
     expOrbs = CreateVector();
     particles = CreateVector();
+
+    //test
+    Point enemySpawnPoint = { 3, 12 };
+    VectorInsert(enemies, CreateMeleeEnemy(enemySpawnPoint));
 }

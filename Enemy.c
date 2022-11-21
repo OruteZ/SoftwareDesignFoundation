@@ -8,6 +8,7 @@
 #include "Enemy.h"
 
 #include "Player.h"
+#include "Debug.h"
 
 void EnemyMove(Enemy* enemy, Point direction) {
 	Point* nextPosition = DuplicatePoint(&enemy->base.entity.pos);
@@ -29,18 +30,23 @@ void EnemyMove(Enemy* enemy, Point direction) {
 }
 void EnemyOnDeath(Enemy* enemy)
 {
-	//몬스터 처치 이펙트	
+#ifdef DEBUG
+	DebugPrint("Enemy Dead!");
+#endif
 }
 void EnemyOnHit(Enemy* enemy, int damage)
 {
 	enemy->hp -= damage;
-	if (enemy->hp <= 0)
-	{
+#ifdef DEBUG
+	DebugPrint("Enemy hitted! hp remains : %d", enemy->hp);
+#endif
+
+	if (enemy->hp <= 0)	{
 		EnemyOnDeath(enemy);
 	}
 }
 
 bool isEnemyDead(Enemy* enemy)
 {
-	return (bool)(enemy->hp < 0);
+	return (bool)(enemy->hp <= 0);
 }

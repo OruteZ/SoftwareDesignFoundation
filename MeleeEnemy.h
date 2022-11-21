@@ -10,6 +10,7 @@ typedef struct _MeleeEnemy {
 	} base;
 } MeleeEnemy;
 
+MeleeEnemy* CreateMeleeEnemy(Point p);
 void CalculateMeleeAttackCooldown(MeleeEnemy* meleeEnemy);
 void MeleeEnemyAttack(MeleeEnemy* meleeEnemy);
 void SetMeleeAttackRange(MeleeEnemy* meleeEnemy);

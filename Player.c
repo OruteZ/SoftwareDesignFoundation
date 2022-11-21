@@ -29,8 +29,8 @@ Player* CreatePlayer(Point spawnPoint)
 	_player->level = 0;
 	_player->facing = Direction.north;
 
-	_player->attackHeight = 0;
-	_player->attackWidth = 2;
+	_player->attackHeight = 1;
+	_player->attackWidth = 3;
 	return _player;
 }
 
@@ -39,6 +39,8 @@ double _playerAttackCooldown;
 
 BOOL _canPlayerMove = TRUE;
 double _playerMoveCooldown;
+
+double _playerAttackDelay = 0.15f;
 
 void CalculatePlayerCooldown()
 {
@@ -92,9 +94,6 @@ void PlayerAttack()
 
 	Point attackPoint = player->base.entity.pos;
 	PointAdd(&attackPoint, &player->facing);
-#ifdef DEBUG
-	DebugPrint("Player Attack, %d %d", attackPoint.x, attackPoint.y);
-#endif 
 
 
 	Rect attackRect = CreatePlayerAttackRect(attackPoint, player->facing);
@@ -122,12 +121,13 @@ void PlayerAttack()
 	for (int i = 0; i < len; i++) {
 		Enemy* e = enemies->entities[i];
 		if (RectContainsPoint(&attackRect, &e->base.entity.pos)) {
-			//EnemyOnHit();
+			EnemyOnHit(e, player->baseDamage);
 		}
 	}
 
 	_canPlayerAttack = FALSE;
 	_playerAttackCooldown = 1 - (player->attackSpeed);
+	_playerMoveCooldown = _playerAttackDelay;
 
 #ifdef DEBUG
 	DebugPrint("Player Attacked");

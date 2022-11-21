@@ -30,4 +30,5 @@ typedef struct _Enemy
 } Enemy;
 
 bool isEnemyDead(Enemy* enemy);
+void EnemyOnHit(Enemy* enemy, int damage);
 

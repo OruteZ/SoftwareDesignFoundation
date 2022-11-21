@@ -80,11 +80,6 @@ void CreateParticle(Point direction, Point point, ParticleType type)
 		}
 	}
 
-
-#ifdef DEBUG
-	DebugPrint("Print particle : %d %d ", particle->particleRect.x, particle->particleRect.y);
-#endif
-
 	VectorInsert(particles, (Entity*)particle);
 }
 
