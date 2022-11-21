@@ -23,7 +23,7 @@ typedef struct _Paritcle {
 } Particle;
 
 //파티클을 생성합니다. 생성하여서 바로 Vector particles로 들어가 Game.c에서 관리합니다.
-//Point는 particle의 중심좌표가 아닌 시작지점을 의미합니다.
+//Point는 particle의 중심좌표를 의미합니다 길이가 짝수일 경우, 중간지점에서 0.5를 뺀 블록을 의미합니다.
 void CreateParticle(Point direction, Point point, ParticleType type);
 
 //파티클을 매 프레임마다 갱신합니다. particleChangeTime을 확인하고 특정 시간을 넘어가면

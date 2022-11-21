@@ -52,11 +52,16 @@ void CreateParticle(Point direction, Point point, ParticleType type)
 	Particle* particle = (Particle*)malloc(sizeof(Particle));
 	if (particle == NULL) exit(-1);
 
-	particle->base.entity.pos = point;
+	Point startPoint = {
+		point.x - particle->particleRect.width / 2,
+		point.y - particle->particleRect.height / 2
+	};
+
+	particle->base.entity.pos = startPoint;
 	particle->base.entity.type = _ParticleEffect;
 
-	particle->particleRect.x = point.x;
-	particle->particleRect.y = point.y;
+	particle->particleRect.x = startPoint.x;
+	particle->particleRect.y = startPoint.y;
 
 	particle->nowTime = 0;
 	particle->particleType = type;
