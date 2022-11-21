@@ -25,4 +25,9 @@ void Init()
     // todo: player = CreatePlayer();
     enemies = CreateVector();
     expOrbs = CreateVector();
+
+
+#ifdef DEBUG
+    debugVector = CreateVector();
+#endif
 }

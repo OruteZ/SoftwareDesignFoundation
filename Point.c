@@ -1,11 +1,9 @@
+#include <stdlib.h>
+#include <math.h>
+
 #include "Point.h"
 
-const struct {
-	Point north;
-	Point south;
-	Point east;
-	Point west;
-} Direction = {
+const struct __Directions Direction = {
 	.north = {.x = 0 , .y = 1},
 	.south = {.x = 0 , .y = -1},
 	.east = {.x = 1 , .y = 0},

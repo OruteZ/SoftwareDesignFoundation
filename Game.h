@@ -20,3 +20,8 @@ extern Vector* expOrbs;
 extern QuadTree* enemiesTree;
 extern QuadTree* expOrbsTree;
 
+#ifdef DEBUG
+extern Vector* debugVector;
+extern QuadTree* debugTree;
+#endif
+

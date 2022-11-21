@@ -14,3 +14,8 @@ Vector* expOrbs;
 QuadTree* enemiesTree;
 QuadTree* expOrbsTree;
 
+#ifdef DEBUG
+Vector* debugVector;
+QuadTree* debugTree;
+#endif
+

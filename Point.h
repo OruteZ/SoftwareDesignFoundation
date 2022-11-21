@@ -1,15 +1,13 @@
 #pragma once
 
-#include <stdlib.h>
 #include <stdbool.h>
-#include <math.h>
 
 typedef struct _Point {
 	int x;
 	int y;
 } Point;
 
-extern const struct {
+extern const struct __Directions {
 	Point north;
 	Point south;
 	Point east;
