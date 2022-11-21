@@ -8,3 +8,6 @@ void PrintEnemies();
 void PrintExpOrb();
 
 void SetCameraPoint();
+
+void InitCamera();
+void RenderCamera();

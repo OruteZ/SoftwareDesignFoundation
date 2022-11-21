@@ -22,15 +22,24 @@ void UpdateEnemies() {
 			//DeleteEnemy(enemy)
 			VectorDeleteUnstable(enemies, i);
 		}
+
+		else {
+			//UpdateEnemy(enemy);
+		}
 	}
 }
 void UpdateParticles() {
 	int len = particles->length;
 	for (int i = 0; i < len; i++) {
-		Enemy* enemy = (Enemy*)enemies->entities[i];
+		Particle* particle = (Particle*)particles->entities[i];
 
-		if (isEnemyDead(enemy)) {
-			VectorDeleteUnstable(enemies, i);
+		if (IsParticleFinished(particle)) {
+			DeleteParticle(particle);
+			VectorDeleteUnstable(particles, i);
+		}
+
+		else {
+			UpdateParticle(particle);
 		}
 	}
 }
@@ -39,9 +48,11 @@ void Update() {
 	UpdateTime();
 	UpdateKeyboard();
 
-	
+	UpdateEnemies();
+	UpdateParticles();
+	UpdatePlayer();
 
 #ifdef DEBUG
-	if (GetKeyDown('D')) DebugPrint("D Pressed!, %d", rand());
+	if (GetKeyDown('K')) DebugPrint("D Pressed!, %d", rand());
 #endif
 }

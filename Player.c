@@ -10,13 +10,13 @@
 
 Player* player;
 
-Player* CreatePlayer(Point p)
+Player* CreatePlayer(Point spawnPoint)
 {
 	Player* _player = (Player*)malloc(sizeof(Player));
 
 	_player->base.entity.type = _Player;
-	_player->base.entity.pos.x = p.x;
-	_player->base.entity.pos.y = p.y;
+	_player->base.entity.pos.x = spawnPoint.x;
+	_player->base.entity.pos.y = spawnPoint.y;
 
 	_player->attackSpeed = 1.0f;
 	_player->baseDamage = 20;
@@ -45,19 +45,6 @@ void CalculatePlayerCooldown()
 
 	if (_playerAttackCooldown < 0) _canPlayerAttack = TRUE;
 	if (_playerMoveCooldown < 0) _canPlayerMove = TRUE;
-}
-
-void UpdatePlayer() {
-	if (player == NULL) return;
-
-	if (GetKeyDown('W')) PlayerMove(Direction.south);
-	if (GetKeyDown('A')) PlayerMove(Direction.west);
-	if (GetKeyDown('S')) PlayerMove(Direction.north);
-	if (GetKeyDown('D')) PlayerMove(Direction.east);
-
-	if (GetKeyDown("VK_SPACE")) PlayerAttack();
-
-	CalculatePlayerCooldown();
 }
 
 void PlayerMove(Point dir)
@@ -133,6 +120,19 @@ void PlayerAttack()
 
 	_canPlayerAttack = FALSE;
 	_playerAttackCooldown = 1 - (player->attackSpeed);
+}
+
+void UpdatePlayer() {
+	if (player == NULL) return;
+
+	if (GetKeyDown('W')) PlayerMove(Direction.south);
+	if (GetKeyDown('A')) PlayerMove(Direction.west);
+	if (GetKeyDown('S')) PlayerMove(Direction.north);
+	if (GetKeyDown('D')) PlayerMove(Direction.east);
+
+	if (GetKeyDown("VK_SPACE")) PlayerAttack();
+
+	CalculatePlayerCooldown();
 }
 
 Point GetPlayerPos() { return player->base.entity.pos; }

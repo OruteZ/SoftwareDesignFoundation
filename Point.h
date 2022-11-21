@@ -9,12 +9,13 @@ typedef struct _Point {
 	int y;
 } Point;
 
-extern const struct {
+struct Direction {
 	Point north;
 	Point south;
 	Point east;
 	Point west;
-} Direction;
+};
+extern const struct Direction Direction;
 
 Point* CreatePoint(int _x, int _y);
 void DeletePoint(Point* point);

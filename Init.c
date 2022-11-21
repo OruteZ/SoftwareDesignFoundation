@@ -5,6 +5,8 @@
 #include "World001.h"
 
 #include "Game.h"
+#include "Player.h"
+#include "Camera.h"
 
 #ifdef DEBUG
 #include "Debug.h"
@@ -17,12 +19,17 @@ void Init()
     ScreenInit();
     InitTime();
     InitializeKeyboard();
+    InitCamera();
 
     // Initialize worlds
     InitializeWorld001();
 
+    SetCurrentWorld(world001);
+
     // Vectors
-    // todo: player = CreatePlayer();
+    Point playerSpawnPoint = { 3, 14 };
+    player = CreatePlayer(playerSpawnPoint);
     enemies = CreateVector();
     expOrbs = CreateVector();
+    particles = CreateVector();
 }
