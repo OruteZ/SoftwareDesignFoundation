@@ -16,7 +16,9 @@ extern enum _GameState GameState;
 extern Player* player;
 extern Vector* enemies;
 extern Vector* expOrbs;
+extern Vector* particles;
 
 extern QuadTree* enemiesTree;
 extern QuadTree* expOrbsTree;
+extern QuadTree* particleTree;
 
