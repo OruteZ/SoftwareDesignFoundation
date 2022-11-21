@@ -1,7 +1,7 @@
 #include "Rect.h"
 Rect* CreateRect(int _x, int _y, int _width, int _height) {
 	Rect* rect = (Rect*)malloc(sizeof(Rect));
-	if (rect == NULL) return NULL;
+	if (rect == NULL) exit(-1);
 	rect->x = _x;
 	rect->y = _y;
 	rect->width = _width;

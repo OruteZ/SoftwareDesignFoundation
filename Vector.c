@@ -8,7 +8,9 @@
 
 Vector* CreateVector() {
 	Vector* vector = (Vector*)malloc(sizeof(Vector));
+	if (vector == NULL) exit(-1);
 	vector->entities = (Entity**)malloc(sizeof(Entity*) * VECTOR_MINIMUM_SIZE);
+	if (vector->entities == NULL) exit(-1);
 	vector->length = 0;
 	vector->size = VECTOR_MINIMUM_SIZE;
 	return vector;
@@ -30,14 +32,18 @@ void DeepDeleteVector(Vector* vector) {
 
 void VectorExpand(Vector* vector) {
 	vector->size *= 2;
-	vector->entities = (Entity**)realloc(vector->entities, sizeof(Entity*) * vector->size);
+	Entity** new_entities = (Entity**)realloc(vector->entities, sizeof(Entity*) * vector->size);
+	if (new_entities == NULL) exit(-1);
+	vector->entities = new_entities;
 }
 void TryVectorExpand(Vector* vector) {
 	if (vector->size <= vector->length) VectorExpand(vector);
 }
 void VectorShrink(Vector* vector) {
 	vector->size /= 2;
-	vector->entities = (Entity**)realloc(vector->entities, sizeof(Entity*) * vector->size);
+	Entity** new_entities = (Entity**)realloc(vector->entities, sizeof(Entity*) * vector->size);
+	if (new_entities == NULL) exit(-1);
+	vector->entities = new_entities;
 }
 void TryVectorShrink(Vector* vector) {
 	if (VECTOR_MINIMUM_SIZE < vector->size && vector->length < vector->size / 3) VectorShrink(vector);
