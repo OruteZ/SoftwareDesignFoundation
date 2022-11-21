@@ -39,3 +39,8 @@ void EnemyOnHit(Enemy* enemy, int damage)
 		EnemyOnDeath(enemy);
 	}
 }
+
+bool isEnemyDead(Enemy* enemy)
+{
+	return (bool)(enemy->hp < 0);
+}

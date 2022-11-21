@@ -10,7 +10,8 @@ enum _GameState GameState = Menu;
 Player* player;
 Vector* enemies;
 Vector* expOrbs;
+Vector* particles;
 
 QuadTree* enemiesTree;
 QuadTree* expOrbsTree;
-
+QuadTree* particleTree;

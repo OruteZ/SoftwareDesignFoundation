@@ -29,3 +29,5 @@ typedef struct _Enemy
 	int detectionRadius;
 } Enemy;
 
+bool isEnemyDead(Enemy* enemy);
+

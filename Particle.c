@@ -1,5 +1,7 @@
 #include "Particle.h"
 #include "Time.h"
+#include "Game.h"
+#include "Vector.h"
 
 //AttackParticle에 관한 함수 및 고정 상수, 모든 Rect의 기본 direction은 north, 기본좌표는 0으로 고정한다.
 const Rect _baseAttackParticleRect = { 0,0,3,1 };
@@ -16,20 +18,14 @@ void InitAttackParticleRect(Particle* particle, Point direction) {
 		particle->particleRect.width = _baseAttackParticleRect.height;
 	}
 }
-bool UpdateAttackParticle(Particle* particle) {
+void UpdateAttackParticle(Particle* particle) {
 	particle->nowTime += GameTime.deltaTime;
-	if (particle->nowTime >= _AttackParticleDuration) {
-		DeleteParticle(particle);
-		return true;
-	}
-
+	if (particle->nowTime >= _AttackParticleDuration) return true;
+	
 	int index = (int)(particle->nowTime / _AttackParticleUpdateTime);
 
 	//임시
-	if (index > 2) {
-		DeleteParticle(particle);
-		return true;
-	}
+	if (index > 2) return;
 
 	if (particle->facing.x == 0) { //상하
 		for (int i = 0; i < particle->particleRect.width; i++) {
@@ -43,8 +39,9 @@ bool UpdateAttackParticle(Particle* particle) {
 			else particle->particleImage[i][0] = ' ';
 		}
 	}
-
-	return false;
+}
+bool IsAttackParticleFinished(Particle* particle) {
+	return (bool)particle->nowTime >= _AttackParticleDuration;
 }
 
 void CreateParticle(Point direction, Point point, ParticleType type)
@@ -77,6 +74,8 @@ void CreateParticle(Point direction, Point point, ParticleType type)
 	for (int i = 0; i < particle->particleRect.height; i++) {
 		particle->particleImage[i] = (char*)malloc(sizeof(char*) * particle->particleRect.width);
 	}
+
+	VectorInsert(particles, (Entity*)particle);
 }
 
 void DeleteParticle(Particle* particle) {
@@ -87,9 +86,17 @@ void DeleteParticle(Particle* particle) {
 	free(particle);
 }
 
-bool UpdateParticle(Particle* particle) {
+bool IsParticleFinished(Particle* particle)
+{
+	switch (particle->particleType) {
+	case AttackParticleType: return IsAttackParticleFinished(particle);
+	}
+}
+
+void UpdateParticle(Particle* particle) {
 	switch (particle->particleType){
 	case AttackParticleType:
-		return UpdateAttackParticle(particle);
+		UpdateAttackParticle(particle);
+		return;
 	}
 }
