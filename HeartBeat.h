@@ -1,13 +1,50 @@
 #pragma once
-void HeartBeat_init();
-void HeartBeat_update(double delta_time);
-void HeartBeat_render();
-void HeartBeat_release();
 
-void HeartBeat_set_BPM(int BPM);
-int HeartBeat_get_BPM();
+#include<stdlib.h>
+#include<string.h>
+#include"Point.h"
+#include"Screen.h"
+#include"KeyBoard.h"
+#include <stdio.h> 
 
-short* HeartBeat_get_note_information();
+//for test
+#include <process.h>
 
-int HeartBeat_get_combo();
+BOOLEAN isHit;
+//----
+
+typedef struct _HeartBeatObject {
+	short* note;
+	int BPM;
+	int note_size;
+	double time_to_check_tempo;
+	int combo;
+
+	Point* print_point;
+	char* print_buffer;
+} HeartBeat;
+
+HeartBeat* heart_beat;
+
+void InitHeartBeat();
+void UpdateHeartBeat(double delta_time);
+void RenderHeartBeat();
+void RealeseHeartBeat();
+
+void ResetNote();
+
+void MoveNote();
+void ReloadHeartBeatBuffer();
+
+int IsNoteBeaten();
+
+
+void SetBPM(int BPM);
+int GetBPM();
+
+short* GetNoteInfo();
+
+int GetCombo();
+
+unsigned _stdcall Thread_PlaySound(void* arg);
 

@@ -1,13 +1,21 @@
 #include "Screen.h"
 
-#include <windows.h>
+#include <Windows.h>
 
-static int g_nScreenIndex;
-static HANDLE g_hScreen[2];
+int g_nScreenIndex = 0;
+HANDLE g_hScreen[2];
+
+#ifdef DEBUG
+HANDLE* ScreenReturnBufferHandles_Unsafe() {
+	return g_hScreen;
+}
+#endif
 
 void ScreenInit()
 {
 	CONSOLE_CURSOR_INFO cci;
+
+	system("mode con:cols=200 lines=100");
 
 	// 화면 버퍼 2개를 만든다.
 	g_hScreen[0] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
@@ -30,7 +38,7 @@ void ScreenClear()
 {
 	COORD Coor = { 0, 0 };
 	DWORD dw;
-	FillConsoleOutputCharacter(g_hScreen[g_nScreenIndex], ' ', 80 * 25, Coor, &dw);
+	FillConsoleOutputCharacterW(g_hScreen[g_nScreenIndex], ' ', 80 * 25, Coor, &dw);
 }
 
 void ScreenRelease()
