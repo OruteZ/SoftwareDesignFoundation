@@ -34,20 +34,19 @@ Player* CreatePlayer(Point spawnPoint)
 	return _player;
 }
 
-BOOL _canPlayerAttack = TRUE;
-double _playerAttackCooldown;
+BOOL _canPlayerMeleeAttack = TRUE;
+double _playerAttackDelay;
 
 BOOL _canPlayerMove = TRUE;
 double _playerMoveCooldown;
 
 double _playerAttackDelay = 0.15f;
 
-void CalculatePlayerCooldown()
-{
-	_playerAttackCooldown -= Time.deltaTime;
+void CalculatePlayerCooldown() {
+	_playerAttackDelay -= Time.deltaTime;
 	_playerMoveCooldown -= Time.deltaTime;
 
-	if (_playerAttackCooldown < 0) _canPlayerAttack = TRUE;
+	if (_playerAttackDelay < 0) _canPlayerMeleeAttack = TRUE;
 	if (_playerMoveCooldown < 0) _canPlayerMove = TRUE;
 }
 
@@ -88,9 +87,8 @@ Rect CreatePlayerAttackRect(Point middle, Point direction) {
 	return result;
 }
 
-void PlayerAttack()
-{
-	if (!_canPlayerAttack) return;
+void PlayerMeleeAttack() {
+	if (!_canPlayerMeleeAttack) return;
 
 	Point attackPoint = player->base.entity.pos;
 	PointAdd(&attackPoint, &player->facing);
@@ -125,10 +123,10 @@ void PlayerAttack()
 		}
 	}
 
-	_canPlayerAttack = FALSE;
-	_playerAttackCooldown = 1 - (player->attackSpeed);
+	_canPlayerMeleeAttack = FALSE;
+	_playerAttackDelay = 1 - (player->attackSpeed);
 
-	if (_canPlayerMove) {
+	if (_playerMoveCooldown < _playerAttackDelay) {
 		_canPlayerMove = FALSE;
 		_playerMoveCooldown = _playerAttackDelay;
 	}
@@ -136,6 +134,10 @@ void PlayerAttack()
 #ifdef DEBUG
 	DebugPrint("Player Attacked");
 #endif
+}
+
+void PlayerRangeAttack() {
+
 }
 
 void UpdatePlayer() {
@@ -146,15 +148,14 @@ void UpdatePlayer() {
 	if (GetKeyDown('S')) PlayerMove(Direction.north);
 	if (GetKeyDown('D')) PlayerMove(Direction.east);
 
-	if (GetKeyDown(VK_SPACE)) PlayerAttack();
+	if (GetKeyDown(VK_SPACE)) PlayerMeleeAttack();
 
 	CalculatePlayerCooldown();
 }
 
 Point GetPlayerPos() { return player->base.entity.pos; }
 
-void PlayerOnHit(int damage)
-{
+void PlayerOnHit(int damage) {
 	player->hp -= damage;
 	if (player->hp <= 0) {
 		// gameover;
