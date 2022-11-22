@@ -22,3 +22,8 @@ extern QuadTree* enemiesTree;
 extern QuadTree* expOrbsTree;
 extern QuadTree* particleTree;
 
+#ifdef DEBUG
+extern Vector* debugVector;
+extern QuadTree* debugTree;
+#endif
+

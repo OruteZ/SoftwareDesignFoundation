@@ -1,21 +1,18 @@
 #pragma once
 
-#include <stdlib.h>
 #include <stdbool.h>
-#include <math.h>
 
 typedef struct _Point {
 	int x;
 	int y;
 } Point;
 
-struct Direction {
+extern const struct __Directions {
 	Point north;
 	Point south;
 	Point east;
 	Point west;
-};
-extern const struct Direction Direction;
+} Direction;
 
 Point* CreatePoint(int _x, int _y);
 void DeletePoint(Point* point);

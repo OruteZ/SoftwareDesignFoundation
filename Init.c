@@ -38,4 +38,8 @@ void Init()
     //test
     Point enemySpawnPoint = { 3, 12 };
     VectorInsert(enemies, CreateMeleeEnemy(enemySpawnPoint));
+
+#ifdef DEBUG
+    debugVector = CreateVector();
+#endif
 }
