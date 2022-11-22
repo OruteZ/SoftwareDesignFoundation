@@ -21,6 +21,7 @@ typedef struct _Paritcle {
 	//생성 이후 변할 수 있는 변수
 	char** particleImage;
 	double nowTime;
+	bool isDead;
 } Particle;
 
 //파티클을 생성합니다. 생성하여서 바로 Vector particles로 들어가 Game.c에서 관리합니다.
@@ -32,6 +33,3 @@ void UpdateParticle(Particle* particle);
 
 //파티클을 삭제합니다. 내부 동적할당을 모두 해제 합니다.
 void DeleteParticle(Particle* particle);
-
-//해당 파티클의 수명이 다했는지 확인합니다.
-bool IsParticleFinished(Particle* particle);

@@ -97,7 +97,7 @@ void PlayerAttack()
 
 
 	Rect attackRect = CreatePlayerAttackRect(attackPoint, player->facing);
-	CreateParticle(player->facing, attackPoint, AttackParticleType);
+	CreateParticle(player->facing, attackPoint, MeleeAttackParticleType);
 
 
 	/* 차후 쿼드트리 사용시 변경

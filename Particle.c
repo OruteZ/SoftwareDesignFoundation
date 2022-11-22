@@ -3,11 +3,13 @@
 #include "Game.h"
 #include "Vector.h"
 
-//AttackParticle에 관한 함수 및 고정 상수, 모든 Rect의 기본 direction은 north, 기본좌표는 0으로 고정한다.
+#include "World.h"
+
+//MeleeAttackParticle에 관한 함수 및 고정 상수, 모든 Rect의 기본 direction은 north, 기본좌표는 0으로 고정한다.
 const Rect _baseMeleeAttackParticleRect = { 0,0,3,1 };
-const double _MeleeAttackParticleUpdateTime = 0.05f;
-const double _MeleeAttackParticleDuration = 0.15f;
-const char _MeleeAttackParticleChar = '◈';
+const double _meleeAttackParticleUpdateTime = 0.05f;
+const double _meleeAttackParticleDuration= 0.15f;
+const char _meleeAttackParticleChar = '◈';
 void InitMeleeAttackParticleRect(Particle* particle, Point direction) {
 	if (direction.x == 0) { //위 아래 바라보는 방향 -> 범위 변함 없음
 		particle->particleRect.height = _baseMeleeAttackParticleRect.height;
@@ -20,30 +22,61 @@ void InitMeleeAttackParticleRect(Particle* particle, Point direction) {
 }
 void UpdateMeleeAttackParticle(Particle* particle) {
 	particle->nowTime += Time.deltaTime;
-	if (particle->nowTime >= _MeleeAttackParticleDuration) return;
+	if (particle->nowTime >= _meleeAttackParticleDuration) return;
 
-	int index = (int)(particle->nowTime / _MeleeAttackParticleUpdateTime);
+	int index = (int)(particle->nowTime / _meleeAttackParticleUpdateTime);
 
 	//임시
 	if (index > 2) return;
 
 	if (particle->facing.x == 0) { //상하
 		for (int i = 0; i < particle->particleRect.width; i++) {
-			if (i == index) particle->particleImage[0][i] = _MeleeAttackParticleChar;
+			if (i == index) particle->particleImage[0][i] = _meleeAttackParticleChar;
 			else particle->particleImage[0][i] = ' ';
 		}
 	}
 	else {
 		for (int i = 0; i < particle->particleRect.height; i++) {
-			if (i == index) particle->particleImage[i][0] = _MeleeAttackParticleChar;
+			if (i == index) particle->particleImage[i][0] = _meleeAttackParticleChar;
 			else particle->particleImage[i][0] = ' ';
 		}
 	}
 }
-bool IsMeleeAttackParticleFinished(Particle* particle) {
-	return (bool)(particle->nowTime >= _MeleeAttackParticleDuration);
-}
 //-------------------------------------------------------------------------------------------------------
+
+//RangeAttackParticle에 관한 함수 및 고정 상수, 모든 Rect의 기본 direction은 north, 기본좌표는 0으로 고정한다.
+const Rect _baseRangeAttackParticleRect = { 0, 0, 1, 1 };
+const double _rangeAttackParticleMoveSpeed = 0.1f; //Time per block
+const char _rangeAttackParticleChar = 'a';
+
+void RangeAttackParticleMove(Particle* particle) {
+	Point destination = particle->base.entity.pos;
+	PointAdd(&destination, &particle->facing);
+
+	//detection collision
+	if (1) { //collision with enemy
+
+	}
+	else if (GetTile(destination) & FLAG_COLLIDE_WITH_PHYSICAL_ATTACK) { // collision with else somthing
+		DeleteParticle(particle);
+		return;
+	}
+}
+void InitRangeAttackParticleRect(Particle* particle, Point direction) {
+	if (direction.x == 0) { //위 아래 바라보는 방향 -> 범위 변함 없음
+		particle->particleRect.height = _baseRangeAttackParticleRect.height;
+		particle->particleRect.width = _baseRangeAttackParticleRect.width;
+	}
+	else { //좌우 바라보는 방향 -> 가로세로 교환
+		particle->particleRect.height = _baseRangeAttackParticleRect.width;
+		particle->particleRect.width = _baseRangeAttackParticleRect.height;
+	}
+}
+void UpdateRangeAttackParticle(Particle* particle) {
+	particle->nowTime += Time.deltaTime;
+
+}
+
 
 void CreateParticle(Point direction, Point point, ParticleType type)
 {
@@ -51,7 +84,7 @@ void CreateParticle(Point direction, Point point, ParticleType type)
 	if (particle == NULL) exit(-1);
 
 	switch (type) {
-	case AttackParticleType:
+	case MeleeAttackParticleType:
 		InitMeleeAttackParticleRect(particle, direction);
 		break;
 	}
@@ -70,6 +103,7 @@ void CreateParticle(Point direction, Point point, ParticleType type)
 	particle->nowTime = 0;
 	particle->particleType = type;
 	particle->facing = direction;
+	particle->isDead = true;
 
 	particle->particleImage = (char**)malloc(sizeof(char*) * particle->particleRect.height);
 	for (int i = 0; i < particle->particleRect.height; i++) {
@@ -85,6 +119,8 @@ void CreateParticle(Point direction, Point point, ParticleType type)
 }
 
 void DeleteParticle(Particle* particle) {
+	if (!particle->isDead) return;
+
 	for (int i = 0; i < particle->particleRect.height; i++) {
 		free(particle->particleImage[i]);
 	}
@@ -92,16 +128,11 @@ void DeleteParticle(Particle* particle) {
 	free(particle);
 }
 
-bool IsParticleFinished(Particle* particle)
-{
-	switch (particle->particleType) {
-	case AttackParticleType: return IsMeleeAttackParticleFinished(particle);
-	}
-}
-
 void UpdateParticle(Particle* particle) {
+	if (particle->isDead) return;
+
 	switch (particle->particleType) {
-	case AttackParticleType:
+	case MeleeAttackParticleType:
 		UpdateMeleeAttackParticle(particle);
 		return;
 	}
