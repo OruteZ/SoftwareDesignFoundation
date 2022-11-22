@@ -127,7 +127,11 @@ void PlayerAttack()
 
 	_canPlayerAttack = FALSE;
 	_playerAttackCooldown = 1 - (player->attackSpeed);
-	_playerMoveCooldown = _playerAttackDelay;
+
+	if (_canPlayerMove) {
+		_canPlayerMove = FALSE;
+		_playerMoveCooldown = _playerAttackDelay;
+	}
 
 #ifdef DEBUG
 	DebugPrint("Player Attacked");
@@ -137,10 +141,10 @@ void PlayerAttack()
 void UpdatePlayer() {
 	if (player == NULL) return;
 
-	if (GetKey('W')) PlayerMove(Direction.south);
-	if (GetKey('A')) PlayerMove(Direction.west);
-	if (GetKey('S')) PlayerMove(Direction.north);
-	if (GetKey('D')) PlayerMove(Direction.east);
+	if (GetKeyDown('W')) PlayerMove(Direction.south);
+	if (GetKeyDown('A')) PlayerMove(Direction.west);
+	if (GetKeyDown('S')) PlayerMove(Direction.north);
+	if (GetKeyDown('D')) PlayerMove(Direction.east);
 
 	if (GetKeyDown(VK_SPACE)) PlayerAttack();
 
