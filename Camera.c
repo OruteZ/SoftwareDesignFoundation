@@ -15,9 +15,9 @@ int _cameraHeightInGame = 19;
 Rect CameraRectInGame;
 Rect CameraRectInCanvas;
 
-const char enemyChar[] = "ee";
-const char playerChar[] = "pp";
-const char wallChar[] = "WW";
+const char enemyChar[] = "◎";
+const char playerChar[] = "▣";
+const char wallChar[] = "▒";
 
 Point IngamePosition_to_CanvasPosition(Point pos);
 
@@ -114,19 +114,27 @@ void PrintParticles() {
 				if (!RectContainsPoint(&CameraRectInGame, &inGamePos)) continue;
 
 				printPos = IngamePosition_to_CanvasPosition(inGamePos);
-				if (p->particleImage[y][x] == ' ') ScreenPrint(printPos.x, printPos.y, "  ");
-				else ScreenPrint(printPos.x, printPos.y, "◈");
+				if (p->particleImage[y][x] != ' ') ScreenPrint(printPos.x, printPos.y, "◈");
 			}
 		}
 	}
 }
 
-void SetCameraPoint()
+//카메라의 위치를 플레이어를 중심으로 설정한다. 만약 값이 변경되었을 경우 true를 반환한다.
+bool SetCameraPoint()
 {
 	Point playerPos = GetPlayerPos();
 
-	CameraRectInGame.x = playerPos.x - (_cameraWidthInGame / 2);
-	CameraRectInGame.y = playerPos.y - (_cameraHeightInGame / 2);
+	int newX = playerPos.x - (_cameraWidthInGame / 2);
+	int newY = playerPos.y - (_cameraHeightInGame / 2);
+
+	if (newX == CameraRectInGame.x && newY == CameraRectInGame.y) {
+		return false;
+	}
+	else {
+		CameraRectInGame.x = newX;
+		CameraRectInGame.y = newY;
+	}
 
 	if (CameraRectInGame.x < 0) CameraRectInGame.x = 0;
 	if (CameraRectInGame.y < 0) CameraRectInGame.y = 0;
@@ -137,13 +145,17 @@ void SetCameraPoint()
 
 	if (CameraRectInGame.x + CameraRectInGame.width >= worldWidth) CameraRectInGame.x = worldWidth - _cameraWidthInGame;
 	if (CameraRectInGame.y + CameraRectInGame.height >= worldHeight) CameraRectInGame.y = worldHeight - _cameraHeightInGame;
+
+	return true;
 }
 
 void RenderCamera()
 {
-	SetCameraPoint();
+	if(SetCameraPoint()) {
+		PrintWorld();
+	}
 	DrawBox();
-	PrintWorld();
+	
 	PrintEnemies();
 	PrintPlayer();
 	PrintParticles();
