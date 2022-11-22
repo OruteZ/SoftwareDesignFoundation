@@ -8,6 +8,7 @@
 #include "Screen.h"
 #include "Enemy.h"
 #include "Particle.h"
+#include "Debug.h"
 
 int _cameraWidthInGame = 25;
 int _cameraHeightInGame = 19;
@@ -15,14 +16,13 @@ int _cameraHeightInGame = 19;
 Rect CameraRectInGame;
 Rect CameraRectInCanvas;
 
-const char enemyChar[] = "ee";
-const char playerChar[] = "pp";
-const char wallChar[] = "WW";
+const char enemyChar[] = "◎";
+const char playerChar[] = "▣";
+const char wallChar[] = "▒";
 
 Point IngamePosition_to_CanvasPosition(Point pos);
 
-void InitCamera()
-{
+void InitCamera() {
 	CameraRectInGame.height = _cameraHeightInGame;
 	CameraRectInGame.width = _cameraWidthInGame;
 
@@ -30,21 +30,43 @@ void InitCamera()
 	CameraRectInCanvas.width = 2 * _cameraWidthInGame;
 
 	CameraRectInCanvas.x = 7;
-	CameraRectInCanvas.y = 7;
+	CameraRectInCanvas.y = 3;
 }
 
-Point IngamePosition_to_CanvasPosition(Point pos)
-{
+Point IngamePosition_to_CanvasPosition(Point pos) {
 	Point result;
 	result.x = CameraRectInCanvas.x + (pos.x - CameraRectInGame.x) * 2;
 	//result.y = CameraRectInCanvas.y + (CameraRectInCanvas.height - (pos.y - CameraRectInGame.y));
-	result.y = CameraRectInCanvas.x + (pos.y - CameraRectInGame.y);
+	result.y = CameraRectInCanvas.y + (pos.y - CameraRectInGame.y);
+
+	if (result.x % 2 == 0) {
+#ifdef DEBUG
+		DebugPrint("%d %d", result.x, result.y);
+#endif
+	}
 
 	return result;
 }
 
-void PrintWorld()
-{
+void DrawBox() {
+	const char BoxChar[] = "■";
+	int BoxLeft = CameraRectInCanvas.x - 2;
+	int BoxRight = CameraRectInCanvas.x + CameraRectInCanvas.width;
+	int BoxTop = CameraRectInCanvas.y - 1;
+	int BoxBottom = CameraRectInCanvas.y + CameraRectInCanvas.height;
+
+	for (int i = 0; i < CameraRectInCanvas.height + 2; i++) {
+		ScreenPrint(BoxLeft, CameraRectInCanvas.y + i - 1, BoxChar);
+		ScreenPrint(BoxRight, CameraRectInCanvas.y + i - 1, BoxChar);
+	}
+
+	for (int i = 0; i < CameraRectInCanvas.width + 4; i += 2) {
+		ScreenPrint(CameraRectInCanvas.x + i - 2, BoxTop, BoxChar);
+		ScreenPrint(CameraRectInCanvas.x + i - 2, BoxBottom, BoxChar);
+	}
+}
+
+void PrintWorld() {
 	for (int dx = 0; dx < CameraRectInGame.width; dx++) {
 		for (int dy = 0; dy < CameraRectInGame.height; dy++) {
 			int x = CameraRectInGame.x + dx;
@@ -99,19 +121,27 @@ void PrintParticles() {
 				if (!RectContainsPoint(&CameraRectInGame, &inGamePos)) continue;
 
 				printPos = IngamePosition_to_CanvasPosition(inGamePos);
-				if (p->particleImage[y][x] == ' ') ScreenPrint(printPos.x, printPos.y, "  ");
-				else ScreenPrint(printPos.x, printPos.y, "◈");
+				if (p->particleImage[y][x] != ' ') ScreenPrint(printPos.x, printPos.y, "◈");
 			}
 		}
 	}
 }
 
-void SetCameraPoint()
+//카메라의 위치를 플레이어를 중심으로 설정한다. 만약 값이 변경되었을 경우 true를 반환한다.
+bool SetCameraPoint()
 {
 	Point playerPos = GetPlayerPos();
 
-	CameraRectInGame.x = playerPos.x - (_cameraWidthInGame / 2);
-	CameraRectInGame.y = playerPos.y - (_cameraHeightInGame / 2);
+	int newX = playerPos.x - (_cameraWidthInGame / 2);
+	int newY = playerPos.y - (_cameraHeightInGame / 2);
+
+	if (newX == CameraRectInGame.x && newY == CameraRectInGame.y) {
+		return false;
+	}
+	else {
+		CameraRectInGame.x = newX;
+		CameraRectInGame.y = newY;
+	}
 
 	if (CameraRectInGame.x < 0) CameraRectInGame.x = 0;
 	if (CameraRectInGame.y < 0) CameraRectInGame.y = 0;
@@ -122,12 +152,16 @@ void SetCameraPoint()
 
 	if (CameraRectInGame.x + CameraRectInGame.width >= worldWidth) CameraRectInGame.x = worldWidth - _cameraWidthInGame;
 	if (CameraRectInGame.y + CameraRectInGame.height >= worldHeight) CameraRectInGame.y = worldHeight - _cameraHeightInGame;
+
+	return true;
 }
 
 void RenderCamera()
 {
 	SetCameraPoint();
 	PrintWorld();
+	DrawBox();
+	
 	PrintEnemies();
 	PrintPlayer();
 	PrintParticles();
