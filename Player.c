@@ -46,7 +46,10 @@ void CalculatePlayerCooldown() {
 	_playerAttackDelay -= Time.deltaTime;
 	_playerMoveCooldown -= Time.deltaTime;
 
-	if (_playerAttackDelay < 0) _canPlayerMeleeAttack = TRUE;
+	if (_playerAttackDelay < 0) {
+		_canPlayerMeleeAttack = TRUE;
+		_canPlayerRangeAttack = true;
+	}
 	if (_playerMoveCooldown < 0) _canPlayerMove = TRUE;
 }
 
@@ -141,6 +144,10 @@ void PlayerRangeAttack() {
 
 	CreateParticle(player->facing, player->base.entity.pos, RangeAttackParticleType);
 
+#ifdef DEBUG
+	DebugPrint("Created Range Particle");
+#endif
+
 	_canPlayerRangeAttack = false;
 	_playerAttackDelay = 1 - (player->attackSpeed);
 	if (_playerMoveCooldown < _playerAttackDelay) {
@@ -158,6 +165,7 @@ void UpdatePlayer() {
 	if (GetKeyDown('D')) PlayerMove(Direction.east);
 
 	if (GetKeyDown(VK_SPACE)) PlayerMeleeAttack();
+	if (GetKeyDown('J')) PlayerRangeAttack();
 
 	CalculatePlayerCooldown();
 }
