@@ -64,6 +64,10 @@ void RangeAttackParticleMove(Particle* particle) {
 		DeleteParticle(particle);
 		return;
 	}
+
+	particle->base.entity.pos = destination;
+	particle->particleRect.x = destination.x;
+	particle->particleRect.y = destination.y;
 }
 void InitRangeAttackParticleRect(Particle* particle, Point direction) {
 	if (direction.x == 0) { //위 아래 바라보는 방향 -> 범위 변함 없음
@@ -78,6 +82,10 @@ void InitRangeAttackParticleRect(Particle* particle, Point direction) {
 void UpdateRangeAttackParticle(Particle* particle) {
 	particle->nowTime += Time.deltaTime;
 
+	if (particle->nowTime >= _rangeAttackParticleMoveSpeed) {
+		RangeAttackParticleMove(particle);
+		particle->nowTime = 0;
+	}
 }
 //---------------------------------------------------------------------------------------------------------
 
