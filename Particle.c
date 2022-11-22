@@ -22,7 +22,10 @@ void InitMeleeAttackParticleRect(Particle* particle, Point direction) {
 }
 void UpdateMeleeAttackParticle(Particle* particle) {
 	particle->nowTime += Time.deltaTime;
-	if (particle->nowTime >= _meleeAttackParticleDuration) return;
+	if (particle->nowTime >= _meleeAttackParticleDuration) {
+		particle->isDead = true;
+		return;
+	}
 
 	int index = (int)(particle->nowTime / _meleeAttackParticleUpdateTime);
 
@@ -76,7 +79,7 @@ void UpdateRangeAttackParticle(Particle* particle) {
 	particle->nowTime += Time.deltaTime;
 
 }
-
+//---------------------------------------------------------------------------------------------------------
 
 void CreateParticle(Point direction, Point point, ParticleType type)
 {
@@ -86,6 +89,9 @@ void CreateParticle(Point direction, Point point, ParticleType type)
 	switch (type) {
 	case MeleeAttackParticleType:
 		InitMeleeAttackParticleRect(particle, direction);
+		break;
+	case RangeAttackParticleType:
+		InitRangeAttackParticleRect(particle, direction);
 		break;
 	}
 
@@ -103,7 +109,7 @@ void CreateParticle(Point direction, Point point, ParticleType type)
 	particle->nowTime = 0;
 	particle->particleType = type;
 	particle->facing = direction;
-	particle->isDead = true;
+	particle->isDead = false;
 
 	particle->particleImage = (char**)malloc(sizeof(char*) * particle->particleRect.height);
 	for (int i = 0; i < particle->particleRect.height; i++) {
@@ -134,6 +140,9 @@ void UpdateParticle(Particle* particle) {
 	switch (particle->particleType) {
 	case MeleeAttackParticleType:
 		UpdateMeleeAttackParticle(particle);
+		return;
+	case RangeAttackParticleType:
+		UpdateRangeAttackParticle(particle);
 		return;
 	}
 }
