@@ -20,6 +20,13 @@ void InitMeleeAttackParticleRect(Particle* particle, Point direction) {
 		particle->particleRect.width = _baseMeleeAttackParticleRect.height;
 	}
 }
+void InitMeleeAttackParticleImage(Particle* particle) {
+	for (int i = 0; i < particle->particleRect.height; i++) {
+		for (int j = 0; j < particle->particleRect.width; j++) {
+			particle->particleImage[i][j] = ' ';
+		}
+	}
+}
 void UpdateMeleeAttackParticle(Particle* particle) {
 	particle->nowTime += Time.deltaTime;
 	if (particle->nowTime >= _meleeAttackParticleDuration) {
@@ -79,6 +86,13 @@ void InitRangeAttackParticleRect(Particle* particle, Point direction) {
 		particle->particleRect.width = _baseRangeAttackParticleRect.height;
 	}
 }
+void InitRangeAttackParticleImage(Particle* particle) {
+	for (int i = 0; i < particle->particleRect.height; i++) {
+		for (int j = 0; j < particle->particleRect.width; j++) {
+			particle->particleImage[i][j] = '1';
+		}
+	}
+}
 void UpdateRangeAttackParticle(Particle* particle) {
 	particle->nowTime += Time.deltaTime;
 
@@ -123,10 +137,14 @@ void CreateParticle(Point direction, Point point, ParticleType type)
 	for (int i = 0; i < particle->particleRect.height; i++) {
 		particle->particleImage[i] = (char*)malloc(sizeof(char*) * particle->particleRect.width);
 	}
-	for (int i = 0; i < particle->particleRect.height; i++) {
-		for (int j = 0; j < particle->particleRect.width; j++) {
-			particle->particleImage[i][j] = ' ';
-		}
+
+	switch (type) {
+	case MeleeAttackParticleType:
+		InitMeleeAttackParticleImage(particle);
+		break;
+	case RangeAttackParticleType:
+		InitRangeAttackParticleImage(particle);
+		break;
 	}
 
 	VectorInsert(particles, (Entity*)particle);
