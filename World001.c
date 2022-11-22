@@ -99,8 +99,6 @@ Tile grid[] = {
 
 World* world001;
 
-#define ENEMY_SPAWN_SEQUENCES 1
-
 void InitializeWorld001() {
 	world001 = CreateWorld(90, 89);
 	world001->grid = grid;
