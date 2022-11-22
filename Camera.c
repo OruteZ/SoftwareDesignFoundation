@@ -8,6 +8,7 @@
 #include "Screen.h"
 #include "Enemy.h"
 #include "Particle.h"
+#include "Debug.h"
 
 int _cameraWidthInGame = 25;
 int _cameraHeightInGame = 19;
@@ -37,6 +38,12 @@ Point IngamePosition_to_CanvasPosition(Point pos) {
 	result.x = CameraRectInCanvas.x + (pos.x - CameraRectInGame.x) * 2;
 	//result.y = CameraRectInCanvas.y + (CameraRectInCanvas.height - (pos.y - CameraRectInGame.y));
 	result.y = CameraRectInCanvas.y + (pos.y - CameraRectInGame.y);
+
+	if (result.x % 2 == 0) {
+#ifdef DEBUG
+		DebugPrint("%d %d", result.x, result.y);
+#endif
+	}
 
 	return result;
 }
@@ -151,9 +158,8 @@ bool SetCameraPoint()
 
 void RenderCamera()
 {
-	if(SetCameraPoint()) {
-		PrintWorld();
-	}
+	SetCameraPoint();
+	PrintWorld();
 	DrawBox();
 	
 	PrintEnemies();

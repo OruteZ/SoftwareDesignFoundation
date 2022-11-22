@@ -56,7 +56,7 @@ void UpdateMeleeAttackParticle(Particle* particle) {
 
 //RangeAttackParticle에 관한 함수 및 고정 상수, 모든 Rect의 기본 direction은 north, 기본좌표는 0으로 고정한다.
 const Rect _baseRangeAttackParticleRect = { 0, 0, 1, 1 };
-const double _rangeAttackParticleMoveSpeed = 0.1f; //Time per block
+const double _rangeAttackParticleMoveSpeed = 0.05f; //Time per block
 const char _rangeAttackParticleChar = 'a';
 
 void RangeAttackParticleMove(Particle* particle) {
@@ -64,11 +64,11 @@ void RangeAttackParticleMove(Particle* particle) {
 	PointAdd(&destination, &particle->facing);
 
 	//detection collision
-	if (1) { //collision with enemy
+	if (0) { //collision with enemy
 
 	}
 	else if (GetTile(destination) & FLAG_COLLIDE_WITH_PHYSICAL_ATTACK) { // collision with else somthing
-		DeleteParticle(particle);
+		particle->isDead = true;
 		return;
 	}
 
@@ -151,10 +151,10 @@ void CreateParticle(Point direction, Point point, ParticleType type)
 }
 
 void DeleteParticle(Particle* particle) {
-	if (!particle->isDead) return;
+	if (!(particle->isDead)) return;
 
 	for (int i = 0; i < particle->particleRect.height; i++) {
-		free(particle->particleImage[i]);
+		if(particle->particleImage != NULL) free(particle->particleImage[i]);
 	}
 	free(particle->particleImage);
 	free(particle);
