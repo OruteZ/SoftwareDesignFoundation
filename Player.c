@@ -35,7 +35,7 @@ Player* CreatePlayer(Point spawnPoint)
 }
 
 BOOL _canPlayerMeleeAttack = TRUE;
-double _playerAttackDelay;
+bool _canPlayerRangeAttack = true;
 
 BOOL _canPlayerMove = TRUE;
 double _playerMoveCooldown;
@@ -137,7 +137,16 @@ void PlayerMeleeAttack() {
 }
 
 void PlayerRangeAttack() {
+	if (!_canPlayerRangeAttack) return;
 
+	CreateParticle(player->facing, player->base.entity.pos, RangeAttackParticleType);
+
+	_canPlayerRangeAttack = false;
+	_playerAttackDelay = 1 - (player->attackSpeed);
+	if (_playerMoveCooldown < _playerAttackDelay) {
+		_canPlayerMove = FALSE;
+		_playerMoveCooldown = _playerAttackDelay;
+	}
 }
 
 void UpdatePlayer() {
