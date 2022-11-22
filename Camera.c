@@ -21,8 +21,7 @@ const char wallChar[] = "WW";
 
 Point IngamePosition_to_CanvasPosition(Point pos);
 
-void InitCamera()
-{
+void InitCamera() {
 	CameraRectInGame.height = _cameraHeightInGame;
 	CameraRectInGame.width = _cameraWidthInGame;
 
@@ -30,21 +29,37 @@ void InitCamera()
 	CameraRectInCanvas.width = 2 * _cameraWidthInGame;
 
 	CameraRectInCanvas.x = 7;
-	CameraRectInCanvas.y = 7;
+	CameraRectInCanvas.y = 3;
 }
 
-Point IngamePosition_to_CanvasPosition(Point pos)
-{
+Point IngamePosition_to_CanvasPosition(Point pos) {
 	Point result;
 	result.x = CameraRectInCanvas.x + (pos.x - CameraRectInGame.x) * 2;
 	//result.y = CameraRectInCanvas.y + (CameraRectInCanvas.height - (pos.y - CameraRectInGame.y));
-	result.y = CameraRectInCanvas.x + (pos.y - CameraRectInGame.y);
+	result.y = CameraRectInCanvas.y + (pos.y - CameraRectInGame.y);
 
 	return result;
 }
 
-void PrintWorld()
-{
+void DrawBox() {
+	const char BoxChar[] = "бс";
+	int BoxLeft = CameraRectInCanvas.x - 2;
+	int BoxRight = CameraRectInCanvas.x + CameraRectInCanvas.width;
+	int BoxTop = CameraRectInCanvas.y - 1;
+	int BoxBottom = CameraRectInCanvas.y + CameraRectInCanvas.height;
+
+	for (int i = 0; i < CameraRectInCanvas.height + 2; i++) {
+		ScreenPrint(BoxLeft, CameraRectInCanvas.y + i - 1, BoxChar);
+		ScreenPrint(BoxRight, CameraRectInCanvas.y + i - 1, BoxChar);
+	}
+
+	for (int i = 0; i < CameraRectInCanvas.width + 4; i += 2) {
+		ScreenPrint(CameraRectInCanvas.x + i - 2, BoxTop, BoxChar);
+		ScreenPrint(CameraRectInCanvas.x + i - 2, BoxBottom, BoxChar);
+	}
+}
+
+void PrintWorld() {
 	for (int dx = 0; dx < CameraRectInGame.width; dx++) {
 		for (int dy = 0; dy < CameraRectInGame.height; dy++) {
 			int x = CameraRectInGame.x + dx;
@@ -127,6 +142,7 @@ void SetCameraPoint()
 void RenderCamera()
 {
 	SetCameraPoint();
+	DrawBox();
 	PrintWorld();
 	PrintEnemies();
 	PrintPlayer();
