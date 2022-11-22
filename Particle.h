@@ -4,7 +4,8 @@
 #include "Rect.h"
 
 typedef enum _ParticleType {
-	AttackParticleType,
+	MeleeAttackParticleType,
+	RangeAttackParticleType,
 } ParticleType;
 
 typedef struct _Paritcle {

@@ -4,45 +4,46 @@
 #include "Vector.h"
 
 //AttackParticle에 관한 함수 및 고정 상수, 모든 Rect의 기본 direction은 north, 기본좌표는 0으로 고정한다.
-const Rect _baseAttackParticleRect = { 0,0,3,1 };
-const double _AttackParticleUpdateTime = 0.05f;
-const double _AttackParticleDuration = 0.15f;
-const char _AttackParticleChar = '◈';
-void InitAttackParticleRect(Particle* particle, Point direction) {
+const Rect _baseMeleeAttackParticleRect = { 0,0,3,1 };
+const double _MeleeAttackParticleUpdateTime = 0.05f;
+const double _MeleeAttackParticleDuration = 0.15f;
+const char _MeleeAttackParticleChar = '◈';
+void InitMeleeAttackParticleRect(Particle* particle, Point direction) {
 	if (direction.x == 0) { //위 아래 바라보는 방향 -> 범위 변함 없음
-		particle->particleRect.height = _baseAttackParticleRect.height;
-		particle->particleRect.width = _baseAttackParticleRect.width;
+		particle->particleRect.height = _baseMeleeAttackParticleRect.height;
+		particle->particleRect.width = _baseMeleeAttackParticleRect.width;
 	}
 	else { //좌우 바라보는 방향 -> 가로세로 교환
-		particle->particleRect.height = _baseAttackParticleRect.width;
-		particle->particleRect.width = _baseAttackParticleRect.height;
+		particle->particleRect.height = _baseMeleeAttackParticleRect.width;
+		particle->particleRect.width = _baseMeleeAttackParticleRect.height;
 	}
 }
-void UpdateAttackParticle(Particle* particle) {
+void UpdateMeleeAttackParticle(Particle* particle) {
 	particle->nowTime += Time.deltaTime;
-	if (particle->nowTime >= _AttackParticleDuration) return;
-	
-	int index = (int)(particle->nowTime / _AttackParticleUpdateTime);
+	if (particle->nowTime >= _MeleeAttackParticleDuration) return;
+
+	int index = (int)(particle->nowTime / _MeleeAttackParticleUpdateTime);
 
 	//임시
 	if (index > 2) return;
 
 	if (particle->facing.x == 0) { //상하
 		for (int i = 0; i < particle->particleRect.width; i++) {
-			if (i == index) particle->particleImage[0][i] = _AttackParticleChar;
+			if (i == index) particle->particleImage[0][i] = _MeleeAttackParticleChar;
 			else particle->particleImage[0][i] = ' ';
 		}
 	}
 	else {
 		for (int i = 0; i < particle->particleRect.height; i++) {
-			if (i == index) particle->particleImage[i][0] = _AttackParticleChar;
+			if (i == index) particle->particleImage[i][0] = _MeleeAttackParticleChar;
 			else particle->particleImage[i][0] = ' ';
 		}
 	}
 }
-bool IsAttackParticleFinished(Particle* particle) {
-	return (bool)(particle->nowTime >= _AttackParticleDuration);
+bool IsMeleeAttackParticleFinished(Particle* particle) {
+	return (bool)(particle->nowTime >= _MeleeAttackParticleDuration);
 }
+//-------------------------------------------------------------------------------------------------------
 
 void CreateParticle(Point direction, Point point, ParticleType type)
 {
@@ -51,7 +52,7 @@ void CreateParticle(Point direction, Point point, ParticleType type)
 
 	switch (type) {
 	case AttackParticleType:
-		InitAttackParticleRect(particle, direction);
+		InitMeleeAttackParticleRect(particle, direction);
 		break;
 	}
 
@@ -94,14 +95,14 @@ void DeleteParticle(Particle* particle) {
 bool IsParticleFinished(Particle* particle)
 {
 	switch (particle->particleType) {
-	case AttackParticleType: return IsAttackParticleFinished(particle);
+	case AttackParticleType: return IsMeleeAttackParticleFinished(particle);
 	}
 }
 
 void UpdateParticle(Particle* particle) {
-	switch (particle->particleType){
+	switch (particle->particleType) {
 	case AttackParticleType:
-		UpdateAttackParticle(particle);
+		UpdateMeleeAttackParticle(particle);
 		return;
 	}
 }
