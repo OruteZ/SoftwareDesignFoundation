@@ -49,7 +49,6 @@ bool RayCastInCurrentWorld(RayCastResult* result, const Point _origin, const Poi
 		.y = delta.y == 0 ? DBL_MAX : sqrt((delta.x / delta.y) * (delta.x / delta.y) + 1)
 	};
 
-	//const double deltaMag = sqrt(delta.x * delta.x + delta.y * delta.y);
 	DPoint stepsMarched = {	// first step is marching to the walls of each cell
 		.x = marchingStep.x < 0 ? origin.x - floor(origin.x) : floor(origin.x) + 1 - origin.x,
 		.y = marchingStep.y < 0 ? origin.y - floor(origin.y) : floor(origin.y) + 1 - origin.y
