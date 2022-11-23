@@ -49,6 +49,9 @@
     <Filter Include="Header Files\World">
       <UniqueIdentifier>{44622124-4a3a-44aa-b459-cb0be9793513}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Menu">
+      <UniqueIdentifier>{f7d5f701-19f4-4c1c-9cb0-744379c98bd9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Init.c">
@@ -125,6 +128,9 @@
     </ClCompile>
     <ClCompile Include="Particle.c">
       <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.c">
+      <Filter>Source Files\Menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
