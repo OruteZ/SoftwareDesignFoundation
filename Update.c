@@ -15,6 +15,7 @@
 #ifdef DEBUG
 #include "Keyboard.h"
 #include "Debug.h"
+#include "RayCast.h"
 #endif
 void UpdateEnemies() {
 	int len = enemies->length;
@@ -58,8 +59,16 @@ void Update() {
 	TrySpawnSequence();
 
 #ifdef DEBUG
-	if (GetKeyDown('P')) {
-		DebugPrint("GameTime.time = %.3f", GameTime.time);
+	if (GetKeyDown('R')) {
+		RayCastResult* result = CreateRayCastResult(10);
+		Point origin = { .x = 17, .y = 8 };
+		Point destination = { .x = 21, .y = 7 };
+		bool success = RayCastInCurrentWorld(result, origin, destination);
+		DebugPrint("RayCast Successful?: %d, length: %d", success, result->length);
+		for (int i = 0; i < result->length; i++) {
+			DebugPrint("RayCast Block: (%d, %d)", result->arr[i].x, result->arr[i].y);
+		}
+		DeleteRayCastResult(result);
 	}
 #endif
 }

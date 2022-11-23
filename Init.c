@@ -37,8 +37,4 @@ void Init()
     enemies = CreateVector();
     expOrbs = CreateVector();
     particles = CreateVector();
-
-    //test
-    Point enemySpawnPoint = { 3, 12 };
-    VectorInsert(enemies, CreateMeleeEnemy(enemySpawnPoint));
 }

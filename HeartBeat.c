@@ -13,16 +13,16 @@
 BOOLEAN isHit;
 //----
 
-typedef struct _HeartBeatObject {
-	short* note;
-	int BPM;
-	int note_size;
-	double time_to_check_tempo;
-	int combo;
-
-	Point* print_point;
-	char* print_buffer;
-} HeartBeat;
+//typedef struct _HeartBeatObject {
+//	short* note;
+//	int BPM;
+//	int note_size;
+//	double time_to_check_tempo;
+//	int combo;
+//
+//	Point* print_point;
+//	char* print_buffer;
+//} HeartBeat;
 
 HeartBeat* heart_beat;
 
