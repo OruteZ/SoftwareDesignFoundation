@@ -20,11 +20,13 @@ void LookAt(Enemy* enemy, Point target) {
 	int deltaY = target.y - enemy->base.entity.pos.y;
 
 	if (abs(deltaX) > abs(deltaY)) {
-		if (deltaX < 0) enemy->facing = 
+		if (deltaX < 0) enemy->facing = Direction.west;
+		else enemy->facing = Direction.east;
 	}
 
 	else {
-
+		if (deltaY < 0) enemy->facing = Direction.south;
+		else enemy->facing = Direction.north;
 	}
 }
 
