@@ -29,10 +29,12 @@ typedef struct _Enemy
 	double momentOfAttack;
 
 	int detectionRadius;
+
+	Rect AttackRange;
 } Enemy;
 
 bool isEnemyDead(Enemy* enemy);
-bool isEnemy(Enemy* enemy);
+bool isEnemy(Entity* entity);
 void EnemyOnHit(Enemy* enemy, int damage);
 void CreateEnemy(enum EntityType type, Point spawnPoint);
 void UpdateEnemy(Enemy* enemy);
