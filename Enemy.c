@@ -3,6 +3,7 @@
 
 #include "Game.h"
 #include "World.h"
+#include "Point.h"
 
 #include "Entity.h"
 #include "Enemy.h"
@@ -19,6 +20,10 @@ void LookAt(Enemy* enemy, Point target) {
 	int deltaY = target.y - enemy->base.entity.pos.y;
 
 	if (abs(deltaX) > abs(deltaY)) {
+		if (deltaX < 0) enemy->facing = 
+	}
+
+	else {
 
 	}
 }
@@ -65,7 +70,7 @@ void EnemyOnHit(Enemy* enemy, int damage)
 	}
 }
 
-void CreateEnemy(EnemyBehaviorType type, Point spawnPoint) {
+void CreateEnemy(enum EntityType type, Point spawnPoint) {
 	Enemy* newEnemy;
 
 	switch (type) {
@@ -93,4 +98,10 @@ void UpdateEnemy(Enemy* enemy) {
 
 bool isEnemyDead(Enemy* enemy) {
 	return (bool)(enemy->hp <= 0);
+}
+
+bool isEnemy(Enemy* enemy)
+{
+	enum EntityType type = enemy->base.entity.type;
+	return (bool)(MeleeEnemyType <= type && type <= BomberEnemyType);
 }

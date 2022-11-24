@@ -7,7 +7,9 @@
 
 enum EntityType {
 	PlayerType,
-	EnemyType,
+	MeleeEnemyType,
+	ArcherEnemyType,
+	BomberEnemyType,
 	ExpOrbType,
 	ParticleEffectType
 };

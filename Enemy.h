@@ -10,19 +10,11 @@ typedef enum EnemyState{
 	Attacking,
 } EnemyState;
 
-typedef enum _EnemyType {
-	MeleeEnemyType,
-	ArcherEnemyType,
-	BomberEnemyType,
-} EnemyBehaviorType;
-
 typedef struct _Enemy
 {
 	union {
 		Entity entity;
 	} base;
-
-	EnemyBehaviorType enemyType;
 	EnemyState state;
 
 	Point facing;
@@ -40,6 +32,7 @@ typedef struct _Enemy
 } Enemy;
 
 bool isEnemyDead(Enemy* enemy);
+bool isEnemy(Enemy* enemy);
 void EnemyOnHit(Enemy* enemy, int damage);
-void CreateEnemy(EnemyBehaviorType type, Point spawnPoint);
+void CreateEnemy(enum EntityType type, Point spawnPoint);
 void UpdateEnemy(Enemy* enemy);
