@@ -126,6 +126,9 @@
     <ClCompile Include="Particle.c">
       <Filter>Source Files\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="RayCast.c">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Init.h">
@@ -202,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="Particle.h">
       <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="RayCast.h">
+      <Filter>Header Files\World</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

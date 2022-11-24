@@ -118,6 +118,7 @@
     <ClCompile Include="Player.c" />
     <ClCompile Include="Point.c" />
     <ClCompile Include="QuadTree.c" />
+    <ClCompile Include="RayCast.c" />
     <ClCompile Include="Rect.c" />
     <ClCompile Include="Release.c" />
     <ClCompile Include="Render.c" />
@@ -146,6 +147,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="QuadTree.h" />
+    <ClInclude Include="RayCast.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="Release.h" />
     <ClInclude Include="Render.h" />
