@@ -24,7 +24,7 @@ typedef struct _HeartBeatObject {
 	char* print_buffer;
 } HeartBeat;
 
-HeartBeat* heart_beat;
+extern HeartBeat* heart_beat;
 
 void InitHeartBeat();
 void UpdateHeartBeat(double delta_time);

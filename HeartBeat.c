@@ -13,23 +13,11 @@
 BOOLEAN isHit;
 //----
 
-typedef struct _HeartBeatObject {
-	short* note;
-	int BPM;
-	int note_size;
-	double time_to_check_tempo;
-	int combo;
-
-	Point* print_point;
-	char* print_buffer;
-} HeartBeat;
-
 HeartBeat* heart_beat;
 
-void HeartBeat_reset();
-void HeartBeat_move_note();
-void HeartBeat_reload_buffer();
-int HeartBeat_is_note_beaten();
+void ResetNote();
+void MoveNote();
+int IsNoteBeaten();
 
 unsigned _stdcall Thread_PlaySound(void* arg);
 
