@@ -123,7 +123,7 @@ void CreateParticle(Point direction, Point point, ParticleType type)
 	};
 
 	particle->base.entity.pos = startPoint;
-	particle->base.entity.type = _ParticleEffect;
+	particle->base.entity.type = ParticleEffectType;
 
 	particle->particleRect.x = startPoint.x;
 	particle->particleRect.y = startPoint.y;

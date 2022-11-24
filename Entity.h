@@ -6,12 +6,10 @@
 #define ENTITY_DEFAULT_POS_Y = 0
 
 enum EntityType {
-	_Player,
-	_MeleeEnemy,
-	_ArcherEnemy,
-	_BomberEnemy,
-	_ExperienceOrb,
-	_ParticleEffect
+	PlayerType,
+	EnemyType,
+	ExpOrbType,
+	ParticleEffectType
 };
 
 typedef struct _Entity {

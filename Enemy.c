@@ -10,6 +10,18 @@
 #include "Player.h"
 #include "Debug.h"
 
+#include "MeleeEnemy.h"
+#include "ArcherEnemy.h"
+#include "BomberEnemy.h"
+
+void LookAt(Point target) {
+
+}
+
+bool IsPlayerInRange() {
+
+}
+
 void EnemyMove(Enemy* enemy, Point direction) {
 	Point* nextPosition = DuplicatePoint(&enemy->base.entity.pos);
 	PointAdd(nextPosition, &direction);
@@ -46,7 +58,32 @@ void EnemyOnHit(Enemy* enemy, int damage)
 	}
 }
 
-bool isEnemyDead(Enemy* enemy)
-{
+void CreateEnemy(EnemyBehaviorType type, Point spawnPoint) {
+	Enemy* newEnemy;
+
+	switch (type) {
+	case MeleeEnemyType:
+		newEnemy = CreateMeleeEnemy(spawnPoint);
+		break;
+
+	case ArcherEnemyType:
+		newEnemy = CreateArcherEnemy(spawnPoint);
+		break;
+
+	case BomberEnemyType:
+		newEnemy = CreateBomberEnemy(spawnPoint);
+		break;
+	}
+
+	VectorInsert(enemies, newEnemy);
+	QuadTreeInsert(enemiesTree, newEnemy);
+}
+
+void UpdateEnemy(Enemy* enemy) {
+	//사거리 내로 들어오면 우선 공격하기
+
+}
+
+bool isEnemyDead(Enemy* enemy) {
 	return (bool)(enemy->hp <= 0);
 }

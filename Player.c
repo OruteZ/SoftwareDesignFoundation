@@ -16,7 +16,7 @@ Player* CreatePlayer(Point spawnPoint)
 {
 	Player* _player = (Player*)malloc(sizeof(Player));
 
-	_player->base.entity.type = _Player;
+	_player->base.entity.type = PlayerType;
 	_player->base.entity.pos.x = spawnPoint.x;
 	_player->base.entity.pos.y = spawnPoint.y;
 

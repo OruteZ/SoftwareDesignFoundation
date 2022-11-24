@@ -3,7 +3,7 @@
 MeleeEnemy* CreateMeleeEnemy(Point p)
 {
 	MeleeEnemy* meleeEnemy = (MeleeEnemy*)malloc(sizeof(MeleeEnemy));
-	meleeEnemy->base.entity.type = _MeleeEnemy;
+	meleeEnemy->base.entity.type = EnemyType;
 	meleeEnemy->base.entity.pos.x = p.x;
 	meleeEnemy->base.entity.pos.y = p.y;
 	meleeEnemy->base.enemy.attackDelay = 1.0;
