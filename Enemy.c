@@ -10,6 +10,14 @@
 #include "Player.h"
 #include "Debug.h"
 
+void LookAt(Point target) {
+
+}
+
+bool IsPlayerInRange() {
+
+}
+
 void EnemyMove(Enemy* enemy, Point direction) {
 	Point* nextPosition = DuplicatePoint(&enemy->base.entity.pos);
 	PointAdd(nextPosition, &direction);
@@ -46,7 +54,14 @@ void EnemyOnHit(Enemy* enemy, int damage)
 	}
 }
 
-bool isEnemyDead(Enemy* enemy)
-{
+void CreateEnemy(EnemyBehaviorType type, Point spawnPoint) {
+}
+
+void UpdateEnemy(Enemy* enemy) {
+	//사거리 내로 들어오면 우선 공격하기
+
+}
+
+bool isEnemyDead(Enemy* enemy) {
 	return (bool)(enemy->hp <= 0);
 }

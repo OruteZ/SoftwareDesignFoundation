@@ -4,7 +4,7 @@
 BomberEnemy* CreateBomberEnemy(Point p)
 {
 	BomberEnemy* bomberEnemy = (BomberEnemy*)malloc(sizeof(BomberEnemy));
-	bomberEnemy->base.entity.type = _BomberEnemy;
+	bomberEnemy->base.entity.type = EnemyType;
 	bomberEnemy->base.entity.pos.x = p.x;
 	bomberEnemy->base.entity.pos.y = p.y;
 	bomberEnemy->base.enemy.attackDelay = 1;

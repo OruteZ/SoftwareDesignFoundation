@@ -60,7 +60,7 @@ void Update() {
 		if (randomEntity == NULL) exit(-1);
 		randomEntity->pos.x = rand();
 		randomEntity->pos.y = rand();
-		randomEntity->type = _Player;
+		randomEntity->type = PlayerType;
 		VectorInsert(debugVector, randomEntity);
 		//for (int i = 0; i < debugVector->length; i++) {
 		//	DebugPrint("%d (%d, %d) Entity", i, debugVector->entities[i]->pos.x, debugVector->entities[i]->pos.y);
