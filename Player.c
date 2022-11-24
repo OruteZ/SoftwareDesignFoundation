@@ -98,7 +98,7 @@ void PlayerMeleeAttack() {
 
 
 	Rect attackRect = CreatePlayerAttackRect(attackPoint, player->facing);
-	CreateParticle(player->facing, attackPoint, MeleeAttackParticleType);
+	CreateParticle(player->facing, attackPoint, MeleeAttackParticleType, player->baseDamage);
 
 
 	/* 차후 쿼드트리 사용시 변경
@@ -142,7 +142,7 @@ void PlayerMeleeAttack() {
 void PlayerRangeAttack() {
 	if (!_canPlayerRangeAttack) return;
 
-	CreateParticle(player->facing, player->base.entity.pos, RangeAttackParticleType);
+	CreateParticle(player->facing, player->base.entity.pos, RangeAttackParticleType, player->baseDamage);
 
 #ifdef DEBUG
 	DebugPrint("Created Range Particle");
