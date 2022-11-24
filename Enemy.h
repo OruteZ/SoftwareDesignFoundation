@@ -12,7 +12,7 @@ typedef enum EnemyState{
 
 typedef enum _EnemyType {
 	MeleeEnemyType,
-	RangeEnemyType,
+	ArcherEnemyType,
 	BomberEnemyType,
 } EnemyBehaviorType;
 

@@ -10,6 +10,10 @@
 #include "Player.h"
 #include "Debug.h"
 
+#include "MeleeEnemy.h"
+#include "ArcherEnemy.h"
+#include "BomberEnemy.h"
+
 void LookAt(Point target) {
 
 }
@@ -55,6 +59,24 @@ void EnemyOnHit(Enemy* enemy, int damage)
 }
 
 void CreateEnemy(EnemyBehaviorType type, Point spawnPoint) {
+	Enemy* newEnemy;
+
+	switch (type) {
+	case MeleeEnemyType:
+		newEnemy = CreateMeleeEnemy(spawnPoint);
+		break;
+
+	case ArcherEnemyType:
+		newEnemy = CreateArcherEnemy(spawnPoint);
+		break;
+
+	case BomberEnemyType:
+		newEnemy = CreateBomberEnemy(spawnPoint);
+		break;
+	}
+
+	VectorInsert(enemies, newEnemy);
+	QuadTreeInsert(enemiesTree, newEnemy);
 }
 
 void UpdateEnemy(Enemy* enemy) {
