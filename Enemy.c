@@ -14,8 +14,13 @@
 #include "ArcherEnemy.h"
 #include "BomberEnemy.h"
 
-void LookAt(Point target) {
+void LookAt(Enemy* enemy, Point target) {
+	int deltaX = target.x - enemy->base.entity.pos.x;
+	int deltaY = target.y - enemy->base.entity.pos.y;
 
+	if (abs(deltaX) > abs(deltaY)) {
+
+	}
 }
 
 bool IsPlayerInRange() {
@@ -40,12 +45,14 @@ void EnemyMove(Enemy* enemy, Point direction) {
 	DeletePoint(nextPosition);
 	DeleteVector(vector);
 }
+
 void EnemyOnDeath(Enemy* enemy)
 {
 #ifdef DEBUG
 	DebugPrint("Enemy Dead!");
 #endif
 }
+
 void EnemyOnHit(Enemy* enemy, int damage)
 {
 	enemy->hp -= damage;

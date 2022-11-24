@@ -25,6 +25,8 @@ typedef struct _Enemy
 	EnemyBehaviorType enemyType;
 	EnemyState state;
 
+	Point facing;
+
 	double moveSpeed;
 	double lastMoved;
 
