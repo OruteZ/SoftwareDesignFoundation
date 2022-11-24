@@ -52,6 +52,9 @@
     <Filter Include="Source Files\Menu">
       <UniqueIdentifier>{f7d5f701-19f4-4c1c-9cb0-744379c98bd9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Menu">
+      <UniqueIdentifier>{b5460a6b-6481-4e72-83fb-b0901bbab814}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Init.c">
@@ -208,6 +211,9 @@
     </ClInclude>
     <ClInclude Include="Particle.h">
       <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files\Menu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

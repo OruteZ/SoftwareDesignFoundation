@@ -5,7 +5,6 @@
 #include"Point.h"
 #include"Screen.h"
 #include"KeyBoard.h"
-
 #pragma once
 //for test
 #include <process.h>

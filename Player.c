@@ -126,7 +126,7 @@ void PlayerMeleeAttack() {
 		}
 	}
 
-	_canPlayerMeleeAttack = FALSE;
+
 	_playerAttackDelay = 1 - (player->attackSpeed);
 
 	if (_playerMoveCooldown < _playerAttackDelay) {

@@ -1,47 +1,67 @@
 ﻿#include "Keyboard.h"
 #include "World.h"
+#include<Windows.h>
 #include <stdio.h>
 #include <time.h>
-
-void SetCurrentCursorPos(int x, int y)
-{
-	COORD pos = { x,y };
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
-}
-COORD GetCurrentCursorPos()
-{
-	COORD curPoint;
-	CONSOLE_SCREEN_BUFFER_INFO curInfo;
-
-	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &curInfo);
-	curPoint.X = curInfo.dwCursorPosition.X;
-	curPoint.Y = curInfo.dwCursorPosition.Y;
-
-	return curPoint;
-}
+#include "Point.h"
+#include "Screen.h"
+#include "Game.h"
+#define StartButtonPosX 30
+#define StartButtonPosY 80
+#define EndButtonPosX 60
+#define EndButtonPosY 80
 
 void Button()
 {
-	COORD curPos = GetCurrentCursorPos();
-	SetCurrentCursorPos(15, 15);
-	printf("게임 시작");
-	SetCurrentCursorPos(25, 15);
-	printf("종료"); 
+	Point p;
+	p.x = StartButtonPosX;
+	p.y = StartButtonPosY;
+	ScreenPrint(p.x, p.y, "Game Start");
+	p.x = EndButtonPosX;
+	p.y = EndButtonPosY;
+	ScreenPrint(p.x, p.y, "Quit");
 }
 
 void CursorMove()
 {
-	COORD curPos = GetCurrentCursorPos();
-	if (GetKeyDown("A"))
+	Point p;
+	p.x = StartButtonPosX - 5;
+	p.y = StartButtonPosY;
+	if (GetKeyDown('A'))
 	{
-		printf(" ");
-		SetCurrentCursorPos(14, 15);
-		printf("->");
+		ScreenPrint(p.x, p.y, "  ");
+		p.x = StartButtonPosX - 5;
+		p.y = StartButtonPosY;
+		ScreenPrint(p.x, p.y, "->");
 	}
-	else if (GetKeyDown("D"))
+	else if (GetKeyDown('D'))
 	{
-		printf(" ");
-		SetCurrentCursorPos(24, 15);
-		printf("->");
+		ScreenPrint(p.x, p.y, "  ");
+		p.x = EndButtonPosX - 5;
+		p.y = EndButtonPosY;
+		ScreenPrint(p.x, p.y, "->");
+	}
+}
+
+void GameEnd(Point p)
+{
+	if (p.x == EndButtonPosX - 5 && p.y == EndButtonPosY)
+	{
+		if (GetKeyDown(VK_RETURN))
+		{
+			//게임 종료
+			
+		}
+	}
+}
+void GameStart(Point p)
+{
+	if (p.x == StartButtonPosX - 5 && p.y == StartButtonPosY)
+	{
+		if (GetKeyDown(VK_RETURN))
+		{
+			GameState = Dungeon;
+
+		}
 	}
 }

@@ -154,7 +154,8 @@ void DeleteParticle(Particle* particle) {
 	if (!(particle->isDead)) return;
 
 	for (int i = 0; i < particle->particleRect.height; i++) {
-		if(particle->particleImage != NULL) free(particle->particleImage[i]);
+		if(particle->particleImage != NULL) 
+			(particle->particleImage[i]);
 	}
 	free(particle->particleImage);
 	free(particle);
