@@ -14,6 +14,7 @@
 #include "Enemy.h"
 #include "Vector.h"
 #include "Entity.h"
+#include "Menu.h"
 
 void UpdateEnemies() {
 	int len = enemies->length;
@@ -49,7 +50,6 @@ void UpdateParticles() {
 void Update() {
 	UpdateTime();
 	UpdateKeyboard();
-
 	UpdateEnemies();
 	UpdateParticles();
 	UpdatePlayer();

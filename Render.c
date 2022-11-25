@@ -1,7 +1,8 @@
 #include "Screen.h"
 #include "Time.h"
 #include "Camera.h"
-
+#include "Game.h"
+#include "Menu.h"
 #include <stdio.h> // only used for debug
 
 #ifdef DEBUG
@@ -11,7 +12,14 @@
 void Render() {
 	ScreenClear();
 
-	RenderCamera();
+	if (GameState == Dungeon) {
+		RenderCamera();
+	}
+	if (GameState == Menu) {
+		RenderButton();
+		RenderTitle();
+		RenderButtonArrow();
+	}
 
 	ScreenFlipping();
 }
