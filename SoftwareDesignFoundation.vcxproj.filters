@@ -129,6 +129,12 @@
     <ClCompile Include="RayCast.c">
       <Filter>Source Files\World</Filter>
     </ClCompile>
+    <ClCompile Include="World002.c">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="World003.c">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Init.h">
@@ -207,6 +213,12 @@
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
     <ClInclude Include="RayCast.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="World002.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="World003.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
   </ItemGroup>
