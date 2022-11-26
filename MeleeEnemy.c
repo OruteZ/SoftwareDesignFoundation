@@ -21,12 +21,9 @@ const MeleeEnemy DefaultMeleeEnemy = {
 
 		.moveCoolDown = 0,
 		.attackDelay = 0,
-		.attackRange = {
-			.x = 0,
-			.y = 0,
-			.width = 3,
-			.height = 1,
-		}
+
+		.attackHeight = 1,
+		.attackWidth = 3,
 	}
 };
 
@@ -45,30 +42,29 @@ void MeleeEnemyAttack(MeleeEnemy* mEnemy) {
 
 	//바라보는 방향에 따라 공격범위 rect 지정
 	Rect attackRect;
-
 	if (PointEquals(&mEnemy->base.enemy.facing, &Direction.north)) {
-		attackRect.x = mEnemy->base.entity.pos.x - mEnemy->base.enemy.attackRange.width / 2;
+		attackRect.x = mEnemy->base.entity.pos.x - mEnemy->base.enemy.attackWidth / 2;
 		attackRect.y = mEnemy->base.entity.pos.y + 1;
-		attackRect.width = mEnemy->base.enemy.attackRange.width;
-		attackRect.height = mEnemy->base.enemy.attackRange.height;
+		attackRect.width = mEnemy->base.enemy.attackWidth;
+		attackRect.height = mEnemy->base.enemy.attackHeight;
 	}
 	else if (PointEquals(&mEnemy->base.enemy.facing, &Direction.south)) {
-		attackRect.x = mEnemy->base.entity.pos.x - mEnemy->base.enemy.attackRange.width / 2;
-		attackRect.y = mEnemy->base.entity.pos.y - mEnemy->base.enemy.attackRange.height;
-		attackRect.width = mEnemy->base.enemy.attackRange.width;
-		attackRect.height = mEnemy->base.enemy.attackRange.height;
+		attackRect.x = mEnemy->base.entity.pos.x - mEnemy->base.enemy.attackWidth / 2;
+		attackRect.y = mEnemy->base.entity.pos.y - mEnemy->base.enemy.attackHeight;
+		attackRect.width = mEnemy->base.enemy.attackWidth;
+		attackRect.height = mEnemy->base.enemy.attackHeight;
 	}
 	else if (PointEquals(&mEnemy->base.enemy.facing, &Direction.west)) {
-		attackRect.x = mEnemy->base.entity.pos.x - mEnemy->base.enemy.attackRange.height;
-		attackRect.y = mEnemy->base.entity.pos.y - mEnemy->base.enemy.attackRange.width / 2;
-		attackRect.width = mEnemy->base.enemy.attackRange.height;
-		attackRect.height = mEnemy->base.enemy.attackRange.width;
+		attackRect.x = mEnemy->base.entity.pos.x - mEnemy->base.enemy.attackHeight;
+		attackRect.y = mEnemy->base.entity.pos.y - mEnemy->base.enemy.attackWidth / 2;
+		attackRect.width = mEnemy->base.enemy.attackHeight;
+		attackRect.height = mEnemy->base.enemy.attackWidth;
 	}
 	else {
 		attackRect.x = mEnemy->base.entity.pos.x + 1;
-		attackRect.y = mEnemy->base.entity.pos.y - mEnemy->base.enemy.attackRange.width / 2;
-		attackRect.width = mEnemy->base.enemy.attackRange.height;
-		attackRect.height = mEnemy->base.enemy.attackRange.width;
+		attackRect.y = mEnemy->base.entity.pos.y - mEnemy->base.enemy.attackWidth / 2;
+		attackRect.width = mEnemy->base.enemy.attackHeight;
+		attackRect.height = mEnemy->base.enemy.attackWidth;
 	}
 
 	//플레이어 피격 확인

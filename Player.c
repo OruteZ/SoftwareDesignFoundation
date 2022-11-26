@@ -177,6 +177,10 @@ void PlayerOnHit(int damage) {
 	if (player->hp <= 0) {
 		// gameover;
 	}
+
+#ifdef DEBUG
+	DebugPrint("Player On Hit");
+#endif
 }
 
 

@@ -35,18 +35,18 @@ bool IsPlayerInRange(Enemy* enemy) {
 
 	//세로범위
 	Rect verticalDetectRect = {
-		.x = enemy->base.entity.pos.x - (enemy->attackRange.width / 2),
-		.y = enemy->base.entity.pos.y - enemy->attackRange.height,
-		.width = enemy->attackRange.width,
-		.height = enemy->attackRange.height * 2 + 1
+		.x = enemy->base.entity.pos.x - (enemy->attackWidth / 2),
+		.y = enemy->base.entity.pos.y - enemy->attackHeight,
+		.width = enemy->attackWidth,
+		.height = enemy->attackHeight * 2 + 1
 	};
 
 	//가로범위
 	Rect horizontalDetectRect = {
-		.x = enemy->base.entity.pos.x - enemy->attackRange.height,
-		.y = enemy->base.entity.pos.y - (enemy->attackRange.width / 2),
-		.width = enemy->attackRange.height * 2 + 1,
-		.height = enemy->attackRange.width
+		.x = enemy->base.entity.pos.x - enemy->attackHeight,
+		.y = enemy->base.entity.pos.y - (enemy->attackWidth / 2),
+		.width = enemy->attackHeight * 2 + 1,
+		.height = enemy->attackWidth
 	};
 
 	return (bool)(
@@ -145,7 +145,7 @@ bool isEnemyDead(Enemy* enemy) {
 }
 
 bool isEnemy(Entity* entity) {
-	enum EntityType type = entity->base.entity.type;
+	enum EntityType type = entity->type;
 	return (bool)(MeleeEnemyType <= type && type <= BomberEnemyType);
 }
 

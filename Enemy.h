@@ -31,7 +31,8 @@ typedef struct _Enemy
 
 	int detectionRadius;
 
-	Rect AttackRange;
+	int attackWidth;
+	int attackHeight;
 } Enemy;
 
 bool isEnemyDead(Enemy* enemy);
