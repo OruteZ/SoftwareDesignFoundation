@@ -19,14 +19,15 @@ typedef struct _Enemy
 
 	Point facing;
 
-	double moveSpeed;
-	double lastMoved;
+	double moveSpeed;	//block per second
+	double attackSpeed; //attack per second
 
 	int hp;
 
 	int baseDamage;
+
+	double moveCoolDown;
 	double attackDelay;
-	double momentOfAttack;
 
 	int detectionRadius;
 

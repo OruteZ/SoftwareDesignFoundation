@@ -35,18 +35,18 @@ bool IsPlayerInRange(Enemy* enemy) {
 
 	//세로범위
 	Rect verticalDetectRect = {
-		.x = enemy->base.entity.pos.x - (enemy->AttackRange.width / 2),
-		.y = enemy->base.entity.pos.y - enemy->AttackRange.height,
-		.width = enemy->AttackRange.width,
-		.height = enemy->AttackRange.height * 2 + 1
+		.x = enemy->base.entity.pos.x - (enemy->attackRange.width / 2),
+		.y = enemy->base.entity.pos.y - enemy->attackRange.height,
+		.width = enemy->attackRange.width,
+		.height = enemy->attackRange.height * 2 + 1
 	};
 
 	//가로범위
 	Rect horizontalDetectRect = {
-		.x = enemy->base.entity.pos.x - enemy->AttackRange.height,
-		.y = enemy->base.entity.pos.y - (enemy->AttackRange.width / 2),
-		.width = enemy->AttackRange.height * 2 + 1,
-		.height = enemy->AttackRange.width
+		.x = enemy->base.entity.pos.x - enemy->attackRange.height,
+		.y = enemy->base.entity.pos.y - (enemy->attackRange.width / 2),
+		.width = enemy->attackRange.height * 2 + 1,
+		.height = enemy->attackRange.width
 	};
 
 	return (bool)(
@@ -75,6 +75,8 @@ void EnemyMove(Enemy* enemy, Point direction) {
 }
 
 void EnemyAttack(Enemy* enemy) {
+	if (!canEnemyAttack(enemy)) return;
+
 	switch (enemy->base.entity.type) {
 	case MeleeEnemyType:
 		MeleeEnemyAttack(enemy);
@@ -133,7 +135,7 @@ void CreateEnemy(enum EntityType type, Point spawnPoint) {
 void UpdateEnemy(Enemy* enemy) {
 	//사거리 내로 들어오면 우선 공격하기
 	if (IsPlayerInRange(enemy)) {
-		LookAt(enemy, player->base.entity.pos);
+		LookAt(enemy, GetPlayerPos());
 		EnemyAttack(enemy);
 	}
 }
@@ -143,6 +145,14 @@ bool isEnemyDead(Enemy* enemy) {
 }
 
 bool isEnemy(Entity* entity) {
-	enum EntityType type = enemy->base.entity.type;
+	enum EntityType type = entity->base.entity.type;
 	return (bool)(MeleeEnemyType <= type && type <= BomberEnemyType);
+}
+
+bool canEnemyAttack(Enemy* enemy) {
+	return enemy->attackDelay <= 0;
+}
+
+bool canEnemyMove(Enemy* enemy) {
+	return enemy->moveCoolDown <= 0;
 }
