@@ -50,21 +50,18 @@ void TrySpawnSequence() {
 	if (sequence == NULL) return; // end of linked list! stop spawning!
 
 	if (sequence->gameTime <= GameTime.time) { // time to spawn!
-#ifdef DEBUG
-		DebugPrint("Trying Spawn!");
-#endif
 		Vector* list = sequence->list;
 		for (int i = 0; i < list->length; i++) {
 			Entity* enemy;
 			switch (list->entities[i]->type) {
-			case _MeleeEnemy:
+			case MeleeEnemyType:
 				enemy = CreateMeleeEnemy(list->entities[i]->pos);
 				VectorInsert(enemies, enemy);
 				break;
-			case _ArcherEnemy:
+			case ArcherEnemyType:
 				// todo add ArcherEnemy
 				break;
-			case _BomberEnemy:
+			case BomberEnemyType:
 				// todo add BomberEnemy
 				break;
 			default:

@@ -74,20 +74,24 @@ void EnemyMove(Enemy* enemy, Point direction) {
 	DeleteVector(vector);
 }
 
+bool canEnemyAttack(Enemy* enemy) {
+	return enemy->attackDelay <= 0;
+}
+
 void EnemyAttack(Enemy* enemy) {
 	if (!canEnemyAttack(enemy)) return;
 
 	switch (enemy->base.entity.type) {
 	case MeleeEnemyType:
-		MeleeEnemyAttack(enemy);
+		MeleeEnemyAttack((MeleeEnemy*)enemy);
 		break;
 
 	case ArcherEnemyType:
-		ArcherEnemyAttack(enemy);
+		//ArcherEnemyAttack((ArcherEnemy*)enemy);
 		break;
 
 	case BomberEnemyType:
-		BomberEnemyAttack(enemy);
+		BomberEnemyAttack((BomberEnemy*)enemy);
 		break;
 	}
 }
@@ -116,15 +120,16 @@ void CreateEnemy(enum EntityType type, Point spawnPoint) {
 
 	switch (type) {
 	case MeleeEnemyType:
-		newEnemy = CreateMeleeEnemy(spawnPoint);
+	default:
+		newEnemy = (Enemy*)CreateMeleeEnemy(spawnPoint);
 		break;
 
 	case ArcherEnemyType:
-		newEnemy = CreateArcherEnemy(spawnPoint);
+		newEnemy = (Enemy*)CreateArcherEnemy(spawnPoint);
 		break;
 
 	case BomberEnemyType:
-		newEnemy = CreateBomberEnemy(spawnPoint);
+		newEnemy = (Enemy*)CreateBomberEnemy(spawnPoint);
 		break;
 	}
 
@@ -147,10 +152,6 @@ bool isEnemyDead(Enemy* enemy) {
 bool isEnemy(Entity* entity) {
 	enum EntityType type = entity->type;
 	return (bool)(MeleeEnemyType <= type && type <= BomberEnemyType);
-}
-
-bool canEnemyAttack(Enemy* enemy) {
-	return enemy->attackDelay <= 0;
 }
 
 bool canEnemyMove(Enemy* enemy) {

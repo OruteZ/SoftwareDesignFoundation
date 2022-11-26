@@ -15,10 +15,11 @@ Player* player;
 Player* CreatePlayer(Point spawnPoint)
 {
 	Player* _player = (Player*)malloc(sizeof(Player));
+	if (_player == NULL) exit(-1);
 
 	_player->base.entity.type = PlayerType;
-	_player->base.entity.pos.x = spawnPoint.x;
-	_player->base.entity.pos.y = spawnPoint.y;
+	_player->base.entity.pos.x = 0;
+	_player->base.entity.pos.y = 0;
 
 	_player->attackSpeed = 10.0f;
 	_player->baseDamage = 20;

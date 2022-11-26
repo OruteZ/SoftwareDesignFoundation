@@ -36,7 +36,6 @@ void InitCamera() {
 Point IngamePosition_to_CanvasPosition(Point pos) {
 	Point result;
 	result.x = CameraRectInCanvas.x + (pos.x - CameraRectInGame.x) * 2;
-	//result.y = CameraRectInCanvas.y + (CameraRectInCanvas.height - (pos.y - CameraRectInGame.y));
 	result.y = CameraRectInCanvas.y + (pos.y - CameraRectInGame.y);
 
 	if (result.x % 2 == 0) {
@@ -143,15 +142,15 @@ bool SetCameraPoint()
 		CameraRectInGame.y = newY;
 	}
 
-	if (CameraRectInGame.x < 0) CameraRectInGame.x = 0;
-	if (CameraRectInGame.y < 0) CameraRectInGame.y = 0;
+	//if (CameraRectInGame.x < 0) CameraRectInGame.x = 0;
+	//if (CameraRectInGame.y < 0) CameraRectInGame.y = 0;
 
-	World* worldInfo = GetCurrentWorld();
-	int worldWidth = worldInfo->width;
-	int worldHeight = worldInfo->height;
+	//World* worldInfo = GetCurrentWorld();
+	//int worldWidth = worldInfo->width;
+	//int worldHeight = worldInfo->height;
 
-	if (CameraRectInGame.x + CameraRectInGame.width >= worldWidth) CameraRectInGame.x = worldWidth - _cameraWidthInGame;
-	if (CameraRectInGame.y + CameraRectInGame.height >= worldHeight) CameraRectInGame.y = worldHeight - _cameraHeightInGame;
+	//if (CameraRectInGame.x + CameraRectInGame.width >= worldWidth) CameraRectInGame.x = worldWidth - _cameraWidthInGame;
+	//if (CameraRectInGame.y + CameraRectInGame.height >= worldHeight) CameraRectInGame.y = worldHeight - _cameraHeightInGame;
 
 	return true;
 }

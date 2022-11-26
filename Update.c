@@ -50,17 +50,19 @@ void UpdateParticles() {
 }
 
 void Update() {
+	UpdateTime();
+	UpdateKeyboard();
+
+	if (GameState == Dungeon) {
+		TrySpawnSequence();
+		UpdateEnemies();
+		UpdateParticles();
+		UpdatePlayer();
+	}
+	
 	if (GameState == Menu) {
 		UpdateMenu();
 	}
-
-	UpdateTime();
-	UpdateKeyboard();
-	UpdateEnemies();
-	UpdateParticles();
-	UpdatePlayer();
-
-	TrySpawnSequence();
 
 #ifdef DEBUG
 	if (GetKeyDown('R')) {

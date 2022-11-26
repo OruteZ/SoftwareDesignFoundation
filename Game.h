@@ -8,7 +8,8 @@
 enum _GameState {
 	Menu,
 	Dialogue,
-	Dungeon
+	Dungeon,
+	Exiting
 };
 
 extern enum _GameState GameState;
@@ -22,7 +23,7 @@ extern QuadTree* enemiesTree;
 extern QuadTree* expOrbsTree;
 extern QuadTree* particleTree;
 
-#ifdef DEBUG2
+#ifdef DEBUG
 extern Vector* debugVector;
 extern QuadTree* debugTree;
 #endif

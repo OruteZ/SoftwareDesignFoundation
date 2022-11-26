@@ -8,11 +8,14 @@
 #include "Render.h"
 #include "Release.h"
 
+#include "Game.h"
+
 int main() {
     Init();
     while (true) {
         Update();
         Render();
+        if (GameState == Exiting) break;
     }
     Release();
 
