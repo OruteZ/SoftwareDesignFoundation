@@ -49,6 +49,12 @@
     <Filter Include="Header Files\World">
       <UniqueIdentifier>{44622124-4a3a-44aa-b459-cb0be9793513}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Menu">
+      <UniqueIdentifier>{f7d5f701-19f4-4c1c-9cb0-744379c98bd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Menu">
+      <UniqueIdentifier>{b5460a6b-6481-4e72-83fb-b0901bbab814}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Init.c">
@@ -129,6 +135,10 @@
     <ClCompile Include="RayCast.c">
       <Filter>Source Files\World</Filter>
     </ClCompile>
+    <ClCompile Include="Menu.c">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Init.h">
@@ -208,6 +218,9 @@
     </ClInclude>
     <ClInclude Include="RayCast.h">
       <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files\Menu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

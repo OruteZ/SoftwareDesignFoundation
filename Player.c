@@ -126,7 +126,7 @@ void PlayerMeleeAttack() {
 		}
 	}
 
-	_canPlayerMeleeAttack = FALSE;
+
 	_playerAttackDelay = 1 - (player->attackSpeed);
 
 	if (_playerMoveCooldown < _playerAttackDelay) {
@@ -177,6 +177,10 @@ void PlayerOnHit(int damage) {
 	if (player->hp <= 0) {
 		// gameover;
 	}
+
+#ifdef DEBUG
+	DebugPrint("Player On Hit");
+#endif
 }
 
 
