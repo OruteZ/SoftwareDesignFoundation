@@ -132,13 +132,12 @@
     <ClCompile Include="Particle.c">
       <Filter>Source Files\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="Menu.c">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
     <ClCompile Include="RayCast.c">
       <Filter>Source Files\World</Filter>
     </ClCompile>
-    <ClCompile Include="Menu.c">
-      <Filter>Source Files\Menu</Filter>
-    </ClCompile>
-
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Init.h">
@@ -220,7 +219,7 @@
       <Filter>Header Files\World</Filter>
     </ClInclude>
     <ClInclude Include="Menu.h">
-      <Filter>Header Files\Menu</Filter>
+      <Filter>Header Files\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

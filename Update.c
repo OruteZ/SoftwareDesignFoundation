@@ -10,6 +10,7 @@
 #include "Enemy.h"
 #include "Vector.h"
 #include "Entity.h"
+#include "Menu.h"
 #include "World.h"
 
 #ifdef DEBUG
@@ -49,9 +50,12 @@ void UpdateParticles() {
 }
 
 void Update() {
+	if (GameState == Menu) {
+		UpdateMenu();
+	}
+
 	UpdateTime();
 	UpdateKeyboard();
-
 	UpdateEnemies();
 	UpdateParticles();
 	UpdatePlayer();

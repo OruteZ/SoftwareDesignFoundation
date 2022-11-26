@@ -6,55 +6,112 @@
 #include "Point.h"
 #include "Screen.h"
 #include "Game.h"
-#define StartButtonPosX 30
-#define StartButtonPosY 80
-#define EndButtonPosX 60
-#define EndButtonPosY 80
+#include "Debug.h"
+#define StartButtonPosX (20)
+#define StartButtonPosY (24)
+#define EndButtonPosX (50)
+#define EndButtonPosY (24)
+#define StartButtonSelectionArrowPosX (StartButtonPosX - 4)
+#define StartButtonSelectionArrowPosY StartButtonPosY
+#define EndButtonSelectionArrowPosX (EndButtonPosX - 4)
+#define EndButtonSelectionArrowPosY EndButtonPosY 
 
 void Button()
 {
-	Point p;
-	p.x = StartButtonPosX;
-	p.y = StartButtonPosY;
-	ScreenPrint(p.x, p.y, "Game Start");
-	p.x = EndButtonPosX;
-	p.y = EndButtonPosY;
-	ScreenPrint(p.x, p.y, "Quit");
+Point p;
+bool CanArrowMove = true;
+
+//--------------------------------------
+typedef enum ButtonType {
+	StartButton,
+	EndButton,
+}button;
+
+button nowButton = StartButton;
+
+void ChangeButton() {
+	if (nowButton == StartButton) nowButton = EndButton;
+	else if (nowButton == EndButton) nowButton = StartButton;
+#ifdef DEBUG
+	DebugPrint("%d", nowButton);
+#endif
 }
 
-void CursorMove()
+void UpdateMenu() {
+	if (GetKeyDown('A')) ChangeButton();
+	if (GetKeyDown('D')) ChangeButton();
+}
+//---------------------------------------
+
+
+void RenderButton()
 {
-	Point p;
-	p.x = StartButtonPosX - 5;
-	p.y = StartButtonPosY;
-	if (GetKeyDown('A'))
-	{
-		ScreenPrint(p.x, p.y, "  ");
-		p.x = StartButtonPosX - 5;
-		p.y = StartButtonPosY;
-		ScreenPrint(p.x, p.y, "->");
+	ScreenPrint(StartButtonPosX, StartButtonPosY, "Game Start");
+	ScreenPrint(EndButtonPosX, EndButtonPosY, "Quit");
+}
+void RenderStartArrow()
+{
+	ScreenPrint(StartButtonSelectionArrowPosX, StartButtonSelectionArrowPosY, "->");
+}
+void RenderEndArrow()
+{
+	ScreenPrint(EndButtonSelectionArrowPosX, EndButtonSelectionArrowPosY, "->");
+}
+
+void RenderTitle()
+{
+	ScreenPrint(10, 10, " ###   ##                   #                          ##     #              ");
+	ScreenPrint(10, 11, "#  #   #                   #                           #                     ");
+	ScreenPrint(10, 12, "#  #   #     ##    ##    ###  # ##   ##   ###    ###   #    ##    ###    ##  ");
+	ScreenPrint(10, 13, "###    #    #  #  #  #  #  #  ##    #  #  #  #  #  #   #     #    #  #  #  # ");
+	ScreenPrint(10, 14, "#  #   #    #  #  #  #  #  #  #     ####  #  #  #  #   #     #    #  #  #### ");
+	ScreenPrint(10, 15, "#  #   #    #  #  #  #  #  #  #     #     #  #  # ##   #     #    #  #  #    ");
+	ScreenPrint(10, 16, "###   ###    ##    ##    ###  #      ##   #  #   # #  ###   ###   #  #   ### ");
 	}
-	else if (GetKeyDown('D'))
+/*
+	void StartButtonArrowMove()
 	{
-		ScreenPrint(p.x, p.y, "  ");
-		p.x = EndButtonPosX - 5;
-		p.y = EndButtonPosY;
-		ScreenPrint(p.x, p.y, "->");
+		p.x = StartButtonSelectionArrowPosX;
+		p.y = StartButtonSelectionArrowPosY;
+		ScreenPrint(StartButtonSelectionArrowPosX, StartButtonSelectionArrowPosY, "->");
+	}
+	void EndButtonArrowMove()
+	{
+		p.x = EndButtonSelectionArrowPosX;
+		p.y = EndButtonSelectionArrowPosY;
+		ScreenPrint(EndButtonSelectionArrowPosX, EndButtonSelectionArrowPosY, "->");
+	}
+	*/
+
+void RenderButtonArrow()
+{
+	if (nowButton == StartButton) {
+		RenderStartArrow();
+#ifdef DEBUG
+		DebugPrint("Start");
+#endif
+	}
+	else if (nowButton == EndButton) {
+		RenderEndArrow();
+#ifdef DEBUG
+		DebugPrint("END  ");
+#endif
 	}
 }
 
-void GameEnd(Point p)
+
+void GameEnd()
 {
-	if (p.x == EndButtonPosX - 5 && p.y == EndButtonPosY)
+	if (p.x == EndButtonSelectionArrowPosX && p.y == EndButtonSelectionArrowPosY)
 	{
 		if (GetKeyDown(VK_RETURN))
 		{
-			//게임 종료
-			
+			//���� ����
+			exit(0);
 		}
 	}
 }
-void GameStart(Point p)
+void GameStart()
 {
 	if (p.x == StartButtonPosX - 5 && p.y == StartButtonPosY)
 	{
@@ -64,4 +121,10 @@ void GameStart(Point p)
 
 		}
 	}
+}
+
+void RenderMenu() {
+	RenderTitle();
+	RenderButton();
+	RenderButtonArrow();
 }
