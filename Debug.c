@@ -21,8 +21,8 @@ void DebugPrint(const char* format , ...) {
 	va_list args;
 	va_start(args, format);
 
-	char buffer_line_number[6];
-	sprintf_s(buffer_line_number, sizeof(buffer_line_number), "%03d: ", current_debug_line);
+	char buffer_line_number[9];
+	sprintf_s(buffer_line_number, sizeof(buffer_line_number), "%05d: ", current_debug_line);
 	char buffer[256];
 	vsprintf_s(buffer, sizeof(buffer), format, args);
 

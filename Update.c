@@ -48,6 +48,10 @@ void UpdateParticles() {
 }
 
 void Update() {
+	if (GameState == Menu) {
+		UpdateMenu();
+	}
+
 	UpdateTime();
 	UpdateKeyboard();
 	UpdateEnemies();

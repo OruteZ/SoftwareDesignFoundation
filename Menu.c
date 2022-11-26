@@ -6,17 +6,42 @@
 #include "Point.h"
 #include "Screen.h"
 #include "Game.h"
-#define StartButtonPosX 20
-#define StartButtonPosY 24
-#define EndButtonPosX 50
-#define EndButtonPosY 24
-#define StartButtonSelectionArrowPosX StartButtonPosX - 5
+#include "Debug.h"
+#define StartButtonPosX (20)
+#define StartButtonPosY (24)
+#define EndButtonPosX (50)
+#define EndButtonPosY (24)
+#define StartButtonSelectionArrowPosX (StartButtonPosX - 4)
 #define StartButtonSelectionArrowPosY StartButtonPosY
-#define EndButtonSelectionArrowPosX EndButtonPosX - 5
+#define EndButtonSelectionArrowPosX (EndButtonPosX - 4)
 #define EndButtonSelectionArrowPosY EndButtonPosY 
 
 Point p;
 bool CanArrowMove = true;
+
+//--------------------------------------
+typedef enum ButtonType {
+	StartButton,
+	EndButton,
+}button;
+
+button nowButton = StartButton;
+
+void ChangeButton() {
+	if (nowButton == StartButton) nowButton = EndButton;
+	else if (nowButton == EndButton) nowButton = StartButton;
+#ifdef DEBUG
+	DebugPrint("%d", nowButton);
+#endif
+}
+
+void UpdateMenu() {
+	if (GetKeyDown('A')) ChangeButton();
+	if (GetKeyDown('D')) ChangeButton();
+}
+//---------------------------------------
+
+
 void RenderButton()
 {
 	ScreenPrint(StartButtonPosX, StartButtonPosY, "Game Start");
@@ -30,6 +55,7 @@ void RenderEndArrow()
 {
 	ScreenPrint(EndButtonSelectionArrowPosX, EndButtonSelectionArrowPosY, "->");
 }
+
 void RenderTitle()
 {
 	ScreenPrint(10, 10, " ###   ##                   #                          ##     #              ");
@@ -38,32 +64,36 @@ void RenderTitle()
 	ScreenPrint(10, 13, "###    #    #  #  #  #  #  #  ##    #  #  #  #  #  #   #     #    #  #  #  # ");
 	ScreenPrint(10, 14, "#  #   #    #  #  #  #  #  #  #     ####  #  #  #  #   #     #    #  #  #### ");
 	ScreenPrint(10, 15, "#  #   #    #  #  #  #  #  #  #     #     #  #  # ##   #     #    #  #  #    ");
-	ScreenPrint(10, 16, "###   ###    ##    ##    ###  #      ##   #  #   # #  ###   ###   #  #   ###");
-}
-void StartButtonArrowMove()
-{
-	p.x = StartButtonSelectionArrowPosX;
-	p.y = StartButtonSelectionArrowPosY;
-	ScreenPrint(StartButtonSelectionArrowPosX, StartButtonSelectionArrowPosY, "->");
-}
-void EndButtonArrowMove()
-{
-	p.x = EndButtonSelectionArrowPosX;
-	p.y = EndButtonSelectionArrowPosY;
-	ScreenPrint(EndButtonSelectionArrowPosX, EndButtonSelectionArrowPosY, "->");
-}
+	ScreenPrint(10, 16, "###   ###    ##    ##    ###  #      ##   #  #   # #  ###   ###   #  #   ### ");
+	}
+/*
+	void StartButtonArrowMove()
+	{
+		p.x = StartButtonSelectionArrowPosX;
+		p.y = StartButtonSelectionArrowPosY;
+		ScreenPrint(StartButtonSelectionArrowPosX, StartButtonSelectionArrowPosY, "->");
+	}
+	void EndButtonArrowMove()
+	{
+		p.x = EndButtonSelectionArrowPosX;
+		p.y = EndButtonSelectionArrowPosY;
+		ScreenPrint(EndButtonSelectionArrowPosX, EndButtonSelectionArrowPosY, "->");
+	}
+	*/
 
 void RenderButtonArrow()
 {
-
-	if (GetKeyDown('A'))
-	{
+	if (nowButton == StartButton) {
 		RenderStartArrow();
-
+#ifdef DEBUG
+		DebugPrint("Start");
+#endif
 	}
-	else if (GetKeyDown('D'))
-	{
+	else if (nowButton == EndButton) {
 		RenderEndArrow();
+#ifdef DEBUG
+		DebugPrint("END  ");
+#endif
 	}
 }
 
@@ -89,4 +119,10 @@ void GameStart()
 
 		}
 	}
+}
+
+void RenderMenu() {
+	RenderTitle();
+	RenderButton();
+	RenderButtonArrow();
 }

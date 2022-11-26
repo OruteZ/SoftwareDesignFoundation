@@ -15,10 +15,9 @@ void Render() {
 	if (GameState == Dungeon) {
 		RenderCamera();
 	}
+
 	if (GameState == Menu) {
-		RenderButton();
-		RenderTitle();
-		RenderButtonArrow();
+		RenderMenu();
 	}
 
 	ScreenFlipping();
