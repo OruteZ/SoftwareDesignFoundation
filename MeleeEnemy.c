@@ -1,7 +1,8 @@
 #include "Point.h"
 #include "MeleeEnemy.h"
 #include "Player.h"
-
+#include "Enemy.h"
+#include<string.h>
 
 
 const double _baseMeleeEnemyAttackDelay = 0.15;
@@ -29,14 +30,29 @@ const MeleeEnemy DefaultMeleeEnemy = {
 
 MeleeEnemy* CreateMeleeEnemy(Point p) {
 	MeleeEnemy* meleeEnemy = (MeleeEnemy*)malloc(sizeof(MeleeEnemy));
+	if (meleeEnemy == NULL) exit(-1);
 
-	(*meleeEnemy) = DefaultMeleeEnemy;
 	meleeEnemy->base.entity.pos = p;
+	meleeEnemy->base.entity.type = DefaultMeleeEnemy.base.entity.type;
+
+	meleeEnemy->base.enemy.baseDamage = 15;
+	meleeEnemy->base.enemy.hp = 100;
+	meleeEnemy->base.enemy.moveSpeed = 1;
+	meleeEnemy->base.enemy.attackSpeed = 1 / 0.15;
+	meleeEnemy->base.enemy.detectionRadius = 10;
+	meleeEnemy->base.enemy.facing = Direction.north;
+	meleeEnemy->base.enemy.moveCoolDown = 0;
+	meleeEnemy->base.enemy.attackDelay = 0;
+	meleeEnemy->base.enemy.attackHeight = 1;
+	meleeEnemy->base.enemy.attackWidth = 3;
 
 	return meleeEnemy;
 }
 
 void MeleeEnemyAttack(MeleeEnemy* mEnemy) {
+#ifdef DEBUG
+	DebugPrint("Melee Enemy attack Call");
+#endif
 	Point attackPoint = mEnemy->base.entity.pos;
 	PointAdd(&attackPoint, &mEnemy->base.enemy.facing);
 

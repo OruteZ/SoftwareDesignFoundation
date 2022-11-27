@@ -81,6 +81,11 @@ bool canEnemyAttack(Enemy* enemy) {
 void EnemyAttack(Enemy* enemy) {
 	if (!canEnemyAttack(enemy)) return;
 
+#ifdef DEBUG
+	DebugPrint("Enemy can attack");
+	DebugPrint("Enemy type : %d", enemy->base.entity.type);
+#endif
+
 	switch (enemy->base.entity.type) {
 	case MeleeEnemyType:
 		MeleeEnemyAttack((MeleeEnemy*)enemy);
@@ -120,7 +125,6 @@ void CreateEnemy(enum EntityType type, Point spawnPoint) {
 
 	switch (type) {
 	case MeleeEnemyType:
-	default:
 		newEnemy = (Enemy*)CreateMeleeEnemy(spawnPoint);
 		break;
 
@@ -131,10 +135,13 @@ void CreateEnemy(enum EntityType type, Point spawnPoint) {
 	case BomberEnemyType:
 		newEnemy = (Enemy*)CreateBomberEnemy(spawnPoint);
 		break;
+
+	default: break;
 	}
 
+	if (newEnemy == NULL) exit(-1);
 	VectorInsert(enemies, newEnemy);
-	QuadTreeInsert(enemiesTree, newEnemy);
+	//QuadTreeInsert(enemiesTree, newEnemy);
 }
 
 void UpdateEnemy(Enemy* enemy) {
