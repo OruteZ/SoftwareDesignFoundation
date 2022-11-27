@@ -20,6 +20,9 @@ const char enemyChar[] = "¡Ý";
 const char playerChar[] = "¢Ã";
 const char wallChar[] = "¢Æ";
 
+const char MeleeAttackChar[] = "¢Â";
+const char RangeAttackChar[] = "RR";
+
 Point IngamePosition_to_CanvasPosition(Point pos);
 
 void InitCamera() {
@@ -112,7 +115,25 @@ void PrintParticles() {
 	int len = particles->length;
 	for (int i = 0; i < len; i++) {
 		Particle* p = (Particle*)particles->entities[i];
-		if (!RectIsIntersectingRect(&CameraRectInGame, &p->particleRect)) continue;
+
+		if (!RectIsIntersectingRect(&CameraRectInGame, &p->particleRect)) {
+
+			continue;
+		}
+
+
+		char nowChar[3];
+		switch (p->particleType) {
+		case MeleeAttackParticleType:
+			strcpy(nowChar, MeleeAttackChar);
+			break;
+
+		case RangeAttackParticleType:
+		case EnemyRangeAttackParticleType:
+			strcpy(nowChar, RangeAttackChar);
+			break;
+
+		}
 
 		for (int y = 0; y < p->particleRect.height; y++) {
 			for (int x = 0; x < p->particleRect.width; x++) {
@@ -120,7 +141,9 @@ void PrintParticles() {
 				if (!RectContainsPoint(&CameraRectInGame, &inGamePos)) continue;
 
 				printPos = IngamePosition_to_CanvasPosition(inGamePos);
-				if (p->particleImage[y][x] != ' ') ScreenPrint(printPos.x, printPos.y, "¢Â");
+				if (p->particleGrid[y][x]) {
+					ScreenPrint(printPos.x, printPos.y, nowChar);
+				}
 			}
 		}
 	}
@@ -142,15 +165,15 @@ bool SetCameraPoint()
 		CameraRectInGame.y = newY;
 	}
 
-	//if (CameraRectInGame.x < 0) CameraRectInGame.x = 0;
-	//if (CameraRectInGame.y < 0) CameraRectInGame.y = 0;
+	if (CameraRectInGame.x < 0) CameraRectInGame.x = 0;
+	if (CameraRectInGame.y < 0) CameraRectInGame.y = 0;
 
-	//World* worldInfo = GetCurrentWorld();
-	//int worldWidth = worldInfo->width;
-	//int worldHeight = worldInfo->height;
+	World* worldInfo = GetCurrentWorld();
+	int worldWidth = worldInfo->width;
+	int worldHeight = worldInfo->height;
 
-	//if (CameraRectInGame.x + CameraRectInGame.width >= worldWidth) CameraRectInGame.x = worldWidth - _cameraWidthInGame;
-	//if (CameraRectInGame.y + CameraRectInGame.height >= worldHeight) CameraRectInGame.y = worldHeight - _cameraHeightInGame;
+	if (CameraRectInGame.x + CameraRectInGame.width >= worldWidth) CameraRectInGame.x = worldWidth - _cameraWidthInGame;
+	if (CameraRectInGame.y + CameraRectInGame.height >= worldHeight) CameraRectInGame.y = worldHeight - _cameraHeightInGame;
 
 	return true;
 }

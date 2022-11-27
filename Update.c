@@ -39,8 +39,8 @@ void UpdateParticles() {
 		Particle* particle = (Particle*)particles->entities[i];
 
 		if (particle->isDead) {
-			DeleteParticle(particle);
 			VectorDeleteUnstable(particles, i);
+			DeleteParticle(particle);
 		}
 
 		else {

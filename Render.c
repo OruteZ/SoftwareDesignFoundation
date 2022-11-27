@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Menu.h"
 #include <stdio.h> // only used for debug
+#include "Render.h"
 
 #ifdef DEBUG
 #include "Keyboard.h"
