@@ -10,6 +10,7 @@
 #include "Enemy.h"
 #include "Vector.h"
 #include "Entity.h"
+#include "Menu.h"
 #include "World.h"
 
 #ifdef DEBUG
@@ -52,11 +53,16 @@ void Update() {
 	UpdateTime();
 	UpdateKeyboard();
 
-	UpdateEnemies();
-	UpdateParticles();
-	UpdatePlayer();
-
-	TrySpawnSequence();
+	if (GameState == Dungeon) {
+		TrySpawnSequence();
+		UpdateEnemies();
+		UpdateParticles();
+		UpdatePlayer();
+	}
+	
+	if (GameState == Menu) {
+		UpdateMenu();
+	}
 
 #ifdef DEBUG
 	if (GetKeyDown('R')) {

@@ -25,15 +25,14 @@ void Init()
     InitCamera();
 
 
-    GameState = Dungeon;
+    GameState = Menu;
     // Initialize worlds
     InitializeWorld001();
 
-    StartWorld001();
+    // StartWorld001();
 
     // Vectors
-    Point playerSpawnPoint = { 3, 14 };
-    player = CreatePlayer(playerSpawnPoint);
+    player = CreatePlayer();
     enemies = CreateVector();
     expOrbs = CreateVector();
     particles = CreateVector();

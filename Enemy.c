@@ -3,6 +3,7 @@
 
 #include "Game.h"
 #include "World.h"
+#include "Point.h"
 
 #include "Entity.h"
 #include "Enemy.h"
@@ -14,12 +15,44 @@
 #include "ArcherEnemy.h"
 #include "BomberEnemy.h"
 
-void LookAt(Point target) {
+void LookAt(Enemy* enemy, Point target) {
+	int deltaX = target.x - enemy->base.entity.pos.x;
+	int deltaY = target.y - enemy->base.entity.pos.y;
 
+	if (abs(deltaX) > abs(deltaY)) {
+		if (deltaX < 0) enemy->facing = Direction.west;
+		else enemy->facing = Direction.east;
+	}
+
+	else {
+		if (deltaY < 0) enemy->facing = Direction.south;
+		else enemy->facing = Direction.north;
+	}
 }
 
-bool IsPlayerInRange() {
+bool IsPlayerInRange(Enemy* enemy) {
+	Point playerPos = player->base.entity.pos;
 
+	//세로범위
+	Rect verticalDetectRect = {
+		.x = enemy->base.entity.pos.x - (enemy->attackWidth / 2),
+		.y = enemy->base.entity.pos.y - enemy->attackHeight,
+		.width = enemy->attackWidth,
+		.height = enemy->attackHeight * 2 + 1
+	};
+
+	//가로범위
+	Rect horizontalDetectRect = {
+		.x = enemy->base.entity.pos.x - enemy->attackHeight,
+		.y = enemy->base.entity.pos.y - (enemy->attackWidth / 2),
+		.width = enemy->attackHeight * 2 + 1,
+		.height = enemy->attackWidth
+	};
+
+	return (bool)(
+		RectContainsPoint(&verticalDetectRect, &playerPos)||
+		RectContainsPoint(&horizontalDetectRect, &playerPos)
+		);
 }
 
 void EnemyMove(Enemy* enemy, Point direction) {
@@ -40,12 +73,36 @@ void EnemyMove(Enemy* enemy, Point direction) {
 	DeletePoint(nextPosition);
 	DeleteVector(vector);
 }
+
+bool canEnemyAttack(Enemy* enemy) {
+	return enemy->attackDelay <= 0;
+}
+
+void EnemyAttack(Enemy* enemy) {
+	if (!canEnemyAttack(enemy)) return;
+
+	switch (enemy->base.entity.type) {
+	case MeleeEnemyType:
+		MeleeEnemyAttack((MeleeEnemy*)enemy);
+		break;
+
+	case ArcherEnemyType:
+		//ArcherEnemyAttack((ArcherEnemy*)enemy);
+		break;
+
+	case BomberEnemyType:
+		BomberEnemyAttack((BomberEnemy*)enemy);
+		break;
+	}
+}
+
 void EnemyOnDeath(Enemy* enemy)
 {
 #ifdef DEBUG
 	DebugPrint("Enemy Dead!");
 #endif
 }
+
 void EnemyOnHit(Enemy* enemy, int damage)
 {
 	enemy->hp -= damage;
@@ -58,20 +115,21 @@ void EnemyOnHit(Enemy* enemy, int damage)
 	}
 }
 
-void CreateEnemy(EnemyBehaviorType type, Point spawnPoint) {
+void CreateEnemy(enum EntityType type, Point spawnPoint) {
 	Enemy* newEnemy;
 
 	switch (type) {
 	case MeleeEnemyType:
-		newEnemy = CreateMeleeEnemy(spawnPoint);
+	default:
+		newEnemy = (Enemy*)CreateMeleeEnemy(spawnPoint);
 		break;
 
 	case ArcherEnemyType:
-		newEnemy = CreateArcherEnemy(spawnPoint);
+		newEnemy = (Enemy*)CreateArcherEnemy(spawnPoint);
 		break;
 
 	case BomberEnemyType:
-		newEnemy = CreateBomberEnemy(spawnPoint);
+		newEnemy = (Enemy*)CreateBomberEnemy(spawnPoint);
 		break;
 	}
 
@@ -81,9 +139,21 @@ void CreateEnemy(EnemyBehaviorType type, Point spawnPoint) {
 
 void UpdateEnemy(Enemy* enemy) {
 	//사거리 내로 들어오면 우선 공격하기
-
+	if (IsPlayerInRange(enemy)) {
+		LookAt(enemy, GetPlayerPos());
+		EnemyAttack(enemy);
+	}
 }
 
 bool isEnemyDead(Enemy* enemy) {
 	return (bool)(enemy->hp <= 0);
+}
+
+bool isEnemy(Entity* entity) {
+	enum EntityType type = entity->type;
+	return (bool)(MeleeEnemyType <= type && type <= BomberEnemyType);
+}
+
+bool canEnemyMove(Enemy* enemy) {
+	return enemy->moveCoolDown <= 0;
 }
