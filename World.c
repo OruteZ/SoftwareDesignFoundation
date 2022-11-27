@@ -76,14 +76,13 @@ void TrySpawnSequence() {
 
 
 
-World* CreateWorld(const int width, const int height, const Point playerSpawnPoint) {
+World* CreateWorld(const int width, const int height) {
 	World* world = (World*)malloc(sizeof(World));
 	if (world == NULL) exit(-1);
 	world->width = width;
 	world->height = height;
 	world->grid = NULL;
 
-	world->playerSpawnPoint = playerSpawnPoint;
 	world->enemySpawnSequence = NULL;
 	world->currentSpawnSequence = NULL;
 }
@@ -96,6 +95,9 @@ void SetCurrentWorld(World* world) {
 }
 World* GetCurrentWorld() {
 	return current_world;
+}
+void StartNextWorld() {
+	(*current_world->startNextWorld)();
 }
 
 

@@ -99,12 +99,15 @@ Tile grid_001[] = {
 
 World* world001;
 
+#include "world002.h"
 void InitializeWorld001() {
 	world001 = CreateWorld(90, 89);
 	world001->grid = grid_001;
 	
 	Point playerSpawnPoint = { .x = 4, .y = 13 };
 	world001->playerSpawnPoint = playerSpawnPoint;
+
+	world001->startNextWorld = &StartWorld002;
 
 	// spawn at Gametime.time >= 0
 	SpawnSequence* seq_1 = CreateSpawnSequence(0);

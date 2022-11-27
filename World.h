@@ -26,6 +26,8 @@ typedef struct _World {
 
 	SpawnSequence* enemySpawnSequence;
 	SpawnSequence* currentSpawnSequence;
+
+	void (*startNextWorld)();
 } World;
 
 
