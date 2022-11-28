@@ -9,6 +9,7 @@
 #include "Enemy.h"
 #include "Particle.h"
 #include "Debug.h"
+#include "Time.h"
 
 int _cameraWidthInGame = 51;
 int _cameraHeightInGame = 21;
@@ -197,6 +198,30 @@ bool SetCameraPoint()
 	return true;
 }
 
+bool isShaking = false;
+double ShakingTime = 0;
+double BaseShakingTime = 0.1f;
+
+void CameraShake() {
+	if (isShaking) return;
+
+	CameraRectInCanvas.x++;
+	isShaking = true;
+
+	ShakingTime = BaseShakingTime;
+}
+
+void UpdateShakingTime() {
+	ShakingTime -= Time.deltaTime;
+
+	if (ShakingTime <= 0) {
+		isShaking = false;
+
+		CameraRectInCanvas.x--;
+		//CameraRectInGame.y--;
+	}
+}
+
 void RenderCamera()
 {
 	SetCameraPoint();
@@ -206,4 +231,6 @@ void RenderCamera()
 	PrintEnemies();
 	PrintPlayer();
 	PrintParticles();
+
+	if (isShaking) UpdateShakingTime();
 }
