@@ -58,6 +58,10 @@ void Update() {
 		UpdateEnemies();
 		UpdateParticles();
 		UpdatePlayer();
+
+		if (GetTile(player->base.entity.pos) & FLAG_GOAL) {
+			StartNextWorld();
+		}
 	}
 	
 	if (GameState == Menu) {

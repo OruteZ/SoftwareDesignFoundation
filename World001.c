@@ -125,9 +125,4 @@ void InitializeWorld001() {
 #include "Game.h"
 void StartWorld001() {
 	SetCurrentWorld(world001);
-	
-	player->base.entity.pos.x = world001->playerSpawnPoint.x;
-	player->base.entity.pos.y = world001->playerSpawnPoint.y;
-
-	world001->currentSpawnSequence = world001->enemySpawnSequence;
 }

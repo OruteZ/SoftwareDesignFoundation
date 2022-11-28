@@ -4,7 +4,17 @@
 #include "Point.h"
 #include "Entity.h"
 
-World* current_world = NULL;
+World* current_world;
+World* void_world;
+Tile void_grid[] = { GROUND };
+
+#include "World001.h"
+void InitializeWorld() {
+	void_world = CreateWorld(1, 1);
+	void_world->grid = void_grid;
+	void_world->startNextWorld = &StartWorld001;
+	SetCurrentWorld(void_world);
+}
 
 
 
@@ -75,7 +85,8 @@ void TrySpawnSequence() {
 
 
 
-
+void voidFunc() {
+}
 World* CreateWorld(const int width, const int height) {
 	World* world = (World*)malloc(sizeof(World));
 	if (world == NULL) exit(-1);
@@ -83,8 +94,13 @@ World* CreateWorld(const int width, const int height) {
 	world->height = height;
 	world->grid = NULL;
 
+	world->playerSpawnPoint.x = 0;
+	world->playerSpawnPoint.y = 0;
+
 	world->enemySpawnSequence = NULL;
 	world->currentSpawnSequence = NULL;
+
+	world->startNextWorld = &voidFunc;
 }
 void DeleteWorld(World* world) {
 	free(world);
@@ -96,8 +112,24 @@ void SetCurrentWorld(World* world) {
 World* GetCurrentWorld() {
 	return current_world;
 }
+
+void StartVoidWorld() {
+	current_world = void_world;
+}
 void StartNextWorld() {
 	(*current_world->startNextWorld)();
+
+	DeepDeleteVector(enemies);
+	DeepDeleteVector(expOrbs);
+	DeepDeleteVector(particles);
+	enemies = CreateVector();
+	expOrbs = CreateVector();
+	particles = CreateVector();
+
+	player->base.entity.pos.x = current_world->playerSpawnPoint.x;
+	player->base.entity.pos.y = current_world->playerSpawnPoint.y;
+
+	current_world->currentSpawnSequence = current_world->enemySpawnSequence;
 }
 
 
