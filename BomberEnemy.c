@@ -31,8 +31,8 @@ void BomberEnemyAttack(BomberEnemy* bomberEnemy) {
 
 	//바라보는 방향에 따라 공격범위 rect 지정
 	Rect attackRect = {
-		.x = attackPoint.x - (bomberEnemy->base.enemy.attackHeight - 1),
-		.y = attackPoint.y - (bomberEnemy->base.enemy.attackHeight - 1),
+		.x = attackPoint.x - (bomberEnemy->base.enemy.attackWidth / 2),
+		.y = attackPoint.y - (bomberEnemy->base.enemy.attackHeight / 2),
 		.width = bomberEnemy->base.enemy.attackWidth,
 		.height = bomberEnemy->base.enemy.attackHeight
 	};
@@ -44,7 +44,7 @@ void BomberEnemyAttack(BomberEnemy* bomberEnemy) {
 		PlayerOnHit(bomberEnemy->base.enemy.baseDamage);
 	}
 
-	bomberEnemy->base.enemy.hp = 0;
+	bomberEnemy->base.enemy.hp = -1;
 	bomberEnemy->base.enemy.attackDelay = 10000;
 
 #ifdef DEBUG
