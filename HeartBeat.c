@@ -36,7 +36,7 @@ void InitHeartBeat()
 	if (heartBeat == NULL) exit(-1);
 
 	heartBeat->noteSize = 20;
-	heartBeat->BPM = 280;
+	heartBeat->BPM = 140;
 	heartBeat->time_to_check_tempo = 0;
 	heartBeat->combo = 0;
 
@@ -50,15 +50,15 @@ void InitHeartBeat()
 	PlaySound(TEXT(".\\GameSound.wav"), NULL, SND_FILENAME | SND_ASYNC);
 }
 
-void UpdateHeartBeat(double delta_time) {
+void UpdateHeartBeat() {
 	heartBeat->time_to_check_tempo += Time.deltaTime;
 
-	if (heartBeat->time_to_check_tempo >= ((double)60 * 1000) / (double)heartBeat->BPM) {
+	if (heartBeat->time_to_check_tempo >= ((double)60) / (double)heartBeat->BPM) {
 		MoveNote();
 		heartBeat->time_to_check_tempo -= ((double)60) / (double)heartBeat->BPM;
 		MoveNote();
 		isBeatNow = true;
-		heartBeat->time_to_check_tempo -= ((double)60 * 1000) / (double)heartBeat->BPM;
+		heartBeat->time_to_check_tempo -= ((double)60) / (double)heartBeat->BPM;
 
 		if (GetKeyDown('K')) {
 			if (IsNoteBeaten()) {
