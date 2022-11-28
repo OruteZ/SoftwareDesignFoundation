@@ -4,7 +4,9 @@
 #include<string.h>
 #include"Point.h"
 #include"Screen.h"
+#include "Time.h"
 #include"KeyBoard.h"
+#include "Debug.h"
 
 
 //for test
@@ -28,35 +30,29 @@ void InitHeartBeat()
 	heartBeat = (HeartBeat*)malloc(sizeof(HeartBeat));
 	if (heartBeat == NULL) exit(-1);
 
-	heartBeat->note_size = 40;
+	heartBeat->noteSize = 20;
 	heartBeat->BPM = 240;
 	heartBeat->time_to_check_tempo = 0;
 	heartBeat->combo = 0;
 
-	heartBeat->note = (short*)malloc(sizeof(short) * heartBeat->note_size);
+	heartBeat->note = (short*)malloc(sizeof(short) * heartBeat->noteSize);
 	if (heartBeat->note == NULL) exit(-1);
 
-	for (int i = 0; i < heartBeat->note_size; i++) {
-		heartBeat->note[i] = 0;
+	for (int i = 0; i < heartBeat->noteSize; i++) {
+		heartBeat->note[i] = false;
 	}
-
-	heartBeat->print_point = CreatePoint(0, 20);
 }
 
-void UpdateHeartBeat(double delta_time)
+void UpdateHeartBeat()
 {
-	heartBeat->time_to_check_tempo += delta_time;
+	heartBeat->time_to_check_tempo += Time.deltaTime;
 
-	if (heartBeat->time_to_check_tempo >= ((double)60 * 1000) / (double)heartBeat->BPM) {
+	if (heartBeat->time_to_check_tempo >= ((double)60) / (double)heartBeat->BPM) {
 		MoveNote();
-		isBeatNow = true;
-		heartBeat->time_to_check_tempo -= ((double)60 * 1000) / (double)heartBeat->BPM;
-	}
-	else {
-		isBeatNow = false;
+		heartBeat->time_to_check_tempo -= ((double)60) / (double)heartBeat->BPM;
 	}
 
-	if (GetKeyDown(BeatKey)) {
+	if (GetKeyDown('K')) {
 		if (IsNoteBeaten()) {
 			isHit = TRUE;
 			if (++(heartBeat->combo) >= 10) {
@@ -74,8 +70,6 @@ void UpdateHeartBeat(double delta_time)
 void RealeseHeartBeat()
 {
 	free(heartBeat->note);
-	free(heartBeat->print_buffer);
-	DeletePoint(heartBeat->print_point);
 	free(heartBeat);
 }
 
@@ -84,25 +78,33 @@ void MoveNote()
 	//test
 	if (isHit) isHit = FALSE;
 
-	int i, size = heartBeat->note_size;
+	int i, size = heartBeat->noteSize;
 	int last_node_point = -1;
 	for (i = 1; i < size; i++) {
 		heartBeat->note[i - 1] = heartBeat->note[i];
-		if (heartBeat->note[i - 1] == 1) last_node_point = i;
+		if (heartBeat->note[i - 1]) last_node_point = i;
 	}
 
 	if (last_node_point <= size - 4) {
-		heartBeat->note[size - 1] = 1;
-		//_beginthreadex(NULL, 0, Thread_PlaySound, 0, 0, NULL);
-	}
+		heartBeat->note[size - 1] = true;
 
-	else heartBeat->note[size - 1] = 0;
+		isBeatNow = true;
+		//_beginthreadex(NULL, 0, Thread_PlaySound, 0, 0, NULL);
+#ifdef DEBUG
+		DebugPrint("Beat");
+#endif
+
+	}
+	else {
+		isBeatNow = false;
+		heartBeat->note[size - 1] = false;
+	}
 }
 
 void ResetNote()
 {
-	for (int i = 0; i < heartBeat->note_size; i++) {
-		heartBeat->note[i] = 0;
+	for (int i = 0; i < heartBeat->noteSize; i++) {
+		heartBeat->note[i] = false;
 	}
 }
 
@@ -110,16 +112,16 @@ int IsNoteBeaten()
 {
 	double time_per_beat = (((double)60 * 1000) / (double)heartBeat->BPM);
 
-	int notePosition;
-	for (int i = 0; i < heartBeat->note_size; i++) {
-		if (heartBeat->note[i] == 1) {
+	int notePosition = -1;
+	for (int i = 0; i < heartBeat->noteSize; i++) {
+		if (heartBeat->note[i]) {
 			notePosition = i;
 			break;
 		}
 	}
 	if (notePosition > 1) return 0;
 
-	heartBeat->note[notePosition] = 0;
+	heartBeat->note[notePosition] = false;
 
 	double correct_time = time_per_beat * notePosition;
 	double time_differece = abs(correct_time - heartBeat->time_to_check_tempo);
@@ -138,11 +140,7 @@ int GetBPM() {
 
 short* GetNoteInfo()
 {
-	short* result = (short*)malloc(sizeof(short) * heartBeat->note_size);
-	if (result == NULL) exit(-1);
-
-	memcpy(result, heartBeat->note, heartBeat->note_size);
-	return result;
+	return heartBeat->note;
 }
 
 int GetCombo() {

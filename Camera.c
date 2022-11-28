@@ -10,8 +10,8 @@
 #include "Particle.h"
 #include "Debug.h"
 
-int _cameraWidthInGame = 25;
-int _cameraHeightInGame = 19;
+int _cameraWidthInGame = 51;
+int _cameraHeightInGame = 21;
 
 Rect CameraRectInGame;
 Rect CameraRectInCanvas;
@@ -26,7 +26,7 @@ const char RangeAttackChar[] = "RR";
 const char ExplosionChar1[] = "qq";
 const char ExplosionChar2[] = "pp";
 
-Point IngamePosition_to_CanvasPosition(Point pos);
+char** BufferToPrintWorld;
 
 void InitCamera() {
 	CameraRectInGame.height = _cameraHeightInGame;
@@ -37,6 +37,13 @@ void InitCamera() {
 
 	CameraRectInCanvas.x = 7;
 	CameraRectInCanvas.y = 3;
+
+	BufferToPrintWorld = (char**)malloc(sizeof(char*) * (CameraRectInCanvas.height));
+	if (BufferToPrintWorld == NULL) exit(-1);
+	for (int i = 0; i < CameraRectInCanvas.height; i++) {
+		BufferToPrintWorld[i] = (char*)malloc(sizeof(char) * CameraRectInCanvas.width);
+		if (BufferToPrintWorld[i] == NULL) exit(-1);
+	}
 }
 
 Point IngamePosition_to_CanvasPosition(Point pos) {
@@ -44,11 +51,12 @@ Point IngamePosition_to_CanvasPosition(Point pos) {
 	result.x = CameraRectInCanvas.x + (pos.x - CameraRectInGame.x) * 2;
 	result.y = CameraRectInCanvas.y + (pos.y - CameraRectInGame.y);
 
-	if (result.x % 2 == 0) {
 #ifdef DEBUG
-		DebugPrint("%d %d", result.x, result.y);
-#endif
+	if (result.x % 2 == 1) {
+		//DebugPrint("%d %d", result.x, result.y);
+
 	}
+#endif
 
 	return result;
 }
@@ -80,7 +88,8 @@ void PrintWorld() {
 			Point q = IngamePosition_to_CanvasPosition(p);
 
 			if (GetTile(p) == WALL) ScreenPrint(q.x, q.y, wallChar);
-			else ScreenPrint(q.x, q.y, "  ");
+			//else ScreenPrint(q.x, q.y, "  ");
+
 		}
 	}
 }

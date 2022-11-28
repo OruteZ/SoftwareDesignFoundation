@@ -4,52 +4,40 @@
 #include "Player.h"
 #include "Debug.h"
 #include "HeartBeat.h"
-#define PlayerHpInfoPosX (10)
-#define PlayerHpInfoPosY  (5)
 
-#define PlayerAttackDamageInfoPosX (10)
-#define PlayerAttackDamageInfoPosY (10)
+#define HEARTBEAT_NOTE_POSITION_X (111)
+#define HEARTBEAT_NOTE_POSITION_Y (2)
 
-#define ExpInfoPosX (5)
-#define ExpInfoPosY (15)
+#define HPBAR_POSITION_X (8)
+#define HPBAR_POSITION_Y (1)
+#define HPBAR_MAX_LENGTH (100)
 
-#define LevelInfoPosX (15)
-#define LevelInfoPosY (15)
+const char noteImg[] = "ⓣⓣⓣⓣ";
+const char lineImg[] = "--------";
+void RenderHeatBeatNote() {
+	const short* note = heartBeat->note;
+	const int size = heartBeat->noteSize;
 
-#define BPMInfoPosX (5)
-#define BPMInfoPosY (20)
-
-#define ComboInfoPosX (15)
-#define ComboInfoPoxY (20)
-
-#define ScoreInfoPosX (10)
-#define ScoreInfoPosY (30)
-
-void InfoPrint(int x, int y, char* string, int value)
-{
-	ScreenPrint(x, y, string);
-	ScreenPrint(x + strlen(string), y, value);
+	for (int y = 0; y < size; y++) {
+		if(note[size - 1 - y]) ScreenPrint(HEARTBEAT_NOTE_POSITION_X, HEARTBEAT_NOTE_POSITION_Y + y, noteImg);
+	}
+	ScreenPrint(HEARTBEAT_NOTE_POSITION_X, HEARTBEAT_NOTE_POSITION_Y + size - 1, lineImg);
 }
-void PlayerStateInfo()
-{
-	InfoPrint(PlayerHpInfoPosX, PlayerHpInfoPosY, "HP : ", player->hp);
-	InfoPrint(PlayerAttackDamageInfoPosX, PlayerAttackDamageInfoPosY, "Power : ", player->baseDamage);
-	InfoPrint(ExpInfoPosX, ExpInfoPosY, "Exp : ", player->exp);
-	InfoPrint(LevelInfoPosX, LevelInfoPosY, "Level : ", player->level);
+
+const char HeartChar[] = "|";
+void PrintHPBar() {
+	int maxHp = 100; // todo = maxHP 필드 player 구조체에 추가
+	int nowHp = player->hp;
+	
+	int barLength = (int)(HPBAR_MAX_LENGTH * nowHp) / maxHp;
+	for (int i = 0; i < barLength; i++) {
+		ScreenPrint(HPBAR_POSITION_X + i, HPBAR_POSITION_Y, HeartChar);
+	}
 }
-void HeartBeatInfo()
-{
-	InfoPrint(BPMInfoPosX, BPMInfoPosY, "BPM : ", GetBPM());
-	InfoPrint(ComboInfoPosX, ComboInfoPoxY, "Combo : ", GetCombo());
+
+
+void RenderUI() {
+	PrintHPBar();
+	RenderHeatBeatNote();
 }
-void ScoreStateInfo()
-{
-	//Score는 game에 전역선언, EnemyOnDeath 에서 10씩 증가시키도록 설정
-	InfoPrint(ScoreInfoPosX, ScoreInfoPosY, "Score : ", score);
-}
-void UpdateUI()
-{
-	PlayerStateInfo();
-	HeartBeatInfo();
-	ScoreStateInfo();
-}
+

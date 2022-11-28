@@ -5,6 +5,7 @@
 #include "Menu.h"
 #include <stdio.h> // only used for debug
 #include "Render.h"
+#include "UI.h"
 
 #ifdef DEBUG
 #include "Keyboard.h"
@@ -15,6 +16,7 @@ void Render() {
 
 	if (GameState == Dungeon) {
 		RenderCamera();
+		RenderUI();
 	}
 
 	if (GameState == Menu) {

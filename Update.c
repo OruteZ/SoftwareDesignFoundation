@@ -12,6 +12,7 @@
 #include "Entity.h"
 #include "Menu.h"
 #include "World.h"
+#include "HeartBeat.h"
 
 #ifdef DEBUG
 #include "Keyboard.h"
@@ -55,6 +56,9 @@ void Update() {
 
 	if (GameState == Dungeon) {
 		TrySpawnSequence();
+
+		UpdateHeartBeat();
+
 		UpdateEnemies();
 		UpdateParticles();
 		UpdatePlayer();
