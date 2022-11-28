@@ -99,9 +99,6 @@
     <ClCompile Include="HeartBeat.c">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
-    <ClCompile Include="World.c">
-      <Filter>Source Files\World</Filter>
-    </ClCompile>
     <ClCompile Include="World001.c">
       <Filter>Source Files\World</Filter>
     </ClCompile>
@@ -129,14 +126,11 @@
     <ClCompile Include="Menu.c">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
-    <ClCompile Include="RayCast.c">
+    <ClCompile Include="World.c">
       <Filter>Source Files\World</Filter>
     </ClCompile>
-    <ClCompile Include="World002.c">
-      <Filter>Source Files\World</Filter>
-    </ClCompile>
-    <ClCompile Include="World003.c">
-      <Filter>Source Files\World</Filter>
+    <ClCompile Include="UI.c">
+      <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

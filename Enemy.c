@@ -120,6 +120,7 @@ void EnemyOnDeath(Enemy* enemy)
 #ifdef DEBUG
 	DebugPrint("Enemy Dead!");
 #endif
+	score += 10;
 }
 
 void EnemyOnHit(Enemy* enemy, int damage)
