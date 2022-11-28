@@ -52,6 +52,8 @@ void TrySpawnSequence() {
 	if (sequence->gameTime <= GameTime.time) { // time to spawn!
 		Vector* list = sequence->list;
 		for (int i = 0; i < list->length; i++) {
+			CreateEnemy(list->entities[i]->type, list->entities[i]->pos);
+			/*
 			Entity* enemy;
 			switch (list->entities[i]->type) {
 			case MeleeEnemyType:
@@ -67,6 +69,7 @@ void TrySpawnSequence() {
 			default:
 				break;
 			}
+			*/
 		}
 		current_world->currentSpawnSequence = sequence->next; // prime next spawn sequence
 	}

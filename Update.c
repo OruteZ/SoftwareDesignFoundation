@@ -29,7 +29,7 @@ void UpdateEnemies() {
 		}
 
 		else {
-			//UpdateEnemy(enemy);
+			UpdateEnemy(enemy);
 		}
 	}
 }

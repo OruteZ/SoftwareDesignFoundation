@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "World.h"
 #include "Point.h"
+#include "Time.h"
 
 #include "Entity.h"
 #include "Enemy.h"
@@ -14,6 +15,17 @@
 #include "MeleeEnemy.h"
 #include "ArcherEnemy.h"
 #include "BomberEnemy.h"
+
+bool isEnemyDead(Enemy* enemy);
+bool canEnemyMove(Enemy* enemy);
+bool isEnemy(Entity* entity);
+bool canEnemyAttack(Enemy* enemy);
+
+void LookAt(Enemy* enemy, Point target);
+bool IsPlayerInRange(Enemy* enemy);
+void EnemyMove(Enemy* enemy, Point direction);
+void EnemyAttack(Enemy* enemy);
+void CalEnemyCooldown(Enemy* enemy);
 
 void LookAt(Enemy* enemy, Point target) {
 	int deltaX = target.x - enemy->base.entity.pos.x;
@@ -79,7 +91,9 @@ bool canEnemyAttack(Enemy* enemy) {
 }
 
 void EnemyAttack(Enemy* enemy) {
-	if (!canEnemyAttack(enemy)) return;
+	if (!canEnemyAttack(enemy)) {
+		return;
+	}
 
 	switch (enemy->base.entity.type) {
 	case MeleeEnemyType:
@@ -94,6 +108,11 @@ void EnemyAttack(Enemy* enemy) {
 		BomberEnemyAttack((BomberEnemy*)enemy);
 		break;
 	}
+}
+
+void CalEnemyCooldown(Enemy* enemy) {
+	enemy->attackDelay -= Time.deltaTime;
+	enemy->moveCoolDown -= Time.deltaTime;
 }
 
 void EnemyOnDeath(Enemy* enemy)
@@ -116,11 +135,10 @@ void EnemyOnHit(Enemy* enemy, int damage)
 }
 
 void CreateEnemy(enum EntityType type, Point spawnPoint) {
-	Enemy* newEnemy;
+	Enemy* newEnemy = NULL;
 
 	switch (type) {
 	case MeleeEnemyType:
-	default:
 		newEnemy = (Enemy*)CreateMeleeEnemy(spawnPoint);
 		break;
 
@@ -131,10 +149,15 @@ void CreateEnemy(enum EntityType type, Point spawnPoint) {
 	case BomberEnemyType:
 		newEnemy = (Enemy*)CreateBomberEnemy(spawnPoint);
 		break;
+
+	default: break;
 	}
 
+#ifdef DEBUG
+	DebugPrint("%d %d", newEnemy->base.entity.type, type);
+#endif
 	VectorInsert(enemies, newEnemy);
-	QuadTreeInsert(enemiesTree, newEnemy);
+	//QuadTreeInsert(enemiesTree, newEnemy);
 }
 
 void UpdateEnemy(Enemy* enemy) {
@@ -143,6 +166,7 @@ void UpdateEnemy(Enemy* enemy) {
 		LookAt(enemy, GetPlayerPos());
 		EnemyAttack(enemy);
 	}
+	CalEnemyCooldown(enemy);
 }
 
 bool isEnemyDead(Enemy* enemy) {
@@ -157,3 +181,4 @@ bool isEnemy(Entity* entity) {
 bool canEnemyMove(Enemy* enemy) {
 	return enemy->moveCoolDown <= 0;
 }
+
