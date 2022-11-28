@@ -34,7 +34,7 @@ void BomberEnemyAttack(BomberEnemy* bomberEnemy) {
 		.x = attackPoint.x - (bomberEnemy->base.enemy.attackWidth / 2),
 		.y = attackPoint.y - (bomberEnemy->base.enemy.attackHeight / 2),
 		.width = bomberEnemy->base.enemy.attackWidth,
-		.height = bomberEnemy->base.enemy.attackHeight
+		.height = bomberEnemy->base.enemy.attackHeight * 3
 	};
 
 	CreateParticle(bomberEnemy->base.enemy.facing, bomberEnemy->base.entity.pos, ExplosionParticleType1, bomberEnemy->base.enemy.baseDamage);
