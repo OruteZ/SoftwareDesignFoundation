@@ -5,8 +5,7 @@
 #define P PIT,
 #define D DOWNSTAIRS,
 
-<<<<<<< HEAD
-Tile grid[] = {
+Tile grid_002[] = {
 	W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W
 	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
 	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
@@ -57,23 +56,13 @@ Tile grid[] = {
 	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
 	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
 	W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W
-=======
-Tile grid_002[] = {
-	G W G
-
->>>>>>> 51168a74c01d1aa2873c77c65972a74c2ae50ae8
 };
 
 World* world002;
 
 void InitializeWorld002() {
-<<<<<<< HEAD
-	world002 = CreateWorld(50, 50);
-	world002->grid = grid;
-=======
 	world002 = CreateWorld(90, 89);
 	world002->grid = grid_002;
->>>>>>> 51168a74c01d1aa2873c77c65972a74c2ae50ae8
 
 	Point playerSpawnPoint = { .x = 25, .y = 25 };
 	world002->playerSpawnPoint = playerSpawnPoint;
