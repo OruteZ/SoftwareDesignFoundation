@@ -59,11 +59,12 @@ void UpdateMeleeAttackParticle(Particle* particle) {
 //RangeAttackParticle에 관한 함수 및 고정 상수, 모든 Rect의 기본 direction은 north, 기본좌표는 0으로 고정한다.
 const Rect baseRangeAttackParticleRect = { 0, 0, 1, 1 };
 const double rangeAttackParticleMoveSpeed = 0.05f; //Time per block
+
 //RangeAttack의 경우 Enemy의 소유와 Player의 소유로 구분되며, 타입에 따라 충돌처리하는 대상이 다르다
 void RangeAttackDetectPlayer(Particle* particle) {
 	Point playerPos = GetPlayerPos();
 
-	if (PointEquals(&particle, &playerPos)) {
+	if (PointEquals(&particle->particleRect, &playerPos)) {
 		PlayerOnHit(particle->damage);
 		particle->isDead = true;
 	}
@@ -142,7 +143,7 @@ const int ExplosionParticleLifeCount = 5;
 
 void InitExplosionParticleRect(Particle* particle) {
 	particle->particleRect.height = baseExplosionParticleRect.height;
-	particle->particleRect.height = baseExplosionParticleRect.width;
+	particle->particleRect.width = baseExplosionParticleRect.width;
 
 	particle->particleRect.x = particle->base.entity.pos.x - (baseExplosionParticleRect.width / 2);
 	particle->particleRect.y = particle->base.entity.pos.y - (baseExplosionParticleRect.height / 2);
@@ -175,12 +176,11 @@ void CreateParticle(Point direction, Point point, ParticleType type, int dmg) {
 	switch (type) {
 	case MeleeAttackParticleType:
 		InitMeleeAttackParticleRect(particle, direction);
-		particle->damage = dmg;
 		break;
+
 	case EnemyRangeAttackParticleType:
 	case RangeAttackParticleType:
 		InitRangeAttackParticleRect(particle, direction);
-		particle->damage = dmg;
 		break;
 
 	case ExplosionParticleType1:
@@ -190,6 +190,7 @@ void CreateParticle(Point direction, Point point, ParticleType type, int dmg) {
 
 	default: exit(10);
 	}
+	particle->damage = dmg;
 
 	Point startPoint = {
 		point.x - (particle->particleRect.width / 2),
@@ -218,12 +219,11 @@ void CreateParticle(Point direction, Point point, ParticleType type, int dmg) {
 	switch (particle->particleType) {
 	case MeleeAttackParticleType:
 		SetMeleeAttackParticleGrid(particle);
-		particle->damage = dmg;
 		break;
+
 	case EnemyRangeAttackParticleType:
 	case RangeAttackParticleType:
 		SetRangeAttackParticleGrid(particle);
-		particle->damage = dmg;
 		break;
 
 	case ExplosionParticleType1:

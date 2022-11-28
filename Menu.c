@@ -30,9 +30,6 @@ button nowButton = StartButton;
 void ChangeButton() {
 	if (nowButton == StartButton) nowButton = EndButton;
 	else if (nowButton == EndButton) nowButton = StartButton;
-#ifdef DEBUG
-	DebugPrint("%d", nowButton);
-#endif
 }
 
 void SelectButton() {
@@ -60,7 +57,7 @@ void UpdateMenu() {
 void RenderButton()
 {
 	
-	(StartButtonPosX, StartButtonPosY, "Game Start");
+	ScreenPrint(StartButtonPosX, StartButtonPosY, "Game Start");
 	ScreenPrint(EndButtonPosX, EndButtonPosY, "Quit");
 }
 void RenderStartArrow()
