@@ -23,6 +23,9 @@ const char wallChar[] = "¢Æ";
 const char MeleeAttackChar[] = "¢Â";
 const char RangeAttackChar[] = "RR";
 
+const char ExplosionChar1[] = "qq";
+const char ExplosionChar2[] = "pp";
+
 Point IngamePosition_to_CanvasPosition(Point pos);
 
 void InitCamera() {
@@ -133,6 +136,13 @@ void PrintParticles() {
 			strcpy(nowChar, RangeAttackChar);
 			break;
 
+		case ExplosionParticleType1:
+			strcpy(nowChar, ExplosionChar1);
+			break;
+
+		case ExplosionParticleType2:
+			strcpy(nowChar, ExplosionChar2);
+			break;
 		}
 
 		for (int y = 0; y < p->particleRect.height; y++) {

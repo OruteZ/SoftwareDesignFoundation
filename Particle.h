@@ -7,6 +7,8 @@ typedef enum _ParticleType {
 	MeleeAttackParticleType,
 	RangeAttackParticleType,
 	EnemyRangeAttackParticleType,
+	ExplosionParticleType1, ExplosionParticleType2,
+
 } ParticleType;
 
 typedef struct _Paritcle {
