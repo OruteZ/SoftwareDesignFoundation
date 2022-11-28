@@ -2,9 +2,13 @@
 #include "HeartBeat.h"
 #include<stdlib.h>
 #include<string.h>
+#include <Windows.h>
+#include <process.h>
 #include"Point.h"
 #include"Screen.h"
 #include"KeyBoard.h"
+
+#define NUMTHREAD 5
 
 
 //for test
@@ -21,7 +25,9 @@ int IsNoteBeaten();
 
 bool isBeatNow = false;
 
-unsigned _stdcall Thread_PlaySound(void* arg);
+void Thread_PlaySound() {
+	Beep(1200, 300);
+}
 
 void InitHeartBeat()
 {
@@ -47,7 +53,9 @@ void UpdateHeartBeat(double delta_time)
 {
 	heartBeat->time_to_check_tempo += delta_time;
 
-	if (heartBeat->time_to_check_tempo >= ((double)60 * 1000) / (double)heartBeat->BPM) {
+	if (heartBeat->time_to_check_tempo >= ((double)60) / (double)heartBeat->BPM) {
+		_beginthread(Thread_PlaySound, 0, (void*)0);
+		isBeatNow = true;
 		MoveNote();
 		isBeatNow = true;
 		heartBeat->time_to_check_tempo -= ((double)60 * 1000) / (double)heartBeat->BPM;
@@ -92,11 +100,12 @@ void MoveNote()
 	}
 
 	if (last_node_point <= size - 4) {
-		heartBeat->note[size - 1] = 1;
+		heartBeat->note[size - 1] = true;
 		//_beginthreadex(NULL, 0, Thread_PlaySound, 0, 0, NULL);
 	}
-
-	else heartBeat->note[size - 1] = 0;
+	else {
+		heartBeat->note[size - 1] = false;
+	}
 }
 
 void ResetNote()
@@ -108,7 +117,7 @@ void ResetNote()
 
 int IsNoteBeaten()
 {
-	double time_per_beat = (((double)60 * 1000) / (double)heartBeat->BPM);
+	double time_per_beat = (((double)60) / (double)heartBeat->BPM);
 
 	int notePosition;
 	for (int i = 0; i < heartBeat->note_size; i++) {
@@ -149,6 +158,10 @@ int GetCombo() {
 	return heartBeat->combo;
 }
 
-bool nowBeat() {
+bool BPMCall() {
 	return isBeatNow;
+}
+
+bool NotBeatCall() {
+
 }

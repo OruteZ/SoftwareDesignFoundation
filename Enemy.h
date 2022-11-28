@@ -33,6 +33,8 @@ typedef struct _Enemy
 
 	int attackWidth;
 	int attackHeight;
+
+	bool ReadyToAttack;
 } Enemy;
 
 bool isEnemyDead(Enemy* enemy);

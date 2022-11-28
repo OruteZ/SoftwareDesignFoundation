@@ -42,5 +42,5 @@ short* GetNoteInfo();
 
 int GetCombo();
 
-unsigned _stdcall Thread_PlaySound(void* arg);
+bool BPMCall();
 

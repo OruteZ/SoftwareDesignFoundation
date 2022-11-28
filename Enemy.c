@@ -15,6 +15,19 @@
 #include "ArcherEnemy.h"
 #include "BomberEnemy.h"
 
+#include "HeartBeat.h"
+
+bool isEnemyDead(Enemy* enemy);
+bool canEnemyMove(Enemy* enemy);
+bool isEnemy(Entity* entity);
+bool canEnemyAttack(Enemy* enemy);
+
+void LookAt(Enemy* enemy, Point target);
+bool IsPlayerInRange(Enemy* enemy);
+void EnemyMove(Enemy* enemy, Point direction);
+void EnemyAttack(Enemy* enemy);
+void CalEnemyCooldown(Enemy* enemy);
+
 void LookAt(Enemy* enemy, Point target) {
 	int deltaX = target.x - enemy->base.entity.pos.x;
 	int deltaY = target.y - enemy->base.entity.pos.y;
@@ -78,6 +91,10 @@ bool canEnemyAttack(Enemy* enemy) {
 	return enemy->attackDelay <= 0;
 }
 
+void EnemyReadyAttack(Enemy* enemy) {
+	//색깔 print 가능한 다음에
+}
+
 void EnemyAttack(Enemy* enemy) {
 	if (!canEnemyAttack(enemy)) return;
 
@@ -96,11 +113,17 @@ void EnemyAttack(Enemy* enemy) {
 	}
 }
 
+void CalEnemyCooldown(Enemy* enemy) {
+	enemy->attackDelay -= Time.deltaTime;
+	enemy->moveCoolDown -= Time.deltaTime;
+}
+
 void EnemyOnDeath(Enemy* enemy)
 {
 #ifdef DEBUG
 	DebugPrint("Enemy Dead!");
 #endif
+	score += 10;
 }
 
 void EnemyOnHit(Enemy* enemy, int damage)
@@ -133,15 +156,20 @@ void CreateEnemy(enum EntityType type, Point spawnPoint) {
 		break;
 	}
 
+	newEnemy->ReadyToAttack = false;
+
+#ifdef DEBUG
+	DebugPrint("%d %d", newEnemy->base.entity.type, type);
+#endif
 	VectorInsert(enemies, newEnemy);
 	QuadTreeInsert(enemiesTree, newEnemy);
 }
 
 void UpdateEnemy(Enemy* enemy) {
 	//사거리 내로 들어오면 우선 공격하기
-	if (IsPlayerInRange(enemy)) {
+	if (IsPlayerInRange(enemy) && BPMCall()) {
 		LookAt(enemy, GetPlayerPos());
-		EnemyAttack(enemy);
+		EnemyReadyAttack(enemy);
 	}
 }
 
@@ -157,3 +185,4 @@ bool isEnemy(Entity* entity) {
 bool canEnemyMove(Enemy* enemy) {
 	return enemy->moveCoolDown <= 0;
 }
+

@@ -163,6 +163,7 @@ void CreateParticle(Point direction, Point point, ParticleType type, int dmg)
 
 void DeleteParticle(Particle* particle) {
 	if (!(particle->isDead)) return;
+	if (particle == NULL) return;
 
 	for (int i = 0; i < particle->particleRect.height; i++) {
 		if(particle->particleImage != NULL) 
