@@ -46,7 +46,10 @@ void InitHeartBeat()
 	for (int i = 0; i < heartBeat->noteSize; i++) {
 		heartBeat->note[i] = false;
 	}
+}
 
+void StartBeat() {
+	ResetNote();
 	PlaySound(TEXT(".\\GameSound.wav"), NULL, SND_FILENAME | SND_ASYNC);
 }
 

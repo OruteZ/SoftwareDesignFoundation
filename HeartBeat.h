@@ -27,6 +27,7 @@ extern HeartBeat* heartBeat;
 void InitHeartBeat();
 void UpdateHeartBeat();
 void RealeseHeartBeat();
+void StartBeat();
 
 int IsNoteBeaten();
 
