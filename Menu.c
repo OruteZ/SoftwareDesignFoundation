@@ -44,7 +44,8 @@ void UpdateMenu() {
 
 void RenderButton()
 {
-	ScreenPrint(StartButtonPosX, StartButtonPosY, "Game Start");
+	
+	(StartButtonPosX, StartButtonPosY, "Game Start");
 	ScreenPrint(EndButtonPosX, EndButtonPosY, "Quit");
 }
 void RenderStartArrow()

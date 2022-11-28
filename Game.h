@@ -10,7 +10,7 @@ enum _GameState {
 	Dialogue,
 	Dungeon
 };
-
+extern int score;
 extern enum _GameState GameState;
 
 extern Player* player;

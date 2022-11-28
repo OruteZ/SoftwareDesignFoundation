@@ -124,6 +124,7 @@
     <ClCompile Include="Render.c" />
     <ClCompile Include="Screen.c" />
     <ClCompile Include="Time.c" />
+    <ClCompile Include="UI.c" />
     <ClCompile Include="Update.c" />
     <ClCompile Include="Vector.c" />
     <ClCompile Include="World.c" />
