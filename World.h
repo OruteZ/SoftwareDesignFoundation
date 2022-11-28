@@ -1,17 +1,31 @@
 #pragma once
 
 #include "Point.h"
+#include "Entity.h"
+#include "Vector.h"
 
 typedef unsigned char BOOLEAN;
 // 2차원 배열의 각 요소를 "타일" 이라고 부르기로 한다.
 // 타일은 1바이트 정수다.
 typedef unsigned char Tile;
 
+typedef struct _SpawnSequence {
+	double gameTime;
+	Vector* list;
+
+	struct _SpawnSequence* next;
+} SpawnSequence;
+
 typedef struct _World {
 	Tile* grid;
 
 	int width;
 	int height;
+
+	Point playerSpawnPoint;
+
+	SpawnSequence* enemySpawnSequence;
+	SpawnSequence* currentSpawnSequence;
 } World;
 
 
@@ -76,6 +90,27 @@ typedef struct _World {
 World* CreateWorld(const int width, const int height);
 // World를 제거한다.
 void DeleteWorld(World* world);
+
+
+
+// 각 월드 초기화를 하는 함수 안의 내용에 다음과 같은 내용이 있어야 한다.
+// 1. "생성 단계"를 하나 만든다.
+// 2. 그 생성 단계에 엔티티를 추가한다.
+// 3. 월드에 생성 단계를 추가한다.
+// 위의 단계들을 원하는 단계 수 만큼 해줘야 한다. 예시는 World001.c 참고.
+
+
+// 적들 "생성 단계"를 하나 생성한다. 인자로 전달된 gameTime의 시간에 맞게 실행한다.
+// 사용되려면 WorldInsertSpawnSequence()를 사용해야 한다.
+SpawnSequence* CreateSpawnSequence(double gameTime);
+// "생성 단계"에 엔티티를 하나 넣는다.
+void SpawnSequenceInsert(SpawnSequence* seq, const int spawn_x, const int spawn_y, const enum EntityType entityType);
+// 월드에 "생성 단계"를 집어넣는다. 언제나 뒤에 추가되기 때문에 순서대로 넣어야 한다.
+void WorldInsertSpawnSequence(World* world, SpawnSequence* seq);
+// "생성 단계"를 시도한다. 생성 단계가 다 떨어졌는지 확인하기 때문에 생각 없이 호출해도 된다.
+void TrySpawnSequence();
+
+
 
 // 현재의 World를 바꾼다.
 void SetCurrentWorld(World* world);
