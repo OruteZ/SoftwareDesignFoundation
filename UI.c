@@ -1,18 +1,20 @@
-#include "World.h"
+ï»¿#include "World.h"
 #include "Screen.h"
 #include "Game.h"
 #include "Player.h"
 #include "Debug.h"
 #include "HeartBeat.h"
+#include "Rect.h"
+#include "Point.h"
 
-#define HEARTBEAT_NOTE_POSITION_X (111)
+#define HEARTBEAT_NOTE_POSITION_X (121)
 #define HEARTBEAT_NOTE_POSITION_Y (2)
 
-#define HPBAR_POSITION_X (8)
-#define HPBAR_POSITION_Y (1)
-#define HPBAR_MAX_LENGTH (100)
+#define HPBAR_POSITION_X (18)
+#define HPBAR_POSITION_Y (3)
+#define HPBAR_MAX_LENGTH (50)
 
-const char noteImg[] = "¨à¨à¨à¨à";
+const char noteImg[] = "â“£â“£â“£â“£";
 const char lineImg[] = "--------";
 void RenderHeatBeatNote() {
 	const short* note = heartBeat->note;
@@ -24,20 +26,62 @@ void RenderHeatBeatNote() {
 	ScreenPrint(HEARTBEAT_NOTE_POSITION_X, HEARTBEAT_NOTE_POSITION_Y + size - 1, lineImg);
 }
 
-const char HeartChar[] = "|";
+const char HeartChar[] = "â™¥";
 void PrintHPBar() {
-	int maxHp = 100; // todo = maxHP ÇÊµå player ±¸Á¶Ã¼¿¡ Ãß°¡
+	int maxHp = 100; // todo = maxHP í•„ë“œ player êµ¬ì¡°ì²´ì— ì¶”ê°€
 	int nowHp = player->hp;
 	
+	SetColor(4);
 	int barLength = (int)(HPBAR_MAX_LENGTH * nowHp) / maxHp;
 	for (int i = 0; i < barLength; i++) {
-		ScreenPrint(HPBAR_POSITION_X + i, HPBAR_POSITION_Y, HeartChar);
+		ScreenPrint(HPBAR_POSITION_X + i * 2, HPBAR_POSITION_Y, HeartChar);
 	}
+	SetColor(15);
 }
 
+const Rect InfoUIRect = {
+	.x = 2,
+	.y = 2,
+	.width = 11,
+	.height = 22,
+};
+
+const Point printPoint_BPM = {
+	.x = 4,
+	.y = 7
+};
+
+const Point printPoint_Score = {
+	.x = 4,
+	.y = 13,
+};
+
+
+void PrintInfo() {
+	Point p = printPoint_BPM;
+	ScreenPrint(p.x, p.y, "BPM : %d", GetBPM());
+}
+
+void PrintInfoUIBox() {
+	for (int x = InfoUIRect.x + 2; x < InfoUIRect.x + InfoUIRect.width; x += 2) {
+		ScreenPrint(x, InfoUIRect.y, "â”€");
+		ScreenPrint(x, InfoUIRect.y + InfoUIRect.height, "â”€");
+	}
+
+	for (int y = InfoUIRect.y + 1; y < InfoUIRect.y + InfoUIRect.height; y++) {
+		ScreenPrint(InfoUIRect.x, y, "â”‚");
+		ScreenPrint(InfoUIRect.x + InfoUIRect.width, y, "â”‚");
+	}
+
+	ScreenPrint(InfoUIRect.x, InfoUIRect.y, "â”Œ");
+	ScreenPrint(InfoUIRect.x + InfoUIRect.width, InfoUIRect.y, "â”");
+	ScreenPrint(InfoUIRect.x, InfoUIRect.y + InfoUIRect.height, "â””");
+	ScreenPrint(InfoUIRect.x + InfoUIRect.width, InfoUIRect.y + InfoUIRect.height, "â”˜");
+}
 
 void RenderUI() {
 	PrintHPBar();
 	RenderHeatBeatNote();
+	PrintInfoUIBox();
 }
 

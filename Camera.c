@@ -13,6 +13,8 @@
 
 int _cameraWidthInGame = 51;
 int _cameraHeightInGame = 21;
+int _cameraStartX = 17;
+int _cameraStartY = 3;
 
 Rect CameraRectInGame;
 Rect CameraRectInCanvas;
@@ -36,8 +38,8 @@ void InitCamera() {
 	CameraRectInCanvas.height = _cameraHeightInGame;
 	CameraRectInCanvas.width = 2 * _cameraWidthInGame;
 
-	CameraRectInCanvas.x = 7;
-	CameraRectInCanvas.y = 3;
+	CameraRectInCanvas.x = _cameraStartX;
+	CameraRectInCanvas.y = _cameraStartY;
 
 	BufferToPrintWorld = (char**)malloc(sizeof(char*) * (CameraRectInCanvas.height));
 	if (BufferToPrintWorld == NULL) exit(-1);
