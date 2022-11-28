@@ -58,7 +58,6 @@ void Update() {
 		TrySpawnSequence();
 
 		UpdateHeartBeat();
-
 		UpdateEnemies();
 		UpdateParticles();
 		UpdatePlayer();

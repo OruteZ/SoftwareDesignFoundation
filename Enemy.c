@@ -121,11 +121,6 @@ void CalEnemyCooldown(Enemy* enemy) {
 	enemy->moveCoolDown -= Time.deltaTime;
 }
 
-void CalEnemyCooldown(Enemy* enemy) {
-	enemy->attackDelay -= Time.deltaTime;
-	enemy->moveCoolDown -= Time.deltaTime;
-}
-
 void EnemyOnDeath(Enemy* enemy)
 {
 #ifdef DEBUG

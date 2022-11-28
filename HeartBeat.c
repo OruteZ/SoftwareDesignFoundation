@@ -35,7 +35,7 @@ void InitHeartBeat()
 	heartBeat = (HeartBeat*)malloc(sizeof(HeartBeat));
 	if (heartBeat == NULL) exit(-1);
 
-	heartBeat->note_size = 20;
+	heartBeat->noteSize = 20;
 	heartBeat->BPM = 280;
 	heartBeat->time_to_check_tempo = 0;
 	heartBeat->combo = 0;
@@ -47,14 +47,10 @@ void InitHeartBeat()
 		heartBeat->note[i] = false;
 	}
 
-	heartBeat->print_point = CreatePoint(0, 20);
+	PlaySound(TEXT(".\\GameSound.wav"), NULL, SND_FILENAME | SND_ASYNC);
 }
 
-	PlaySound(TEXT(".\\__GameSound.mp3"), NULL, SND_FILENAME | SND_ASYNC);
-}
-
-void UpdateHeartBeat(double delta_time)
-{
+void UpdateHeartBeat(double delta_time) {
 	heartBeat->time_to_check_tempo += Time.deltaTime;
 
 	if (heartBeat->time_to_check_tempo >= ((double)60 * 1000) / (double)heartBeat->BPM) {
@@ -64,23 +60,23 @@ void UpdateHeartBeat(double delta_time)
 		isBeatNow = true;
 		heartBeat->time_to_check_tempo -= ((double)60 * 1000) / (double)heartBeat->BPM;
 
-	if (GetKeyDown('K')) {
-		if (IsNoteBeaten()) {
-			isHit = TRUE;
-			if (++(heartBeat->combo) >= 10) {
-				ResetNote();
-				heartBeat->combo = 0;
-				heartBeat->BPM += 120;
+		if (GetKeyDown('K')) {
+			if (IsNoteBeaten()) {
+				isHit = TRUE;
+				if (++(heartBeat->combo) >= 10) {
+					ResetNote();
+					heartBeat->combo = 0;
+					heartBeat->BPM += 120;
+				}
 			}
-		}
-		else {
-			heartBeat->combo = 0;
+			else {
+				heartBeat->combo = 0;
+			}
 		}
 	}
 }
 
-void RealeseHeartBeat()
-{
+void RealeseHeartBeat() {
 	free(heartBeat->note);
 	free(heartBeat);
 }
@@ -99,20 +95,13 @@ void MoveNote()
 
 	if (last_node_point <= size - 4) {
 		heartBeat->note[size - 1] = 1;
-		//_beginthreadex(NULL, 0, Thread_PlaySound, 0, 0, NULL);
-#ifdef DEBUG
-	else {
-#endif
-
 	}
 	else {
 		isBeatNow = false;
 		heartBeat->note[size - 1] = false;
 	}
-
-	else heartBeat->note[size - 1] = 0;
 }
-{
+void ResetNote() {
 	for (int i = 0; i < heartBeat->noteSize; i++) {
 		heartBeat->note[i] = false;
 	}
