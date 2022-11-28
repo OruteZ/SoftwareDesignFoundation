@@ -3,10 +3,6 @@
 
 #include "Game.h"
 
-#ifdef DEBUG
-#include "Keyboard.h"
-#include "Debug.h"
-#endif
 
 #include "Game.h"
 #include "Particle.h"
@@ -15,7 +11,13 @@
 #include "Vector.h"
 #include "Entity.h"
 #include "Menu.h"
+#include "World.h"
 
+#ifdef DEBUG
+#include "Keyboard.h"
+#include "Debug.h"
+#include "RayCast.h"
+#endif
 void UpdateEnemies() {
 	int len = enemies->length;
 	for (int i = 0; i < len; i++) {
@@ -48,51 +50,31 @@ void UpdateParticles() {
 }
 
 void Update() {
+	UpdateTime();
+	UpdateKeyboard();
+
+	if (GameState == Dungeon) {
+		TrySpawnSequence();
+		UpdateEnemies();
+		UpdateParticles();
+		UpdatePlayer();
+	}
+	
 	if (GameState == Menu) {
 		UpdateMenu();
 	}
 
-	UpdateTime();
-	UpdateKeyboard();
-	UpdateEnemies();
-	UpdateParticles();
-	UpdatePlayer();
-
 #ifdef DEBUG
-	if (GetKey(VK_CONTROL) && GetKey(VK_MENU) && GetKeyDown('V')) {
-		Entity* randomEntity = (Entity*)malloc(sizeof(Entity));
-		if (randomEntity == NULL) exit(-1);
-		randomEntity->pos.x = rand();
-		randomEntity->pos.y = rand();
-		randomEntity->type = _Player;
-		VectorInsert(debugVector, randomEntity);
-		//for (int i = 0; i < debugVector->length; i++) {
-		//	DebugPrint("%d (%d, %d) Entity", i, debugVector->entities[i]->pos.x, debugVector->entities[i]->pos.y);
-		//}
-	}
-
-
-	// Start of QuadTree Debug
-	Rect debugQuadTreeRect = { .x = 0, .y = 0, .width = RAND_MAX + 1, .height = RAND_MAX + 1 };
-	debugTree = CreateQuadTree(debugQuadTreeRect);
-	for (int i = 0; i < debugVector->length; i++) {
-		bool inserted = QuadTreeInsert(debugTree, debugVector->entities[i]);
-	}
-
-	if (GetKey(VK_CONTROL) && GetKey(VK_MENU) && GetKeyDown('Q')) DebugQuadTree(debugTree);
-	if (GetKey(VK_CONTROL) && GetKey(VK_MENU) && GetKeyDown('R')) {
-		Rect queryRect = { .x = 0, .y = 0, .width = 20000, .height = 20000 };
-		Vector* queryResult = QuadTreeQuery(debugTree, queryRect);
-		DebugPrint("QueryResult length is.. %d", queryResult->length);
-		for (int i = 0; i < queryResult->length; i++) {
-			DebugPrint("Query Entity: (%d, %d)", queryResult->entities[i]->pos.x, queryResult->entities[i]->pos.y);
+	if (GetKeyDown('R')) {
+		RayCastResult* result = CreateRayCastResult(10);
+		Point origin = { .x = 17, .y = 8 };
+		Point destination = { .x = 21, .y = 7 };
+		bool success = RayCastInCurrentWorld(result, origin, destination);
+		DebugPrint("RayCast Successful?: %d, length: %d", success, result->length);
+		for (int i = 0; i < result->length; i++) {
+			DebugPrint("RayCast Block: (%d, %d)", result->arr[i].x, result->arr[i].y);
 		}
-		DeleteVector(queryResult);
+		DeleteRayCastResult(result);
 	}
-	
-	DeleteQuadTree(debugTree);
-	// End of QuadTree Debug
-
-	
 #endif
 }

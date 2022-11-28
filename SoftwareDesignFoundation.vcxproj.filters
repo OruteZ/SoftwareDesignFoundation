@@ -209,6 +209,15 @@
     <ClInclude Include="Particle.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
+    <ClInclude Include="RayCast.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="World002.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="World003.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
     <ClInclude Include="Menu.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>

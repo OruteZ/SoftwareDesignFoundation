@@ -17,29 +17,23 @@ void Init()
 {
 #ifdef DEBUG
     DebugInit();
+    //debugVector = CreateVector();
 #endif
     ScreenInit();
     InitTime();
     InitializeKeyboard();
     InitCamera();
 
+
+    GameState = Menu;
     // Initialize worlds
     InitializeWorld001();
 
-    SetCurrentWorld(world001);
+    // StartWorld001();
 
     // Vectors
-    Point playerSpawnPoint = { 3, 14 };
-    player = CreatePlayer(playerSpawnPoint);
+    player = CreatePlayer();
     enemies = CreateVector();
     expOrbs = CreateVector();
     particles = CreateVector();
-
-    //test
-    Point enemySpawnPoint = { 3, 12 };
-    VectorInsert(enemies, CreateMeleeEnemy(enemySpawnPoint));
-
-#ifdef DEBUG
-    debugVector = CreateVector();
-#endif
 }

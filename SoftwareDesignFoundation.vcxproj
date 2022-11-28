@@ -119,6 +119,7 @@
     <ClCompile Include="Player.c" />
     <ClCompile Include="Point.c" />
     <ClCompile Include="QuadTree.c" />
+    <ClCompile Include="RayCast.c" />
     <ClCompile Include="Rect.c" />
     <ClCompile Include="Release.c" />
     <ClCompile Include="Render.c" />
@@ -129,6 +130,8 @@
     <ClCompile Include="Vector.c" />
     <ClCompile Include="World.c" />
     <ClCompile Include="World001.c" />
+    <ClCompile Include="World002.c" />
+    <ClCompile Include="World003.c" />
     <ClCompile Include="_main.c" />
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +152,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="QuadTree.h" />
+    <ClInclude Include="RayCast.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="Release.h" />
     <ClInclude Include="Render.h" />
@@ -158,6 +162,8 @@
     <ClInclude Include="Vector.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="World001.h" />
+    <ClInclude Include="World002.h" />
+    <ClInclude Include="World003.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

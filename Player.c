@@ -15,10 +15,11 @@ Player* player;
 Player* CreatePlayer(Point spawnPoint)
 {
 	Player* _player = (Player*)malloc(sizeof(Player));
+	if (_player == NULL) exit(-1);
 
-	_player->base.entity.type = _Player;
-	_player->base.entity.pos.x = spawnPoint.x;
-	_player->base.entity.pos.y = spawnPoint.y;
+	_player->base.entity.type = PlayerType;
+	_player->base.entity.pos.x = 0;
+	_player->base.entity.pos.y = 0;
 
 	_player->attackSpeed = 10.0f;
 	_player->baseDamage = 20;
@@ -98,7 +99,7 @@ void PlayerMeleeAttack() {
 
 
 	Rect attackRect = CreatePlayerAttackRect(attackPoint, player->facing);
-	CreateParticle(player->facing, attackPoint, MeleeAttackParticleType);
+	CreateParticle(player->facing, attackPoint, MeleeAttackParticleType, player->baseDamage);
 
 
 	/* 차후 쿼드트리 사용시 변경
@@ -126,7 +127,7 @@ void PlayerMeleeAttack() {
 		}
 	}
 
-	_canPlayerMeleeAttack = FALSE;
+
 	_playerAttackDelay = 1 - (player->attackSpeed);
 
 	if (_playerMoveCooldown < _playerAttackDelay) {
@@ -142,7 +143,7 @@ void PlayerMeleeAttack() {
 void PlayerRangeAttack() {
 	if (!_canPlayerRangeAttack) return;
 
-	CreateParticle(player->facing, player->base.entity.pos, RangeAttackParticleType);
+	CreateParticle(player->facing, player->base.entity.pos, RangeAttackParticleType, player->baseDamage);
 
 #ifdef DEBUG
 	DebugPrint("Created Range Particle");
@@ -177,6 +178,10 @@ void PlayerOnHit(int damage) {
 	if (player->hp <= 0) {
 		// gameover;
 	}
+
+#ifdef DEBUG
+	DebugPrint("Player On Hit");
+#endif
 }
 
 

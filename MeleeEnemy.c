@@ -1,17 +1,87 @@
 #include "Point.h"
 #include "MeleeEnemy.h"
-MeleeEnemy* CreateMeleeEnemy(Point p)
-{
+#include "Player.h"
+
+
+
+const double _baseMeleeEnemyAttackDelay = 0.15;
+const MeleeEnemy DefaultMeleeEnemy = {
+	.base.entity = {
+		.pos = {0, 0},
+		.type = MeleeEnemyType
+	},
+
+	.base.enemy = {
+		.baseDamage = 15,
+		.hp = 100,
+		.moveSpeed = 1, //block per second
+		.attackSpeed = 1 / 0.15,
+		.detectionRadius = 10,
+		.facing = {0, 1},
+
+		.moveCoolDown = 0,
+		.attackDelay = 0,
+
+		.attackHeight = 1,
+		.attackWidth = 3,
+	}
+};
+
+MeleeEnemy* CreateMeleeEnemy(Point p) {
 	MeleeEnemy* meleeEnemy = (MeleeEnemy*)malloc(sizeof(MeleeEnemy));
-	meleeEnemy->base.entity.type = _MeleeEnemy;
-	meleeEnemy->base.entity.pos.x = p.x;
-	meleeEnemy->base.entity.pos.y = p.y;
-	meleeEnemy->base.enemy.attackDelay = 1.0;
-	meleeEnemy->base.enemy.baseDamage = 15;
-	meleeEnemy->base.enemy.hp = 100;
-	meleeEnemy->base.enemy.moveSpeed = 1.0;
-	meleeEnemy->base.enemy.detectionRadius = 10;
+
+	(*meleeEnemy) = DefaultMeleeEnemy;
+	meleeEnemy->base.entity.pos = p;
+
 	return meleeEnemy;
+}
+
+void MeleeEnemyAttack(MeleeEnemy* mEnemy) {
+	Point attackPoint = mEnemy->base.entity.pos;
+	PointAdd(&attackPoint, &mEnemy->base.enemy.facing);
+
+	//바라보는 방향에 따라 공격범위 rect 지정
+	Rect attackRect;
+	if (PointEquals(&mEnemy->base.enemy.facing, &Direction.north)) {
+		attackRect.x = mEnemy->base.entity.pos.x - mEnemy->base.enemy.attackWidth / 2;
+		attackRect.y = mEnemy->base.entity.pos.y + 1;
+		attackRect.width = mEnemy->base.enemy.attackWidth;
+		attackRect.height = mEnemy->base.enemy.attackHeight;
+	}
+	else if (PointEquals(&mEnemy->base.enemy.facing, &Direction.south)) {
+		attackRect.x = mEnemy->base.entity.pos.x - mEnemy->base.enemy.attackWidth / 2;
+		attackRect.y = mEnemy->base.entity.pos.y - mEnemy->base.enemy.attackHeight;
+		attackRect.width = mEnemy->base.enemy.attackWidth;
+		attackRect.height = mEnemy->base.enemy.attackHeight;
+	}
+	else if (PointEquals(&mEnemy->base.enemy.facing, &Direction.west)) {
+		attackRect.x = mEnemy->base.entity.pos.x - mEnemy->base.enemy.attackHeight;
+		attackRect.y = mEnemy->base.entity.pos.y - mEnemy->base.enemy.attackWidth / 2;
+		attackRect.width = mEnemy->base.enemy.attackHeight;
+		attackRect.height = mEnemy->base.enemy.attackWidth;
+	}
+	else {
+		attackRect.x = mEnemy->base.entity.pos.x + 1;
+		attackRect.y = mEnemy->base.entity.pos.y - mEnemy->base.enemy.attackWidth / 2;
+		attackRect.width = mEnemy->base.enemy.attackHeight;
+		attackRect.height = mEnemy->base.enemy.attackWidth;
+	}
+
+	//플레이어 피격 확인
+	Point playerPos = GetPlayerPos();
+	if (RectContainsPoint(&attackRect, &playerPos)) {
+		PlayerOnHit(mEnemy->base.enemy.baseDamage);
+	}
+
+
+	mEnemy->base.enemy.attackDelay = 1 / (mEnemy->base.enemy.attackSpeed);
+	if (mEnemy->base.enemy.moveCoolDown < mEnemy->base.enemy.attackDelay) {
+		mEnemy->base.enemy.moveCoolDown = mEnemy->base.enemy.attackDelay;
+	}
+
+#ifdef DEBUG
+	DebugPrint("Enemy Attacked");
+#endif
 }
 
 //#include "MeleeEnemyAttack.h"

@@ -20,7 +20,7 @@ typedef struct _Player {
 	double moveSpeed; // block per second;
 } Player;
 
-Player* CreatePlayer(Point spawnPoint);
+Player* CreatePlayer();
 
 void PlayerMove(Point dir);
 

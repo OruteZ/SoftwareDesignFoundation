@@ -2,6 +2,7 @@
 #include "Time.h"
 #include "Game.h"
 #include "Vector.h"
+#include "Enemy.h"
 
 #include "World.h"
 
@@ -63,11 +64,8 @@ void RangeAttackParticleMove(Particle* particle) {
 	Point destination = particle->base.entity.pos;
 	PointAdd(&destination, &particle->facing);
 
-	//detection collision
-	if (0) { //collision with enemy
-
-	}
-	else if (GetTile(destination) & FLAG_COLLIDE_WITH_PHYSICAL_ATTACK) { // collision with else somthing
+	//detection Tile collision
+	if (GetTile(destination) & FLAG_COLLIDE_WITH_PHYSICAL_ATTACK) { // collision with else somthing
 		particle->isDead = true;
 		return;
 	}
@@ -75,6 +73,17 @@ void RangeAttackParticleMove(Particle* particle) {
 	particle->base.entity.pos = destination;
 	particle->particleRect.x = destination.x;
 	particle->particleRect.y = destination.y;
+
+	Vector* enemiesCollided = QuadTreeQuery(enemies, particle->particleRect);
+	if (enemiesCollided->length > 0) {
+		for (int i = 0; i < enemiesCollided->length; i++) {
+			Enemy* e = enemiesCollided->entities[i];
+			EnemyOnHit(e, particle->damage);
+		}
+
+		particle->isDead = true;
+	}
+	DeleteVector(enemiesCollided);
 }
 void InitRangeAttackParticleRect(Particle* particle, Point direction) {
 	if (direction.x == 0) { //위 아래 바라보는 방향 -> 범위 변함 없음
@@ -103,7 +112,7 @@ void UpdateRangeAttackParticle(Particle* particle) {
 }
 //---------------------------------------------------------------------------------------------------------
 
-void CreateParticle(Point direction, Point point, ParticleType type)
+void CreateParticle(Point direction, Point point, ParticleType type, int dmg)
 {
 	Particle* particle = (Particle*)malloc(sizeof(Particle));
 	if (particle == NULL) exit(-1);
@@ -111,9 +120,11 @@ void CreateParticle(Point direction, Point point, ParticleType type)
 	switch (type) {
 	case MeleeAttackParticleType:
 		InitMeleeAttackParticleRect(particle, direction);
+		particle->damage = dmg;
 		break;
 	case RangeAttackParticleType:
 		InitRangeAttackParticleRect(particle, direction);
+		particle->damage = dmg;
 		break;
 	}
 
@@ -123,7 +134,7 @@ void CreateParticle(Point direction, Point point, ParticleType type)
 	};
 
 	particle->base.entity.pos = startPoint;
-	particle->base.entity.type = _ParticleEffect;
+	particle->base.entity.type = ParticleEffectType;
 
 	particle->particleRect.x = startPoint.x;
 	particle->particleRect.y = startPoint.y;
@@ -154,7 +165,8 @@ void DeleteParticle(Particle* particle) {
 	if (!(particle->isDead)) return;
 
 	for (int i = 0; i < particle->particleRect.height; i++) {
-		if(particle->particleImage != NULL) free(particle->particleImage[i]);
+		if(particle->particleImage != NULL) 
+			(particle->particleImage[i]);
 	}
 	free(particle->particleImage);
 	free(particle);

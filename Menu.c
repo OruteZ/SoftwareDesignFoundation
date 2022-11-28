@@ -1,4 +1,4 @@
-#include "Keyboard.h"
+Ôªø#include "Keyboard.h"
 #include "World.h"
 #include<Windows.h>
 #include <stdio.h>
@@ -35,9 +35,25 @@ void ChangeButton() {
 #endif
 }
 
+#include "World001.h"
+void SelectButton() {
+	switch (nowButton) {
+	case StartButton:
+		StartWorld001();
+		GameState = Dungeon;
+		break;
+	case EndButton:
+		GameState = Exiting;
+		break;
+	default:
+		break;
+	}
+}
+
 void UpdateMenu() {
 	if (GetKeyDown('A')) ChangeButton();
 	if (GetKeyDown('D')) ChangeButton();
+	if (GetKeyDown(VK_SPACE)) SelectButton();
 }
 //---------------------------------------
 
@@ -59,14 +75,14 @@ void RenderEndArrow()
 
 void RenderTitle()
 {
-	ScreenPrint(10, 10, " ###   ##                   #                          ##     #              ");
+	ScreenPrint(10, 10, "###   ##                   #                          ##     #               ");
 	ScreenPrint(10, 11, "#  #   #                   #                           #                     ");
 	ScreenPrint(10, 12, "#  #   #     ##    ##    ###  # ##   ##   ###    ###   #    ##    ###    ##  ");
 	ScreenPrint(10, 13, "###    #    #  #  #  #  #  #  ##    #  #  #  #  #  #   #     #    #  #  #  # ");
 	ScreenPrint(10, 14, "#  #   #    #  #  #  #  #  #  #     ####  #  #  #  #   #     #    #  #  #### ");
 	ScreenPrint(10, 15, "#  #   #    #  #  #  #  #  #  #     #     #  #  # ##   #     #    #  #  #    ");
 	ScreenPrint(10, 16, "###   ###    ##    ##    ###  #      ##   #  #   # #  ###   ###   #  #   ### ");
-	}
+}
 /*
 	void StartButtonArrowMove()
 	{
@@ -98,29 +114,6 @@ void RenderButtonArrow()
 	}
 }
 
-
-void GameEnd()
-{
-	if (p.x == EndButtonSelectionArrowPosX && p.y == EndButtonSelectionArrowPosY)
-	{
-		if (GetKeyDown(VK_RETURN))
-		{
-			//∞‘¿” ¡æ∑·
-			exit(0);
-		}
-	}
-}
-void GameStart()
-{
-	if (p.x == StartButtonPosX - 5 && p.y == StartButtonPosY)
-	{
-		if (GetKeyDown(VK_RETURN))
-		{
-			GameState = Dungeon;
-
-		}
-	}
-}
 
 void RenderMenu() {
 	RenderTitle();

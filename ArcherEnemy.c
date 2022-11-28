@@ -5,7 +5,7 @@
 ArcherEnemy* CreateArcherEnemy(Point p)
 {
 	ArcherEnemy* archerEnemy = (ArcherEnemy*)malloc(sizeof(ArcherEnemy));
-	archerEnemy->base.entity.type = _ArcherEnemy;
+	archerEnemy->base.entity.type = ArcherEnemyType;
 	archerEnemy->base.entity.pos.x = p.x;
 	archerEnemy->base.entity.pos.y = p.y;
 	archerEnemy->base.enemy.attackDelay= 3.0f;
