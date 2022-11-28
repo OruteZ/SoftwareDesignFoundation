@@ -12,7 +12,7 @@
 #include "Entity.h"
 #include "Menu.h"
 #include "World.h"
-
+#include "UI.h"
 #ifdef DEBUG
 #include "Keyboard.h"
 #include "Debug.h"
@@ -58,6 +58,7 @@ void Update() {
 		UpdateEnemies();
 		UpdateParticles();
 		UpdatePlayer();
+		UpdateUI();
 	}
 	
 	if (GameState == Menu) {
