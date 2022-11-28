@@ -3,6 +3,8 @@
 #include "Keyboard.h"
 
 #include "World001.h"
+#include "World002.h"
+#include "World003.h"
 
 #include "Game.h"
 #include "Player.h"
@@ -27,7 +29,10 @@ void Init()
 
     GameState = Menu;
     // Initialize worlds
+    InitializeWorld();
     InitializeWorld001();
+    InitializeWorld002();
+    InitializeWorld003();
 
     // StartWorld001();
 

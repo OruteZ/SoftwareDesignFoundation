@@ -35,11 +35,10 @@ void ChangeButton() {
 #endif
 }
 
-#include "World001.h"
 void SelectButton() {
 	switch (nowButton) {
 	case StartButton:
-		StartWorld001();
+		StartNextWorld();
 		GameState = Dungeon;
 		break;
 	case EndButton:
