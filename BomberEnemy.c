@@ -2,18 +2,27 @@
 #include "BomberEnemy.h"
 
 #include "Player.h"
+#include "Particle.h"
 
 BomberEnemy* CreateBomberEnemy(Point p)
 {
 	BomberEnemy* bomberEnemy = (BomberEnemy*)malloc(sizeof(BomberEnemy));
+	if (bomberEnemy == NULL) exit(-1);
+
 	bomberEnemy->base.entity.type = BomberEnemyType;
-	bomberEnemy->base.entity.pos.x = p.x;
-	bomberEnemy->base.entity.pos.y = p.y;
-	bomberEnemy->base.enemy.attackDelay = 1;
+	bomberEnemy->base.entity.pos = p;
+
 	bomberEnemy->base.enemy.baseDamage = 50;
 	bomberEnemy->base.enemy.hp = 30;
-	bomberEnemy->base.enemy.moveSpeed = 0.5f;
+	bomberEnemy->base.enemy.attackSpeed = 1;
+	bomberEnemy->base.enemy.moveSpeed = 1;
 	bomberEnemy->base.enemy.detectionRadius = 15;
+	bomberEnemy->base.enemy.facing = Direction.north;
+	bomberEnemy->base.enemy.moveCoolDown = 0;
+	bomberEnemy->base.enemy.attackDelay = 0;
+	bomberEnemy->base.enemy.attackHeight = 1;
+	bomberEnemy->base.enemy.attackWidth = 3;
+
 	return bomberEnemy;
 }
 
@@ -22,23 +31,21 @@ void BomberEnemyAttack(BomberEnemy* bomberEnemy) {
 
 	//바라보는 방향에 따라 공격범위 rect 지정
 	Rect attackRect = {
-		.x = attackPoint.x - (bomberEnemy->base.enemy.attackHeight - 1),
-		.y = attackPoint.y - (bomberEnemy->base.enemy.attackHeight - 1),
+		.x = attackPoint.x - (bomberEnemy->base.enemy.attackWidth / 2),
+		.y = attackPoint.y - (bomberEnemy->base.enemy.attackHeight / 2),
 		.width = bomberEnemy->base.enemy.attackWidth,
-		.height = bomberEnemy->base.enemy.attackHeight
+		.height = bomberEnemy->base.enemy.attackHeight * 3
 	};
 
+	CreateParticle(bomberEnemy->base.enemy.facing, bomberEnemy->base.entity.pos, ExplosionParticleType1, bomberEnemy->base.enemy.baseDamage);
 	//플레이어 피격 확인
 	Point playerPos = GetPlayerPos();
 	if (RectContainsPoint(&attackRect, &playerPos)) {
 		PlayerOnHit(bomberEnemy->base.enemy.baseDamage);
 	}
 
-
-	bomberEnemy->base.enemy.attackDelay = 1 / (bomberEnemy->base.enemy.attackSpeed);
-	if (bomberEnemy->base.enemy.moveCoolDown < bomberEnemy->base.enemy.attackDelay) {
-		bomberEnemy->base.enemy.moveCoolDown = bomberEnemy->base.enemy.attackDelay;
-	}
+	bomberEnemy->base.enemy.hp = -1;
+	bomberEnemy->base.enemy.attackDelay = 10000;
 
 #ifdef DEBUG
 	DebugPrint("Enemy Attacked");

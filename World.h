@@ -4,6 +4,9 @@
 #include "Entity.h"
 #include "Vector.h"
 
+// 프로그램 초기화 단계에 불려야 된다.
+void InitializeWorld();
+
 typedef unsigned char BOOLEAN;
 // 2차원 배열의 각 요소를 "타일" 이라고 부르기로 한다.
 // 타일은 1바이트 정수다.
@@ -26,6 +29,8 @@ typedef struct _World {
 
 	SpawnSequence* enemySpawnSequence;
 	SpawnSequence* currentSpawnSequence;
+
+	void (*startNextWorld)();
 } World;
 
 
@@ -115,6 +120,11 @@ void TrySpawnSequence();
 // 현재의 World를 바꾼다.
 void SetCurrentWorld(World* world);
 World* GetCurrentWorld();
+
+// 빈 월드(다음 월드가 월드 001인 메뉴 등에서 사용하기 위한 월드)를 시작한다.
+void StartVoidWorld();
+// 다음 월드를 시작한다.
+void StartNextWorld();
 
 // 지금 World의 width height에 Point가 포함되는지 확인
 BOOLEAN IsPointValidInCurrentWorld(Point p);

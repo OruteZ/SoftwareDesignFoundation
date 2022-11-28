@@ -6,6 +6,9 @@
 typedef enum _ParticleType {
 	MeleeAttackParticleType,
 	RangeAttackParticleType,
+	EnemyRangeAttackParticleType,
+	ExplosionParticleType1, ExplosionParticleType2,
+
 } ParticleType;
 
 typedef struct _Paritcle {
@@ -21,7 +24,7 @@ typedef struct _Paritcle {
 	Point facing;
 
 	//생성 이후 변할 수 있는 변수
-	char** particleImage;
+	bool** particleGrid;
 	double nowTime;
 	bool isDead;
 } Particle;

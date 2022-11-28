@@ -9,7 +9,7 @@
 #include "Enemy.h"
 #include "Debug.h"
 #include "Particle.h"
-
+#include "Camera.h"
 Player* player;
 
 Player* CreatePlayer(Point spawnPoint)
@@ -178,6 +178,8 @@ void PlayerOnHit(int damage) {
 	if (player->hp <= 0) {
 		// gameover;
 	}
+
+	CameraShake();
 
 #ifdef DEBUG
 	DebugPrint("Player On Hit");

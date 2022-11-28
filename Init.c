@@ -3,12 +3,15 @@
 #include "Keyboard.h"
 
 #include "World001.h"
+#include "World002.h"
+#include "World003.h"
 
 #include "Game.h"
 #include "Player.h"
 #include "Camera.h"
 #include "Enemy.h"
 #include "MeleeEnemy.h"
+#include "HeartBeat.h"
 
 #ifdef DEBUG
 #include "Debug.h"
@@ -23,11 +26,15 @@ void Init()
     InitTime();
     InitializeKeyboard();
     InitCamera();
+    InitHeartBeat();
 
 
     GameState = Menu;
     // Initialize worlds
+    InitializeWorld();
     InitializeWorld001();
+    InitializeWorld002();
+    InitializeWorld003();
 
     // StartWorld001();
 

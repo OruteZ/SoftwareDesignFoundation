@@ -99,6 +99,7 @@ Tile grid_001[] = {
 
 World* world001;
 
+#include "world002.h"
 void InitializeWorld001() {
 	world001 = CreateWorld(90, 89);
 	world001->grid = grid_001;
@@ -106,10 +107,12 @@ void InitializeWorld001() {
 	Point playerSpawnPoint = { .x = 4, .y = 13 };
 	world001->playerSpawnPoint = playerSpawnPoint;
 
+	world001->startNextWorld = &StartWorld002;
+
 	// spawn at Gametime.time >= 0
 	SpawnSequence* seq_1 = CreateSpawnSequence(0);
 	SpawnSequenceInsert(seq_1, 13, 5, MeleeEnemyType);
-	SpawnSequenceInsert(seq_1, 15, 5, MeleeEnemyType);
+	SpawnSequenceInsert(seq_1, 15, 5, BomberEnemyType);
 	WorldInsertSpawnSequence(world001, seq_1);
 
 	// spawn at GameTime.time >= 60.0
@@ -122,9 +125,4 @@ void InitializeWorld001() {
 #include "Game.h"
 void StartWorld001() {
 	SetCurrentWorld(world001);
-	
-	player->base.entity.pos.x = world001->playerSpawnPoint.x;
-	player->base.entity.pos.y = world001->playerSpawnPoint.y;
-
-	world001->currentSpawnSequence = world001->enemySpawnSequence;
 }

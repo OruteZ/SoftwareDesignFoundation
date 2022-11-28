@@ -7,6 +7,7 @@
 
 enum _GameState GameState = Menu;
 
+int score;
 Player* player;
 Vector* enemies;
 Vector* expOrbs;

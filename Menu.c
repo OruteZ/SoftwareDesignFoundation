@@ -30,16 +30,12 @@ button nowButton = StartButton;
 void ChangeButton() {
 	if (nowButton == StartButton) nowButton = EndButton;
 	else if (nowButton == EndButton) nowButton = StartButton;
-#ifdef DEBUG
-	DebugPrint("%d", nowButton);
-#endif
 }
 
-#include "World001.h"
 void SelectButton() {
 	switch (nowButton) {
 	case StartButton:
-		StartWorld001();
+		StartNextWorld();
 		GameState = Dungeon;
 		break;
 	case EndButton:
@@ -60,6 +56,7 @@ void UpdateMenu() {
 
 void RenderButton()
 {
+	
 	ScreenPrint(StartButtonPosX, StartButtonPosY, "Game Start");
 	ScreenPrint(EndButtonPosX, EndButtonPosY, "Quit");
 }
@@ -101,15 +98,9 @@ void RenderButtonArrow()
 {
 	if (nowButton == StartButton) {
 		RenderStartArrow();
-#ifdef DEBUG
-		DebugPrint("Start");
-#endif
 	}
 	else if (nowButton == EndButton) {
 		RenderEndArrow();
-#ifdef DEBUG
-		DebugPrint("END  ");
-#endif
 	}
 }
 

@@ -9,9 +9,10 @@
 #include "Enemy.h"
 #include "Particle.h"
 #include "Debug.h"
+#include "Time.h"
 
-int _cameraWidthInGame = 25;
-int _cameraHeightInGame = 19;
+int _cameraWidthInGame = 51;
+int _cameraHeightInGame = 21;
 
 Rect CameraRectInGame;
 Rect CameraRectInCanvas;
@@ -20,7 +21,13 @@ const char enemyChar[] = "¡Ý";
 const char playerChar[] = "¢Ã";
 const char wallChar[] = "¢Æ";
 
-Point IngamePosition_to_CanvasPosition(Point pos);
+const char MeleeAttackChar[] = "¢Â";
+const char RangeAttackChar[] = "RR";
+
+const char ExplosionChar1[] = "qq";
+const char ExplosionChar2[] = "pp";
+
+char** BufferToPrintWorld;
 
 void InitCamera() {
 	CameraRectInGame.height = _cameraHeightInGame;
@@ -31,6 +38,13 @@ void InitCamera() {
 
 	CameraRectInCanvas.x = 7;
 	CameraRectInCanvas.y = 3;
+
+	BufferToPrintWorld = (char**)malloc(sizeof(char*) * (CameraRectInCanvas.height));
+	if (BufferToPrintWorld == NULL) exit(-1);
+	for (int i = 0; i < CameraRectInCanvas.height; i++) {
+		BufferToPrintWorld[i] = (char*)malloc(sizeof(char) * CameraRectInCanvas.width);
+		if (BufferToPrintWorld[i] == NULL) exit(-1);
+	}
 }
 
 Point IngamePosition_to_CanvasPosition(Point pos) {
@@ -38,11 +52,12 @@ Point IngamePosition_to_CanvasPosition(Point pos) {
 	result.x = CameraRectInCanvas.x + (pos.x - CameraRectInGame.x) * 2;
 	result.y = CameraRectInCanvas.y + (pos.y - CameraRectInGame.y);
 
-	if (result.x % 2 == 0) {
 #ifdef DEBUG
-		DebugPrint("%d %d", result.x, result.y);
-#endif
+	if (result.x % 2 == 1) {
+		//DebugPrint("%d %d", result.x, result.y);
+
 	}
+#endif
 
 	return result;
 }
@@ -74,7 +89,8 @@ void PrintWorld() {
 			Point q = IngamePosition_to_CanvasPosition(p);
 
 			if (GetTile(p) == WALL) ScreenPrint(q.x, q.y, wallChar);
-			else ScreenPrint(q.x, q.y, "  ");
+			//else ScreenPrint(q.x, q.y, "  ");
+
 		}
 	}
 }
@@ -112,7 +128,32 @@ void PrintParticles() {
 	int len = particles->length;
 	for (int i = 0; i < len; i++) {
 		Particle* p = (Particle*)particles->entities[i];
-		if (!RectIsIntersectingRect(&CameraRectInGame, &p->particleRect)) continue;
+
+		if (!RectIsIntersectingRect(&CameraRectInGame, &p->particleRect)) {
+
+			continue;
+		}
+
+
+		char nowChar[3];
+		switch (p->particleType) {
+		case MeleeAttackParticleType:
+			strcpy(nowChar, MeleeAttackChar);
+			break;
+
+		case RangeAttackParticleType:
+		case EnemyRangeAttackParticleType:
+			strcpy(nowChar, RangeAttackChar);
+			break;
+
+		case ExplosionParticleType1:
+			strcpy(nowChar, ExplosionChar1);
+			break;
+
+		case ExplosionParticleType2:
+			strcpy(nowChar, ExplosionChar2);
+			break;
+		}
 
 		for (int y = 0; y < p->particleRect.height; y++) {
 			for (int x = 0; x < p->particleRect.width; x++) {
@@ -120,7 +161,9 @@ void PrintParticles() {
 				if (!RectContainsPoint(&CameraRectInGame, &inGamePos)) continue;
 
 				printPos = IngamePosition_to_CanvasPosition(inGamePos);
-				if (p->particleImage[y][x] != ' ') ScreenPrint(printPos.x, printPos.y, "¢Â");
+				if (p->particleGrid[y][x]) {
+					ScreenPrint(printPos.x, printPos.y, nowChar);
+				}
 			}
 		}
 	}
@@ -142,17 +185,41 @@ bool SetCameraPoint()
 		CameraRectInGame.y = newY;
 	}
 
-	//if (CameraRectInGame.x < 0) CameraRectInGame.x = 0;
-	//if (CameraRectInGame.y < 0) CameraRectInGame.y = 0;
+	if (CameraRectInGame.x < 0) CameraRectInGame.x = 0;
+	if (CameraRectInGame.y < 0) CameraRectInGame.y = 0;
 
-	//World* worldInfo = GetCurrentWorld();
-	//int worldWidth = worldInfo->width;
-	//int worldHeight = worldInfo->height;
+	World* worldInfo = GetCurrentWorld();
+	int worldWidth = worldInfo->width;
+	int worldHeight = worldInfo->height;
 
-	//if (CameraRectInGame.x + CameraRectInGame.width >= worldWidth) CameraRectInGame.x = worldWidth - _cameraWidthInGame;
-	//if (CameraRectInGame.y + CameraRectInGame.height >= worldHeight) CameraRectInGame.y = worldHeight - _cameraHeightInGame;
+	if (CameraRectInGame.x + CameraRectInGame.width >= worldWidth) CameraRectInGame.x = worldWidth - _cameraWidthInGame;
+	if (CameraRectInGame.y + CameraRectInGame.height >= worldHeight) CameraRectInGame.y = worldHeight - _cameraHeightInGame;
 
 	return true;
+}
+
+bool isShaking = false;
+double ShakingTime = 0;
+double BaseShakingTime = 0.1f;
+
+void CameraShake() {
+	if (isShaking) return;
+
+	CameraRectInCanvas.x++;
+	isShaking = true;
+
+	ShakingTime = BaseShakingTime;
+}
+
+void UpdateShakingTime() {
+	ShakingTime -= Time.deltaTime;
+
+	if (ShakingTime <= 0) {
+		isShaking = false;
+
+		CameraRectInCanvas.x--;
+		//CameraRectInGame.y--;
+	}
 }
 
 void RenderCamera()
@@ -164,4 +231,6 @@ void RenderCamera()
 	PrintEnemies();
 	PrintPlayer();
 	PrintParticles();
+
+	if (isShaking) UpdateShakingTime();
 }

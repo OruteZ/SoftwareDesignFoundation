@@ -12,6 +12,7 @@
 #include "Entity.h"
 #include "Menu.h"
 #include "World.h"
+#include "HeartBeat.h"
 
 #ifdef DEBUG
 #include "Keyboard.h"
@@ -29,7 +30,7 @@ void UpdateEnemies() {
 		}
 
 		else {
-			//UpdateEnemy(enemy);
+			UpdateEnemy(enemy);
 		}
 	}
 }
@@ -39,8 +40,8 @@ void UpdateParticles() {
 		Particle* particle = (Particle*)particles->entities[i];
 
 		if (particle->isDead) {
-			DeleteParticle(particle);
 			VectorDeleteUnstable(particles, i);
+			DeleteParticle(particle);
 		}
 
 		else {
@@ -55,9 +56,16 @@ void Update() {
 
 	if (GameState == Dungeon) {
 		TrySpawnSequence();
+
+		UpdateHeartBeat();
+
 		UpdateEnemies();
 		UpdateParticles();
 		UpdatePlayer();
+
+		if (GetTile(player->base.entity.pos) & FLAG_GOAL) {
+			StartNextWorld();
+		}
 	}
 	
 	if (GameState == Menu) {

@@ -1,42 +1,36 @@
 #include "Point.h"
 #include "MeleeEnemy.h"
 #include "Player.h"
+#include "Enemy.h"
+#include "Particle.h"
+#include<string.h>
 
-
-
-const double _baseMeleeEnemyAttackDelay = 0.15;
-const MeleeEnemy DefaultMeleeEnemy = {
-	.base.entity = {
-		.pos = {0, 0},
-		.type = MeleeEnemyType
-	},
-
-	.base.enemy = {
-		.baseDamage = 15,
-		.hp = 100,
-		.moveSpeed = 1, //block per second
-		.attackSpeed = 1 / 0.15,
-		.detectionRadius = 10,
-		.facing = {0, 1},
-
-		.moveCoolDown = 0,
-		.attackDelay = 0,
-
-		.attackHeight = 1,
-		.attackWidth = 3,
-	}
-};
 
 MeleeEnemy* CreateMeleeEnemy(Point p) {
 	MeleeEnemy* meleeEnemy = (MeleeEnemy*)malloc(sizeof(MeleeEnemy));
+	if (meleeEnemy == NULL) exit(-1);
 
-	(*meleeEnemy) = DefaultMeleeEnemy;
 	meleeEnemy->base.entity.pos = p;
+	meleeEnemy->base.entity.type = MeleeEnemyType;
+
+	meleeEnemy->base.enemy.baseDamage = 15;
+	meleeEnemy->base.enemy.hp = 100;
+	meleeEnemy->base.enemy.moveSpeed = 1;
+	meleeEnemy->base.enemy.attackSpeed = 1 / 1; //attack per second;
+	meleeEnemy->base.enemy.detectionRadius = 10;
+	meleeEnemy->base.enemy.facing = Direction.north;
+	meleeEnemy->base.enemy.moveCoolDown = 0;
+	meleeEnemy->base.enemy.attackDelay = 0;
+	meleeEnemy->base.enemy.attackHeight = 1;
+	meleeEnemy->base.enemy.attackWidth = 3;
 
 	return meleeEnemy;
 }
 
 void MeleeEnemyAttack(MeleeEnemy* mEnemy) {
+#ifdef DEBUG
+	DebugPrint("Enemy Attacked");
+#endif
 	Point attackPoint = mEnemy->base.entity.pos;
 	PointAdd(&attackPoint, &mEnemy->base.enemy.facing);
 
@@ -67,6 +61,8 @@ void MeleeEnemyAttack(MeleeEnemy* mEnemy) {
 		attackRect.height = mEnemy->base.enemy.attackWidth;
 	}
 
+	CreateParticle(mEnemy->base.enemy.facing, attackPoint, MeleeAttackParticleType, 0);
+
 	//플레이어 피격 확인
 	Point playerPos = GetPlayerPos();
 	if (RectContainsPoint(&attackRect, &playerPos)) {
@@ -78,10 +74,6 @@ void MeleeEnemyAttack(MeleeEnemy* mEnemy) {
 	if (mEnemy->base.enemy.moveCoolDown < mEnemy->base.enemy.attackDelay) {
 		mEnemy->base.enemy.moveCoolDown = mEnemy->base.enemy.attackDelay;
 	}
-
-#ifdef DEBUG
-	DebugPrint("Enemy Attacked");
-#endif
 }
 
 //#include "MeleeEnemyAttack.h"
