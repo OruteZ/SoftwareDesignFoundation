@@ -13,78 +13,70 @@
 BOOLEAN isHit;
 //----
 
-HeartBeat* heart_beat;
+HeartBeat* heartBeat;
 
 void ResetNote();
 void MoveNote();
 int IsNoteBeaten();
 
+bool isBeatNow = false;
+
 unsigned _stdcall Thread_PlaySound(void* arg);
 
 void InitHeartBeat()
 {
-	heart_beat = (HeartBeat*)malloc(sizeof(HeartBeat));
+	heartBeat = (HeartBeat*)malloc(sizeof(HeartBeat));
+	if (heartBeat == NULL) exit(-1);
 
-	heart_beat->note_size = 40;
-	heart_beat->BPM = 240;
-	heart_beat->time_to_check_tempo = 0;
-	heart_beat->combo = 0;
+	heartBeat->note_size = 40;
+	heartBeat->BPM = 240;
+	heartBeat->time_to_check_tempo = 0;
+	heartBeat->combo = 0;
 
-	heart_beat->note = (short*)malloc(sizeof(short) * heart_beat->note_size);
-	heart_beat->print_buffer = (char*)malloc(sizeof(char) * (heart_beat->note_size * 2));
-	for (int i = 0; i < heart_beat->note_size; i++) {
-		heart_beat->note[i] = 0;
-		heart_beat->print_buffer[i * 2] = ' ';
-		heart_beat->print_buffer[i * 2 + 1] = ' ';
+	heartBeat->note = (short*)malloc(sizeof(short) * heartBeat->note_size);
+	if (heartBeat->note == NULL) exit(-1);
+
+	for (int i = 0; i < heartBeat->note_size; i++) {
+		heartBeat->note[i] = 0;
 	}
 
-
-	heart_beat->print_point = CreatePoint(0, 20);
+	heartBeat->print_point = CreatePoint(0, 20);
 }
 
 void UpdateHeartBeat(double delta_time)
 {
-	heart_beat->time_to_check_tempo += delta_time;
+	heartBeat->time_to_check_tempo += delta_time;
 
-	if (heart_beat->time_to_check_tempo >= ((double)60 * 1000) / (double)heart_beat->BPM) {
+	if (heartBeat->time_to_check_tempo >= ((double)60 * 1000) / (double)heartBeat->BPM) {
 		MoveNote();
-		heart_beat->time_to_check_tempo -= ((double)60 * 1000) / (double)heart_beat->BPM;
+		isBeatNow = true;
+		heartBeat->time_to_check_tempo -= ((double)60 * 1000) / (double)heartBeat->BPM;
+	}
+	else {
+		isBeatNow = false;
 	}
 
-	if (GetKeyDown('J')) {
+	if (GetKeyDown(BeatKey)) {
 		if (IsNoteBeaten()) {
 			isHit = TRUE;
-			if (++(heart_beat->combo) >= 10) {
+			if (++(heartBeat->combo) >= 10) {
 				ResetNote();
-				heart_beat->combo = 0;
-				heart_beat->BPM += 120;
+				heartBeat->combo = 0;
+				heartBeat->BPM += 120;
 			}
 		}
-		else
-		{
-			heart_beat->combo = 0;
+		else {
+			heartBeat->combo = 0;
 		}
-	}
-}
-
-void RenderHeartBeat()
-{
-	for (int dy = 0; dy < 4; dy++) {
-		ScreenPrint(heart_beat->print_point->x, heart_beat->print_point->y + dy, heart_beat->print_buffer);
-		ScreenPrint(
-			heart_beat->print_point->x + heart_beat->note_size * 2,
-			heart_beat->print_point->y + dy,
-			"                    "
-		);
 	}
 }
 
 void RealeseHeartBeat()
 {
-	free(heart_beat->note);
-	free(heart_beat->print_buffer);
-	DeletePoint(heart_beat->print_point);
-	free(heart_beat);
+	free(heartBeat->note);
+	free(heartBeat->print_buffer);
+	DeletePoint(heartBeat->print_point);
+	free(heartBeat);
 }
 
 void MoveNote()
@@ -92,80 +84,71 @@ void MoveNote()
 	//test
 	if (isHit) isHit = FALSE;
 
-
-	int i, size = heart_beat->note_size;
+	int i, size = heartBeat->note_size;
 	int last_node_point = -1;
 	for (i = 1; i < size; i++) {
-		heart_beat->note[i - 1] = heart_beat->note[i];
-		if (heart_beat->note[i - 1] == 1) last_node_point = i;
+		heartBeat->note[i - 1] = heartBeat->note[i];
+		if (heartBeat->note[i - 1] == 1) last_node_point = i;
 	}
 
 	if (last_node_point <= size - 4) {
-		heart_beat->note[size - 1] = 1;
+		heartBeat->note[size - 1] = 1;
 		//_beginthreadex(NULL, 0, Thread_PlaySound, 0, 0, NULL);
 	}
 
-	else heart_beat->note[size - 1] = 0;
-	ReloadHeartBeatBuffer();
-}
-
-void ReloadHeartBeatBuffer()
-{
-	int i, size = heart_beat->note_size;
-	for (i = 0; i < size; i++) {
-		//sprintf((*fps_data)->fps_text_buffer, "FPS=%d", (*fps_data)->frame_cnt);
-		if (heart_beat->note[i] == 1)
-			sprintf_s((heart_beat->print_buffer) + (i * 2), 2,"aa");
-		else sprintf_s((heart_beat->print_buffer) + (i * 2), 2, "  ");
-	}
+	else heartBeat->note[size - 1] = 0;
 }
 
 void ResetNote()
 {
-	for (int i = 0; i < heart_beat->note_size; i++) {
-		heart_beat->note[i] = 0;
+	for (int i = 0; i < heartBeat->note_size; i++) {
+		heartBeat->note[i] = 0;
 	}
 }
 
 int IsNoteBeaten()
 {
-	double time_per_beat = (((double)60 * 1000) / (double)heart_beat->BPM);
+	double time_per_beat = (((double)60 * 1000) / (double)heartBeat->BPM);
 
-	int note_position;
-	for (int i = 0; i < heart_beat->note_size; i++) {
-		if (heart_beat->note[i] == 1) {
-			note_position = i;
+	int notePosition;
+	for (int i = 0; i < heartBeat->note_size; i++) {
+		if (heartBeat->note[i] == 1) {
+			notePosition = i;
 			break;
 		}
 	}
-	if (note_position > 1) return 0;
+	if (notePosition > 1) return 0;
 
-	heart_beat->note[note_position] = 0;
+	heartBeat->note[notePosition] = 0;
 
-	double correct_time = time_per_beat * note_position;
-	double time_differece = abs(correct_time - heart_beat->time_to_check_tempo);
+	double correct_time = time_per_beat * notePosition;
+	double time_differece = abs(correct_time - heartBeat->time_to_check_tempo);
 
 	if (time_differece < time_per_beat / 2) return 1;
 	else return 0;
 }
 
-void SetBPM(int BPM)
-{
-	heart_beat->BPM = BPM;
+void SetBPM(int BPM) {
+	heartBeat->BPM = BPM;
 }
 
-int GetBPM()
-{
-	return heart_beat->BPM;
+int GetBPM() {
+	return heartBeat->BPM;
 }
 
 short* GetNoteInfo()
 {
-	short* result = (short*)malloc(sizeof(short) * heart_beat->note_size);
-	memcpy(result, heart_beat->note, heart_beat->note_size);
+	short* result = (short*)malloc(sizeof(short) * heartBeat->note_size);
+	if (result == NULL) exit(-1);
+
+	memcpy(result, heartBeat->note, heartBeat->note_size);
 	return result;
 }
 
 int GetCombo() {
-	return heart_beat->combo;
+	return heartBeat->combo;
+}
+
+bool nowBeat() {
+	return isBeatNow;
 }

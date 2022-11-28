@@ -13,6 +13,8 @@
 BOOLEAN isHit;
 //----
 
+const char BeatKey = 'J';
+
 typedef struct _HeartBeatObject {
 	short* note;
 	int BPM;
@@ -24,17 +26,11 @@ typedef struct _HeartBeatObject {
 	char* print_buffer;
 } HeartBeat;
 
-extern HeartBeat* heart_beat;
+extern HeartBeat* heartBeat;
 
 void InitHeartBeat();
 void UpdateHeartBeat(double delta_time);
-void RenderHeartBeat();
 void RealeseHeartBeat();
-
-void ResetNote();
-
-void MoveNote();
-void ReloadHeartBeatBuffer();
 
 int IsNoteBeaten();
 
