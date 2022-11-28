@@ -132,6 +132,15 @@
     <ClCompile Include="UI.c">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
+    <ClCompile Include="RayCast.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="World002.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="World003.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Init.h">
@@ -219,6 +228,9 @@
       <Filter>Header Files\World</Filter>
     </ClInclude>
     <ClInclude Include="Menu.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
   </ItemGroup>
