@@ -2,18 +2,27 @@
 #include "BomberEnemy.h"
 
 #include "Player.h"
+#include "Particle.h"
 
 BomberEnemy* CreateBomberEnemy(Point p)
 {
 	BomberEnemy* bomberEnemy = (BomberEnemy*)malloc(sizeof(BomberEnemy));
+	if (bomberEnemy == NULL) exit(-1);
+
 	bomberEnemy->base.entity.type = BomberEnemyType;
-	bomberEnemy->base.entity.pos.x = p.x;
-	bomberEnemy->base.entity.pos.y = p.y;
-	bomberEnemy->base.enemy.attackDelay = 1;
+	bomberEnemy->base.entity.pos = p;
+
 	bomberEnemy->base.enemy.baseDamage = 50;
 	bomberEnemy->base.enemy.hp = 30;
-	bomberEnemy->base.enemy.moveSpeed = 0.5f;
+	bomberEnemy->base.enemy.attackSpeed = 1;
+	bomberEnemy->base.enemy.moveSpeed = 1;
 	bomberEnemy->base.enemy.detectionRadius = 15;
+	bomberEnemy->base.enemy.facing = Direction.north;
+	bomberEnemy->base.enemy.moveCoolDown = 0;
+	bomberEnemy->base.enemy.attackDelay = 0;
+	bomberEnemy->base.enemy.attackHeight = 1;
+	bomberEnemy->base.enemy.attackWidth = 3;
+
 	return bomberEnemy;
 }
 
@@ -28,17 +37,15 @@ void BomberEnemyAttack(BomberEnemy* bomberEnemy) {
 		.height = bomberEnemy->base.enemy.attackHeight
 	};
 
+	CreateParticle(bomberEnemy->base.enemy.facing, bomberEnemy->base.entity.pos, ExplosionParticleType1, bomberEnemy->base.enemy.baseDamage);
 	//플레이어 피격 확인
 	Point playerPos = GetPlayerPos();
 	if (RectContainsPoint(&attackRect, &playerPos)) {
 		PlayerOnHit(bomberEnemy->base.enemy.baseDamage);
 	}
 
-
-	bomberEnemy->base.enemy.attackDelay = 1 / (bomberEnemy->base.enemy.attackSpeed);
-	if (bomberEnemy->base.enemy.moveCoolDown < bomberEnemy->base.enemy.attackDelay) {
-		bomberEnemy->base.enemy.moveCoolDown = bomberEnemy->base.enemy.attackDelay;
-	}
+	bomberEnemy->base.enemy.hp = 0;
+	bomberEnemy->base.enemy.attackDelay = 10000;
 
 #ifdef DEBUG
 	DebugPrint("Enemy Attacked");
