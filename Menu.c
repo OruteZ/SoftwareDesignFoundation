@@ -98,15 +98,9 @@ void RenderButtonArrow()
 {
 	if (nowButton == StartButton) {
 		RenderStartArrow();
-#ifdef DEBUG
-		DebugPrint("Start");
-#endif
 	}
 	else if (nowButton == EndButton) {
 		RenderEndArrow();
-#ifdef DEBUG
-		DebugPrint("END  ");
-#endif
 	}
 }
 

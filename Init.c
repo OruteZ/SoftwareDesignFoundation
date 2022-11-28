@@ -11,6 +11,7 @@
 #include "Camera.h"
 #include "Enemy.h"
 #include "MeleeEnemy.h"
+#include "HeartBeat.h"
 
 #ifdef DEBUG
 #include "Debug.h"
@@ -25,6 +26,7 @@ void Init()
     InitTime();
     InitializeKeyboard();
     InitCamera();
+    InitHeartBeat();
 
 
     GameState = Menu;
