@@ -8,7 +8,10 @@
 #include"Screen.h"
 #include"KeyBoard.h"
 
-#define NUMTHREAD 5
+#include <windows.h>
+#include <mmsystem.h>
+#include <conio.h>
+#pragma comment(lib, "winmm.lib")
 
 
 //for test
@@ -25,19 +28,15 @@ int IsNoteBeaten();
 
 bool isBeatNow = false;
 
-void Thread_PlaySound() {
-	Beep(1200, 300);
-}
-
 void InitHeartBeat()
 {
 	heartBeat = (HeartBeat*)malloc(sizeof(HeartBeat));
 	if (heartBeat == NULL) exit(-1);
 
-	heartBeat->note_size = 40;
-	heartBeat->BPM = 240;
-	heartBeat->time_to_check_tempo = 0;
-	heartBeat->combo = 0;
+	heart_beat->note_size = 40;
+	heart_beat->BPM = 280;
+	heart_beat->time_to_check_tempo = 0;
+	heart_beat->combo = 0;
 
 	heartBeat->note = (short*)malloc(sizeof(short) * heartBeat->note_size);
 	if (heartBeat->note == NULL) exit(-1);
@@ -46,7 +45,10 @@ void InitHeartBeat()
 		heartBeat->note[i] = 0;
 	}
 
-	heartBeat->print_point = CreatePoint(0, 20);
+
+	heart_beat->print_point = CreatePoint(0, 20);
+
+	PlaySound(TEXT(".\\__GameSound.mp3"), NULL, SND_FILENAME | SND_ASYNC);
 }
 
 void UpdateHeartBeat(double delta_time)
