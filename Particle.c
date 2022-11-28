@@ -196,7 +196,7 @@ void CreateParticle(Point direction, Point point, ParticleType type, int dmg) {
 		point.y - (particle->particleRect.height / 2)
 	};
 
-	particle->base.entity.pos = startPoint;
+	particle->base.entity.pos = point;
 	particle->base.entity.type = ParticleEffectType;
 
 	particle->particleRect.x = startPoint.x;
@@ -213,10 +213,6 @@ void CreateParticle(Point direction, Point point, ParticleType type, int dmg) {
 	for (int i = 0; i < particle->particleRect.height; i++) {
 		particle->particleGrid[i] = (bool*)malloc(sizeof(bool) * particle->particleRect.width);
 		if (particle->particleGrid[i] == NULL) exit(-1);
-
-		for (int j = 0; j < particle->particleRect.width;j++) {
-			particle->particleGrid[i][j] = false;
-		}
 	}
 
 	switch (particle->particleType) {
