@@ -116,7 +116,7 @@ void emptyFunc() {
 }
 
 void InitializeWorld003() {
-	world003 = CreateWorld(90, 89);
+	world003 = CreateWorld(100, 100);
 	world003->grid = grid_003;
 
 	Point playerSpawnPoint = { .x = 19, .y = 20 };
