@@ -100,6 +100,7 @@ void EnemyMove(Enemy* enemy, Point direction) {
 	if (!canEnemyMove(enemy)) return;
 
 	Point* nextPosition = DuplicatePoint(&enemy->base.entity.pos);
+	Point playerPos = GetPlayerPos();
 	PointAdd(nextPosition, &direction);
 	Rect nextPositionRect = {
 		.x = nextPosition->x,
@@ -108,15 +109,30 @@ void EnemyMove(Enemy* enemy, Point direction) {
 		.height = 1
 	};
 	
-	Vector* vector = QuadTreeQuery(enemiesTree, nextPositionRect);
-	if (vector->length <= 0 && !(GetTile(*nextPosition) & FLAG_COLLIDE_WITH_BODY)) {
-		enemy->base.entity.pos = *nextPosition;
+	//Vector* vector = QuadTreeQuery(enemiesTree, nextPositionRect);
+
+	bool moveSuccess = true;
+
+	if(GetTile(*nextPosition) & FLAG_COLLIDE_WITH_BODY) moveSuccess = false;
+	if(PointEquals(nextPosition, &playerPos)) moveSuccess = false;
+	int len = enemies->length;
+	for (int i = 0; i < len; i++) {
+		if (PointEquals(&enemies->entities[i]->pos, nextPosition)) {
+			moveSuccess = false;
+		}
+
+		if (!moveSuccess) break;
 	}
 
+	if(moveSuccess) enemy->base.entity.pos = *nextPosition;
+
 	DeletePoint(nextPosition);
-	DeleteVector(vector);
+	//DeleteVector(vector);
 
 	enemy->moveCoolDown = 1 / enemy->moveSpeed;
+	if (enemy->attackDelay <= 0 && moveSuccess) {
+		enemy->attackDelay = 1 / enemy->moveSpeed;
+	}
 }
 
 bool canEnemyAttack(Enemy* enemy) {
@@ -209,12 +225,15 @@ void CreateEnemy(enum EntityType type, Point spawnPoint) {
 
 void UpdateEnemy(Enemy* enemy) {
 	//사거리 내로 들어오면 우선 공격하기
-	if (IsPlayerInRange(enemy)) {
-		LookAt(enemy, GetPlayerPos());
-		EnemyAttack(enemy);
-	}
-	else if(canEnemyMove(enemy)) {
-		EnemyRayCastPlayer(enemy);
+	if (!isEnemyStiff(enemy)) {
+		if (IsPlayerInRange(enemy)) {
+			LookAt(enemy, GetPlayerPos());
+			EnemyAttack(enemy);
+		}
+
+		if (canEnemyMove(enemy)) {
+			EnemyRayCastPlayer(enemy);
+		}
 	}
 	CalEnemyCooldown(enemy);
 }

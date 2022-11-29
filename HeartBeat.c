@@ -58,23 +58,21 @@ void UpdateHeartBeat() {
 
 	if (heartBeat->time_to_check_tempo >= ((double)60) / (double)heartBeat->BPM) {
 		MoveNote();
-		heartBeat->time_to_check_tempo -= ((double)60) / (double)heartBeat->BPM;
-		MoveNote();
 		isBeatNow = true;
 		heartBeat->time_to_check_tempo -= ((double)60) / (double)heartBeat->BPM;
+	} else isBeatNow = false;
 
-		if (GetKeyDown('K')) {
-			if (IsNoteBeaten()) {
-				isHit = TRUE;
-				if (++(heartBeat->combo) >= 10) {
-					ResetNote();
-					heartBeat->combo = 0;
-					heartBeat->BPM += 120;
-				}
-			}
-			else {
+	if (GetKeyDown('K')) {
+		if (IsNoteBeaten()) {
+			isHit = TRUE;
+			if (++(heartBeat->combo) >= 10) {
+				ResetNote();
 				heartBeat->combo = 0;
+				heartBeat->BPM += 120;
 			}
+		}
+		else {
+			heartBeat->combo = 0;
 		}
 	}
 }
@@ -100,7 +98,6 @@ void MoveNote()
 		heartBeat->note[size - 1] = 1;
 	}
 	else {
-		isBeatNow = false;
 		heartBeat->note[size - 1] = false;
 	}
 }
