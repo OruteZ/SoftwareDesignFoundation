@@ -27,6 +27,7 @@ void RenderHeatBeatNote() {
 }
 
 const char HeartChar[] = "♥";
+const char EmptyHeartChar[] = "♡";
 void PrintHPBar() {
 	int maxHp = 100; // todo = maxHP 필드 player 구조체에 추가
 	int nowHp = player->hp;
@@ -35,6 +36,9 @@ void PrintHPBar() {
 	int barLength = (int)(HPBAR_MAX_LENGTH * nowHp) / maxHp;
 	for (int i = 0; i < barLength; i++) {
 		ScreenPrint(HPBAR_POSITION_X + i * 2, HPBAR_POSITION_Y, HeartChar);
+	}
+	for (int i = barLength; i < HPBAR_MAX_LENGTH; i += 2) {
+		ScreenPrint(HPBAR_POSITION_X + i * 2, HPBAR_POSITION_Y, EmptyHeartChar);
 	}
 	SetColor(15);
 }
