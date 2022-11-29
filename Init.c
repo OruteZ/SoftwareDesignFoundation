@@ -39,7 +39,7 @@ void Init()
     // StartWorld001();
 
     // Vectors
-    player = CreatePlayer();
+    player = CreatePlayer(GetCurrentWorld()->playerSpawnPoint);
     enemies = CreateVector();
     expOrbs = CreateVector();
     particles = CreateVector();
