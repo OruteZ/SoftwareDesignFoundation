@@ -128,7 +128,7 @@ void EnemyOnDeath(Enemy* enemy)
 #endif
 }
 
-void EnemyOnHit(Enemy* enemy, int damage)
+bool EnemyOnHit(Enemy* enemy, int damage)
 {
 	enemy->hp -= damage;
 #ifdef DEBUG
@@ -137,6 +137,7 @@ void EnemyOnHit(Enemy* enemy, int damage)
 
 	if (enemy->hp <= 0)	{
 		EnemyOnDeath(enemy);
+		return true;
 	}
 }
 

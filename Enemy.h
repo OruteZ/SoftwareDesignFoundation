@@ -39,6 +39,8 @@ typedef struct _Enemy
 
 bool isEnemyDead(Enemy* enemy);
 bool isEnemy(Entity* entity);
-void EnemyOnHit(Enemy* enemy, int damage);
+
+//Enemy에게 damage만큼의 피해를 가합니다. Enemy사망시 true를 반환합니다.
+bool EnemyOnHit(Enemy* enemy, int damage);
 void CreateEnemy(enum EntityType type, Point spawnPoint);
 void UpdateEnemy(Enemy* enemy);
