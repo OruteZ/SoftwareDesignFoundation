@@ -26,8 +26,8 @@ const char wallChar[] = "¢Æ";
 const char MeleeAttackChar[] = "¢Â";
 const char RangeAttackChar[] = "RR";
 
-const char ExplosionChar1[] = "qq";
-const char ExplosionChar2[] = "pp";
+const char ExplosionChar1[] = "¦¶";
+const char ExplosionChar2[] = "¥¹";
 
 char** BufferToPrintWorld;
 
@@ -152,10 +152,12 @@ void PrintParticles() {
 			break;
 
 		case ExplosionParticleType1:
+			SetColor(4);
 			strcpy(nowChar, ExplosionChar1);
 			break;
 
 		case ExplosionParticleType2:
+			SetColor(4);
 			strcpy(nowChar, ExplosionChar2);
 			break;
 		}
@@ -171,6 +173,8 @@ void PrintParticles() {
 				}
 			}
 		}
+
+		SetColor(15);
 	}
 }
 
