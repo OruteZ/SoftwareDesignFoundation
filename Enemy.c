@@ -139,6 +139,7 @@ bool EnemyOnHit(Enemy* enemy, int damage)
 		EnemyOnDeath(enemy);
 		return true;
 	}
+	return false;
 }
 
 void CreateEnemy(enum EntityType type, Point spawnPoint) {
