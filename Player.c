@@ -10,12 +10,16 @@
 #include "Debug.h"
 #include "Particle.h"
 #include "Camera.h"
+#include "HeartBeat.h"
 Player* player;
+int score;
 
 Player* CreatePlayer(Point spawnPoint)
 {
 	Player* _player = (Player*)malloc(sizeof(Player));
 	if (_player == NULL) exit(-1);
+
+	score = 0;
 
 	_player->base.entity.type = PlayerType;
 	_player->base.entity.pos.x = 0;
@@ -42,6 +46,8 @@ BOOL _canPlayerMove = TRUE;
 double _playerMoveCooldown;
 
 double _playerAttackDelay = 0.15f;
+
+int score;
 
 void CalculatePlayerCooldown() {
 	_playerAttackDelay -= Time.deltaTime;
@@ -186,4 +192,10 @@ void PlayerOnHit(int damage) {
 #endif
 }
 
+//현재 점수를 반환합니다.
+int GetScore() { return score; }
+
+void UpScore(int baseScore) {
+	score += GetBPM() * baseScore;
+}
 

@@ -46,6 +46,11 @@ const Rect InfoUIRect = {
 	.height = 22,
 };
 
+const Point printPoint_Stage = {
+	.x = 4,
+	.y = 3,
+};
+
 const Point printPoint_BPM = {
 	.x = 4,
 	.y = 7
@@ -56,10 +61,34 @@ const Point printPoint_Score = {
 	.y = 13,
 };
 
+void PrintBuffer(int x, int y, const char* format, ...) {
+	va_list args;
+	va_start(args, format);
 
+	char buffer[11];
+	vsprintf_s(buffer, sizeof(buffer), format, args);
+
+	va_end(args);
+
+	ScreenPrint(x, y, buffer);
+
+}
+
+
+int currentWorldNumber = 1;
 void PrintInfo() {
-	Point p = printPoint_BPM;
-	ScreenPrint(p.x, p.y, "BPM : %d", GetBPM());
+	Point p;
+	
+	p = printPoint_BPM;
+	PrintBuffer(p.x, p.y, "BPM");
+	PrintBuffer(p.x, p.y + 1, "%d", GetBPM());
+
+	p = printPoint_Score;
+	ScreenPrint(p.x, p.y, "Score");
+	PrintBuffer(p.x, p.y + 1, "%d", GetScore());
+
+	p = printPoint_Stage;
+	PrintBuffer(p.x, p.y, "Stage %d", 1);
 }
 
 void PrintInfoUIBox() {
@@ -83,5 +112,6 @@ void RenderUI() {
 	PrintHPBar();
 	RenderHeatBeatNote();
 	PrintInfoUIBox();
+	PrintInfo();
 }
 

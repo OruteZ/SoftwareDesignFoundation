@@ -20,7 +20,7 @@ typedef struct _Player {
 	double moveSpeed; // block per second;
 } Player;
 
-Player* CreatePlayer();
+Player* CreatePlayer(Point spawnPoint);
 
 void PlayerMove(Point dir);
 
@@ -29,3 +29,5 @@ void UpdatePlayer();
 Point GetPlayerPos();
 
 void PlayerOnHit(int damage);
+
+int GetScore();
