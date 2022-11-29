@@ -13,6 +13,8 @@
 #include "MeleeEnemy.h"
 #include "HeartBeat.h"
 
+#include "Menu.h"
+
 #ifdef DEBUG
 #include "Debug.h"
 #endif 
@@ -39,8 +41,10 @@ void Init()
     // StartWorld001();
 
     // Vectors
-    player = CreatePlayer();
+    player = CreatePlayer(GetCurrentWorld()->playerSpawnPoint);
     enemies = CreateVector();
     expOrbs = CreateVector();
     particles = CreateVector();
+
+    StartMainMenu();
 }

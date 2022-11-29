@@ -7,6 +7,8 @@
 #include "Screen.h"
 #include "Game.h"
 #include "Debug.h"
+
+//MainMenu Keys
 #define StartButtonPosX (20)
 #define StartButtonPosY (24)
 #define EndButtonPosX (50)
@@ -16,60 +18,86 @@
 #define EndButtonSelectionArrowPosX (EndButtonPosX - 4)
 #define EndButtonSelectionArrowPosY EndButtonPosY 
 
-Point p;
-bool CanArrowMove = true;
+//GaimOverMenu Keys
+#define GoToMainButtonPosX (20)
+#define GoToMainButtonPosY (24)
+#define GameOverEndButtonPosX (50)
+#define GameOverEndButtonPosY (24)
+#define GoToMainButtonSelectionArrowPosX (GoToMainButtonPosX - 4)
+#define GoToMainButtonSelectionArrowPosY GoToMainButtonPosY
+#define GameOverEndButtonSelectionArrowPosX (GameOverEndButtonPosX - 4)
+#define GameOverEndButtonSelectionArrowPosY GameOverEndButtonPosY 
 
-//--------------------------------------
+enum MenuType {
+	Main,
+	GameOver,
+} menuState;
+
 typedef enum ButtonType {
-	StartButton,
-	EndButton,
+	Main_StartButton,
+	Main_QuitButton,
+
+	GameOver_RetryMainButton,
+	GameOver_QuitButton,
 }button;
 
-button nowButton = StartButton;
+button nowButton = Main_StartButton;
 
-void ChangeButton() {
-	if (nowButton == StartButton) nowButton = EndButton;
-	else if (nowButton == EndButton) nowButton = StartButton;
+void ChangeButton_ToLeft() {
+	if		(nowButton == Main_QuitButton)
+		nowButton = Main_StartButton;
+
+	else if (nowButton == GameOver_QuitButton)
+		nowButton = GameOver_RetryMainButton;
+}
+
+void ChangeButton_ToRight() {
+	if (nowButton == Main_StartButton)
+		nowButton = Main_QuitButton;
+
+	else if (nowButton == GameOver_RetryMainButton)
+		nowButton = GameOver_QuitButton;
 }
 
 void SelectButton() {
 	switch (nowButton) {
-	case StartButton:
+	case Main_StartButton:
 		StartNextWorld();
 		GameState = Dungeon;
 		break;
-	case EndButton:
+	case Main_QuitButton:
+	case GameOver_QuitButton:
 		GameState = Exiting;
 		break;
+	case GameOver_RetryMainButton:
+		GameState = Menu;
+		menuState = Main;
 	default:
 		break;
 	}
 }
 
 void UpdateMenu() {
-	if (GetKeyDown('A')) ChangeButton();
-	if (GetKeyDown('D')) ChangeButton();
+	if (GetKeyDown('A')) ChangeButton_ToLeft();
+	if (GetKeyDown('D')) ChangeButton_ToRight();
 	if (GetKeyDown(VK_SPACE)) SelectButton();
 }
-//---------------------------------------
 
-
-void RenderButton()
+//MainMenu
+void RenderMainButton()
 {
-	
 	ScreenPrint(StartButtonPosX, StartButtonPosY, "Game Start");
 	ScreenPrint(EndButtonPosX, EndButtonPosY, "Quit");
 }
-void RenderStartArrow()
+void RenderMainStartArrow()
 {
 	ScreenPrint(StartButtonSelectionArrowPosX, StartButtonSelectionArrowPosY, "->");
 }
-void RenderEndArrow()
+void RenderMainQuitArrow()
 {
 	ScreenPrint(EndButtonSelectionArrowPosX, EndButtonSelectionArrowPosY, "->");
 }
-
-void RenderTitle()
+void RenderMainTitle()
 {
 	ScreenPrint(10, 10, "###   ##                   #                          ##     #               ");
 	ScreenPrint(10, 11, "#  #   #                   #                           #                     ");
@@ -79,34 +107,47 @@ void RenderTitle()
 	ScreenPrint(10, 15, "#  #   #    #  #  #  #  #  #  #     #     #  #  # ##   #     #    #  #  #    ");
 	ScreenPrint(10, 16, "###   ###    ##    ##    ###  #      ##   #  #   # #  ###   ###   #  #   ### ");
 }
-/*
-	void StartButtonArrowMove()
-	{
-		p.x = StartButtonSelectionArrowPosX;
-		p.y = StartButtonSelectionArrowPosY;
-		ScreenPrint(StartButtonSelectionArrowPosX, StartButtonSelectionArrowPosY, "->");
-	}
-	void EndButtonArrowMove()
-	{
-		p.x = EndButtonSelectionArrowPosX;
-		p.y = EndButtonSelectionArrowPosY;
-		ScreenPrint(EndButtonSelectionArrowPosX, EndButtonSelectionArrowPosY, "->");
-	}
-	*/
+
+//GameOvers
+void RenderGameOverButton() {
+	ScreenPrint(GoToMainButtonPosX, GoToMainButtonPosY, "Go to main menu");
+	ScreenPrint(GameOverEndButtonPosX, GameOverEndButtonPosY, "Quit");
+}
+void RenderRetryArrow() {
+	ScreenPrint(GoToMainButtonSelectionArrowPosX, GoToMainButtonSelectionArrowPosY, "->");
+
+}
+void RenderGameOverEndArrow() {
+	ScreenPrint(GameOverEndButtonSelectionArrowPosX, GameOverEndButtonSelectionArrowPosY, "->");
+}
+void RenderGameOver() {}
 
 void RenderButtonArrow()
 {
-	if (nowButton == StartButton) {
-		RenderStartArrow();
-	}
-	else if (nowButton == EndButton) {
-		RenderEndArrow();
-	}
+	if (nowButton == Main_StartButton) RenderMainStartArrow();
+	else if (nowButton == Main_QuitButton) RenderMainQuitArrow();
+	else if (nowButton == GameOver_RetryMainButton) RenderRetryArrow();
+	else if (nowButton == GameOver_QuitButton) RenderGameOverEndArrow();
 }
 
-
 void RenderMenu() {
-	RenderTitle();
-	RenderButton();
+	if (menuState == Main) {
+		RenderMainTitle();
+		RenderMainButton();
+	}
+	else if (menuState == GameOver) {
+		RenderGameOver();
+		RenderGameOverButton();
+	}
 	RenderButtonArrow();
+}
+
+void StartMainMenu() {
+	menuState = Main;
+	nowButton = Main_StartButton;
+}
+
+void StartGameOverMenu() {
+	menuState = GameOver;
+	nowButton = GameOver_RetryMainButton;
 }

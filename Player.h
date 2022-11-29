@@ -31,3 +31,5 @@ Point GetPlayerPos();
 void PlayerOnHit(int damage);
 
 int GetScore();
+
+bool IsPlayerDead();

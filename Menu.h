@@ -1,8 +1,8 @@
 #pragma once
-void RenderButton();
-void RenderTitle();
+void RenderMainButton();
+void RenderMainTitle();
 void RenderButtonArrow();
-void GameEnd();
-void GameStart();
 void RenderMenu();
 void UpdateMenu();
+void StartMainMenu();
+void StartGameOverMenu();
