@@ -17,6 +17,7 @@
 #include "BomberEnemy.h"
 
 #include "HeartBeat.h"
+#include "Raycast.h"
 
 bool isEnemyDead(Enemy* enemy);
 bool canEnemyMove(Enemy* enemy);
@@ -28,6 +29,32 @@ bool IsPlayerInRange(Enemy* enemy);
 void EnemyMove(Enemy* enemy, Point direction);
 void EnemyAttack(Enemy* enemy);
 void CalEnemyCooldown(Enemy* enemy);
+void EnemyRayCastPlayer(Enemy* enemy);
+
+void EnemyRayCastPlayer(Enemy* enemy) {
+	RayCastResult* result = CreateRayCastResult(enemy->detectionRadius * 2);
+	Point start = enemy->base.entity.pos;
+	Point dest = GetPlayerPos();
+	bool success = RayCastInCurrentWorld(result, start, dest);
+
+	if (success) {
+		Point direction = result->arr[1];
+		PointSub(&direction, &start);
+
+#ifdef DEBUG
+		for (int i = 0; i < result->length; i++) {
+			DebugPrint("RayCast Block: (%d, %d)", result->arr[i].x, result->arr[i].y);
+		}
+
+		DebugPrint("Direction = %d %d", direction.x, direction.y);
+#endif
+
+
+		EnemyMove(enemy, direction);
+	}
+
+	DeleteRayCastResult(result);
+}
 
 void LookAt(Enemy* enemy, Point target) {
 	int deltaX = target.x - enemy->base.entity.pos.x;
@@ -70,6 +97,8 @@ bool IsPlayerInRange(Enemy* enemy) {
 }
 
 void EnemyMove(Enemy* enemy, Point direction) {
+	if (!canEnemyMove(enemy)) return;
+
 	Point* nextPosition = DuplicatePoint(&enemy->base.entity.pos);
 	PointAdd(nextPosition, &direction);
 	Rect nextPositionRect = {
@@ -86,6 +115,8 @@ void EnemyMove(Enemy* enemy, Point direction) {
 
 	DeletePoint(nextPosition);
 	DeleteVector(vector);
+
+	enemy->moveCoolDown = 1 / enemy->moveSpeed;
 }
 
 bool canEnemyAttack(Enemy* enemy) {
@@ -181,6 +212,9 @@ void UpdateEnemy(Enemy* enemy) {
 	if (IsPlayerInRange(enemy)) {
 		LookAt(enemy, GetPlayerPos());
 		EnemyAttack(enemy);
+	}
+	else if(canEnemyMove(enemy)) {
+		EnemyRayCastPlayer(enemy);
 	}
 	CalEnemyCooldown(enemy);
 }
