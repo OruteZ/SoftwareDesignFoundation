@@ -31,6 +31,8 @@ Point GetPlayerPos();
 void PlayerOnHit(int damage);
 
 int GetScore();
-void UpScore();
+void UpScore(int baseScore);
 
 bool IsPlayerDead();
+
+void UpExp(int exp);

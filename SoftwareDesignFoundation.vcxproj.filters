@@ -147,6 +147,9 @@
     <ClCompile Include="Boss.c">
       <Filter>Source Files\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="ExpOrb.c">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Init.h">
@@ -243,6 +246,9 @@
       <Filter>Header Files\IO</Filter>
     </ClInclude>
     <ClInclude Include="Boss.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="ExpOrb.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
   </ItemGroup>

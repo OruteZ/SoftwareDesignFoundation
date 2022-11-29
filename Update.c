@@ -8,6 +8,7 @@
 #include "Particle.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "ExpOrb.h"
 
 #include "Menu.h"
 
@@ -24,6 +25,7 @@ void UpdateEnemies() {
 		if (isEnemyDead(enemy)) {
 			DeleteEnemy(enemy);
 			VectorDeleteUnstable(enemies, i);
+			i--;
 		}
 
 		else {
@@ -36,11 +38,13 @@ void UpdateParticles() {
 		Particle* particle = (Particle*)particles->entities[i];
 			if (particle == NULL) {
 				VectorDeleteUnstable(particles, i);
+				i--;
 			}
 
 			else if (particle->isDead) {
 				DeleteParticle(particle);
 				VectorDeleteUnstable(particles, i);
+				i--;
 			}
 
 			else {
@@ -48,7 +52,6 @@ void UpdateParticles() {
 			}
 	}
 }
-
 
 void Update() {
 	UpdateTime();

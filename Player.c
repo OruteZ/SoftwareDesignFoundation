@@ -212,6 +212,9 @@ bool IsPlayerDead()
 	return playerDeadFlag;
 }
 
+void UpExp(int exp) {
+}
+
 void UpScore(int baseScore) {
 	score += GetBPM() * baseScore;
 
