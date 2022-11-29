@@ -65,6 +65,15 @@ void Update() {
 		if (GetTile(player->base.entity.pos) & FLAG_GOAL) {
 			StartNextWorld();
 		}
+
+		if (IsPlayerDead()) {
+			DeepDeleteVector(enemies);
+			DeepDeleteVector(expOrbs);
+			DeepDeleteVector(particles);
+			free(player);
+			GameState = Menu;
+			StartGameOverMenu();
+		}
 	}
 	
 	if (GameState == Menu) {

@@ -13,7 +13,7 @@
 #include "HeartBeat.h"
 Player* player;
 int score;
-
+bool playerDeadFlag = false;
 Player* CreatePlayer(Point spawnPoint)
 {
 	Player* _player = (Player*)malloc(sizeof(Player));
@@ -36,6 +36,8 @@ Player* CreatePlayer(Point spawnPoint)
 
 	_player->attackHeight = 1;
 	_player->attackWidth = 3;
+
+	playerDeadFlag = false;
 	return _player;
 }
 
@@ -192,7 +194,7 @@ Point GetPlayerPos() { return player->base.entity.pos; }
 void PlayerOnHit(int damage) {
 	player->hp -= damage;
 	if (player->hp <= 0) {
-		// gameover;
+		playerDeadFlag = true;
 	}
 
 	CameraShake();
@@ -204,6 +206,11 @@ void PlayerOnHit(int damage) {
 
 //현재 점수를 반환합니다.
 int GetScore() { return score; }
+
+bool IsPlayerDead()
+{
+	return playerDeadFlag;
+}
 
 void UpScore(int baseScore) {
 	score += GetBPM() * baseScore;

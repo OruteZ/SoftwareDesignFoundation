@@ -13,6 +13,8 @@
 #include "MeleeEnemy.h"
 #include "HeartBeat.h"
 
+#include "Menu.h"
+
 #ifdef DEBUG
 #include "Debug.h"
 #endif 
@@ -43,4 +45,6 @@ void Init()
     enemies = CreateVector();
     expOrbs = CreateVector();
     particles = CreateVector();
+
+    StartMainMenu();
 }
