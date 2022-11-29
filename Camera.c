@@ -107,7 +107,10 @@ void PrintEnemies()
 		if (!RectContainsPoint(&CameraRectInGame, &e->base.entity.pos)) continue;
 
 		printPos = IngamePosition_to_CanvasPosition(e->base.entity.pos);
+
+		if (isEnemyStiff(e)) SetColor(3);
 		ScreenPrint(printPos.x, printPos.y, enemyChar);
+		SetColor(15);
 	}
 }
 
