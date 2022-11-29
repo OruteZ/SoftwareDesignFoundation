@@ -20,12 +20,11 @@
 #include "RayCast.h"
 #endif
 void UpdateEnemies() {
-	int len = enemies->length;
-	for (int i = 0; i < len; i++) {
+	for (int i = 0; i < enemies->length; i++) {
 		Enemy* enemy = (Enemy*)enemies->entities[i];
 
 		if (isEnemyDead(enemy)) {
-			//DeleteEnemy(enemy)
+			DeleteEnemy(enemy);
 			VectorDeleteUnstable(enemies, i);
 		}
 
@@ -35,18 +34,20 @@ void UpdateEnemies() {
 	}
 }
 void UpdateParticles() {
-	int len = particles->length;
-	for (int i = 0; i < len; i++) {
+	for (int i = 0; i < particles->length; i++) {
 		Particle* particle = (Particle*)particles->entities[i];
+			if (particle == NULL) {
+				VectorDeleteUnstable(particles, i);
+			}
 
-		if (particle->isDead) {
-			VectorDeleteUnstable(particles, i);
-			DeleteParticle(particle);
-		}
+			else if (particle->isDead) {
+				DeleteParticle(particle);
+				VectorDeleteUnstable(particles, i);
+			}
 
-		else {
-			UpdateParticle(particle);
-		}
+			else {
+				UpdateParticle(particle);
+			}
 	}
 }
 

@@ -99,19 +99,21 @@ void PrintWorld() {
 
 void PrintEnemies()
 {
+	SetColor(2);
 	Point printPos;
 
-	int len = enemies->length;
-	for (int i = 0; i < len; i++) {
+	for (int i = 0; i < enemies->length; i++) {
 		Enemy* e = (Enemy*)enemies->entities[i];
 		if (!RectContainsPoint(&CameraRectInGame, &e->base.entity.pos)) continue;
 
 		printPos = IngamePosition_to_CanvasPosition(e->base.entity.pos);
 
 		if (isEnemyStiff(e)) SetColor(3);
+		else if (e->ReadyToAttack) SetColor(4);
 		ScreenPrint(printPos.x, printPos.y, enemyChar);
-		SetColor(15);
+		SetColor(2);
 	}
+	SetColor(15);
 }
 
 void PrintPlayer()
@@ -130,8 +132,7 @@ void PrintExpOrb()
 void PrintParticles() {
 	Point printPos;
 
-	int len = particles->length;
-	for (int i = 0; i < len; i++) {
+	for (int i = 0; i < particles->length; i++) {
 		Particle* p = (Particle*)particles->entities[i];
 
 		if (!RectIsIntersectingRect(&CameraRectInGame, &p->particleRect)) {

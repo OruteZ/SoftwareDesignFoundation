@@ -41,15 +41,6 @@ void EnemyRayCastPlayer(Enemy* enemy) {
 		Point direction = result->arr[1];
 		PointSub(&direction, &start);
 
-#ifdef DEBUG
-		for (int i = 0; i < result->length; i++) {
-			DebugPrint("RayCast Block: (%d, %d)", result->arr[i].x, result->arr[i].y);
-		}
-
-		DebugPrint("Direction = %d %d", direction.x, direction.y);
-#endif
-
-
 		EnemyMove(enemy, direction);
 	}
 
@@ -115,8 +106,7 @@ void EnemyMove(Enemy* enemy, Point direction) {
 
 	if(GetTile(*nextPosition) & FLAG_COLLIDE_WITH_BODY) moveSuccess = false;
 	if(PointEquals(nextPosition, &playerPos)) moveSuccess = false;
-	int len = enemies->length;
-	for (int i = 0; i < len; i++) {
+	for (int i = 0; i < enemies->length; i++) {
 		if (PointEquals(&enemies->entities[i]->pos, nextPosition)) {
 			moveSuccess = false;
 		}
@@ -179,10 +169,8 @@ void EnemyOnDeath(Enemy* enemy)
 double baseStiffDuration = 0.3;
 bool EnemyOnHit(Enemy* enemy, int damage)
 {
+	if (enemy == NULL) return false;
 	enemy->hp -= damage;
-#ifdef DEBUG
-	DebugPrint("Enemy hitted! hp remains : %d", enemy->hp);
-#endif
 
 	if (!isEnemyStiff(enemy)) enemy->stiffDuration = baseStiffDuration;
 	
@@ -222,6 +210,10 @@ void CreateEnemy(enum EntityType type, Point spawnPoint) {
 	VectorInsert(enemies, newEnemy);
 	//QuadTreeInsert(enemiesTree, newEnemy);
 }
+void DeleteEnemy(Enemy* enemy) {
+	free(enemy);
+	*(&enemy) = NULL;
+}
 
 void UpdateEnemy(Enemy* enemy) {
 	//사거리 내로 들어오면 우선 공격하기
@@ -236,6 +228,8 @@ void UpdateEnemy(Enemy* enemy) {
 		}
 	}
 	CalEnemyCooldown(enemy);
+
+	enemy->ReadyToAttack = IsPlayerInRange(enemy);
 }
 
 bool isEnemyDead(Enemy* enemy) {

@@ -46,3 +46,4 @@ bool isEnemyStiff(Enemy* enemy);
 bool EnemyOnHit(Enemy* enemy, int damage);
 void CreateEnemy(enum EntityType type, Point spawnPoint);
 void UpdateEnemy(Enemy* enemy);
+void DeleteEnemy(Enemy* enemy);

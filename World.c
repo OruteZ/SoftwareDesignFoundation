@@ -139,10 +139,6 @@ void StartNextWorld() {
 	StartBeat();
 }
 
-
-
-
-
 BOOLEAN IsPointValidInCurrentWorld(Point p) {
 	if (0 <= p.x && p.x < current_world->width &&
 		0 <= p.y && p.y < current_world->height) return TRUE;

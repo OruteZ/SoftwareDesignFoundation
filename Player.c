@@ -68,6 +68,11 @@ void PlayerMove(Point dir)
 	PointAdd(&destPos, &dir);
 
 	if (GetTile(destPos) & FLAG_COLLIDE_WITH_BODY) return;
+	
+	for (int i = 0; i < enemies->length; i++) {
+		Enemy* e = enemies->entities[i];
+		if (PointEquals(&destPos, &e->base.entity.pos)) return;
+	}
 
 	player->base.entity.pos = destPos;
 	player->facing = dir;
@@ -125,11 +130,16 @@ void PlayerMeleeAttack() {
 	DeleteVector(hitted_enemys);
 	*/
 
-	int len = enemies->length;
-	for (int i = 0; i < len; i++) {
+	for (int i = 0; i < enemies->length; i++) {
 		Enemy* e = enemies->entities[i];
+		if (e == NULL) continue;
+#ifdef DEBUG
+		DebugPrint("%d", e);
+#endif
+		if (isEnemyDead(e)) continue;
+
 		if (RectContainsPoint(&attackRect, &e->base.entity.pos)) {
-			if(EnemyOnHit(e, player->baseDamage)) UpScore(1);
+			if (EnemyOnHit(e, player->baseDamage)) UpScore(1);
 		}
 	}
 
@@ -166,10 +176,10 @@ void PlayerRangeAttack() {
 void UpdatePlayer() {
 	if (player == NULL) return;
 
-	if (GetKeyDown('W')) PlayerMove(Direction.south);
-	if (GetKeyDown('A')) PlayerMove(Direction.west);
-	if (GetKeyDown('S')) PlayerMove(Direction.north);
-	if (GetKeyDown('D')) PlayerMove(Direction.east);
+	if (GetKey('W')) PlayerMove(Direction.south);
+	if (GetKey('A')) PlayerMove(Direction.west);
+	if (GetKey('S')) PlayerMove(Direction.north);
+	if (GetKey('D')) PlayerMove(Direction.east);
 
 	if (GetKeyDown(VK_SPACE)) PlayerMeleeAttack();
 	if (GetKeyDown('J')) PlayerRangeAttack();
@@ -197,5 +207,7 @@ int GetScore() { return score; }
 
 void UpScore(int baseScore) {
 	score += GetBPM() * baseScore;
+
+	if (score > 200) StartNextWorld();
 }
 

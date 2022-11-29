@@ -1,5 +1,8 @@
 #include "Vector.h"
 
+#include "Enemy.h"
+#include "Particle.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -21,7 +24,21 @@ void DeleteVector(Vector* vector) {
 }
 void DeepDeleteVector(Vector* vector) {
 	for (int i = 0; i < vector->length; i++) {
-		free(vector->entities[i]);
+		//free(vector->entities[i]);
+		Entity* e = vector->entities[i];
+		switch (e->type) {
+		case MeleeEnemyType:
+		case ArcherEnemyType:
+		case BomberEnemyType:
+			DeleteEnemy(e);
+			break;
+
+		case ParticleEffectType:
+			DeleteParticle(e);
+			break;
+
+		default: break; 
+		}
 	}
 	DeleteVector(vector);
 }

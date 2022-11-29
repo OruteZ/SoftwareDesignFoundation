@@ -246,6 +246,8 @@ void DeleteParticle(Particle* particle) {
 	}
 	free(particle->particleGrid);
 	free(particle);
+
+	*(&particle) = NULL;
 }
 
 void UpdateParticle(Particle* particle) {

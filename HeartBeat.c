@@ -50,7 +50,7 @@ void InitHeartBeat()
 
 void StartBeat() {
 	ResetNote();
-	PlaySound(TEXT(".\\GameSound.wav"), NULL, SND_FILENAME | SND_ASYNC);
+	//PlaySound(TEXT(".\\GameSound.wav"), NULL, SND_FILENAME | SND_ASYNC);
 }
 
 void UpdateHeartBeat() {
