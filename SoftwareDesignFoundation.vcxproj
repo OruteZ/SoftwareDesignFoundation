@@ -105,6 +105,7 @@
   <ItemGroup>
     <ClCompile Include="ArcherEnemy.c" />
     <ClCompile Include="BomberEnemy.c" />
+    <ClCompile Include="Boss.c" />
     <ClCompile Include="Camera.c" />
     <ClCompile Include="Debug.c" />
     <ClCompile Include="Enemy.c" />
@@ -124,6 +125,7 @@
     <ClCompile Include="Release.c" />
     <ClCompile Include="Render.c" />
     <ClCompile Include="Screen.c" />
+    <ClCompile Include="Sound.c" />
     <ClCompile Include="Time.c" />
     <ClCompile Include="UI.c" />
     <ClCompile Include="Update.c" />
@@ -137,6 +139,7 @@
   <ItemGroup>
     <ClInclude Include="ArcherEnemy.h" />
     <ClInclude Include="BomberEnemy.h" />
+    <ClInclude Include="Boss.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Enemy.h" />
@@ -157,6 +160,7 @@
     <ClInclude Include="Release.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="Screen.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Update.h" />

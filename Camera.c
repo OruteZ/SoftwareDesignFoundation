@@ -125,8 +125,7 @@ void PrintPlayer()
 	}
 }
 
-void PrintExpOrb()
-{
+void PrintExpOrb() {
 }
 
 void PrintParticles() {
@@ -134,11 +133,16 @@ void PrintParticles() {
 
 	for (int i = 0; i < particles->length; i++) {
 		Particle* p = (Particle*)particles->entities[i];
-
 		if (!RectIsIntersectingRect(&CameraRectInGame, &p->particleRect)) {
-
+#ifdef DEBUG
+			DebugPrint("CamearRect %d %d %d %d", CameraRectInGame.x, CameraRectInGame.y, CameraRectInGame.width, CameraRectInGame.height);
+			DebugPrint("P Rect %d %d %d %d", p->particleRect.x, p->particleRect.y, p->particleRect.width, p->particleRect.height);
+#endif
 			continue;
 		}
+#ifdef DEBUG
+		DebugPrint("Particle PrintCall");
+#endif
 
 
 		char nowChar[3];
@@ -202,8 +206,8 @@ bool SetCameraPoint()
 	int worldWidth = worldInfo->width;
 	int worldHeight = worldInfo->height;
 
-	if (CameraRectInGame.x + CameraRectInGame.width >= worldWidth) CameraRectInGame.x = worldWidth - _cameraWidthInGame;
-	if (CameraRectInGame.y + CameraRectInGame.height >= worldHeight) CameraRectInGame.y = worldHeight - _cameraHeightInGame;
+	if (CameraRectInGame.x + CameraRectInGame.width >= worldWidth) CameraRectInGame.x = worldWidth - CameraRectInGame.width;
+	if (CameraRectInGame.y + CameraRectInGame.height >= worldHeight) CameraRectInGame.y = worldHeight - CameraRectInGame.height;
 
 	return true;
 }
