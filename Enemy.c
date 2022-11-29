@@ -119,6 +119,7 @@ void EnemyAttack(Enemy* enemy) {
 void CalEnemyCooldown(Enemy* enemy) {
 	enemy->attackDelay -= Time.deltaTime;
 	enemy->moveCoolDown -= Time.deltaTime;
+	enemy->stiffDuration -= Time.deltaTime;
 }
 
 void EnemyOnDeath(Enemy* enemy)
@@ -128,12 +129,16 @@ void EnemyOnDeath(Enemy* enemy)
 #endif
 }
 
+double baseStiffDuration = 0.3;
 bool EnemyOnHit(Enemy* enemy, int damage)
 {
 	enemy->hp -= damage;
 #ifdef DEBUG
 	DebugPrint("Enemy hitted! hp remains : %d", enemy->hp);
 #endif
+
+	if (!isEnemyStiff(enemy)) enemy->stiffDuration = baseStiffDuration;
+	
 
 	if (enemy->hp <= 0)	{
 		EnemyOnDeath(enemy);
@@ -161,6 +166,7 @@ void CreateEnemy(enum EntityType type, Point spawnPoint) {
 	default: break;
 	}
 
+	newEnemy->state = Tracking;
 	newEnemy->ReadyToAttack = false;
 
 #ifdef DEBUG
@@ -172,15 +178,19 @@ void CreateEnemy(enum EntityType type, Point spawnPoint) {
 
 void UpdateEnemy(Enemy* enemy) {
 	//사거리 내로 들어오면 우선 공격하기
-	if (IsPlayerInRange(enemy) && BPMCall()) {
+	if (IsPlayerInRange(enemy)) {
 		LookAt(enemy, GetPlayerPos());
-		EnemyReadyAttack(enemy);
+		EnemyAttack(enemy);
 	}
 	CalEnemyCooldown(enemy);
 }
 
 bool isEnemyDead(Enemy* enemy) {
 	return (bool)(enemy->hp <= 0);
+}
+
+bool isEnemyStiff(Enemy* enemy) {
+	return (bool)(enemy->stiffDuration > 0);
 }
 
 bool isEnemy(Entity* entity) {
