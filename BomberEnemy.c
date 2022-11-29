@@ -16,7 +16,7 @@ BomberEnemy* CreateBomberEnemy(Point p)
 	bomberEnemy->base.enemy.hp = 30;
 	bomberEnemy->base.enemy.attackSpeed = 1;
 	bomberEnemy->base.enemy.moveSpeed = 1;
-	bomberEnemy->base.enemy.detectionRadius = 15;
+	bomberEnemy->base.enemy.detectionRadius = 2;
 	bomberEnemy->base.enemy.facing = Direction.north;
 	bomberEnemy->base.enemy.moveCoolDown = 0;
 	bomberEnemy->base.enemy.attackDelay = 0;

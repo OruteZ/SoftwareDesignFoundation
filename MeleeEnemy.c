@@ -17,7 +17,7 @@ MeleeEnemy* CreateMeleeEnemy(Point p) {
 	meleeEnemy->base.enemy.hp = 100;
 	meleeEnemy->base.enemy.moveSpeed = 1;
 	meleeEnemy->base.enemy.attackSpeed = 1 / 1; //attack per second;
-	meleeEnemy->base.enemy.detectionRadius = 10;
+	meleeEnemy->base.enemy.detectionRadius = 2;
 	meleeEnemy->base.enemy.facing = Direction.north;
 	meleeEnemy->base.enemy.moveCoolDown = 0;
 	meleeEnemy->base.enemy.attackDelay = 0;
