@@ -34,10 +34,11 @@ void PrintHPBar() {
 	
 	SetColor(4);
 	int barLength = (int)(HPBAR_MAX_LENGTH * nowHp) / maxHp;
+	if (barLength < 0) barLength = 0;
 	for (int i = 0; i < barLength; i++) {
 		ScreenPrint(HPBAR_POSITION_X + i * 2, HPBAR_POSITION_Y, HeartChar);
 	}
-	for (int i = barLength; i < HPBAR_MAX_LENGTH; i += 2) {
+	for (int i = barLength; i < HPBAR_MAX_LENGTH; i ++) {
 		ScreenPrint(HPBAR_POSITION_X + i * 2, HPBAR_POSITION_Y, EmptyHeartChar);
 	}
 	SetColor(15);
