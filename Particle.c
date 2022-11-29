@@ -87,7 +87,7 @@ void RangeAttackDetectEnemy(Particle* particle) {
 	for (int i = 0; i < len; i++) {
 		Enemy* e = enemies->entities[i];
 		if (RectContainsPoint(&particle->particleRect, &e->base.entity.pos)) {
-			EnemyOnHit(e, player->baseDamage);
+			if(EnemyOnHit(e, player->baseDamage)) UpScore(1);
 
 			particle->isDead = true;
 			return;
