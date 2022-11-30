@@ -13,6 +13,16 @@
 #include "HeartBeat.h"
 #include "ExpOrb.h"
 
+#define MAX_LEVEL (5)
+
+//각 레벨마다 레벨업을 위한 필요 경험치다.
+int essentialExpToLevelUp[MAX_LEVEL] = {
+	100,
+	120,
+	150,
+	190,
+	250,
+};
 
 Player* player;
 int score;
@@ -27,6 +37,21 @@ double playerMoveCooldown;
 double playerAttackDelay = 0.15f;
 
 int score;
+
+double playerBaseAttackSpeed = 1 / 1; // attack per beat
+double playerBaseMoveSpeed = 8 / 1; // block per beat
+int playerBaseAttackDamage = 10;
+
+void CalculatePlayerCooldown();
+void PlayerMove(Point dir);
+Rect CreatePlayerAttackRect(Point middle, Point direction);
+void PlayerMeleeAttack();
+void PlayerRangeAttack();
+void CheckExpOrb(Point nowPoint);
+void UpExp(int exp);
+void UpScore(int baseScore);
+void CheckExpOrb(Point nowPoint);
+void LevelUp();
 
 //public :
 Player* CreatePlayer(Point spawnPoint)
@@ -82,19 +107,16 @@ void PlayerOnHit(int damage) {
 #endif
 }
 bool IsPlayerDead() { return playerDeadFlag; }
+void ResetPlayerStatusByBPM(int BPM) {
+	double BeatPerSecond = 60.0f / BPM;
+
+	player->attackSpeed = playerBaseAttackSpeed * BeatPerSecond;
+	player->baseDamage = playerBaseAttackDamage * BeatPerSecond;
+	player->moveSpeed = playerBaseMoveSpeed * BeatPerSecond;
+}
 int GetScore() { return score; }
 
 //private :
-void CalculatePlayerCooldown();
-void PlayerMove(Point dir);
-Rect CreatePlayerAttackRect(Point middle, Point direction);
-void PlayerMeleeAttack();
-void PlayerRangeAttack();
-void CheckExpOrb(Point nowPoint);
-void UpExp(int exp);
-void LevelUp();
-
-
 void CalculatePlayerCooldown() {
 	playerAttackDelay -= GameTime.deltaTime;
 	playerMoveCooldown -= GameTime.deltaTime;
@@ -105,7 +127,6 @@ void CalculatePlayerCooldown() {
 	}
 	if (playerMoveCooldown < 0) canPlayerMove = TRUE;
 }
-
 void PlayerMove(Point dir) {
 	if (!canPlayerMove) return;
 
@@ -125,7 +146,6 @@ void PlayerMove(Point dir) {
 	canPlayerMove = FALSE;
 	playerMoveCooldown = 1 / (player->moveSpeed);
 }
-
 Rect CreatePlayerAttackRect(Point middle, Point direction) {
 	Rect result;
 	if (direction.x == 0) { //상하 공격 -> 가로라인
@@ -146,7 +166,6 @@ Rect CreatePlayerAttackRect(Point middle, Point direction) {
 
 	return result;
 }
-
 void PlayerMeleeAttack() {
 	if (!canPlayerMeleeAttack) return;
 
@@ -200,7 +219,6 @@ void PlayerMeleeAttack() {
 	DebugPrint("Player Attacked");
 #endif
 }
-
 void PlayerRangeAttack() {
 	if (!canPlayerRangeAttack) return;
 
@@ -217,20 +235,17 @@ void PlayerRangeAttack() {
 		playerMoveCooldown = playerAttackDelay;
 	}
 }
-
 void UpExp(int exp) {
 	player->exp += exp;
 	while (player->exp > essentialExpToLevelUp[player->level]) {
 		LevelUp();
 	}
 }
-
 void UpScore(int baseScore) {
 	score += GetBPM() * baseScore;
 
 	if (score > 200) StartNextWorld();
 }
-
 void CheckExpOrb(Point nowPoint) {
 	for (int i = 0; i < expOrbs->length; i++) {
 		ExpOrb* orb = expOrbs->entities[i];
@@ -241,7 +256,6 @@ void CheckExpOrb(Point nowPoint) {
 		UpExp(exp);
 	}
 }
-
 void LevelUp() {
 	if (player->exp < essentialExpToLevelUp[player->level]) return;
 	//to do : Player 능력 뭘로할지 정하기

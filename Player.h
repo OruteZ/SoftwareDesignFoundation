@@ -2,21 +2,6 @@
 
 #include "Entity.h"
 
-#define MAX_LEVEL (5)
-
-//변경 가능한 public 변수
-
-//각 레벨마다 레벨업을 위한 필요 경험치다.
-int essentialExpToLevelUp[MAX_LEVEL] = {
-	100,
-	120,
-	150,
-	190,
-	250,
-};
-
-
-
 typedef struct _Player {
 	union {
 		Entity entity;
@@ -55,3 +40,5 @@ void UpScore(int baseScore);
 
 //플레이어의 체력을 확인해서 사망 여부를 반환합니다.
 bool IsPlayerDead();
+
+void ResetPlayerStatusByBPM(int BPM);
