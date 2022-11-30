@@ -34,8 +34,7 @@ void CreateEXPOrb(Point p, int exp) {
 	VectorInsert(expOrbs, origin);
 }
 
-void GetEXP(ExpOrb* orb) {
-	UpExp(orb->experience);
-
+int GetExp(ExpOrb* orb) {
 	orb->isDead = true;
+	return orb->experience;
 }

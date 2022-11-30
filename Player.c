@@ -11,9 +11,24 @@
 #include "Particle.h"
 #include "Camera.h"
 #include "HeartBeat.h"
+#include "ExpOrb.h"
+
+
 Player* player;
 int score;
 bool playerDeadFlag = false;
+
+BOOL canPlayerMeleeAttack = TRUE;
+bool canPlayerRangeAttack = true;
+
+BOOL canPlayerMove = TRUE;
+double playerMoveCooldown;
+
+double playerAttackDelay = 0.15f;
+
+int score;
+
+//public :
 Player* CreatePlayer(Point spawnPoint)
 {
 	Player* _player = (Player*)malloc(sizeof(Player));
@@ -40,31 +55,59 @@ Player* CreatePlayer(Point spawnPoint)
 	playerDeadFlag = false;
 	return _player;
 }
+void UpdatePlayer() {
+	if (player == NULL) return;
 
-BOOL _canPlayerMeleeAttack = TRUE;
-bool _canPlayerRangeAttack = true;
+	if (GetKey('W')) PlayerMove(Direction.south);
+	if (GetKey('A')) PlayerMove(Direction.west);
+	if (GetKey('S')) PlayerMove(Direction.north);
+	if (GetKey('D')) PlayerMove(Direction.east);
 
-BOOL _canPlayerMove = TRUE;
-double _playerMoveCooldown;
+	if (GetKeyDown(VK_SPACE)) PlayerMeleeAttack();
+	if (GetKeyDown('J')) PlayerRangeAttack();
 
-double _playerAttackDelay = 0.15f;
+	CalculatePlayerCooldown();
+}
+Point GetPlayerPos() { return player->base.entity.pos; }
+void PlayerOnHit(int damage) {
+	player->hp -= damage;
+	if (player->hp <= 0) {
+		playerDeadFlag = true;
+	}
 
-int score;
+	CameraShake();
+
+#ifdef DEBUG
+	DebugPrint("Player On Hit");
+#endif
+}
+bool IsPlayerDead() { return playerDeadFlag; }
+int GetScore() { return score; }
+
+//private :
+void CalculatePlayerCooldown();
+void PlayerMove(Point dir);
+Rect CreatePlayerAttackRect(Point middle, Point direction);
+void PlayerMeleeAttack();
+void PlayerRangeAttack();
+void CheckExpOrb(Point nowPoint);
+void UpExp(int exp);
+void LevelUp();
+
 
 void CalculatePlayerCooldown() {
-	_playerAttackDelay -= Time.deltaTime;
-	_playerMoveCooldown -= Time.deltaTime;
+	playerAttackDelay -= GameTime.deltaTime;
+	playerMoveCooldown -= GameTime.deltaTime;
 
-	if (_playerAttackDelay < 0) {
-		_canPlayerMeleeAttack = TRUE;
-		_canPlayerRangeAttack = true;
+	if (playerAttackDelay < 0) {
+		canPlayerMeleeAttack = TRUE;
+		canPlayerRangeAttack = true;
 	}
-	if (_playerMoveCooldown < 0) _canPlayerMove = TRUE;
+	if (playerMoveCooldown < 0) canPlayerMove = TRUE;
 }
 
-void PlayerMove(Point dir)
-{
-	if (!_canPlayerMove) return;
+void PlayerMove(Point dir) {
+	if (!canPlayerMove) return;
 
 	Point destPos = player->base.entity.pos;
 	PointAdd(&destPos, &dir);
@@ -79,8 +122,8 @@ void PlayerMove(Point dir)
 	player->base.entity.pos = destPos;
 	player->facing = dir;
 
-	_canPlayerMove = FALSE;
-	_playerMoveCooldown = 1 / (player->moveSpeed);
+	canPlayerMove = FALSE;
+	playerMoveCooldown = 1 / (player->moveSpeed);
 }
 
 Rect CreatePlayerAttackRect(Point middle, Point direction) {
@@ -105,7 +148,7 @@ Rect CreatePlayerAttackRect(Point middle, Point direction) {
 }
 
 void PlayerMeleeAttack() {
-	if (!_canPlayerMeleeAttack) return;
+	if (!canPlayerMeleeAttack) return;
 
 	Point attackPoint = player->base.entity.pos;
 	PointAdd(&attackPoint, &player->facing);
@@ -146,11 +189,11 @@ void PlayerMeleeAttack() {
 	}
 
 
-	_playerAttackDelay = 1 - (player->attackSpeed);
+	playerAttackDelay = 1 - (player->attackSpeed);
 
-	if (_playerMoveCooldown < _playerAttackDelay) {
-		_canPlayerMove = FALSE;
-		_playerMoveCooldown = _playerAttackDelay;
+	if (playerMoveCooldown < playerAttackDelay) {
+		canPlayerMove = FALSE;
+		playerMoveCooldown = playerAttackDelay;
 	}
 
 #ifdef DEBUG
@@ -159,7 +202,7 @@ void PlayerMeleeAttack() {
 }
 
 void PlayerRangeAttack() {
-	if (!_canPlayerRangeAttack) return;
+	if (!canPlayerRangeAttack) return;
 
 	CreateParticle(player->facing, player->base.entity.pos, RangeAttackParticleType, player->baseDamage);
 
@@ -167,52 +210,19 @@ void PlayerRangeAttack() {
 	DebugPrint("Created Range Particle");
 #endif
 
-	_canPlayerRangeAttack = false;
-	_playerAttackDelay = 1 - (player->attackSpeed);
-	if (_playerMoveCooldown < _playerAttackDelay) {
-		_canPlayerMove = FALSE;
-		_playerMoveCooldown = _playerAttackDelay;
+	canPlayerRangeAttack = false;
+	playerAttackDelay = 1 - (player->attackSpeed);
+	if (playerMoveCooldown < playerAttackDelay) {
+		canPlayerMove = FALSE;
+		playerMoveCooldown = playerAttackDelay;
 	}
-}
-
-void UpdatePlayer() {
-	if (player == NULL) return;
-
-	if (GetKey('W')) PlayerMove(Direction.south);
-	if (GetKey('A')) PlayerMove(Direction.west);
-	if (GetKey('S')) PlayerMove(Direction.north);
-	if (GetKey('D')) PlayerMove(Direction.east);
-
-	if (GetKeyDown(VK_SPACE)) PlayerMeleeAttack();
-	if (GetKeyDown('J')) PlayerRangeAttack();
-
-	CalculatePlayerCooldown();
-}
-
-Point GetPlayerPos() { return player->base.entity.pos; }
-
-void PlayerOnHit(int damage) {
-	player->hp -= damage;
-	if (player->hp <= 0) {
-		playerDeadFlag = true;
-	}
-
-	CameraShake();
-
-#ifdef DEBUG
-	DebugPrint("Player On Hit");
-#endif
-}
-
-//현재 점수를 반환합니다.
-int GetScore() { return score; }
-
-bool IsPlayerDead()
-{
-	return playerDeadFlag;
 }
 
 void UpExp(int exp) {
+	player->exp += exp;
+	while (player->exp > essentialExpToLevelUp[player->level]) {
+		LevelUp();
+	}
 }
 
 void UpScore(int baseScore) {
@@ -221,3 +231,20 @@ void UpScore(int baseScore) {
 	if (score > 200) StartNextWorld();
 }
 
+void CheckExpOrb(Point nowPoint) {
+	for (int i = 0; i < expOrbs->length; i++) {
+		ExpOrb* orb = expOrbs->entities[i];
+		if (orb == NULL) continue;
+		if (orb->isDead) continue;
+
+		int exp = GetExp(orb);
+		UpExp(exp);
+	}
+}
+
+void LevelUp() {
+	if (player->exp < essentialExpToLevelUp[player->level]) return;
+	//to do : Player 능력 뭘로할지 정하기
+
+	player->exp -= essentialExpToLevelUp[player->level++];
+}

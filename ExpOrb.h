@@ -18,5 +18,6 @@ typedef struct ExpOrb {
 //생성 즉시 벡터에 삽입합니다.
 void CreateEXPOrb(Point p, int exp);
 
-//오브 내부에 저장 된 경험치만큼 플레이어에게 경험치를 부여합니다.
-void GetEXP(ExpOrb* orb);
+//오브 내부에 저장 된 경험치를 반환합니다.
+//함수가 끝나면 orb는 삭제처리 됩니다.
+int GetExp(ExpOrb* orb);
