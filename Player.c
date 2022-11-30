@@ -13,6 +13,18 @@
 #include "HeartBeat.h"
 #include "ExpOrb.h"
 
+//-----------------인벤토리 / 아이템 관련 인스펙터 창-----------------------
+#define KINDS_OF_ITEM (2)
+#define BULLET_ID (0)
+#define POTION_ID (1)
+
+const char bulletKey = 'J';
+const char potionKey = 'U';
+
+const int potionHealAmount = 10;
+//--------------------------------------------------------------------------
+
+//---------------------플레이어 스텟 관련 인스펙터 창 ----------------------
 #define MAX_LEVEL (5)
 
 //각 레벨마다 레벨업을 위한 필요 경험치다.
@@ -24,6 +36,13 @@ int essentialExpToLevelUp[MAX_LEVEL] = {
 	250,
 };
 
+double playerBaseAttackSpeed = 1 / 1; // attack per beat
+double playerBaseMoveSpeed = 8 / 1; // block per beat
+int playerBaseAttackDamage = 10;
+
+int playerMaxHP = 100;
+//---------------------------------------------------------------------------
+
 Player* player;
 int score;
 bool playerDeadFlag = false;
@@ -33,15 +52,15 @@ bool canPlayerRangeAttack = true;
 
 BOOL canPlayerMove = TRUE;
 double playerMoveCooldown;
+double playerAttackCooldown;
 
-double playerAttackDelay = 0.15f;
+double basePlayerAttackDelay = 0.15f; // 3frame
 
 int score;
 
-double playerBaseAttackSpeed = 1 / 1; // attack per beat
-double playerBaseMoveSpeed = 8 / 1; // block per beat
-int playerBaseAttackDamage = 10;
+int Inventory[KINDS_OF_ITEM] = { 0 };
 
+//-------------------------------------------------------------------
 void CalculatePlayerCooldown();
 void PlayerMove(Point dir);
 Rect CreatePlayerAttackRect(Point middle, Point direction);
@@ -52,6 +71,8 @@ void UpExp(int exp);
 void UpScore(int baseScore);
 void CheckExpOrb(Point nowPoint);
 void LevelUp();
+void DrinkPotion();
+void UseItem(int ID);
 
 //public :
 Player* CreatePlayer(Point spawnPoint)
@@ -67,7 +88,7 @@ Player* CreatePlayer(Point spawnPoint)
 
 	_player->attackSpeed = 10.0f;
 	_player->baseDamage = 20;
-	_player->hp = 100;
+	_player->hp = playerMaxHP;
 	_player->moveSpeed = 12.0f;
 
 	_player->exp = 0;
@@ -78,7 +99,11 @@ Player* CreatePlayer(Point spawnPoint)
 	_player->attackWidth = 3;
 
 	playerDeadFlag = false;
+	playerMoveCooldown = 0;
+	playerAttackCooldown = 0;
+
 	return _player;
+
 }
 void UpdatePlayer() {
 	if (player == NULL) return;
@@ -89,7 +114,9 @@ void UpdatePlayer() {
 	if (GetKey('D')) PlayerMove(Direction.east);
 
 	if (GetKeyDown(VK_SPACE)) PlayerMeleeAttack();
-	if (GetKeyDown('J')) PlayerRangeAttack();
+
+	if (GetKeyDown(bulletKey)) UseItem(BULLET_ID);
+	if (GetKeyDown(potionKey)) UseItem(POTION_ID);
 
 	CalculatePlayerCooldown();
 }
@@ -118,10 +145,10 @@ int GetScore() { return score; }
 
 //private :
 void CalculatePlayerCooldown() {
-	playerAttackDelay -= GameTime.deltaTime;
+	basePlayerAttackDelay -= GameTime.deltaTime;
 	playerMoveCooldown -= GameTime.deltaTime;
 
-	if (playerAttackDelay < 0) {
+	if (basePlayerAttackDelay < 0) {
 		canPlayerMeleeAttack = TRUE;
 		canPlayerRangeAttack = true;
 	}
@@ -136,7 +163,7 @@ void PlayerMove(Point dir) {
 	if (GetTile(destPos) & FLAG_COLLIDE_WITH_BODY) return;
 	
 	for (int i = 0; i < enemies->length; i++) {
-		Enemy* e = enemies->entities[i];
+		Enemy* e = (Enemy*)enemies->entities[i];
 		if (PointEquals(&destPos, &e->base.entity.pos)) return;
 	}
 
@@ -195,7 +222,7 @@ void PlayerMeleeAttack() {
 	*/
 
 	for (int i = 0; i < enemies->length; i++) {
-		Enemy* e = enemies->entities[i];
+		Enemy* e = (Enemy*)enemies->entities[i];
 		if (e == NULL) continue;
 #ifdef DEBUG
 		DebugPrint("%d", e);
@@ -208,11 +235,11 @@ void PlayerMeleeAttack() {
 	}
 
 
-	playerAttackDelay = 1 - (player->attackSpeed);
+	playerAttackCooldown = 1 - (player->attackSpeed);
 
-	if (playerMoveCooldown < playerAttackDelay) {
+	if (playerMoveCooldown < basePlayerAttackDelay) {
 		canPlayerMove = FALSE;
-		playerMoveCooldown = playerAttackDelay;
+		playerMoveCooldown = basePlayerAttackDelay;
 	}
 
 #ifdef DEBUG
@@ -229,10 +256,10 @@ void PlayerRangeAttack() {
 #endif
 
 	canPlayerRangeAttack = false;
-	playerAttackDelay = 1 - (player->attackSpeed);
-	if (playerMoveCooldown < playerAttackDelay) {
+	playerAttackCooldown = 1 - (player->attackSpeed);
+	if (playerMoveCooldown < basePlayerAttackDelay) {
 		canPlayerMove = FALSE;
-		playerMoveCooldown = playerAttackDelay;
+		playerMoveCooldown = basePlayerAttackDelay;
 	}
 }
 void UpExp(int exp) {
@@ -261,4 +288,30 @@ void LevelUp() {
 	//to do : Player 능력 뭘로할지 정하기
 
 	player->exp -= essentialExpToLevelUp[player->level++];
+}
+
+//----------인벤토리 + 아이템 시스템-----------------
+
+void UseItem(int ID) {
+	if (Inventory[ID] == 0) return;
+	else Inventory[ID]--;
+
+	switch (ID) {
+	case BULLET_ID: 
+		PlayerRangeAttack();
+		break;
+
+	case POTION_ID: 
+		
+		break;
+
+	default: break;
+	}
+}
+
+void DrinkPotion() {
+	player->hp += potionHealAmount;
+	if (player->hp > playerMaxHP) {
+		player->hp = playerMaxHP;
+	}
 }
