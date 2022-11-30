@@ -3,8 +3,6 @@
 #include <windows.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <pthread.h>
-#include <unistd.h>
 
 int nowVolume = 10;
 
