@@ -162,6 +162,10 @@ int GetNoteSize() {
 	return heartBeat->noteSize;
 }
 
+int GetBPMGaugePercentage() {
+	return (100 * HeartGauge) / HeartLevelUpLine;
+}
+
 bool BPMCall() {
 	return isBeatNow;
 }
