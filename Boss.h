@@ -5,12 +5,6 @@
 //단일 개체일텐데
 //Player공격 관련 Rect들에 보스 충돌 함수 추가로 넣기만 하면 될거같다
 
-//변경 가능 변수
-int bossMaxHP = 10000;
-int bossBaseDamage = 10;
-
-double bossOnHitEffectDuration = 0.1f;
-
 //boss에게 데미지를 가합니다. 사망여부를 return 합니다.
 bool BossOnHit(int damage);
 
