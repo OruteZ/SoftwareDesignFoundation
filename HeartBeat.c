@@ -9,6 +9,7 @@
 #include "Time.h"
 #include"KeyBoard.h"
 #include "Debug.h"
+#include "Player.h"
 
 #include <windows.h>
 #include <mmsystem.h>
@@ -65,6 +66,7 @@ void InitHeartBeat()
 }
 
 void StartBeat() {
+	ResetPlayerStatusByBPM(heartBeat->BPM);
 	ResetNote();
 	//PlaySound(TEXT(".\\GameSound.wav"), NULL, SND_FILENAME | SND_ASYNC);
 }
@@ -180,6 +182,7 @@ void BPMLevelUp() {
 	HeartGauge = 0;
 
 	ResetNote();
+	ResetPlayerStatusByBPM(heartBeat->BPM);
 }
 void BPMLevelDown() {
 	if (nowBpmLv == 0) return;
@@ -191,6 +194,7 @@ void BPMLevelDown() {
 	HeartGauge = 0;
 
 	ResetNote();
+	ResetPlayerStatusByBPM(heartBeat->BPM);
 }
 
 void BPMGaugeUp() {
