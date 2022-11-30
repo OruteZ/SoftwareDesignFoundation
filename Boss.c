@@ -2,6 +2,14 @@
 
 #include "Rect.h"
 
+
+//----------변경 변수---------------
+int bossMaxHP = 10000;
+int bossBaseDamage = 10;
+
+double bossOnHitEffectDuration = 0.1f;
+//------------------------------------
+
 bool isBossExist = false;
 
 int bossNowHP;
