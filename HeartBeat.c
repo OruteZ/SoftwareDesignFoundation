@@ -77,7 +77,7 @@ void StartBeat() {
 }
 
 void UpdateHeartBeat() {
-	heartBeat->time_to_check_tempo += Time.deltaTime;
+	heartBeat->time_to_check_tempo += GameTime.deltaTime;
 
 	double BeatCheckTime = 15.0 / (double)heartBeat->BPM;
 
@@ -101,10 +101,6 @@ void UpdateHeartBeat() {
 		if		(value == 1) BPMGaugeUp();
 		else if (value == 0) BPMGaugeDown();
 	}
-
-#ifdef DEBUG
-	DebugPrint("%d %d %d", heartBeat->BPM, nowBpmLv, HeartGauge);
-#endif
 }
 
 void RealeseHeartBeat() {

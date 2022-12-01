@@ -30,7 +30,7 @@ void SetMeleeAttackParticleGrid(Particle* particle) {
 	}
 }
 void UpdateMeleeAttackParticle(Particle* particle) {
-	particle->nowTime += Time.deltaTime;
+	particle->nowTime += GameTime.deltaTime;
 	if (particle->nowTime >= meleeAttackParticleDuration) {
 		particle->isDead = true;
 		return;
@@ -126,7 +126,7 @@ void InitRangeAttackParticleRect(Particle* particle, Point direction) {
 	}
 }
 void UpdateRangeAttackParticle(Particle* particle) {
-	particle->nowTime += Time.deltaTime;
+	particle->nowTime += GameTime.deltaTime;
 
 	if (particle->nowTime >= rangeAttackParticleMoveSpeed) {
 		particle->particleGrid[0][0] = true;
@@ -156,7 +156,7 @@ void SetExplosionParticleGrid(Particle* particle) {
 	}
 }
 void UpdateExplosionParticle(Particle* particle) {
-	particle->nowTime += Time.deltaTime;
+	particle->nowTime += GameTime.deltaTime;
 
 	if (particle->nowTime > ExplosionChangeTime * ExplosionParticleLifeCount) {
 		particle->isDead = true;

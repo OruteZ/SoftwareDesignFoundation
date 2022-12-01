@@ -9,7 +9,8 @@ enum _GameState {
 	Menu,
 	Dialogue,
 	Dungeon,
-	Exiting
+	Exiting,
+	Upgrade,
 };
 
 extern enum _GameState GameState;

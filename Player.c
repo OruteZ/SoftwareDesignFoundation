@@ -224,9 +224,6 @@ void PlayerMeleeAttack() {
 	for (int i = 0; i < enemies->length; i++) {
 		Enemy* e = (Enemy*)enemies->entities[i];
 		if (e == NULL) continue;
-#ifdef DEBUG
-		DebugPrint("%d", e);
-#endif
 		if (isEnemyDead(e)) continue;
 
 		if (RectContainsPoint(&attackRect, &e->base.entity.pos)) {
