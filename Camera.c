@@ -49,7 +49,7 @@ void PrintWorld() {
 				SetScreenCell(screen_cell_index.x, screen_cell_index.y, ' ', 0);
 				break;
 			case GROUND:
-				SetScreenCell(screen_cell_index.x, screen_cell_index.y, ' ', BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE);
+				SetScreenCell(screen_cell_index.x, screen_cell_index.y, ' ', 0);
 				break;
 			case WALL:
 				SetScreenCell(screen_cell_index.x, screen_cell_index.y, ' ', BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY);
