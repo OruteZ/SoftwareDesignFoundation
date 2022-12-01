@@ -18,7 +18,7 @@ void InitHeartBeat();
 void UpdateHeartBeat();
 void RealeseHeartBeat();
 void StartBeat();
-
+int GetNowBpmLevel();
 //현재 BPM을 반환합니다.
 int GetBPM();
 
