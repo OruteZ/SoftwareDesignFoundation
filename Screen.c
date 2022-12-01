@@ -124,7 +124,7 @@ void ScreenPrintColor(const int x, const int y, const char* str, const unsigned 
 
 	for (int i = 0, j = x; i < CANVAS_CHAR_BUFFER_SIZE && j < SCREEN_WIDTH; i++, j++) {
 		if (buffer[i] == '\0') return;
-		screen.grid[y][j].Attributes = screen.attribute;
+		screen.grid[y][j].Attributes = attribute;
 		screen.grid[y][j].Char.UnicodeChar = buffer[i];
 
 		// if character requires more than 1 width, advance while filling canvas.grid.Char with '\0'
@@ -132,7 +132,7 @@ void ScreenPrintColor(const int x, const int y, const char* str, const unsigned 
 		for (int i = 1; i < width; i++) {
 			j++;
 			if (j >= SCREEN_WIDTH) return;
-			screen.grid[y][j].Attributes = screen.attribute;
+			screen.grid[y][j].Attributes = attribute;
 			screen.grid[y][j].Char.UnicodeChar = ' ';
 		}
 	}

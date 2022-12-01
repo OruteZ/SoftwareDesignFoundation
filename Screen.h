@@ -18,7 +18,7 @@ void ScreenRelease();
 void SetScreenCell(const int x, const int y, const unsigned short unicode, const unsigned short attribute);
 
 // 스크린의 좌표의 문자를 설정한다.
-void SetScreenHalfCell(const int x, const int y, const unsigned short unicode, const unsigned short attribute) {
+void SetScreenHalfCell(const int x, const int y, const unsigned short unicode, const unsigned short attribute);
 
 // 좌표를 시작으로 문자열을 출력한다.
 // attribute는 색상 정보다. 
