@@ -144,7 +144,7 @@ void EnemyAttack(Enemy* enemy) {
 		break;
 
 	case ArcherEnemyType:
-		//ArcherEnemyAttack((ArcherEnemy*)enemy);
+		ArcherEnemyAttack((ArcherEnemy*)enemy);
 		break;
 
 	case BomberEnemyType:
@@ -217,6 +217,7 @@ void DeleteEnemy(Enemy* enemy) {
 
 void UpdateEnemy(Enemy* enemy) {
 	//사거리 내로 들어오면 우선 공격하기
+	/*
 	if (!isEnemyStiff(enemy)) {
 		if (IsPlayerInRange(enemy)) {
 			LookAt(enemy, GetPlayerPos());
@@ -227,9 +228,22 @@ void UpdateEnemy(Enemy* enemy) {
 			EnemyRayCastPlayer(enemy);
 		}
 	}
-	CalEnemyCooldown(enemy);
+	*/
+	if (isEnemyStiff(enemy)) return;
+
+	if (BPMCall()) {
+		if (IsPlayerInRange(enemy)) {
+			LookAt(enemy, GetPlayerPos());
+			EnemyAttack(enemy);
+		}
+
+		else if (canEnemyMove(enemy)) {
+			EnemyRayCastPlayer(enemy);
+		}
+	}
 
 	enemy->ReadyToAttack = IsPlayerInRange(enemy);
+	CalEnemyCooldown(enemy);
 }
 
 bool isEnemyDead(Enemy* enemy) {
