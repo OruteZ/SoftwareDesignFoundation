@@ -17,17 +17,36 @@
 #include "BomberEnemy.h"
 
 #include "HeartBeat.h"
+#include "Raycast.h"
+
+double baseStiffDuration = 0.3;
 
 bool isEnemyDead(Enemy* enemy);
-bool canEnemyMove(Enemy* enemy);
+bool canEnemyAct(Enemy* enemy);
 bool isEnemy(Entity* entity);
-bool canEnemyAttack(Enemy* enemy);
 
 void LookAt(Enemy* enemy, Point target);
 bool IsPlayerInRange(Enemy* enemy);
 void EnemyMove(Enemy* enemy, Point direction);
 void EnemyAttack(Enemy* enemy);
 void CalEnemyCooldown(Enemy* enemy);
+void EnemyRayCastPlayer(Enemy* enemy);
+
+void EnemyRayCastPlayer(Enemy* enemy) {
+	RayCastResult* result = CreateRayCastResult(enemy->detectionRadius * 2);
+	Point start = enemy->base.entity.pos;
+	Point dest = GetPlayerPos();
+	bool success = RayCastInCurrentWorld(result, start, dest);
+
+	if (success) {
+		Point direction = result->arr[1];
+		PointSub(&direction, &start);
+
+		EnemyMove(enemy, direction);
+	}
+
+	DeleteRayCastResult(result);
+}
 
 void LookAt(Enemy* enemy, Point target) {
 	int deltaX = target.x - enemy->base.entity.pos.x;
@@ -71,6 +90,7 @@ bool IsPlayerInRange(Enemy* enemy) {
 
 void EnemyMove(Enemy* enemy, Point direction) {
 	Point* nextPosition = DuplicatePoint(&enemy->base.entity.pos);
+	Point playerPos = GetPlayerPos();
 	PointAdd(nextPosition, &direction);
 	Rect nextPositionRect = {
 		.x = nextPosition->x,
@@ -79,46 +99,53 @@ void EnemyMove(Enemy* enemy, Point direction) {
 		.height = 1
 	};
 	
-	Vector* vector = QuadTreeQuery(enemiesTree, nextPositionRect);
-	if (vector->length <= 0 && !(GetTile(*nextPosition) & FLAG_COLLIDE_WITH_BODY)) {
-		enemy->base.entity.pos = *nextPosition;
+	//Vector* vector = QuadTreeQuery(enemiesTree, nextPositionRect);
+
+	bool moveSuccess = true;
+
+	if(GetTile(*nextPosition) & FLAG_COLLIDE_WITH_BODY) moveSuccess = false;
+	if(PointEquals(nextPosition, &playerPos)) moveSuccess = false;
+	for (int i = 0; i < enemies->length; i++) {
+		if (PointEquals(&enemies->entities[i]->pos, nextPosition)) {
+			moveSuccess = false;
+		}
+
+		if (!moveSuccess) break;
 	}
 
+	if(moveSuccess) enemy->base.entity.pos = *nextPosition;
+
 	DeletePoint(nextPosition);
-	DeleteVector(vector);
+	//DeleteVector(vector);
+
+	enemy->actCooldown = enemy->moveSpeed;
 }
 
-bool canEnemyAttack(Enemy* enemy) {
-	return enemy->attackDelay <= 0;
-}
-
-void EnemyReadyAttack(Enemy* enemy) {
-	//색깔 print 가능한 다음에
+bool canEnemyAct(Enemy* enemy) {
+	return enemy->actCooldown <= 0;
 }
 
 void EnemyAttack(Enemy* enemy) {
-	if (!canEnemyAttack(enemy)) {
-		return;
-	}
-
 	switch (enemy->base.entity.type) {
 	case MeleeEnemyType:
 		MeleeEnemyAttack((MeleeEnemy*)enemy);
 		break;
 
 	case ArcherEnemyType:
-		//ArcherEnemyAttack((ArcherEnemy*)enemy);
+		ArcherEnemyAttack((ArcherEnemy*)enemy);
 		break;
 
 	case BomberEnemyType:
 		BomberEnemyAttack((BomberEnemy*)enemy);
 		break;
 	}
+
+	enemy->actCooldown = enemy->attackSpeed;
 }
 
 void CalEnemyCooldown(Enemy* enemy) {
-	enemy->attackDelay -= Time.deltaTime;
-	enemy->moveCoolDown -= Time.deltaTime;
+	enemy->actCooldown--;
+	enemy->stiffDuration -= GameTime.deltaTime;
 }
 
 void EnemyOnDeath(Enemy* enemy)
@@ -128,16 +155,19 @@ void EnemyOnDeath(Enemy* enemy)
 #endif
 }
 
-void EnemyOnHit(Enemy* enemy, int damage)
+bool EnemyOnHit(Enemy* enemy, int damage)
 {
+	if (enemy == NULL) return false;
 	enemy->hp -= damage;
-#ifdef DEBUG
-	DebugPrint("Enemy hitted! hp remains : %d", enemy->hp);
-#endif
+
+	if (!isEnemyStiff(enemy)) enemy->stiffDuration = baseStiffDuration;
+	
 
 	if (enemy->hp <= 0)	{
 		EnemyOnDeath(enemy);
+		return true;
 	}
+	return false;
 }
 
 void CreateEnemy(enum EntityType type, Point spawnPoint) {
@@ -159,6 +189,7 @@ void CreateEnemy(enum EntityType type, Point spawnPoint) {
 	default: break;
 	}
 
+	newEnemy->state = Tracking;
 	newEnemy->ReadyToAttack = false;
 
 #ifdef DEBUG
@@ -167,26 +198,51 @@ void CreateEnemy(enum EntityType type, Point spawnPoint) {
 	VectorInsert(enemies, newEnemy);
 	//QuadTreeInsert(enemiesTree, newEnemy);
 }
+void DeleteEnemy(Enemy* enemy) {
+	free(enemy);
+	*(&enemy) = NULL;
+}
 
 void UpdateEnemy(Enemy* enemy) {
 	//사거리 내로 들어오면 우선 공격하기
-	if (IsPlayerInRange(enemy) && BPMCall()) {
-		LookAt(enemy, GetPlayerPos());
-		EnemyReadyAttack(enemy);
+	/*
+	if (!isEnemyStiff(enemy)) {
+		if (IsPlayerInRange(enemy)) {
+			LookAt(enemy, GetPlayerPos());
+			EnemyAttack(enemy);
+		}
+
+		if (canEnemyMove(enemy)) {
+			EnemyRayCastPlayer(enemy);
+		}
 	}
+	*/
+	if (!SmallBeatCall()) return;
+
 	CalEnemyCooldown(enemy);
+	if (isEnemyStiff(enemy)) return;
+
+	if (canEnemyAct(enemy)) {
+		if (IsPlayerInRange(enemy)) {
+			LookAt(enemy, GetPlayerPos());
+			EnemyAttack(enemy);
+		}
+		else EnemyRayCastPlayer(enemy);
+	}
+
+	enemy->ReadyToAttack = IsPlayerInRange(enemy);
 }
 
 bool isEnemyDead(Enemy* enemy) {
 	return (bool)(enemy->hp <= 0);
 }
 
+bool isEnemyStiff(Enemy* enemy) {
+	return (bool)(enemy->stiffDuration > 0);
+}
+
 bool isEnemy(Entity* entity) {
 	enum EntityType type = entity->type;
 	return (bool)(MeleeEnemyType <= type && type <= BomberEnemyType);
-}
-
-bool canEnemyMove(Enemy* enemy) {
-	return enemy->moveCoolDown <= 0;
 }
 

@@ -105,6 +105,7 @@
   <ItemGroup>
     <ClCompile Include="ArcherEnemy.c" />
     <ClCompile Include="BomberEnemy.c" />
+    <ClCompile Include="Boss.c" />
     <ClCompile Include="Camera.c" />
     <ClCompile Include="Canvas.c">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
@@ -112,6 +113,7 @@
     <ClCompile Include="Debug.c" />
     <ClCompile Include="Enemy.c" />
     <ClCompile Include="Entity.c" />
+    <ClCompile Include="ExpOrb.c" />
     <ClCompile Include="Game.c" />
     <ClCompile Include="HeartBeat.c" />
     <ClCompile Include="Init.c" />
@@ -127,6 +129,7 @@
     <ClCompile Include="Release.c" />
     <ClCompile Include="Render.c" />
     <ClCompile Include="Screen.c" />
+    <ClCompile Include="Sound.c" />
     <ClCompile Include="Time.c" />
     <ClCompile Include="UI.c" />
     <ClCompile Include="Update.c" />
@@ -141,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="ArcherEnemy.h" />
     <ClInclude Include="BomberEnemy.h" />
+    <ClInclude Include="Boss.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Canvas.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
@@ -149,6 +153,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ExperienceOrb.h" />
+    <ClInclude Include="ExpOrb.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="HeartBeat.h" />
     <ClInclude Include="Init.h" />
@@ -164,6 +169,7 @@
     <ClInclude Include="Release.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="Screen.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Update.h" />

@@ -16,10 +16,10 @@ BomberEnemy* CreateBomberEnemy(Point p)
 	bomberEnemy->base.enemy.hp = 30;
 	bomberEnemy->base.enemy.attackSpeed = 1;
 	bomberEnemy->base.enemy.moveSpeed = 1;
-	bomberEnemy->base.enemy.detectionRadius = 15;
+	bomberEnemy->base.enemy.detectionRadius = 2;
 	bomberEnemy->base.enemy.facing = Direction.north;
-	bomberEnemy->base.enemy.moveCoolDown = 0;
-	bomberEnemy->base.enemy.attackDelay = 0;
+
+	bomberEnemy->base.enemy.actCooldown = 0;
 	bomberEnemy->base.enemy.attackHeight = 1;
 	bomberEnemy->base.enemy.attackWidth = 3;
 
@@ -45,7 +45,7 @@ void BomberEnemyAttack(BomberEnemy* bomberEnemy) {
 	}
 
 	bomberEnemy->base.enemy.hp = -1;
-	bomberEnemy->base.enemy.attackDelay = 10000;
+	bomberEnemy->base.enemy.actCooldown = 10000;
 
 #ifdef DEBUG
 	DebugPrint("Enemy Attacked");

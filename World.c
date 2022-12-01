@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include "Point.h"
 #include "Entity.h"
+#include "HeartBeat.h"
 
 World* current_world;
 World* void_world;
@@ -133,11 +134,10 @@ void StartNextWorld() {
 	player->base.entity.pos.y = current_world->playerSpawnPoint.y;
 
 	current_world->currentSpawnSequence = current_world->enemySpawnSequence;
+
+	ResetGameTime();
+	StartBeat();
 }
-
-
-
-
 
 BOOLEAN IsPointValidInCurrentWorld(Point p) {
 	if (0 <= p.x && p.x < current_world->width &&

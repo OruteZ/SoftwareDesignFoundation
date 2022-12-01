@@ -17,8 +17,8 @@
 const char noteImg[] = "ⓣⓣⓣⓣ";
 const char lineImg[] = "--------";
 void RenderHeatBeatNote() {
-	const short* note = heartBeat->note;
-	const int size = heartBeat->noteSize;
+	const short* note = GetNoteInfo();
+	const int size = GetNoteSize();
 
 	for (int y = 0; y < size; y++) {
 		if(note[size - 1 - y]) ScreenPrint(HEARTBEAT_NOTE_POSITION_X, HEARTBEAT_NOTE_POSITION_Y + y, noteImg);

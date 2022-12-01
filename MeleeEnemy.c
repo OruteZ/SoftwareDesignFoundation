@@ -15,12 +15,12 @@ MeleeEnemy* CreateMeleeEnemy(Point p) {
 
 	meleeEnemy->base.enemy.baseDamage = 15;
 	meleeEnemy->base.enemy.hp = 100;
-	meleeEnemy->base.enemy.moveSpeed = 1;
-	meleeEnemy->base.enemy.attackSpeed = 1 / 1; //attack per second;
-	meleeEnemy->base.enemy.detectionRadius = 10;
+	meleeEnemy->base.enemy.moveSpeed = 2;
+	meleeEnemy->base.enemy.attackSpeed = 4; //beat per attack
+	meleeEnemy->base.enemy.detectionRadius = 2;
 	meleeEnemy->base.enemy.facing = Direction.north;
-	meleeEnemy->base.enemy.moveCoolDown = 0;
-	meleeEnemy->base.enemy.attackDelay = 0;
+
+	meleeEnemy->base.enemy.actCooldown = 0;
 	meleeEnemy->base.enemy.attackHeight = 1;
 	meleeEnemy->base.enemy.attackWidth = 3;
 
@@ -67,12 +67,6 @@ void MeleeEnemyAttack(MeleeEnemy* mEnemy) {
 	Point playerPos = GetPlayerPos();
 	if (RectContainsPoint(&attackRect, &playerPos)) {
 		PlayerOnHit(mEnemy->base.enemy.baseDamage);
-	}
-
-
-	mEnemy->base.enemy.attackDelay = 1 / (mEnemy->base.enemy.attackSpeed);
-	if (mEnemy->base.enemy.moveCoolDown < mEnemy->base.enemy.attackDelay) {
-		mEnemy->base.enemy.moveCoolDown = mEnemy->base.enemy.attackDelay;
 	}
 }
 

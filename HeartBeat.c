@@ -9,26 +9,43 @@
 #include "Time.h"
 #include"KeyBoard.h"
 #include "Debug.h"
+#include "Player.h"
 
 #include <windows.h>
 #include <mmsystem.h>
 #include <conio.h>
 #pragma comment(lib, "winmm.lib")
-
-
-//for test
 #include <process.h>
 
-BOOLEAN isHit;
-//----
+#define BPM_MAX_LEVEL (5)
+#define LEVEL_UP_LINE_BY_BPM (0.1)
 
 HeartBeat* heartBeat;
+
+int bpmByLevels[BPM_MAX_LEVEL] = {
+	90,
+	120,
+	160,
+	200,
+	240,
+};
+int nowBpmLv;
+
+HeartBeat* heartBeat;
+bool isSmallBeatNow = false;
+bool isBeatNow = false;
+int beatCount = 0;
+
+int HeartGauge = 0;
+int HeartLevelUpLine;
 
 void ResetNote();
 void MoveNote();
 int IsNoteBeaten();
-
-bool isBeatNow = false;
+void BPMGaugeUp();
+void BPMLevelUp();
+void BPMLevelDown();
+void BPMGaugeDown();
 
 void InitHeartBeat()
 {
@@ -36,9 +53,7 @@ void InitHeartBeat()
 	if (heartBeat == NULL) exit(-1);
 
 	heartBeat->noteSize = 20;
-	heartBeat->BPM = 140;
 	heartBeat->time_to_check_tempo = 0;
-	heartBeat->combo = 0;
 
 	heartBeat->note = (short*)malloc(sizeof(short) * heartBeat->noteSize);
 	if (heartBeat->note == NULL) exit(-1);
@@ -46,37 +61,50 @@ void InitHeartBeat()
 	for (int i = 0; i < heartBeat->noteSize; i++) {
 		heartBeat->note[i] = false;
 	}
+
+	nowBpmLv = 0;
+	HeartLevelUpLine = bpmByLevels[nowBpmLv] * LEVEL_UP_LINE_BY_BPM;
+	heartBeat->BPM = bpmByLevels[nowBpmLv];
+
+	isSmallBeatNow = false;
+	isBeatNow = false;
 }
 
 void StartBeat() {
+	ResetPlayerStatusByBPM(heartBeat->BPM);
 	ResetNote();
-	PlaySound(TEXT(".\\GameSound.wav"), NULL, SND_FILENAME | SND_ASYNC);
+	//PlaySound(TEXT(".\\GameSound.wav"), NULL, SND_FILENAME | SND_ASYNC);
 }
 
 void UpdateHeartBeat() {
 	heartBeat->time_to_check_tempo += Time.deltaTime;
 
-	if (heartBeat->time_to_check_tempo >= ((double)60) / (double)heartBeat->BPM) {
-		MoveNote();
-		heartBeat->time_to_check_tempo -= ((double)60) / (double)heartBeat->BPM;
-		MoveNote();
-		isBeatNow = true;
-		heartBeat->time_to_check_tempo -= ((double)60) / (double)heartBeat->BPM;
+	double BeatCheckTime = 15.0 / (double)heartBeat->BPM;
 
-		if (GetKeyDown('K')) {
-			if (IsNoteBeaten()) {
-				isHit = TRUE;
-				if (++(heartBeat->combo) >= 10) {
-					ResetNote();
-					heartBeat->combo = 0;
-					heartBeat->BPM += 120;
-				}
-			}
-			else {
-				heartBeat->combo = 0;
-			}
+	if (heartBeat->time_to_check_tempo >= BeatCheckTime) {
+		heartBeat->time_to_check_tempo -= BeatCheckTime;
+
+		if (++beatCount == 4) {
+			beatCount = 0;
+			MoveNote();
+			isBeatNow = true;
 		}
+		else isBeatNow = false;
+
+		isSmallBeatNow = true;
 	}
+	else isSmallBeatNow = false;
+
+	if (GetKeyDown('K')) {
+		int value = IsNoteBeaten();
+
+		if		(value == 1) BPMGaugeUp();
+		else if (value == 0) BPMGaugeDown();
+	}
+
+#ifdef DEBUG
+	DebugPrint("%d %d %d", heartBeat->BPM, nowBpmLv, HeartGauge);
+#endif
 }
 
 void RealeseHeartBeat() {
@@ -86,8 +114,7 @@ void RealeseHeartBeat() {
 
 void MoveNote()
 {
-	//test
-	if (isHit) isHit = FALSE;
+	bool isThereNoteInJudgeLine = heartBeat->note[0];
 
 	int i, size = heartBeat->noteSize;
 	int last_node_point = -1;
@@ -100,9 +127,10 @@ void MoveNote()
 		heartBeat->note[size - 1] = 1;
 	}
 	else {
-		isBeatNow = false;
 		heartBeat->note[size - 1] = false;
 	}
+
+	if (isThereNoteInJudgeLine) BPMGaugeDown();
 }
 void ResetNote() {
 	for (int i = 0; i < heartBeat->noteSize; i++) {
@@ -110,8 +138,9 @@ void ResetNote() {
 	}
 }
 
-int IsNoteBeaten()
-{
+//노트의 판정 여부를 반환합니다. 
+//판정할 노트가 근처에 없으면 -1, miss판정일 경우 0, 적합 판정이 났을 경우 1이 반환 됩니다.
+int IsNoteBeaten() {
 	double time_per_beat = (((double)60) / (double)heartBeat->BPM);
 
 	int notePosition = -1;
@@ -121,14 +150,14 @@ int IsNoteBeaten()
 			break;
 		}
 	}
-	if (notePosition > 1) return 0;
+	if (notePosition > 2) return -1;
 
 	heartBeat->note[notePosition] = false;
 
 	double correct_time = time_per_beat * notePosition;
 	double time_differece = abs(correct_time - heartBeat->time_to_check_tempo);
 
-	if (time_differece < time_per_beat / 2) return 1;
+	if (time_differece < time_per_beat / 4) return 1;
 	else return 0;
 }
 
@@ -145,14 +174,50 @@ short* GetNoteInfo()
 	return heartBeat->note;
 }
 
-int GetCombo() {
-	return heartBeat->combo;
+int GetNoteSize() {
+	return heartBeat->noteSize;
 }
 
-bool BPMCall() {
+int GetBPMGaugePercentage() {
+	return (100 * HeartGauge) / HeartLevelUpLine;
+}
+
+void BPMLevelUp() {
+	if (nowBpmLv >= BPM_MAX_LEVEL - 1) return;
+
+	nowBpmLv++;
+	heartBeat->BPM = bpmByLevels[nowBpmLv];
+	HeartLevelUpLine = bpmByLevels[nowBpmLv] * LEVEL_UP_LINE_BY_BPM;
+
+	HeartGauge = 0;
+
+	ResetNote();
+	ResetPlayerStatusByBPM(heartBeat->BPM);
+}
+void BPMLevelDown() {
+	if (nowBpmLv == 0) return;
+
+	nowBpmLv--;
+	heartBeat->BPM = bpmByLevels[nowBpmLv];
+	HeartLevelUpLine = bpmByLevels[nowBpmLv] * LEVEL_UP_LINE_BY_BPM;
+
+	HeartGauge = 0;
+
+	ResetNote();
+	ResetPlayerStatusByBPM(heartBeat->BPM);
+}
+
+void BPMGaugeUp() {
+	if (++HeartGauge >= HeartLevelUpLine) BPMLevelUp();
+}
+void BPMGaugeDown() {
+	if (--HeartGauge < 0) BPMLevelDown();
+}
+
+bool BeatCall() {
 	return isBeatNow;
 }
 
-bool NotBeatCall() {
-
+bool SmallBeatCall() {
+	return isSmallBeatNow;
 }

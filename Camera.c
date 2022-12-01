@@ -99,15 +99,13 @@ void PrintPlayer()
 	SetScreenCell(pos.x, pos.y, 0x25a3, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 }
 
-void PrintExpOrb()
-{
+void PrintExpOrb() {
 }
 
 void PrintParticles() {
 	Point printPos;
 
-	int len = particles->length;
-	for (int i = 0; i < len; i++) {
+	for (int i = 0; i < particles->length; i++) {
 		Particle* p = (Particle*)particles->entities[i];
 		Rect camera_world_rect = CameraCellRectToWorldRect();
 

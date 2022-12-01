@@ -73,6 +73,8 @@ void InitializeWorld002() {
 
 	// spawn at Gametime.time >= 0
 	SpawnSequence* seq_1 = CreateSpawnSequence(0);
+	SpawnSequenceInsert(seq_1, 25, 20, MeleeEnemyType);
+	SpawnSequenceInsert(seq_1, 25, 29, MeleeEnemyType);
 	WorldInsertSpawnSequence(world002, seq_1);
 
 	// spawn at GameTime.time >= 60.0
