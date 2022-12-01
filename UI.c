@@ -13,6 +13,10 @@
 #include "Debug.h"
 #endif // DEBUG
 
+#define BPMPosX (68)
+#define LeftArrowPosX (73)
+#define RightArrowPosX (76)
+
 //const char HeartChar[] = "♥";
 //const char EmptyHeartChar[] = "♡";
 
@@ -38,6 +42,40 @@ void RenderUIFrame() {
 	}
 }
 
+void RenderBPM()
+{
+	ScreenPrintColor(BPMPosX, 2, "140", FOREGROUND_BLUE);
+	ScreenPrintColor(BPMPosX, 3, "120", FOREGROUND_BLUE);
+	ScreenPrintColor(BPMPosX, 4, "100", FOREGROUND_BLUE);
+	ScreenPrintColor(BPMPosX, 5, " 80", FOREGROUND_BLUE);
+	ScreenPrintColor(BPMPosX, 6, " 60", FOREGROUND_BLUE);
+	if (GetNowBpmLevel() == 4)
+	{
+		SetScreenCell(LeftArrowPosX, 1, 0x2190, BACKGROUND_BLUE);
+		SetScreenCell(RightArrowPosX, 1, 0x2190, BACKGROUND_BLUE);
+	}
+	else if(GetNowBpmLevel() == 3)
+	{
+		SetScreenCell(LeftArrowPosX, 2, 0x2192, FOREGROUND_BLUE);
+		SetScreenCell(RightArrowPosX, 2, 0x2190, FOREGROUND_BLUE);
+	}
+	else if (GetNowBpmLevel() == 2)
+	{
+		SetScreenCell(LeftArrowPosX, 3, 0x2192, FOREGROUND_BLUE);
+		SetScreenCell(RightArrowPosX, 3, 0x2190, FOREGROUND_BLUE);
+	}
+	else if (GetNowBpmLevel() == 1)
+	{
+		SetScreenCell(LeftArrowPosX, 4, 0x2192, FOREGROUND_BLUE);
+		SetScreenCell(RightArrowPosX, 4, 0x2190, FOREGROUND_BLUE);
+	}
+	else if (GetNowBpmLevel() == 0)
+	{
+		SetScreenCell(LeftArrowPosX, 5, 0x2192, FOREGROUND_BLUE);
+		SetScreenCell(RightArrowPosX, 5, 0x2190, FOREGROUND_BLUE);
+	}
+}
+
 void RenderHealth() {
 	int MHPPLACEHOLDER = 30;
 	int max_health_indicator_height = MHPPLACEHOLDER / 8;
@@ -59,4 +97,5 @@ void RenderHealth() {
 void RenderUI() {
 	RenderUIFrame();
 	RenderHealth();
+	RenderBPM();
 }

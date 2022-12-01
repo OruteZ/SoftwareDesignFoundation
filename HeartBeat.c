@@ -221,3 +221,7 @@ bool BeatCall() {
 bool SmallBeatCall() {
 	return isSmallBeatNow;
 }
+int GetNowBpmLevel()
+{
+	return nowBpmLv;
+}

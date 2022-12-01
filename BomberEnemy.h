@@ -14,4 +14,3 @@ BomberEnemy* CreateBomberEnemy(Point p);
 void CalculateBomberAttackCooldown(BomberEnemy* bomberEnemy);
 void BomberEnemyAttack(BomberEnemy* bomberEnemy);
 void SetBomberAttackRange(BomberEnemy* BomberEnemy);
-
