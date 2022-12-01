@@ -70,11 +70,11 @@ void Update() {
 		}
 
 		if (IsPlayerDead()) {
-			DeepDeleteVector(enemies);
-			DeepDeleteVector(expOrbs);
-			DeepDeleteVector(particles);
 			free(player);
+			Point pointless = { .x = 0, .y = 0 };
+			player = CreatePlayer(pointless);
 			GameState = Menu;
+			StartVoidWorld();
 			StartGameOverMenu();
 		}
 	}

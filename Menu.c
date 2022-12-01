@@ -72,6 +72,8 @@ void SelectButton() {
 	case GameOver_RetryMainButton:
 		GameState = Menu;
 		menuState = Main;
+		nowButton = Main_StartButton;
+		break;
 	default:
 		break;
 	}
@@ -99,13 +101,13 @@ void RenderMainQuitArrow()
 }
 void RenderMainTitle()
 {
-	ScreenPrint(10, 10, "###   ##                   #                          ##     #               ");
-	ScreenPrint(10, 11, "#  #   #                   #                           #                     ");
-	ScreenPrint(10, 12, "#  #   #     ##    ##    ###  # ##   ##   ###    ###   #    ##    ###    ##  ");
-	ScreenPrint(10, 13, "###    #    #  #  #  #  #  #  ##    #  #  #  #  #  #   #     #    #  #  #  # ");
-	ScreenPrint(10, 14, "#  #   #    #  #  #  #  #  #  #     ####  #  #  #  #   #     #    #  #  #### ");
-	ScreenPrint(10, 15, "#  #   #    #  #  #  #  #  #  #     #     #  #  # ##   #     #    #  #  #    ");
-	ScreenPrint(10, 16, "###   ###    ##    ##    ###  #      ##   #  #   # #  ###   ###   #  #   ### ");
+	ScreenPrintColor(10, 10, "###   ##                   #                          ##     #               ", FOREGROUND_RED);
+	ScreenPrintColor(10, 11, "#  #   #                   #                           #                     ", FOREGROUND_RED);
+	ScreenPrintColor(10, 12, "#  #   #     ##    ##    ###  # ##   ##   ###    ###   #    ##    ###    ##  ", FOREGROUND_RED);
+	ScreenPrintColor(10, 13, "###    #    #  #  #  #  #  #  ##    #  #  #  #  #  #   #     #    #  #  #  # ", FOREGROUND_RED);
+	ScreenPrintColor(10, 14, "#  #   #    #  #  #  #  #  #  #     ####  #  #  #  #   #     #    #  #  #### ", FOREGROUND_RED);
+	ScreenPrintColor(10, 15, "#  #   #    #  #  #  #  #  #  #     #     #  #  # ##   #     #    #  #  #    ", FOREGROUND_RED);
+	ScreenPrintColor(10, 16, "###   ###    ##    ##    ###  #      ##   #  #   # #  ###   ###   #  #   ### ", FOREGROUND_RED);
 }
 
 //GameOvers
