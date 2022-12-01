@@ -8,7 +8,7 @@
 
 #include "Player.h"
 #include "HeartBeat.h"
-
+#include "Enemy.h"
 #ifdef DEBUG
 #include "Debug.h"
 #endif // DEBUG
@@ -17,8 +17,29 @@
 #define LeftArrowPosX 33
 #define RightArrowPosX 36
 
+
+#define PlayerHpPosX 5
+#define	PlayerHpPosY 23
+#define PlayerLevelPosX 3
+#define PlayerLevelPosY 4
+#define PlayerExpPosX 3
+#define PlayerExpPosY 5
+#define PlayerBaseDamagePosX 3
+#define PlayerBaseDamagePosY 6
+#define ScorePosX 3
+#define ScorePosY 8
+
+
 //const char HeartChar[] = "♥";
 //const char EmptyHeartChar[] = "♡";
+
+void InfoPrint(int x, int y, char* str, int info, const unsigned short attribute)
+{
+	char arr[10];
+	sprintf(arr, "%d", info);
+	ScreenPrintColor(x, y, str, attribute);
+	ScreenPrintColor(x + strlen(str), y, arr, attribute);
+}
 
 void RenderUIFrame() {
 	// top & bottom row
@@ -76,6 +97,16 @@ void RenderBPM()
 	}
 }
 
+void RenderInfo()
+{
+	InfoPrint(PlayerHpPosX, PlayerHpPosY, "HP:",player->hp, FOREGROUND_RED);
+	InfoPrint(PlayerLevelPosX, PlayerLevelPosY, "Level:", player->level, FOREGROUND_GREEN);
+	InfoPrint(PlayerExpPosX, PlayerExpPosY, "EXP:", player->exp, FOREGROUND_GREEN);
+	InfoPrint(ScorePosX, ScorePosY, "Score:", GetScore(), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	InfoPrint(PlayerBaseDamagePosX, PlayerBaseDamagePosY, "Damage:", player->baseDamage, FOREGROUND_GREEN);
+	
+}
+
 void RenderHealth() {
 	int MHPPLACEHOLDER = 30;
 	int max_health_indicator_height = MHPPLACEHOLDER / 2;
@@ -101,4 +132,5 @@ void RenderUI() {
 	RenderUIFrame();
 	RenderHealth();
 	RenderBPM();
+	RenderInfo();
 }
