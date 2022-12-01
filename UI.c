@@ -38,6 +38,25 @@ void RenderUIFrame() {
 	}
 }
 
+void RenderHealth() {
+	int MHPPLACEHOLDER = 30;
+	int max_health_indicator_height = MHPPLACEHOLDER / 8;
+	int health_bar_full_cell_count = player->hp / 2;
+	int health_bar_partial_cell_status = player->hp % 2;
+
+	Point health_bar_start = { .x = 6, .y = 23 };
+
+	for (int i = 0; i < health_bar_full_cell_count; i++) {
+		SetScreenCell(health_bar_start.x, health_bar_start.y - i, ' ', BACKGROUND_RED | BACKGROUND_INTENSITY);
+	}
+
+	if (health_bar_partial_cell_status) {
+		SetScreenCell(health_bar_start.x * 2, health_bar_start.y - health_bar_full_cell_count, 0x2584, BACKGROUND_RED | BACKGROUND_INTENSITY);
+		SetScreenCell(health_bar_start.x * 2 + 1, health_bar_start.y - health_bar_full_cell_count, 0x2584, BACKGROUND_RED | BACKGROUND_INTENSITY);
+	}
+}
+
 void RenderUI() {
 	RenderUIFrame();
+	RenderHealth();
 }

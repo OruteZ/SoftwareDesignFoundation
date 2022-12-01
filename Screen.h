@@ -17,6 +17,9 @@ void ScreenRelease();
 // 이 함수가 x * 2 를 하므로 미리 x 좌표를 늘리지 않도록 한다.
 void SetScreenCell(const int x, const int y, const unsigned short unicode, const unsigned short attribute);
 
+// 스크린의 좌표의 문자를 설정한다.
+void SetScreenHalfCell(const int x, const int y, const unsigned short unicode, const unsigned short attribute) {
+
 // 좌표를 시작으로 문자열을 출력한다.
 // attribute는 색상 정보다. 
 // 색상 정보는 https://learn.microsoft.com/en-us/windows/console/console-screen-buffers#character-attributes 참고.

@@ -123,7 +123,7 @@ void PrintParticles() {
 		
 		switch (p->particleType) {
 		case MeleeAttackParticleType:
-			nowUnicode = 0x25c9; // ¢Â
+			nowUnicode = 0x25c8; // ¢Â
 			nowColor = 15;
 			break;
 

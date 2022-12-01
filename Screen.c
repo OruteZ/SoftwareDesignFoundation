@@ -43,6 +43,7 @@ struct {
 
 
 
+
 #ifdef DEBUG
 HANDLE ScreenReturnBufferHandle_Unsafe() {
 	return screen.console_handle;
@@ -51,13 +52,14 @@ HANDLE ScreenReturnBufferHandle_Unsafe() {
 
 void ScreenInit()
 {
-	screen.console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
-
-	CONSOLE_CURSOR_INFO cci;
-
+	// console size
 	system("mode con:cols=120 lines=50");
 
-	// Ä¿¼­ ¼û±â±â
+	// get handle
+	screen.console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	//hide cursor
+	CONSOLE_CURSOR_INFO cci;
 	cci.dwSize = 1;
 	cci.bVisible = FALSE;
 	SetConsoleCursorInfo(screen.console_handle, &cci);
@@ -94,13 +96,19 @@ void ScreenRelease()
 }
 
 void SetScreenCell(const int x, const int y, const unsigned short unicode, const unsigned short attribute) {
-	if (!(0 <= x && x < SCREEN_WIDTH &&
+	if (!(0 <= x && x < SCREEN_WIDTH / 2 &&
 		0 <= y && y < SCREEN_HEIGHT)) return;
 	screen.grid[y][2 * x].Attributes = attribute;
 	screen.grid[y][2 * x + 1].Attributes = attribute;
 
 	screen.grid[y][2 * x].Char.UnicodeChar = unicode;
 	screen.grid[y][2 * x + 1].Char.UnicodeChar = 0x0000;
+}
+void SetScreenHalfCell(const int x, const int y, const unsigned short unicode, const unsigned short attribute) {
+	if (!(0 <= x && x < SCREEN_WIDTH &&
+		0 <= y && y < SCREEN_HEIGHT)) return;
+	screen.grid[y][x].Attributes = attribute;
+	screen.grid[y][x].Char.UnicodeChar = unicode;
 }
 #define EUC_KR 51949
 #define CANVAS_CHAR_BUFFER_SIZE 256

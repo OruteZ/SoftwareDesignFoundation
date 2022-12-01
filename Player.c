@@ -40,7 +40,7 @@ double playerBaseAttackSpeed = 1 / 1; // attack per beat
 double playerBaseMoveSpeed = 8 / 1; // block per beat
 int playerBaseAttackDamage = 10;
 
-int playerMaxHP = 100;
+int playerMaxHP = 30;
 //---------------------------------------------------------------------------
 
 Player* player;

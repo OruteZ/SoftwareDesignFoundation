@@ -13,7 +13,7 @@ MeleeEnemy* CreateMeleeEnemy(Point p) {
 	meleeEnemy->base.entity.pos = p;
 	meleeEnemy->base.entity.type = MeleeEnemyType;
 
-	meleeEnemy->base.enemy.baseDamage = 15;
+	meleeEnemy->base.enemy.baseDamage = 1;
 	meleeEnemy->base.enemy.hp = 100;
 	meleeEnemy->base.enemy.moveSpeed = 2;
 	meleeEnemy->base.enemy.attackSpeed = 4; //beat per attack
