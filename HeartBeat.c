@@ -32,7 +32,9 @@ int bpmByLevels[BPM_MAX_LEVEL] = {
 int nowBpmLv;
 
 HeartBeat* heartBeat;
+bool isSmallBeatNow = false;
 bool isBeatNow = false;
+int beatCount = 0;
 
 int HeartGauge = 0;
 int HeartLevelUpLine;
@@ -63,6 +65,9 @@ void InitHeartBeat()
 	nowBpmLv = 0;
 	HeartLevelUpLine = bpmByLevels[nowBpmLv] * LEVEL_UP_LINE_BY_BPM;
 	heartBeat->BPM = bpmByLevels[nowBpmLv];
+
+	isSmallBeatNow = false;
+	isBeatNow = false;
 }
 
 void StartBeat() {
@@ -74,12 +79,21 @@ void StartBeat() {
 void UpdateHeartBeat() {
 	heartBeat->time_to_check_tempo += Time.deltaTime;
 
-	double BeatCheckTime = (double)60 / (double)heartBeat->BPM;
+	double BeatCheckTime = 15.0 / (double)heartBeat->BPM;
+
 	if (heartBeat->time_to_check_tempo >= BeatCheckTime) {
-		MoveNote();
-		isBeatNow = true;
 		heartBeat->time_to_check_tempo -= BeatCheckTime;
-	} else isBeatNow = false;
+
+		if (++beatCount == 4) {
+			beatCount = 0;
+			MoveNote();
+			isBeatNow = true;
+		}
+		else isBeatNow = false;
+
+		isSmallBeatNow = true;
+	}
+	else isSmallBeatNow = false;
 
 	if (GetKeyDown('K')) {
 		int value = IsNoteBeaten();
@@ -168,10 +182,6 @@ int GetBPMGaugePercentage() {
 	return (100 * HeartGauge) / HeartLevelUpLine;
 }
 
-bool BPMCall() {
-	return isBeatNow;
-}
-
 void BPMLevelUp() {
 	if (nowBpmLv >= BPM_MAX_LEVEL - 1) return;
 
@@ -202,4 +212,12 @@ void BPMGaugeUp() {
 }
 void BPMGaugeDown() {
 	if (--HeartGauge < 0) BPMLevelDown();
+}
+
+bool BeatCall() {
+	return isBeatNow;
+}
+
+bool SmallBeatCall() {
+	return isSmallBeatNow;
 }
