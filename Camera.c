@@ -16,7 +16,7 @@ struct {
 	const Rect cell_rect;
 } camera = {
 	.pos = {.x = 0, .y = 0},
-	.cell_rect = {.x = 9, .y = 3, .width = 25, .height = 21}
+	.cell_rect = {.x = 8, .y = 1, .width = 23, .height = 23}
 };
 
 Point WorldPosToScreenCellIndex(Point pos) {

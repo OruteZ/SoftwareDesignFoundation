@@ -140,10 +140,6 @@ void ScreenPrintColor(const int x, const int y, const char* str, const unsigned 
 }
 void ScreenPrint(const int x, const int y, const char* str)
 {
-	//DWORD dw;
-	//COORD CursorPosition = { x, y };
-	//SetConsoleCursorPosition(g_hScreen[g_nScreenIndex], CursorPosition);
-	//WriteFile(g_hScreen[g_nScreenIndex], string, strlen(string), &dw, NULL);
 	ScreenPrintColor(x, y, str, screen.attribute);
 }
 
