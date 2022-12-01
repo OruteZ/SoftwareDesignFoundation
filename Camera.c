@@ -199,15 +199,16 @@ bool SetCameraPoint()
 		CameraRectInGame.y = newY;
 	}
 
-	if (CameraRectInGame.x < 0) CameraRectInGame.x = 0;
-	if (CameraRectInGame.y < 0) CameraRectInGame.y = 0;
-
 	World* worldInfo = GetCurrentWorld();
 	int worldWidth = worldInfo->width;
 	int worldHeight = worldInfo->height;
 
 	if (CameraRectInGame.x + CameraRectInGame.width >= worldWidth) CameraRectInGame.x = worldWidth - CameraRectInGame.width;
 	if (CameraRectInGame.y + CameraRectInGame.height >= worldHeight) CameraRectInGame.y = worldHeight - CameraRectInGame.height;
+
+	if (CameraRectInGame.x < 0) CameraRectInGame.x = 0;
+	if (CameraRectInGame.y < 0) CameraRectInGame.y = 0;
+
 
 	return true;
 }

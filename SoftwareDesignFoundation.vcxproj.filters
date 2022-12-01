@@ -150,6 +150,12 @@
     <ClCompile Include="ExpOrb.c">
       <Filter>Source Files\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="Canvas.c">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="wcwidth.c">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Init.h">
@@ -250,6 +256,12 @@
     </ClInclude>
     <ClInclude Include="ExpOrb.h">
       <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="wcwidth.h">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas.h">
+      <Filter>Header Files\IO</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
