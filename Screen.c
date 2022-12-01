@@ -15,11 +15,13 @@
 	TO CHANGE 'SOMETHING', modify ScreenClear() ScreenPrintColor();
 */
 
-#define SCREEN_WIDTH (40 * 2)
-#define SCREEN_HEIGHT 51
 struct {
 	HANDLE console_handle;
+#ifdef DEBUG
+	CHAR_INFO grid[DEBUG_SCREEN_HEIGHT][SCREEN_WIDTH];
+#else
 	CHAR_INFO grid[SCREEN_HEIGHT][SCREEN_WIDTH];
+#endif // DEBUG
 	int width;
 	int height;
 	COORD origin;
@@ -30,7 +32,11 @@ struct {
 	.height = SCREEN_HEIGHT,
 	.width = SCREEN_WIDTH,
 	.origin = {.X = 0, .Y = 0},
+#ifdef DEBUG
+	.size = {.X = SCREEN_WIDTH, .Y = DEBUG_SCREEN_HEIGHT},
+#else
 	.size = {.X = SCREEN_WIDTH, .Y = SCREEN_HEIGHT},
+#endif
 
 	.attribute = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE
 };
@@ -51,47 +57,28 @@ void ScreenInit()
 
 	system("mode con:cols=120 lines=50");
 
-	// 화면 버퍼 2개를 만든다.
-	//g_hScreen[0] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
-	//g_hScreen[1] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
-
 	// 커서 숨기기
 	cci.dwSize = 1;
 	cci.bVisible = FALSE;
 	SetConsoleCursorInfo(screen.console_handle, &cci);
-	//SetConsoleCursorInfo(g_hScreen[0], &cci);
-	//SetConsoleCursorInfo(g_hScreen[1], &cci);
 
 	ScreenClear();
 }
 
 void ScreenFlipping()
 {
-	//SetConsoleActiveScreenBuffer(g_hScreen[g_nScreenIndex]);
-	//g_nScreenIndex = !g_nScreenIndex;
-
 	SMALL_RECT write_region = {
 		.Left = screen.origin.X,
 		.Top = screen.origin.Y,
 		.Right = screen.size.X,
 		.Bottom = screen.size.Y
 	};
-	WriteConsoleOutputW(screen.console_handle, screen.grid, screen.size, screen.origin, &write_region);
+	WriteConsoleOutputW(screen.console_handle, (CHAR_INFO*)screen.grid, screen.size, screen.origin, &write_region);
 }
 
 void ScreenClear()
 {
-	//COORD Coor = { 0, 0 };
-	//DWORD dw;
-	//FillConsoleOutputCharacterW(g_hScreen[g_nScreenIndex], ' ', 100 * 50, Coor, &dw);
-	
-#ifdef DEBUG
-	const int height = 25;
-#else
-	const int height = SCREEN_HEIGHT;
-#endif // DEBUG
-
-	for (int i = 0; i < height; i++) {
+	for (int i = 0; i < SCREEN_HEIGHT; i++) {
 		for (int j = 0; j < SCREEN_WIDTH; j++) {
 			screen.grid[i][j].Attributes = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
 			screen.grid[i][j].Char.UnicodeChar = ' ';
@@ -119,7 +106,11 @@ void SetScreenCell(const int x, const int y, const unsigned short unicode, const
 #define CANVAS_CHAR_BUFFER_SIZE 256
 #include "wcwidth.h"
 void ScreenPrintColor(const int x, const int y, const char* str, const unsigned short attribute) {
+#ifdef DEBUG
+	if (y >= DEBUG_SCREEN_HEIGHT) return;
+#else
 	if (y >= SCREEN_HEIGHT) return;
+#endif
 	WCHAR buffer[CANVAS_CHAR_BUFFER_SIZE];
 	MultiByteToWideChar(EUC_KR, MB_PRECOMPOSED, str, -1, buffer, CANVAS_CHAR_BUFFER_SIZE);
 

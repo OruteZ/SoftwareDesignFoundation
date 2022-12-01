@@ -52,7 +52,7 @@ void PrintWorld() {
 				SetScreenCell(screen_cell_index.x, screen_cell_index.y, ' ', 0);
 				break;
 			case WALL:
-				SetScreenCell(screen_cell_index.x, screen_cell_index.y, ' ', BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY);
+				SetScreenCell(screen_cell_index.x, screen_cell_index.y, 0x254b, BACKGROUND_RED | BACKGROUND_BLUE);
 				break;
 			case DOWNSTAIRS:
 				SetScreenCell(screen_cell_index.x, screen_cell_index.y, 0x25a5, FOREGROUND_BLUE | FOREGROUND_INTENSITY | BACKGROUND_GREEN);
@@ -141,8 +141,7 @@ void PrintParticles() {
 	}
 }
 
-//카메라의 위치를 플레이어를 중심으로 설정한다. 만약 값이 변경되었을 경우 true를 반환한다.
-bool SetCameraPoint()
+void SetCameraPoint()
 {
 	camera.pos.x = player->base.entity.pos.x - camera.cell_rect.width / 2;
 	camera.pos.y = player->base.entity.pos.y - camera.cell_rect.height / 2;
@@ -150,39 +149,12 @@ bool SetCameraPoint()
 	return true;
 }
 
-//bool isShaking = false;
-//double ShakingTime = 0;
-//double BaseShakingTime = 0.1f;
-//
-//void CameraShake() {
-//	if (isShaking) return;
-//
-//	CameraRectInCanvas.x++;
-//	isShaking = true;
-//
-//	ShakingTime = BaseShakingTime;
-//}
-//
-//void UpdateShakingTime() {
-//	ShakingTime -= Time.deltaTime;
-//
-//	if (ShakingTime <= 0) {
-//		isShaking = false;
-//
-//		CameraRectInCanvas.x--;
-//		//CameraRectInGame.y--;
-//	}
-//}
-
 void RenderCamera()
 {
 	SetCameraPoint();
 	PrintWorld();
-	//DrawBox();
 	
 	PrintEnemies();
 	PrintPlayer();
 	PrintParticles();
-
-	//if (isShaking) UpdateShakingTime();
 }

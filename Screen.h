@@ -1,9 +1,11 @@
 #pragma once
 
+#define SCREEN_WIDTH (40 * 2)
+#define SCREEN_HEIGHT 25
 #ifdef DEBUG
-#include<Windows.h>
-HANDLE ScreenReturnBufferHandle_Unsafe();
-#endif
+#define DEBUG_SCREEN_HEIGHT 51
+#endif // DEBUG
+
 
 void ScreenInit();
 void ScreenFlipping();
@@ -28,6 +30,7 @@ void SetColor(unsigned short color);
 
 #ifdef DEBUG
 #include <Windows.h>
+HANDLE ScreenReturnBufferHandle_Unsafe();
 //void FillCanvasWithRandomCells();
 //void FillCanvasWithTestString();
 #endif // DEBUG
