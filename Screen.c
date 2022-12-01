@@ -1,9 +1,14 @@
+#include <stdlib.h>
 #include "Screen.h"
 
 #include <Windows.h>
 
 int g_nScreenIndex = 0;
 HANDLE g_hScreen[2];
+
+
+
+
 
 #ifdef DEBUG
 HANDLE* ScreenReturnBufferHandles_Unsafe() {
@@ -26,6 +31,8 @@ void ScreenInit()
 	cci.bVisible = FALSE;
 	SetConsoleCursorInfo(g_hScreen[0], &cci);
 	SetConsoleCursorInfo(g_hScreen[1], &cci);
+
+	ClearCanvas();
 }
 
 void ScreenFlipping()
@@ -39,6 +46,8 @@ void ScreenClear()
 	COORD Coor = { 0, 0 };
 	DWORD dw;
 	FillConsoleOutputCharacterW(g_hScreen[g_nScreenIndex], ' ', 100 * 50, Coor, &dw);
+
+	ClearCanvas();
 }
 
 void ScreenRelease()
@@ -54,7 +63,6 @@ void ScreenPrint(int x, int y, char* string)
 	SetConsoleCursorPosition(g_hScreen[g_nScreenIndex], CursorPosition);
 	WriteFile(g_hScreen[g_nScreenIndex], string, strlen(string), &dw, NULL);
 }
-
 
 // 1 ~ 15 까지 색상 설정 가능
 void SetColor(unsigned short color)

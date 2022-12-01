@@ -106,6 +106,7 @@
     <ClCompile Include="ArcherEnemy.c" />
     <ClCompile Include="BomberEnemy.c" />
     <ClCompile Include="Camera.c" />
+    <ClCompile Include="Canvas.c" />
     <ClCompile Include="Debug.c" />
     <ClCompile Include="Enemy.c" />
     <ClCompile Include="Entity.c" />
@@ -128,6 +129,7 @@
     <ClCompile Include="UI.c" />
     <ClCompile Include="Update.c" />
     <ClCompile Include="Vector.c" />
+    <ClCompile Include="wcwidth.c" />
     <ClCompile Include="World.c" />
     <ClCompile Include="World001.c" />
     <ClCompile Include="World002.c" />
@@ -138,6 +140,7 @@
     <ClInclude Include="ArcherEnemy.h" />
     <ClInclude Include="BomberEnemy.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Canvas.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
@@ -161,6 +164,7 @@
     <ClInclude Include="UI.h" />
     <ClInclude Include="Update.h" />
     <ClInclude Include="Vector.h" />
+    <ClInclude Include="wcwidth.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="World001.h" />
     <ClInclude Include="World002.h" />
