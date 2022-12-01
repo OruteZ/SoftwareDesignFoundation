@@ -4,13 +4,12 @@
 #include "Point.h"
 #include "Rect.h"
 
-typedef enum EnemyState{
+typedef enum EnemyState {
 	Tracking,
 	ReadyToAttack,
 } EnemyState;
 
-typedef struct _Enemy
-{
+typedef struct _Enemy {
 	union {
 		Entity entity;
 	} base;
@@ -18,15 +17,11 @@ typedef struct _Enemy
 	EnemyState state;
 	Point facing;
 
-	double moveSpeed;	//block per second
-	double attackSpeed; //attack per second
-
 	int hp;
-
 	int baseDamage;
 
-	double moveCoolDown;
-	double attackDelay;
+	int attackSpeed; // small beat per time
+	int moveSpeed; // small beat per time
 
 	int detectionRadius;
 
@@ -34,7 +29,7 @@ typedef struct _Enemy
 	int attackHeight;
 
 	bool ReadyToAttack;
-
+	int actCooldown; //¥‹¿ß : beat
 	double stiffDuration;
 } Enemy;
 

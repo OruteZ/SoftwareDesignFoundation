@@ -19,8 +19,7 @@ ArcherEnemy* CreateArcherEnemy(Point p)
 	archerEnemy->base.enemy.detectionRadius = 20;
 
 	archerEnemy->base.enemy.facing = Direction.north;
-	archerEnemy->base.enemy.moveCoolDown = 0;
-	archerEnemy->base.enemy.attackDelay = 0;
+	archerEnemy->base.enemy.actCooldown = 0;
 
 	archerEnemy->base.enemy.attackHeight = 10;
 	archerEnemy->base.enemy.attackWidth = 1;
