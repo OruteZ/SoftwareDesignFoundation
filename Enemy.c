@@ -19,10 +19,11 @@
 #include "HeartBeat.h"
 #include "Raycast.h"
 
+double baseStiffDuration = 0.3;
+
 bool isEnemyDead(Enemy* enemy);
-bool canEnemyMove(Enemy* enemy);
+bool canEnemyAct(Enemy* enemy);
 bool isEnemy(Entity* entity);
-bool canEnemyAttack(Enemy* enemy);
 
 void LookAt(Enemy* enemy, Point target);
 bool IsPlayerInRange(Enemy* enemy);
@@ -88,8 +89,6 @@ bool IsPlayerInRange(Enemy* enemy) {
 }
 
 void EnemyMove(Enemy* enemy, Point direction) {
-	if (!canEnemyMove(enemy)) return;
-
 	Point* nextPosition = DuplicatePoint(&enemy->base.entity.pos);
 	Point playerPos = GetPlayerPos();
 	PointAdd(nextPosition, &direction);
@@ -119,44 +118,34 @@ void EnemyMove(Enemy* enemy, Point direction) {
 	DeletePoint(nextPosition);
 	//DeleteVector(vector);
 
-	enemy->moveCoolDown = 1 / enemy->moveSpeed;
-	if (enemy->attackDelay <= 0 && moveSuccess) {
-		enemy->attackDelay = 1 / enemy->moveSpeed;
-	}
+	enemy->actCooldown = enemy->moveSpeed;
 }
 
-bool canEnemyAttack(Enemy* enemy) {
-	return enemy->attackDelay <= 0;
-}
-
-void EnemyReadyAttack(Enemy* enemy) {
-	//색깔 print 가능한 다음에
+bool canEnemyAct(Enemy* enemy) {
+	return enemy->actCooldown <= 0;
 }
 
 void EnemyAttack(Enemy* enemy) {
-	if (!canEnemyAttack(enemy)) {
-		return;
-	}
-
 	switch (enemy->base.entity.type) {
 	case MeleeEnemyType:
 		MeleeEnemyAttack((MeleeEnemy*)enemy);
 		break;
 
 	case ArcherEnemyType:
-		//ArcherEnemyAttack((ArcherEnemy*)enemy);
+		ArcherEnemyAttack((ArcherEnemy*)enemy);
 		break;
 
 	case BomberEnemyType:
 		BomberEnemyAttack((BomberEnemy*)enemy);
 		break;
 	}
+
+	enemy->actCooldown = enemy->attackSpeed;
 }
 
 void CalEnemyCooldown(Enemy* enemy) {
-	enemy->attackDelay -= Time.deltaTime;
-	enemy->moveCoolDown -= Time.deltaTime;
-	enemy->stiffDuration -= Time.deltaTime;
+	enemy->actCooldown--;
+	enemy->stiffDuration -= GameTime.deltaTime;
 }
 
 void EnemyOnDeath(Enemy* enemy)
@@ -166,7 +155,6 @@ void EnemyOnDeath(Enemy* enemy)
 #endif
 }
 
-double baseStiffDuration = 0.3;
 bool EnemyOnHit(Enemy* enemy, int damage)
 {
 	if (enemy == NULL) return false;
@@ -217,6 +205,7 @@ void DeleteEnemy(Enemy* enemy) {
 
 void UpdateEnemy(Enemy* enemy) {
 	//사거리 내로 들어오면 우선 공격하기
+	/*
 	if (!isEnemyStiff(enemy)) {
 		if (IsPlayerInRange(enemy)) {
 			LookAt(enemy, GetPlayerPos());
@@ -227,7 +216,19 @@ void UpdateEnemy(Enemy* enemy) {
 			EnemyRayCastPlayer(enemy);
 		}
 	}
+	*/
+	if (!SmallBeatCall()) return;
+
 	CalEnemyCooldown(enemy);
+	if (isEnemyStiff(enemy)) return;
+
+	if (canEnemyAct(enemy)) {
+		if (IsPlayerInRange(enemy)) {
+			LookAt(enemy, GetPlayerPos());
+			EnemyAttack(enemy);
+		}
+		else EnemyRayCastPlayer(enemy);
+	}
 
 	enemy->ReadyToAttack = IsPlayerInRange(enemy);
 }
@@ -243,9 +244,5 @@ bool isEnemyStiff(Enemy* enemy) {
 bool isEnemy(Entity* entity) {
 	enum EntityType type = entity->type;
 	return (bool)(MeleeEnemyType <= type && type <= BomberEnemyType);
-}
-
-bool canEnemyMove(Enemy* enemy) {
-	return enemy->moveCoolDown <= 0;
 }
 
