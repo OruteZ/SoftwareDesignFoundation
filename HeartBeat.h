@@ -32,5 +32,7 @@ int GetNoteSize();
 int GetBPMGaugePercentage();
 
 //이번 프레임에 박자가 맞을 경우 참을 반환합니다.
-bool BPMCall();
+bool BeatCall();
 
+//더 잘게 쪼갠 박자를 기준으로 BPMCall을 합니다.
+bool SmallBeatCall();
