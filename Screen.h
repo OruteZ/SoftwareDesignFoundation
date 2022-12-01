@@ -26,9 +26,6 @@ void ScreenPrint(const int x, const int y, const char* str);
 // 색상 정보는 https://learn.microsoft.com/en-us/windows/console/console-screen-buffers#character-attributes 참고.
 void SetColor(unsigned short color);
 
-// 흰색 (Non-intensive)
-
-
 #ifdef DEBUG
 #include <Windows.h>
 //void FillCanvasWithRandomCells();

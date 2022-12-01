@@ -8,6 +8,13 @@
 //HANDLE g_hScreen[2];
 
 
+/*
+	FOR EVERY 2-WIDTH CHARACTER
+	SECOND CELL IS FILLED WITH SOMETHING.
+
+	TO CHANGE 'SOMETHING', modify ScreenClear() ScreenPrintColor();
+*/
+
 #define SCREEN_WIDTH (40 * 2)
 #define SCREEN_HEIGHT 51
 struct {
@@ -87,7 +94,7 @@ void ScreenClear()
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < SCREEN_WIDTH; j++) {
 			screen.grid[i][j].Attributes = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
-			screen.grid[i][j].Char.UnicodeChar = 0x00;
+			screen.grid[i][j].Char.UnicodeChar = ' ';
 		}
 	}
 }
