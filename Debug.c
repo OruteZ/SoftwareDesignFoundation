@@ -12,10 +12,10 @@
 #define DEBUG_MAX_LINES 20
 
 int current_debug_line = 0;
-HANDLE* screenBuffers;
+HANDLE screenBuffer;
 
 void DebugInit() {
-	screenBuffers = ScreenReturnBufferHandles_Unsafe();
+	screenBuffer = ScreenReturnBufferHandle_Unsafe();
 }
 void DebugPrint(const char* format , ...) {
 	va_list args;
@@ -28,13 +28,12 @@ void DebugPrint(const char* format , ...) {
 
 	va_end(args);
 	COORD current_debug_coord = { .X = 0, .Y = DEBUG_STARTING_LINE + current_debug_line++ % DEBUG_MAX_LINES };
-	SetConsoleCursorPosition(screenBuffers[0], current_debug_coord);
-	SetConsoleCursorPosition(screenBuffers[1], current_debug_coord);
+	ScreenPrint(current_debug_coord.X, current_debug_coord.Y, buffer_line_number);
+	ScreenPrint(current_debug_coord.X + 7, current_debug_coord.Y, buffer);
+	//SetConsoleCursorPosition(screenBuffer, current_debug_coord);
 
-	WriteFile(screenBuffers[0], buffer_line_number, strlen(buffer_line_number), NULL, NULL);
-	WriteFile(screenBuffers[0], buffer, strlen(buffer), NULL, NULL);
-	WriteFile(screenBuffers[1], buffer_line_number, strlen(buffer_line_number), NULL, NULL);
-	WriteFile(screenBuffers[1], buffer, strlen(buffer), NULL, NULL);
+	//WriteFile(screenBuffer, buffer_line_number, strlen(buffer_line_number), NULL, NULL);
+	//WriteFile(screenBuffer, buffer, strlen(buffer), NULL, NULL);
 }
 #endif
 

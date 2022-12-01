@@ -106,7 +106,9 @@
     <ClCompile Include="ArcherEnemy.c" />
     <ClCompile Include="BomberEnemy.c" />
     <ClCompile Include="Camera.c" />
-    <ClCompile Include="Canvas.c" />
+    <ClCompile Include="Canvas.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Debug.c" />
     <ClCompile Include="Enemy.c" />
     <ClCompile Include="Entity.c" />
@@ -140,7 +142,9 @@
     <ClInclude Include="ArcherEnemy.h" />
     <ClInclude Include="BomberEnemy.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Canvas.h" />
+    <ClInclude Include="Canvas.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />

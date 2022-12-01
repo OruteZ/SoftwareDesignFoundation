@@ -11,23 +11,13 @@
 #include "Game.h"
 
 int main() {
-    //Init();
-    //while (true) {
-    //    Update();
-    //    Render();
-    //    if (GameState == Exiting) break;
-    //}
-    //Release();
-
-#ifdef DEBUG
-#include "Canvas.h"
-    InitCanvas();
-    //FillCanvasWithRandomCells();
-    FillCanvasWithTestString();
-    PrintCanvas();
-    getch();
-#endif // DEBUG
-
+    Init();
+    while (true) {
+        Update();
+        Render();
+        if (GameState == Exiting) break;
+    }
+    Release();
 
     return 0;
 }
