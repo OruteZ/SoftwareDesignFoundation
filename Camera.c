@@ -76,11 +76,14 @@ void PrintEnemies()
 			case MeleeEnemyType:
 				SetScreenCell(screen_cell_index.x, screen_cell_index.y, 0x25c8, FOREGROUND_RED | FOREGROUND_GREEN);
 				break;
+
 			case ArcherEnemyType:
 				break;
+
 			case BomberEnemyType:
 				SetScreenCell(screen_cell_index.x, screen_cell_index.y, 0x25c8, FOREGROUND_RED | FOREGROUND_GREEN);
 				break;
+
 			default:
 				break;
 			}
@@ -105,36 +108,51 @@ void PrintExpOrb() {
 void PrintParticles() {
 	Point printPos;
 
+	int nowUnicode;
+	int nowColor;
+
 	for (int i = 0; i < particles->length; i++) {
 		Particle* p = (Particle*)particles->entities[i];
 		Rect camera_world_rect = CameraCellRectToWorldRect();
 
-		if (!RectIsIntersectingRect(&camera_world_rect, &p->particleRect)) continue;
+		//if (!RectIsIntersectingRect(&camera_world_rect, &p->particleRect)) continue;
+		
+#ifdef DEBUG
+		DebugPrint("Print Particle Rect");
+#endif
+		
+		switch (p->particleType) {
+		case MeleeAttackParticleType:
+			nowUnicode = 0x25c9; // ¢Â
+			nowColor = 15;
+			break;
+
+		case RangeAttackParticleType:
+		case EnemyRangeAttackParticleType:
+			nowUnicode = 0x25a2; //¡à 
+			nowColor = 15;
+			break;
+
+		case ExplosionParticleType1:
+			nowUnicode = 0x254b; // ¦¶
+			nowColor = FOREGROUND_RED;
+			break;
+
+		case ExplosionParticleType2:
+			nowUnicode = 0x2169; // ¥¹
+			nowColor = FOREGROUND_RED;
+			break;
+		}
 
 		for (int i = 0; i < p->particleRect.height; i++) {
 			for (int j = 0; j < p->particleRect.width; j++) {
+				if (p->particleGrid[i][j] == false) continue;
+
 				Point world_pos = { .x = p->particleRect.x + j , .y = p->particleRect.y + i };
 				Point screen_cell_index = WorldPosToScreenCellIndex(world_pos);
 				if (RectContainsPoint(&camera.cell_rect, &screen_cell_index)) {
 
-
-					switch (p->particleType) {
-					case MeleeAttackParticleType:
-						SetScreenCell(screen_cell_index.x, screen_cell_index.y, 0x25c9, 0); // ¢Â
-						break;
-					case RangeAttackParticleType:
-					case EnemyRangeAttackParticleType:
-						SetScreenCell(screen_cell_index.x, screen_cell_index.y, 0x25a2, 0); // ¡à
-						break;
-					case ExplosionParticleType1:
-						SetScreenCell(screen_cell_index.x, screen_cell_index.y, 0x254b, 0); // ¦¶
-						break;
-					case ExplosionParticleType2:
-						SetScreenCell(screen_cell_index.x, screen_cell_index.y, 0x2169, 0); // ¥¹
-						break;
-					}
-
-
+					SetScreenCell(screen_cell_index.x, screen_cell_index.y, nowUnicode, nowColor);
 				}
 			}
 		}
