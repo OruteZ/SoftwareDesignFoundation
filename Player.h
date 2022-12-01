@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Entity.h"
+#include "UpgradeUI.h"
 
 typedef struct _Player {
 	union {
@@ -9,6 +10,7 @@ typedef struct _Player {
 	Point facing;
 
 	int hp;
+	int maxHp;
 
 	int level;
 	int exp;
@@ -41,4 +43,11 @@ void UpScore(int baseScore);
 //플레이어의 체력을 확인해서 사망 여부를 반환합니다.
 bool IsPlayerDead();
 
+//플레이어의 능력치를 BPM에 따라 재설정 합니다.
 void ResetPlayerStatusByBPM(int BPM);
+
+//------------레벨 업 관련-----------------
+
+void Upgrade(UpgradeType);
+
+

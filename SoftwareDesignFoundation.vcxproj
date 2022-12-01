@@ -130,6 +130,7 @@
     <ClCompile Include="Time.c" />
     <ClCompile Include="UI.c" />
     <ClCompile Include="Update.c" />
+    <ClCompile Include="UpgradeUI.c" />
     <ClCompile Include="Vector.c" />
     <ClCompile Include="wcwidth.c" />
     <ClCompile Include="World.c" />
@@ -173,6 +174,7 @@
     <ClInclude Include="World001.h" />
     <ClInclude Include="World002.h" />
     <ClInclude Include="World003.h" />
+    <ClInclude Include="UpgradeUI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -153,6 +153,9 @@
     <ClCompile Include="UI.c">
       <Filter>Source Files\IO</Filter>
     </ClCompile>
+    <ClCompile Include="UpgradeUI.c">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Init.h">
@@ -255,6 +258,9 @@
       <Filter>Header Files\IO</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
+      <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="UpgradeUI.h">
       <Filter>Header Files\IO</Filter>
     </ClInclude>
   </ItemGroup>

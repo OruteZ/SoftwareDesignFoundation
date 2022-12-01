@@ -10,7 +10,7 @@ enum _GameState {
 	Dialogue,
 	Dungeon,
 	Exiting,
-	Upgrade,
+	UpgradeMenu,
 };
 
 extern enum _GameState GameState;
