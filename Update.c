@@ -99,4 +99,8 @@ void Update() {
 	if (GameState == Menu) {
 		UpdateMenu();
 	}
+
+	if (GameState == UpgradeMenu) {
+		UpdateUpgradeUI();
+	}
 }

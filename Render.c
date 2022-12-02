@@ -6,6 +6,7 @@
 #include <stdio.h> // only used for debug
 #include "Render.h"
 #include "UI.h"
+#include "UpgradeUI.h"
 
 #ifdef DEBUG
 #include "Keyboard.h"
@@ -21,6 +22,10 @@ void Render() {
 
 	if (GameState == Menu) {
 		RenderMenu();
+	}
+
+	if (GameState == UpgradeMenu) {
+		RenderUpgradeUI();
 	}
 
 	ScreenFlipping();

@@ -77,7 +77,7 @@ void StartBeat() {
 }
 
 void UpdateHeartBeat() {
-	heartBeat->time_to_check_tempo += Time.deltaTime;
+	heartBeat->time_to_check_tempo += GameTime.deltaTime;
 
 	double BeatCheckTime = 15.0 / (double)heartBeat->BPM;
 
