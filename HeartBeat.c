@@ -101,10 +101,6 @@ void UpdateHeartBeat() {
 		if		(value == 1) BPMGaugeUp();
 		else if (value == 0) BPMGaugeDown();
 	}
-
-#ifdef DEBUG
-	DebugPrint("%d %d %d", heartBeat->BPM, nowBpmLv, HeartGauge);
-#endif
 }
 
 void RealeseHeartBeat() {

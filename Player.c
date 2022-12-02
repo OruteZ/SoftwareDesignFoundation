@@ -102,6 +102,13 @@ Player* CreatePlayer(Point spawnPoint)
 	playerMoveCooldown = 0;
 	playerAttackCooldown = 0;
 
+	for (int i = 0; i < KINDS_OF_ITEM; i++) {
+		Inventory[i] = 0;
+	}
+
+	//테스트용
+	Inventory[BULLET_ID] = 100;
+
 	return _player;
 
 }
@@ -169,6 +176,12 @@ void PlayerMove(Point dir) {
 
 	player->base.entity.pos = destPos;
 	player->facing = dir;
+
+	ExpOrb* orb = FindOrb(destPos);
+	if (orb != NULL) {
+		int exp = GetExp(orb);
+		UpExp(exp);
+	}
 
 	canPlayerMove = FALSE;
 	playerMoveCooldown = 1 / (player->moveSpeed);

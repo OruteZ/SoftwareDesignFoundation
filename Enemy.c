@@ -18,6 +18,7 @@
 
 #include "HeartBeat.h"
 #include "Raycast.h"
+#include "ExpOrb.h"
 
 double baseStiffDuration = 0.3;
 
@@ -150,9 +151,7 @@ void CalEnemyCooldown(Enemy* enemy) {
 
 void EnemyOnDeath(Enemy* enemy)
 {
-#ifdef DEBUG
-	DebugPrint("Enemy Dead!");
-#endif
+	CreateExpOrb(enemy->base.entity.pos, 10);
 }
 
 bool EnemyOnHit(Enemy* enemy, int damage)

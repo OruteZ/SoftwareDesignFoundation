@@ -10,6 +10,7 @@
 #include "Particle.h"
 #include "Debug.h"
 #include "Time.h"
+#include "ExpOrb.h"
 
 struct {
 	Point pos;
@@ -103,6 +104,19 @@ void PrintPlayer()
 }
 
 void PrintExpOrb() {
+	for (int i = 0; i < expOrbs->length; i++) {
+		ExpOrb* e = (ExpOrb*)expOrbs->entities[i];
+
+		if (e == NULL) continue;
+		if (e->isDead) continue;
+
+		Point world_pos = e->base.entity.pos;
+		Point screen_cell_index = WorldPosToScreenCellIndex(world_pos);
+		if (RectContainsPoint(&camera.cell_rect, &screen_cell_index)) {
+			SetScreenCell(screen_cell_index.x, screen_cell_index.y, 0x25c9, 15);
+		}
+	}
+
 }
 
 void PrintParticles() {
@@ -116,10 +130,6 @@ void PrintParticles() {
 		Rect camera_world_rect = CameraCellRectToWorldRect();
 
 		//if (!RectIsIntersectingRect(&camera_world_rect, &p->particleRect)) continue;
-		
-#ifdef DEBUG
-		DebugPrint("Print Particle Rect");
-#endif
 		
 		switch (p->particleType) {
 		case MeleeAttackParticleType:
@@ -171,7 +181,8 @@ void RenderCamera()
 {
 	SetCameraPoint();
 	PrintWorld();
-	
+
+	PrintExpOrb();
 	PrintEnemies();
 	PrintPlayer();
 	PrintParticles();

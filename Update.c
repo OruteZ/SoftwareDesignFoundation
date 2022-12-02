@@ -52,6 +52,22 @@ void UpdateParticles() {
 			}
 	}
 }
+void UpdateExpOrbs() {
+	for (int i = 0; i < expOrbs->length; i++) {
+		ExpOrb* e = (ExpOrb*)expOrbs->entities[i];
+
+		if (e == NULL) {
+			VectorDeleteUnstable(expOrbs, i);
+			i--;
+		}
+
+		else if (e->isDead) {
+			free(e);
+			VectorDeleteUnstable(expOrbs, i);
+			i--;
+		}
+	}
+}
 
 void Update() {
 	UpdateTime();
@@ -64,6 +80,7 @@ void Update() {
 		UpdateEnemies();
 		UpdateParticles();
 		UpdatePlayer();
+		UpdateExpOrbs();
 
 		if (GetTile(player->base.entity.pos) & FLAG_GOAL) {
 			StartNextWorld();
