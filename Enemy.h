@@ -4,6 +4,7 @@
 #include "Point.h"
 #include "Rect.h"
 
+#include "RayCast.h"
 typedef enum EnemyState {
 	Tracking,
 	ReadyToAttack,
@@ -20,15 +21,16 @@ typedef struct _Enemy {
 	int hp;
 	int baseDamage;
 
-	int attackSpeed; // small beat per time
+	int detectionRadius;
+	RayCastResult* memory;
+	int memory_current_index;
 	int moveSpeed; // small beat per time
 
-	int detectionRadius;
-
+	int attackSpeed; // small beat per time
 	int attackWidth;
 	int attackHeight;
-
 	bool ReadyToAttack;
+
 	int actCooldown; //¥‹¿ß : beat
 	double stiffDuration;
 } Enemy;

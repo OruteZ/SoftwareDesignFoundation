@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Particle.h"
 
+#include "RayCast.h"
 BomberEnemy* CreateBomberEnemy(Point p)
 {
 	BomberEnemy* bomberEnemy = (BomberEnemy*)malloc(sizeof(BomberEnemy));
@@ -17,6 +18,8 @@ BomberEnemy* CreateBomberEnemy(Point p)
 	bomberEnemy->base.enemy.attackSpeed = 1;
 	bomberEnemy->base.enemy.moveSpeed = 1;
 	bomberEnemy->base.enemy.detectionRadius = 2;
+	bomberEnemy->base.enemy.memory = CreateRayCastResult(bomberEnemy->base.enemy.detectionRadius << 1);
+	bomberEnemy->base.enemy.memory_current_index = 0;
 	bomberEnemy->base.enemy.facing = Direction.north;
 
 	bomberEnemy->base.enemy.actCooldown = 0;
@@ -52,40 +55,3 @@ void BomberEnemyAttack(BomberEnemy* bomberEnemy) {
 #endif
 }
 
-
-//#include "BomberEnemyAttack.h"
-//double bomberAttackCooldown;
-//void CalculateBomberAttackCooldown(BomberEnemy* bomberEnemy)
-//{
-//	bomberAttackCooldown -= Time.deltaTime;
-//
-//	if (bomberAttackCooldown > 0)
-//	{
-//		bomberEnemy->base.entity.enemyState = Attack;
-//	}
-//}
-//void BomberEnemyAttack(BomberEnemy* bomberEnemy)
-//{
-//	bomberAttackCooldown = bomberEnemy->base.mortal.attackCooldown;
-//	if (RectContainsPoint(bomberEnemy->base.mortal.attackRange, player->base.entity.pos))
-//	{
-//		if (bomberAttackCooldown < 0)
-//		{
-//			PlayerOnHit(bomberEnemy->base.mortal.baseDamage);
-//			bomberEnemy->base.entity.enemyState = Idle;
-//		}
-//	}
-//}
-//
-//#include "SetBomberAttackRange.h"
-//void SetBomberAttackRange(BomberEnemy* bomberEnemy)
-//{
-//	Point playerPos = player->base.entity.pos;
-//	Point bomberEnemyPos = bomberEnemy->base.entity.pos;
-//	if (RectContainsPoint(bomberEnemy->base.mortal.playerSearchRange, player->base.entity.pos))
-//	{
-//		//make bomberAttackRange
-//		bomberEnemy->base.mortal.attackRange =
-//			CreateRect(bomberEnemy->base.entity.pos.x - 3, bomberEnemy->base.entity.pos.y - 3, 6, 6);
-//	}
-//}
