@@ -70,16 +70,20 @@ void Update() {
 		}
 
 		if (IsPlayerDead()) {
-			DeepDeleteVector(enemies);
-			DeepDeleteVector(expOrbs);
-			DeepDeleteVector(particles);
 			free(player);
 			GameState = Menu;
+
+			Point noPoint = { 0, 0 };
+			player = CreatePlayer(noPoint);
 			StartGameOverMenu();
 		}
 	}
 	
 	if (GameState == Menu) {
 		UpdateMenu();
+	}
+
+	if (GameState == UpgradeMenu) {
+		UpdateUpgradeUI();
 	}
 }

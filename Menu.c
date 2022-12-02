@@ -72,6 +72,7 @@ void SelectButton() {
 	case GameOver_RetryMainButton:
 		GameState = Menu;
 		menuState = Main;
+		nowButton = Main_StartButton;
 	default:
 		break;
 	}

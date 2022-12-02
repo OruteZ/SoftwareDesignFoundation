@@ -44,13 +44,6 @@ int essentialExpToLevelUp[MAX_LEVEL] = {
 	190,
 	250,
 };
-
-const int potionUpgradeAmount = 1;
-const int maxHPUpgradeAmount = 8; //무조건 8의 배수
-const int damageUpgradeAmount = 5;
-const int atkSpeedUpgradeAmount = 10;
-const int moveSpeedUpgradeAmount = 5;
-const int bulletUpgradeAmount = 3;
 //---------------------------------------------------------------------------
 
 Player* player;
@@ -262,22 +255,6 @@ void PlayerMeleeAttack() {
 	DebugPrint("Player Attacked");
 #endif
 }
-void PlayerRangeAttack() {
-	if (!canPlayerRangeAttack) return;
-
-	CreateParticle(player->facing, player->base.entity.pos, RangeAttackParticleType, player->baseDamage);
-
-#ifdef DEBUG
-	DebugPrint("Created Range Particle");
-#endif
-
-	canPlayerRangeAttack = false;
-	playerAttackCooldown = 1 - (player->attackSpeed);
-	if (playerMoveCooldown < basePlayerAttackDelay) {
-		canPlayerMove = FALSE;
-		playerMoveCooldown = basePlayerAttackDelay;
-	}
-}
 void UpExp(int exp) {
 	player->exp += exp;
 	while (player->exp > essentialExpToLevelUp[player->level]) {
@@ -336,26 +313,43 @@ void DrinkPotion() {
 	}
 }
 
+void PlayerRangeAttack() {
+	if (!canPlayerRangeAttack) return;
+
+	CreateParticle(player->facing, player->base.entity.pos, RangeAttackParticleType, player->baseDamage);
+
+#ifdef DEBUG
+	DebugPrint("Created Range Particle");
+#endif
+
+	canPlayerRangeAttack = false;
+	playerAttackCooldown = 1 - (player->attackSpeed);
+	if (playerMoveCooldown < basePlayerAttackDelay) {
+		canPlayerMove = FALSE;
+		playerMoveCooldown = basePlayerAttackDelay;
+	}
+}
+
 //--------------레벨업 시스템------------------------
 
 void Upgrade_Potion() {
-	Inventory[POTION_ID] += potionUpgradeAmount;
+	Inventory[POTION_ID] += GetUpgradeAmount(PotionUpgradeType);
 }
 void Upgrade_MaxHP() {
 	if (player->maxHp >= MaxHPUpperLinit) return;
-	player->maxHp += maxHPUpgradeAmount;
+	player->maxHp += GetUpgradeAmount(MaxHPUpgradeType);
 }
 void Upgrade_Damage() {
-	player->baseDamage += damageUpgradeAmount;
+	player->baseDamage += GetUpgradeAmount(DamageUpgradeType);
 }
 void Upgrade_AtkSpeed() {
-	player->attackSpeed += atkSpeedUpgradeAmount;
+	player->attackSpeed += GetUpgradeAmount(AtkSpeedUpgradeType);
 }
-void Upgrade_MoveSpeed() { player->moveSpeed += moveSpeedUpgradeAmount; }
-void Upgrade_Bullet() { Inventory[BULLET_ID] += bulletUpgradeAmount; }
+void Upgrade_MoveSpeed() { player->moveSpeed += GetUpgradeAmount(MoveSpeedUpgradeType);}
+void Upgrade_Bullet() { Inventory[BULLET_ID] += GetUpgradeAmount(BulletUpgradeType); }
 
-void Upgrade(UpgradeType upgrade) {
-	switch (upgrade) {
+void Upgrade(int upgrade) {
+	switch ((UpgradeType)upgrade) {
 	case PotionUpgradeType:
 		Upgrade_Potion();
 		break;

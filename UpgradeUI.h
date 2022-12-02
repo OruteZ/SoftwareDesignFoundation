@@ -15,3 +15,5 @@ void StartUpgradeUI();
 void UpdateUpgradeUI();
 void RenderUpgradeUI();
 void ExitUpgradeUI();
+
+int GetUpgradeAmount(UpgradeType upgrade);

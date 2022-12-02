@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Entity.h"
-#include "UpgradeUI.h"
 
 typedef struct _Player {
 	union {
@@ -48,6 +47,6 @@ void ResetPlayerStatusByBPM(int BPM);
 
 //------------레벨 업 관련-----------------
 
-void Upgrade(UpgradeType);
+void Upgrade(int upgrade);
 
 
