@@ -98,8 +98,12 @@ void ScreenRelease()
 void SetScreenCell(const int x, const int y, const unsigned short unicode, const unsigned short attribute) {
 	if (!(0 <= x && x < SCREEN_WIDTH / 2 &&
 		0 <= y && y < SCREEN_HEIGHT)) return;
-	screen.grid[y][2 * x].Attributes = attribute;
-	screen.grid[y][2 * x + 1].Attributes = attribute;
+
+	static const unsigned short background_attribute_flags_combined = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
+	const unsigned short combined_attribute = !(attribute & background_attribute_flags_combined) ? screen.grid[y][2 * x].Attributes & background_attribute_flags_combined | attribute : attribute;
+
+	screen.grid[y][2 * x].Attributes = combined_attribute;
+	screen.grid[y][2 * x + 1].Attributes = combined_attribute;
 
 	screen.grid[y][2 * x].Char.UnicodeChar = unicode;
 	screen.grid[y][2 * x + 1].Char.UnicodeChar = 0x0000;
