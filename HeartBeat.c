@@ -52,10 +52,10 @@ void InitHeartBeat()
 	heartBeat = (HeartBeat*)malloc(sizeof(HeartBeat));
 	if (heartBeat == NULL) exit(-1);
 
-	heartBeat->noteSize = 20;
+	heartBeat->noteSize = 12;
 	heartBeat->time_to_check_tempo = 0;
 
-	heartBeat->note = (short*)malloc(sizeof(short) * heartBeat->noteSize);
+	heartBeat->note = (bool*)malloc(sizeof(bool) * heartBeat->noteSize);
 	if (heartBeat->note == NULL) exit(-1);
 
 	for (int i = 0; i < heartBeat->noteSize; i++) {
@@ -169,7 +169,7 @@ int GetBPM() {
 	return heartBeat->BPM;
 }
 
-short* GetNoteInfo()
+bool* GetNoteInfo()
 {
 	return heartBeat->note;
 }

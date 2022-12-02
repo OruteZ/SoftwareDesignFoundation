@@ -28,8 +28,6 @@
 #define PlayerBaseDamagePosY 6
 #define ScorePosX 3
 #define ScorePosY 8
-
-
 //const char HeartChar[] = "♥";
 //const char EmptyHeartChar[] = "♡";
 
@@ -128,9 +126,32 @@ void RenderHealth() {
 	SetScreenCell(health_bar_start.x, health_bar_start.y - max_health_indicator_height, 0x2665, FOREGROUND_RED | FOREGROUND_INTENSITY);
 }
 
+void RenderNote() {
+	Point notePrintPos = { .x = 33, .y = 10 };
+	int noteUnicode = ' ';
+
+	int size = GetNoteSize();
+	bool* note = GetNoteInfo();
+
+	for (int j = 0; j < 4; j++) {
+		SetScreenCell(notePrintPos.x + j, notePrintPos.y + size - 1, ' ', BACKGROUND_GREEN);
+	}
+
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < 4; j++) {
+
+			if (note[size - i - 1]) {
+				SetScreenCell(notePrintPos.x + j, notePrintPos.y + i, ' ', BACKGROUND_BLUE);
+			}
+
+		}
+	}
+}
+
 void RenderUI() {
 	RenderUIFrame();
 	RenderHealth();
 	RenderBPM();
 	RenderInfo();
+	RenderNote();
 }
