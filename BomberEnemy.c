@@ -12,7 +12,7 @@ BomberEnemy* CreateBomberEnemy(Point p)
 	
 	Enemy* enemy = (Enemy*)bomberEnemy;
 	enemy->base.entity.pos = p;
-	enemy->base.entity.type = MeleeEnemyType;
+	enemy->base.entity.type = BomberEnemyType;
 	
 	enemy->state = Tracking;
 
@@ -23,7 +23,7 @@ BomberEnemy* CreateBomberEnemy(Point p)
 	enemy->memory_current_index = 0;
 	enemy->player_is_visible = false;
 
-	enemy->move_per_second = 2;
+	enemy->move_per_second = 3;
 	enemy->cant_move_until = 0;
 
 	enemy->attackDamage = 10;

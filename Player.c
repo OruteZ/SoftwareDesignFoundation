@@ -247,7 +247,7 @@ void PlayerMeleeAttack() {
 		Enemy* e = (Enemy*)enemies->entities[i];
 		if (e == NULL) continue;
 #ifdef DEBUG
-		DebugPrint("%d", e);
+		//DebugPrint("%d", e);
 #endif
 		if (IsEnemyDead(e)) continue;
 
@@ -268,7 +268,7 @@ void PlayerMeleeAttack() {
 	}
 
 #ifdef DEBUG
-	DebugPrint("Player Attacked");
+	//DebugPrint("Player Attacked");
 #endif
 }
 void UpExp(int exp) {

@@ -79,6 +79,7 @@ void PrintEnemies()
 				break;
 
 			case ArcherEnemyType:
+				SetScreenCell(screen_cell_index.x, screen_cell_index.y, 0x25c8, FOREGROUND_RED | FOREGROUND_GREEN);
 				break;
 
 			case BomberEnemyType:

@@ -26,7 +26,6 @@ void CreateEnemy(enum EntityType type, Point spawnPoint) {
 
 	switch (type) {
 	case MeleeEnemyType:
-	default:
 		newEnemy = (Enemy*)CreateMeleeEnemy(spawnPoint);
 		break;
 
@@ -37,6 +36,8 @@ void CreateEnemy(enum EntityType type, Point spawnPoint) {
 	case BomberEnemyType:
 		newEnemy = (Enemy*)CreateBomberEnemy(spawnPoint);
 		break;
+	default:
+		return;
 	}
 
 	VectorInsert(enemies, newEnemy);
@@ -107,10 +108,10 @@ void EnemyUpdate(Enemy* enemy) {
 		MeleeEnemyUpdate(enemy);
 		break;
 	case ArcherEnemyType:
-		//ArcherEnemyUpdate();
+		ArcherEnemyUpdate(enemy);
 		break;
 	case BomberEnemyType:
-		//BomberEnemyUpdate();
+		BomberEnemyUpdate(enemy);
 		break;
 	}
 }

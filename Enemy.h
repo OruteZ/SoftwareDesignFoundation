@@ -43,6 +43,11 @@ bool IsEnemyDead(Enemy* enemy);
 bool IsEnemyFrozen(Enemy* enemy);
 void EnemyFreezeUntil(Enemy* enemy, double GameTime);
 
+/*
+WNN
+WPE
+SSE
+*/
 Point EnemyDirectionToFacePlayer(Enemy* enemy);
 bool EnemyMove(Enemy* enemy, Point direction);
 void EnemyMoveAsMemory(Enemy* enemy);
