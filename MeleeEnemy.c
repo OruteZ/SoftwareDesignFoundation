@@ -6,6 +6,7 @@
 #include<string.h>
 
 
+#include "RayCast.h"
 MeleeEnemy* CreateMeleeEnemy(Point p) {
 	MeleeEnemy* meleeEnemy = (MeleeEnemy*)malloc(sizeof(MeleeEnemy));
 	if (meleeEnemy == NULL) exit(-1);
@@ -17,7 +18,9 @@ MeleeEnemy* CreateMeleeEnemy(Point p) {
 	meleeEnemy->base.enemy.hp = 100;
 	meleeEnemy->base.enemy.moveSpeed = 2;
 	meleeEnemy->base.enemy.attackSpeed = 4; //beat per attack
-	meleeEnemy->base.enemy.detectionRadius = 2;
+	meleeEnemy->base.enemy.detectionRadius = 10;
+	meleeEnemy->base.enemy.memory = CreateRayCastResult(meleeEnemy->base.enemy.detectionRadius << 1);
+	meleeEnemy->base.enemy.memory_current_index = 0;
 	meleeEnemy->base.enemy.facing = Direction.north;
 
 	meleeEnemy->base.enemy.actCooldown = 0;

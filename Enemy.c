@@ -28,7 +28,7 @@ bool isEnemy(Entity* entity);
 
 void LookAt(Enemy* enemy, Point target);
 bool IsPlayerInRange(Enemy* enemy);
-void EnemyMove(Enemy* enemy, Point direction);
+bool EnemyMove(Enemy* enemy, Point direction);
 void EnemyAttack(Enemy* enemy);
 void CalEnemyCooldown(Enemy* enemy);
 void EnemyRayCastPlayer(Enemy* enemy);
@@ -39,14 +39,14 @@ void EnemyRayCastPlayer(Enemy* enemy) {
 	Point dest = GetPlayerPos();
 	bool success = RayCastInCurrentWorld(result, start, dest);
 
-	if (success) {
-		Point direction = result->arr[1];
-		PointSub(&direction, &start);
-
-		EnemyMove(enemy, direction);
+	if (success) { // raycast 에 성공하면 memory를 새로운 raycast 결과로 바꿔줘야 한다.
+		DeleteRayCastResult(enemy->memory);
+		enemy->memory = result;
+		enemy->memory_current_index = 0;
 	}
-
-	DeleteRayCastResult(result);
+	else {
+		DeleteRayCastResult(result);
+	}
 }
 
 void LookAt(Enemy* enemy, Point target) {
@@ -89,7 +89,7 @@ bool IsPlayerInRange(Enemy* enemy) {
 		);
 }
 
-void EnemyMove(Enemy* enemy, Point direction) {
+bool EnemyMove(Enemy* enemy, Point direction) {
 	Point* nextPosition = DuplicatePoint(&enemy->base.entity.pos);
 	Point playerPos = GetPlayerPos();
 	PointAdd(nextPosition, &direction);
@@ -120,6 +120,18 @@ void EnemyMove(Enemy* enemy, Point direction) {
 	//DeleteVector(vector);
 
 	enemy->actCooldown = enemy->moveSpeed;
+	return moveSuccess;
+}
+void EnemyMoveAsMemory(Enemy* enemy) {
+	const int next_move_index = enemy->memory_current_index + 1;
+	if (next_move_index < enemy->memory->length) {
+		Point dir = enemy->memory->arr[next_move_index];
+		PointSub(&dir, &enemy->base.entity.pos);
+
+		if (EnemyMove(enemy, dir)) { // increment memory only if move is successful
+			enemy->memory_current_index++;
+		}
+	}
 }
 
 bool canEnemyAct(Enemy* enemy) {
@@ -174,6 +186,7 @@ void CreateEnemy(enum EntityType type, Point spawnPoint) {
 
 	switch (type) {
 	case MeleeEnemyType:
+	default:
 		newEnemy = (Enemy*)CreateMeleeEnemy(spawnPoint);
 		break;
 
@@ -184,8 +197,6 @@ void CreateEnemy(enum EntityType type, Point spawnPoint) {
 	case BomberEnemyType:
 		newEnemy = (Enemy*)CreateBomberEnemy(spawnPoint);
 		break;
-
-	default: break;
 	}
 
 	newEnemy->state = Tracking;
@@ -216,17 +227,31 @@ void UpdateEnemy(Enemy* enemy) {
 		}
 	}
 	*/
+	Rect detectionRect = {
+		.x = enemy->base.entity.pos.x - enemy->detectionRadius,
+		.y = enemy->base.entity.pos.y - enemy->detectionRadius,
+		.width = enemy->detectionRadius * 2 + 1,
+		.height = enemy->detectionRadius * 2 + 1
+	};
+	if (RectContainsPoint(&detectionRect, &player->base.entity.pos)) { // if within detection range..
+		EnemyRayCastPlayer(enemy); // try raycast
+		
+		// raycast는 enemy가 움직이거나 공격할 수 있는지 여부와 상관없이 시행해야 한다.
+	}
+
 	if (!SmallBeatCall()) return;
 
 	CalEnemyCooldown(enemy);
 	if (isEnemyStiff(enemy)) return;
 
 	if (canEnemyAct(enemy)) {
-		if (IsPlayerInRange(enemy)) {
+		if (IsPlayerInRange(enemy)) { // player in attack range!
 			LookAt(enemy, GetPlayerPos());
 			EnemyAttack(enemy);
 		}
-		else EnemyRayCastPlayer(enemy);
+		else { // player is NOT in attack range!
+			EnemyMoveAsMemory(enemy);
+		}
 	}
 
 	enemy->ReadyToAttack = IsPlayerInRange(enemy);
