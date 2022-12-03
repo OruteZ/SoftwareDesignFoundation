@@ -337,7 +337,7 @@ void PlayerRangeAttack() {
 
 	Point point_infront = player->base.entity.pos;
 	PointAdd(&point_infront, &player->facing);
-	CreateParticle(player->facing, point_infront, RangeAttackParticleType, player->baseDamage);
+	CreateParticle(player->facing, point_infront, RangeAttackParticleType, player->baseDamage * 2);
 
 #ifdef DEBUG
 	DebugPrint("Created Range Particle");
@@ -363,13 +363,20 @@ void Upgrade_MaxHP() {
 	player->hp += GetUpgradeAmount(MaxHPUpgradeType);
 }
 void Upgrade_Damage() {
-	player->baseDamage += GetUpgradeAmount(DamageUpgradeType);
+	playerBaseAttackDamage += GetUpgradeAmount(DamageUpgradeType);
+	ResetPlayerStatusByBPM(GetBPM());
 }
 void Upgrade_AtkSpeed() {
-	player->attackSpeed += GetUpgradeAmount(AtkSpeedUpgradeType);
+	playerBaseAttackSpeed += GetUpgradeAmount(AtkSpeedUpgradeType);
+	ResetPlayerStatusByBPM(GetBPM());
 }
-void Upgrade_MoveSpeed() { player->moveSpeed += GetUpgradeAmount(MoveSpeedUpgradeType);}
-void Upgrade_Bullet() { Inventory[BULLET_ID] += GetUpgradeAmount(BulletUpgradeType); }
+void Upgrade_MoveSpeed() { 
+	playerBaseMoveSpeed += GetUpgradeAmount(MoveSpeedUpgradeType);
+	ResetPlayerStatusByBPM(GetBPM());
+}
+void Upgrade_Bullet() { 
+	Inventory[BULLET_ID] += GetUpgradeAmount(BulletUpgradeType);
+}
 
 void Upgrade(int upgrade) {
 	switch ((UpgradeType)upgrade) {
