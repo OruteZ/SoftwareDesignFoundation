@@ -8,6 +8,8 @@ typedef struct _BomberEmemy {
 		Entity entity;
 		Enemy enemy;
 	} base;
+
+	int attack_radius;
 } BomberEnemy;
 
 BomberEnemy* CreateBomberEnemy(Point p);

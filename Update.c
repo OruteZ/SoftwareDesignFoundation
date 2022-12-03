@@ -22,15 +22,7 @@ void UpdateEnemies() {
 	for (int i = 0; i < enemies->length; i++) {
 		Enemy* enemy = (Enemy*)enemies->entities[i];
 
-		if (isEnemyDead(enemy)) {
-			DeleteEnemy(enemy);
-			VectorDeleteUnstable(enemies, i);
-			i--;
-		}
-
-		else {
-			UpdateEnemy(enemy);
-		}
+		EnemyUpdate(enemy);
 	}
 }
 void UpdateParticles() {
@@ -61,9 +53,9 @@ void Update() {
 		TrySpawnSequence();
 
 		UpdateHeartBeat();
+		UpdatePlayer();
 		UpdateEnemies();
 		UpdateParticles();
-		UpdatePlayer();
 
 		if (GetTile(player->base.entity.pos) & FLAG_GOAL) {
 			StartNextWorld();

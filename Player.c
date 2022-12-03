@@ -227,7 +227,7 @@ void PlayerMeleeAttack() {
 #ifdef DEBUG
 		DebugPrint("%d", e);
 #endif
-		if (isEnemyDead(e)) continue;
+		if (IsEnemyDead(e)) continue;
 
 		if (RectContainsPoint(&attackRect, &e->base.entity.pos)) {
 			if (EnemyOnHit(e, player->baseDamage)) UpScore(1);

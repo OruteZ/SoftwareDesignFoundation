@@ -74,15 +74,16 @@ void EnemyRayCastPlayer(Enemy* enemy) {
 Point EnemyDirectionToFacePlayer(Enemy* enemy) {
 	Point diff = { .x = player->base.entity.pos.x - enemy->base.entity.pos.x, .y = player->base.entity.pos.y - enemy->base.entity.pos.y };
 	if (diff.x == 0) {
-		if (diff.y >= 0) return Direction.north;
+		if (0 <= diff.y) return Direction.north;
 		else return Direction.south;
 	}
 	else if (diff.x > 0) {
-		if (diff.y > 0) return Direction.north;
+		if (0 < diff.y) return Direction.north;
 		else return Direction.east;
 	}
 	else {
-
+		if (0 <= diff.y)return Direction.west;
+		else return Direction.south;
 	}
 }
 
@@ -103,13 +104,13 @@ void EnemyUpdate(Enemy* enemy) {
 	if (IsEnemyFrozen(enemy)) return;
 	switch (enemy->base.entity.type) {
 	case MeleeEnemyType:
-		MeleeEnemyUpdate();
+		MeleeEnemyUpdate(enemy);
 		break;
 	case ArcherEnemyType:
-		ArcherEnemyUpdate();
+		//ArcherEnemyUpdate();
 		break;
 	case BomberEnemyType:
-		BomberEnemyUpdate();
+		//BomberEnemyUpdate();
 		break;
 	}
 }

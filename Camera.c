@@ -108,8 +108,8 @@ void PrintEnemies()
 
 		printPos = IngamePosition_to_CanvasPosition(e->base.entity.pos);
 
-		if (isEnemyStiff(e)) SetColor(3);
-		else if (e->ReadyToAttack) SetColor(4);
+		//if (isEnemyStiff(e)) SetColor(3);
+		if (e->state == ReadyToAttack) SetColor(4);
 		ScreenPrint(printPos.x, printPos.y, enemyChar);
 		SetColor(2);
 	}

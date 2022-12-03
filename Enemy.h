@@ -39,7 +39,9 @@ typedef struct _Enemy {
 void CreateEnemy(enum EntityType type, Point spawnPoint);
 void DeleteEnemy(Enemy* enemy);
 
+bool IsEnemyDead(Enemy* enemy);
 bool IsEnemyFrozen(Enemy* enemy);
+void EnemyFreezeUntil(Enemy* enemy, double GameTime);
 
 Point EnemyDirectionToFacePlayer(Enemy* enemy);
 bool EnemyMove(Enemy* enemy, Point direction);
