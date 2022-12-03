@@ -91,6 +91,10 @@ void ArcherEnemyUpdate(ArcherEnemy* aEnemy) {
 void ArcherEnemyAttack(ArcherEnemy* aEnemy) {
 	DebugPrint("SHOOT ARROW NOW");
 	// TODO: spawn arrow 
+	Point arrawSpawnPoint = aEnemy->base.entity.pos;
+	PointAdd(&arrawSpawnPoint, &aEnemy->base.enemy.facing);
+
+	CreateParticle(aEnemy->base.enemy.facing, arrawSpawnPoint, EnemyRangeAttackParticleType, aEnemy->base.enemy.attackDamage);
 }
 void ArcherEnemyAlignWithPlayer(ArcherEnemy* aEnemy) {
 	Enemy* enemy = (Enemy*)aEnemy;
