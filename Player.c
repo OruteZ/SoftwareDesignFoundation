@@ -150,11 +150,9 @@ void PlayerOnHit(int damage) {
 }
 bool IsPlayerDead() { return playerDeadFlag; }
 void ResetPlayerStatusByBPM(int BPM) {
-	double BeatPerSecond = 60.0f / BPM;
-
-	player->attackSpeed = playerBaseAttackSpeed * BeatPerSecond;
-	player->baseDamage = playerBaseAttackDamage * BeatPerSecond;
-	player->moveSpeed = playerBaseMoveSpeed * BeatPerSecond;
+	player->attackSpeed = playerBaseAttackSpeed * (BPM / 90);
+	player->baseDamage = playerBaseAttackDamage * (BPM / 90);
+	player->moveSpeed = playerBaseMoveSpeed * (BPM / 90);
 }
 int GetScore() { return score; }
 
@@ -171,6 +169,7 @@ void CalculatePlayerCooldown() {
 }
 
 void PlayerMove(Point dir) {
+	player->facing = dir;
 	if (!canPlayerMove) return;
 
 	Point destPos = player->base.entity.pos;
@@ -184,7 +183,6 @@ void PlayerMove(Point dir) {
 	}
 
 	player->base.entity.pos = destPos;
-	player->facing = dir;
 
 	ExpOrb* orb = FindOrb(destPos);
 	if (orb != NULL) {
@@ -199,14 +197,18 @@ Rect CreatePlayerAttackRect(Point middle, Point direction) {
 	Rect result;
 	if (direction.x == 0) { //상하 공격 -> 가로라인
 		result.x = middle.x - (player->attackWidth / 2);
-		result.y = middle.y - (player->attackHeight / 2);
+
+		//아래를 향할 경우만 height만큼 감소
+		result.y = middle.y;
+		if (direction.y == -1) result.y -= (player->attackHeight / 2);
 
 		result.height = player->attackHeight;
 		result.width = player->attackWidth;
 	}
 
 	else { //좌우공격 -> 세로라인
-		result.x = middle.x - (player->attackHeight / 2);
+		result.x = middle.x;
+		if(direction.x == -1) result.x -= (player->attackHeight / 2);
 		result.y = middle.y - (player->attackWidth / 2);
 
 		result.height = player->attackWidth;
@@ -277,7 +279,6 @@ void UpExp(int exp) {
 void UpScore(int baseScore) {
 	score += GetBPM() * baseScore;
 
-	if (score > 200) StartNextWorld();
 }
 void CheckExpOrb(Point nowPoint) {
 	for (int i = 0; i < expOrbs->length; i++) {
@@ -291,13 +292,14 @@ void CheckExpOrb(Point nowPoint) {
 }
 
 void LevelUp() {
-	//if (player->exp < essentialExpToLevelUp[player->level]) return;
+	if (player->exp < essentialExpToLevelUp[player->level]) return;
 
 	Inventory[BULLET_ID]++;
 
 	StartUpgradeUI();
 
 	player->exp -= essentialExpToLevelUp[player->level++];
+	if (player->exp < 0) player->exp = 0;
 }
 
 //----------인벤토리 + 아이템 시스템-----------------
@@ -350,7 +352,9 @@ void Upgrade_Potion() {
 }
 void Upgrade_MaxHP() {
 	if (player->maxHp >= MaxHPUpperLinit) return;
+
 	player->maxHp += GetUpgradeAmount(MaxHPUpgradeType);
+	player->hp += GetUpgradeAmount(MaxHPUpgradeType);
 }
 void Upgrade_Damage() {
 	player->baseDamage += GetUpgradeAmount(DamageUpgradeType);
