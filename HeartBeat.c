@@ -73,7 +73,7 @@ void InitHeartBeat()
 void StartBeat() {
 	ResetPlayerStatusByBPM(heartBeat->BPM);
 	ResetNote();
-	//PlaySound(TEXT(".\\GameSound.wav"), NULL, SND_FILENAME | SND_ASYNC);
+
 }
 
 void UpdateHeartBeat() {
@@ -110,6 +110,7 @@ void RealeseHeartBeat() {
 
 void MoveNote()
 {
+	PlaySound(TEXT(".\\GameSound3.wav"), NULL, SND_FILENAME | SND_ASYNC);
 	bool isThereNoteInJudgeLine = heartBeat->note[0];
 
 	int i, size = heartBeat->noteSize;

@@ -93,6 +93,7 @@ void Update() {
 			GameState = Menu;
 			StartVoidWorld();
 			StartGameOverMenu();
+			PlaySound(NULL, NULL, SND_ASYNC);
 		}
 	}
 	
