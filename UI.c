@@ -33,7 +33,7 @@
 
 void InfoPrint(int x, int y, char* str, int info, const unsigned short attribute)
 {
-	char arr[10];
+	char arr[20];
 	sprintf(arr, "%d", info);
 	ScreenPrintColor(x, y, str, attribute);
 	ScreenPrintColor(x + strlen(str), y, arr, attribute);
