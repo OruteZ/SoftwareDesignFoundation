@@ -8,9 +8,11 @@ typedef struct _BomberEmemy {
 		Entity entity;
 		Enemy enemy;
 	} base;
+
+	int attack_radius;
 } BomberEnemy;
 
 BomberEnemy* CreateBomberEnemy(Point p);
-void CalculateBomberAttackCooldown(BomberEnemy* bomberEnemy);
-void BomberEnemyAttack(BomberEnemy* bomberEnemy);
-void SetBomberAttackRange(BomberEnemy* BomberEnemy);
+
+void BomberEnemyUpdate(BomberEnemy* bEnemy);
+

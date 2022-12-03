@@ -248,7 +248,10 @@ void PlayerMeleeAttack() {
 	for (int i = 0; i < enemies->length; i++) {
 		Enemy* e = (Enemy*)enemies->entities[i];
 		if (e == NULL) continue;
-		if (isEnemyDead(e)) continue;
+#ifdef DEBUG
+		//DebugPrint("%d", e);
+#endif
+		if (IsEnemyDead(e)) continue;
 
 		if (RectContainsPoint(&attackRect, &e->base.entity.pos)) {
 			if (EnemyOnHit(e, player->baseDamage)) {
@@ -267,7 +270,7 @@ void PlayerMeleeAttack() {
 	}
 
 #ifdef DEBUG
-	DebugPrint("Player Attacked");
+	//DebugPrint("Player Attacked");
 #endif
 }
 void UpExp(int exp) {
@@ -331,7 +334,9 @@ void DrinkPotion() {
 void PlayerRangeAttack() {
 	if (!canPlayerRangeAttack) return;
 
-	CreateParticle(player->facing, player->base.entity.pos, RangeAttackParticleType, player->baseDamage);
+	Point point_infront = player->base.entity.pos;
+	PointAdd(&point_infront, &player->facing);
+	CreateParticle(player->facing, point_infront, RangeAttackParticleType, player->baseDamage);
 
 #ifdef DEBUG
 	DebugPrint("Created Range Particle");

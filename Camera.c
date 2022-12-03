@@ -79,6 +79,7 @@ void PrintEnemies()
 				break;
 
 			case ArcherEnemyType:
+				SetScreenCell(screen_cell_index.x, screen_cell_index.y, 0x25c8, FOREGROUND_RED | FOREGROUND_GREEN);
 				break;
 
 			case BomberEnemyType:
@@ -139,7 +140,7 @@ void PrintParticles() {
 
 		case RangeAttackParticleType:
 		case EnemyRangeAttackParticleType:
-			nowUnicode = 0x25a2; //бр 
+			nowUnicode = 0x25a1; //бр 
 			nowColor = 15;
 			break;
 

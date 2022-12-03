@@ -8,10 +8,11 @@ typedef struct _MeleeEnemy {
 		Entity entity;
 		Enemy enemy;
 	} base;
+
+	int attack_radius;
 } MeleeEnemy;
 
 MeleeEnemy* CreateMeleeEnemy(Point p);
-void CalculateMeleeAttackCooldown(MeleeEnemy* meleeEnemy);
-void MeleeEnemyAttack(MeleeEnemy* mEnemy);
-void SetMeleeAttackRange(MeleeEnemy* meleeEnemy);
+
+void MeleeEnemyUpdate(MeleeEnemy* mEnemy);
 

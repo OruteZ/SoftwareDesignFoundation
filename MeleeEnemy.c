@@ -1,121 +1,120 @@
-#include "Point.h"
-#include "MeleeEnemy.h"
-#include "Player.h"
 #include "Enemy.h"
-#include "Particle.h"
-#include<string.h>
+#include "MeleeEnemy.h"
 
+#include "Point.h"
+#include "Raycast.h"
 
-#include "RayCast.h"
 MeleeEnemy* CreateMeleeEnemy(Point p) {
 	MeleeEnemy* meleeEnemy = (MeleeEnemy*)malloc(sizeof(MeleeEnemy));
 	if (meleeEnemy == NULL) exit(-1);
+	
+	Enemy* enemy = (Enemy*)meleeEnemy;
+	enemy->base.entity.pos = p;
+	enemy->base.entity.type = MeleeEnemyType;
+	
+	enemy->state = Tracking;
 
-	meleeEnemy->base.entity.pos = p;
-	meleeEnemy->base.entity.type = MeleeEnemyType;
+	enemy->hp = 100;
 
-	meleeEnemy->base.enemy.baseDamage = 1;
-	meleeEnemy->base.enemy.hp = 100;
-	meleeEnemy->base.enemy.moveSpeed = 2;
-	meleeEnemy->base.enemy.attackSpeed = 4; //beat per attack
-	meleeEnemy->base.enemy.detectionRadius = 10;
-	meleeEnemy->base.enemy.memory = CreateRayCastResult(meleeEnemy->base.enemy.detectionRadius << 1);
-	meleeEnemy->base.enemy.memory_current_index = 0;
-	meleeEnemy->base.enemy.facing = Direction.north;
+	enemy->detectionRadius = 10;
+	enemy->memory = CreateRayCastResult(enemy->detectionRadius << 1);
+	enemy->memory_current_index = 0;
+	enemy->player_is_visible = false;
 
-	meleeEnemy->base.enemy.actCooldown = 0;
-	meleeEnemy->base.enemy.attackHeight = 1;
-	meleeEnemy->base.enemy.attackWidth = 3;
+	enemy->move_per_second = 2;
+	enemy->cant_move_until = 0;
+
+	enemy->attackDamage = 5;
+	enemy->attack_delay_small_beats = 3;
+	enemy->attack_cooldown_small_beats = 2;
+
+	enemy->small_beats_after_attack_start = 0;
+	enemy->small_beats_after_attack_end = 0;
+
+	enemy->is_frozen_until = 0;
+
+
+	meleeEnemy->attack_radius = 1;
 
 	return meleeEnemy;
 }
 
-void MeleeEnemyAttack(MeleeEnemy* mEnemy) {
-#ifdef DEBUG
-	DebugPrint("Enemy Attacked");
-#endif
-	Point attackPoint = mEnemy->base.entity.pos;
-	PointAdd(&attackPoint, &mEnemy->base.enemy.facing);
+#include "Time.h"
+#include "Game.h"
+#include "HeartBeat.h"
+#include "Player.h"
+void MeleeEnemyAttack(MeleeEnemy* mEnemy);
+void MeleeEnemyUpdate(MeleeEnemy* mEnemy) {
+	Enemy* enemy = (Enemy*)mEnemy;
+	// Moving
+	if (enemy->state == Tracking) {
+		if (SmallBeatCall()) { // after attack cooldown counting!
+			enemy->small_beats_after_attack_end++;
+		}
+		if (enemy->attack_cooldown_small_beats <= enemy->small_beats_after_attack_end) { // cooled down! ready to move!
+			EnemyMoveAsMemory(mEnemy);
 
+			Rect attack_detection_rect = {
+				.x = mEnemy->base.entity.pos.x - mEnemy->attack_radius,
+				.y = mEnemy->base.entity.pos.y - mEnemy->attack_radius,
+				.width = mEnemy->attack_radius * 2 + 1,
+				.height = mEnemy->attack_radius * 2 + 1
+			};
+			if (RectContainsPoint(&attack_detection_rect, &player->base.entity.pos)) {	// player in range!
+				enemy->facing = EnemyDirectionToFacePlayer(mEnemy); // attack direction is decided!
+				enemy->small_beats_after_attack_start = 0; // attack delay counting is started!
+				enemy->state = ReadyToAttack;
+			}
+		}
+	}
+
+	// Attacking
+	else if (enemy->state == ReadyToAttack) {
+		if (SmallBeatCall()) { // delay counting!
+			enemy->small_beats_after_attack_start++;
+		}
+		if (enemy->attack_delay_small_beats <= enemy->small_beats_after_attack_start) {	// ATTACK!
+			MeleeEnemyAttack(mEnemy);
+			enemy->small_beats_after_attack_end = 0;
+			enemy->state = Tracking;
+		}
+	}
+}
+
+#include "Particle.h"
+void MeleeEnemyAttack(MeleeEnemy* mEnemy) {
+	Enemy* enemy = (Enemy*)mEnemy;
 	//바라보는 방향에 따라 공격범위 rect 지정
 	Rect attackRect;
 	if (PointEquals(&mEnemy->base.enemy.facing, &Direction.north)) {
-		attackRect.x = mEnemy->base.entity.pos.x - mEnemy->base.enemy.attackWidth / 2;
-		attackRect.y = mEnemy->base.entity.pos.y + 1;
-		attackRect.width = mEnemy->base.enemy.attackWidth;
-		attackRect.height = mEnemy->base.enemy.attackHeight;
+		attackRect.x = enemy->base.entity.pos.x - mEnemy->attack_radius;
+		attackRect.y = enemy->base.entity.pos.y + mEnemy->attack_radius;
+		attackRect.width = mEnemy->attack_radius * 2 + 1;
+		attackRect.height = mEnemy->attack_radius;
 	}
 	else if (PointEquals(&mEnemy->base.enemy.facing, &Direction.south)) {
-		attackRect.x = mEnemy->base.entity.pos.x - mEnemy->base.enemy.attackWidth / 2;
-		attackRect.y = mEnemy->base.entity.pos.y - mEnemy->base.enemy.attackHeight;
-		attackRect.width = mEnemy->base.enemy.attackWidth;
-		attackRect.height = mEnemy->base.enemy.attackHeight;
+		attackRect.x = enemy->base.entity.pos.x - mEnemy->attack_radius;
+		attackRect.y = enemy->base.entity.pos.y - mEnemy->attack_radius;
+		attackRect.width = mEnemy->attack_radius * 2 + 1;
+		attackRect.height = mEnemy->attack_radius;
 	}
 	else if (PointEquals(&mEnemy->base.enemy.facing, &Direction.west)) {
-		attackRect.x = mEnemy->base.entity.pos.x - mEnemy->base.enemy.attackHeight;
-		attackRect.y = mEnemy->base.entity.pos.y - mEnemy->base.enemy.attackWidth / 2;
-		attackRect.width = mEnemy->base.enemy.attackHeight;
-		attackRect.height = mEnemy->base.enemy.attackWidth;
+		attackRect.x = enemy->base.entity.pos.x - mEnemy->attack_radius;
+		attackRect.y = enemy->base.entity.pos.y + mEnemy->attack_radius;
+		attackRect.width = mEnemy->attack_radius;
+		attackRect.height = mEnemy->attack_radius * 2 + 1;
 	}
 	else {
-		attackRect.x = mEnemy->base.entity.pos.x + 1;
-		attackRect.y = mEnemy->base.entity.pos.y - mEnemy->base.enemy.attackWidth / 2;
-		attackRect.width = mEnemy->base.enemy.attackHeight;
-		attackRect.height = mEnemy->base.enemy.attackWidth;
+		attackRect.x = enemy->base.entity.pos.x + mEnemy->attack_radius;
+		attackRect.y = enemy->base.entity.pos.y + mEnemy->attack_radius;
+		attackRect.width = mEnemy->attack_radius;
+		attackRect.height = mEnemy->attack_radius * 2 + 1;
 	}
-
-	CreateParticle(mEnemy->base.enemy.facing, attackPoint, MeleeAttackParticleType, 0);
 
 	//플레이어 피격 확인
 	Point playerPos = GetPlayerPos();
 	if (RectContainsPoint(&attackRect, &playerPos)) {
-		PlayerOnHit(mEnemy->base.enemy.baseDamage);
+		PlayerOnHit(enemy->attackDamage);
 	}
 }
 
-//#include "MeleeEnemyAttack.h"
-//#include "Player.h"
-//double meleeAttackCooldown;
-//void CalculateMeleeAttackCooldown(MeleeEnemy* meleeEnemy)
-//{
-//	meleeAttackCooldown -= Time.deltaTime;
-//
-//	if (meleeAttackCooldown > 0)
-//	{
-//		meleeEnemy->base.entity.enemyState = Attack;
-//	}
-//}
-//void MeleeEnemyAttack(MeleeEnemy* meleeEnemy)
-//{
-//	meleeAttackCooldown = meleeEnemy->base.mortal.attackCooldown;
-//	if (RectContainsPoint(meleeEnemy->base.mortal.attackRange, player->base.entity.pos))
-//	{
-//		if (meleeAttackCooldown < 0)
-//		{
-//			PlayerOnHit(meleeEnemy->base.mortal.baseDamage);
-//			meleeEnemy->base.entity.enemyState = Idle;
-//		}
-//	}
-//}
-//
-//#include "SetMeleeAttackRange.h"
-//void SetMeleeAttackRange(MeleeEnemy* meleeEnemy)
-//{
-//	Point playerPos = player->base.entity.pos;
-//	Point meleeEnemyPos = meleeEnemy->base.entity.pos;
-//	if (RectContainsPoint(meleeEnemy->base.mortal.playerSearchRange, player->base.entity.pos))
-//	{
-//		if (playerPos.x >= meleeEnemyPos.x)
-//		{
-//			meleeEnemy->base.entity.direction = east;
-//			meleeEnemy->base.mortal.attackRange =
-//				CreateRect(meleeEnemyPos.x - 1, meleeEnemyPos.y - 1, 3, 2);
-//		}
-//		else if (player->base.entity.pos.x < meleeEnemy->base.entity.pos.x)
-//		{
-//			meleeEnemy->base.entity.direction = west;
-//			meleeEnemy->base.mortal.attackRange =
-//				CreateRect(meleeEnemy->base.entity.pos.x - 2, meleeEnemy->base.entity.pos.y - 1, 3, 2);
-//		}
-//	}
-//}

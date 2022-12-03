@@ -18,21 +18,6 @@
 #include "Keyboard.h"
 #include "Debug.h"
 #endif
-void UpdateEnemies() {
-	for (int i = 0; i < enemies->length; i++) {
-		Enemy* enemy = (Enemy*)enemies->entities[i];
-
-		if (isEnemyDead(enemy)) {
-			DeleteEnemy(enemy);
-			VectorDeleteUnstable(enemies, i);
-			i--;
-		}
-
-		else {
-			UpdateEnemy(enemy);
-		}
-	}
-}
 void UpdateParticles() {
 	for (int i = 0; i < particles->length; i++) {
 		Particle* particle = (Particle*)particles->entities[i];
@@ -77,14 +62,18 @@ void Update() {
 		TrySpawnSequence();
 
 		UpdateHeartBeat();
+		UpdatePlayer();
 		UpdateEnemies();
 		UpdateParticles();
-		UpdatePlayer();
 		UpdateExpOrbs();
+
+		DeleteDeadEnemies();
 
 		if (GetTile(player->base.entity.pos) & FLAG_GOAL) {
 			StartNextWorld();
 		}
+
+
 
 		if (IsPlayerDead()) {
 			free(player);

@@ -9,11 +9,10 @@ typedef struct _ArcherEmemy {
 		Enemy enemy;
 	} base;
 
-	double arrowSpeed;
+	int bow_attack_radius;
 } ArcherEnemy;
 
 ArcherEnemy* CreateArcherEnemy(Point p);
-void CalculateRangeAttackCooldown(ArcherEnemy* archerEnemy);
-void ArcherEnemyAttack(ArcherEnemy* archerEnemy);
-void SetArcherAttackRange(ArcherEnemy* archerEnemy);
+
+void ArcherEnemyUpdate(ArcherEnemy* archerEnemy);
 
