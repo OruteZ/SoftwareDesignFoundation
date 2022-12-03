@@ -119,8 +119,9 @@ void InitializeWorld001() {
 
 	// spawn at Gametime.time >= 0
 	SpawnSequence* seq_1 = CreateSpawnSequence(0);
-	SpawnSequenceInsert(seq_1, 13, 5, ArcherEnemyType);
-	SpawnSequenceInsert(seq_1, 15, 5, ArcherEnemyType);
+	SpawnSequenceInsert(seq_1, 13, 5, MeleeEnemyType);
+	SpawnSequenceInsert(seq_1, 14, 5, ArcherEnemyType);
+	SpawnSequenceInsert(seq_1, 15, 5, BomberEnemyType);
 	WorldInsertSpawnSequence(world001, seq_1);
 
 	// spawn at GameTime.time >= 60.0

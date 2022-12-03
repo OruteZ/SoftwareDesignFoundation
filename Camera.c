@@ -38,6 +38,21 @@ Rect CameraCellRectToWorldRect() {
 }
 
 void PrintWorld() {
+	const World* current_world = GetCurrentWorld();
+	const int height_world = current_world->height;
+	const int width_world = current_world->width * 2;
+	const int ground_grid_length = height_world * width_world;
+	if (ground_grid_length == 0) return;
+
+	//const unsigned short ground_grid_color = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
+	const unsigned short ground_grid_color = FOREGROUND_RED | FOREGROUND_GREEN;
+	int* ground_grid = malloc(sizeof(int) * ground_grid_length);
+	if (ground_grid == NULL) exit(-1);
+	srand(6);
+	for (int i = 0; i < ground_grid_length; i++) {
+		ground_grid[i] = rand() % 8;
+	}
+
 	for (int i = 0; i < camera.cell_rect.height; i++) {
 		for (int j = 0; j < camera.cell_rect.width; j++) {
 			Point tile_pos = { .x = camera.pos.x + j, .y = camera.pos.y + i };
@@ -50,7 +65,35 @@ void PrintWorld() {
 				SetScreenCell(screen_cell_index.x, screen_cell_index.y, ' ', 0);
 				break;
 			case GROUND:
-				SetScreenCell(screen_cell_index.x, screen_cell_index.y, ' ', 0);
+				for (int i = 0; i < 2; i++) {
+					switch (ground_grid[tile_pos.y * height_world + tile_pos.x * 2 + i]) {
+					case 0:
+					default:
+						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2801, ground_grid_color);
+						break;
+					case 1:
+						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2802, ground_grid_color);
+						break;
+					case 2:
+						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2804, ground_grid_color);
+						break;
+					case 3:
+						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2808, ground_grid_color);
+						break;
+					case 4:
+						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2810, ground_grid_color);
+						break;
+					case 5:
+						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2820, ground_grid_color);
+						break;
+					case 6:
+						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2840, ground_grid_color);
+						break;
+					case 7:
+						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2880, ground_grid_color);
+						break;
+					}
+				}
 				break;
 			case WALL:
 				SetScreenCell(screen_cell_index.x, screen_cell_index.y, 0x254b, BACKGROUND_RED | BACKGROUND_BLUE);
@@ -75,15 +118,15 @@ void PrintEnemies()
 
 			switch (e->base.entity.type) {
 			case MeleeEnemyType:
-				SetScreenCell(screen_cell_index.x, screen_cell_index.y, 0x25c8, FOREGROUND_RED | FOREGROUND_GREEN);
+				SetScreenCell(screen_cell_index.x, screen_cell_index.y, 0x25c8, FOREGROUND_GREEN);
 				break;
 
 			case ArcherEnemyType:
-				SetScreenCell(screen_cell_index.x, screen_cell_index.y, 0x25c8, FOREGROUND_RED | FOREGROUND_GREEN);
+				SetScreenCell(screen_cell_index.x, screen_cell_index.y, 0x25c8, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 				break;
 
 			case BomberEnemyType:
-				SetScreenCell(screen_cell_index.x, screen_cell_index.y, 0x25c8, FOREGROUND_RED | FOREGROUND_GREEN);
+				SetScreenCell(screen_cell_index.x, screen_cell_index.y, 0x25c8, FOREGROUND_RED);
 				break;
 
 			default:
