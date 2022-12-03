@@ -94,7 +94,8 @@ void ArcherEnemyAttack(ArcherEnemy* aEnemy) {
 	Point arrawSpawnPoint = aEnemy->base.entity.pos;
 	PointAdd(&arrawSpawnPoint, &aEnemy->base.enemy.facing);
 
-	CreateParticle(aEnemy->base.enemy.facing, arrawSpawnPoint, EnemyRangeAttackParticleType, aEnemy->base.enemy.attackDamage);
+	CreateParticle(aEnemy->base.enemy.facing, arrawSpawnPoint, 
+		EnemyRangeAttackParticleType, aEnemy->base.enemy.attackDamage);
 }
 void ArcherEnemyAlignWithPlayer(ArcherEnemy* aEnemy) {
 	Enemy* enemy = (Enemy*)aEnemy;

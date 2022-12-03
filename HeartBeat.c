@@ -36,6 +36,8 @@ bool isSmallBeatNow = false;
 bool isBeatNow = false;
 int beatCount = 0;
 
+int missDamage = 1;
+
 int HeartGauge = 0;
 int HeartLevelUpLine;
 
@@ -208,6 +210,7 @@ void BPMGaugeUp() {
 	if (++HeartGauge >= HeartLevelUpLine) BPMLevelUp();
 }
 void BPMGaugeDown() {
+	PlayerOnHit(missDamage);
 	if (--HeartGauge < 0) BPMLevelDown();
 }
 

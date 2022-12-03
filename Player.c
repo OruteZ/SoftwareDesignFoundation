@@ -295,7 +295,8 @@ void CheckExpOrb(Point nowPoint) {
 }
 
 void LevelUp() {
-	if (player->exp < essentialExpToLevelUp[player->level]) return;
+	if (player->exp < essentialExpToLevelUp[player->level] ||
+		player->level >= MAX_LEVEL) return;
 
 	Inventory[BULLET_ID]++;
 

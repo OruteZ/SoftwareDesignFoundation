@@ -20,6 +20,7 @@
 #include "MeleeEnemy.h"
 #include "ArcherEnemy.h"
 #include "BomberEnemy.h"
+#include "ExpOrb.h"
 
 void CreateEnemy(enum EntityType type, Point spawnPoint) {
 	Enemy* newEnemy = NULL;
@@ -162,6 +163,8 @@ void EnemyOnDeath(Enemy* enemy)
 	case BomberEnemyType:
 		break;
 	}
+
+	CreateExpOrb(enemy->base.entity.pos, 10);
 }
 bool EnemyOnHit(Enemy* enemy, int damage)
 {

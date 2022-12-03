@@ -96,11 +96,14 @@ void RangeAttackDetectEnemy(Particle* particle) {
 }
 
 void RangeAttackParticleMove(Particle* particle) {
+	if (particle->particleType == EnemyRangeAttackParticleType) RangeAttackDetectPlayer(particle);
+	if (particle->particleType == RangeAttackParticleType) RangeAttackDetectEnemy(particle);
+
 	Point destination = particle->base.entity.pos;
 	PointAdd(&destination, &particle->facing);
 
 	//detection Tile collision
-	if (GetTile(destination) & FLAG_COLLIDE_WITH_PHYSICAL_ATTACK) { // collision with else somthing
+	if (GetTile(destination) & FLAG_COLLIDE_WITH_PHYSICAL_ATTACK) { // collision with somthing else
 		particle->isDead = true;
 		return;
 	}
@@ -108,9 +111,6 @@ void RangeAttackParticleMove(Particle* particle) {
 	particle->base.entity.pos = destination;
 	particle->particleRect.x = destination.x;
 	particle->particleRect.y = destination.y;
-
-	if (particle->particleType == EnemyRangeAttackParticleType) RangeAttackDetectPlayer(particle);
-	if (particle->particleType == RangeAttackParticleType) RangeAttackDetectEnemy(particle);
 }
 void SetRangeAttackParticleGrid(Particle* particle) {
 	particle->particleGrid[0][0] = true;
