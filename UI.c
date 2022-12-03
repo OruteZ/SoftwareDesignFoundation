@@ -106,8 +106,7 @@ void RenderInfo()
 }
 
 void RenderHealth() {
-	int MHPPLACEHOLDER = 30;
-	int max_health_indicator_height = MHPPLACEHOLDER / 2;
+	int max_health_indicator_height = player->maxHp / 2;
 	int health_bar_full_cell_count = player->hp / 2;
 	int health_bar_partial_cell_status = player->hp % 2;
 
