@@ -13,6 +13,6 @@ typedef struct _BomberEmemy {
 } BomberEnemy;
 
 BomberEnemy* CreateBomberEnemy(Point p);
-void BomberEnemyAttack(BomberEnemy* bomberEnemy);
 
+void BomberEnemyUpdate(BomberEnemy* bEnemy);
 

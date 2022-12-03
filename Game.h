@@ -29,3 +29,6 @@ extern Vector* debugVector;
 extern QuadTree* debugTree;
 #endif
 
+void UpdateEnemies();
+void DeleteDeadEnemies();
+

@@ -11,27 +11,36 @@
 #include "RayCast.h"
 ArcherEnemy* CreateArcherEnemy(Point p)
 {
-	ArcherEnemy* archerEnemy = (ArcherEnemy*)malloc(sizeof(ArcherEnemy));
+	ArcherEnemy* archerEnemy = malloc(sizeof(ArcherEnemy));
 	if (archerEnemy == NULL) exit(-1);
-
+	
 	Enemy* enemy = (Enemy*)archerEnemy;
+	enemy->base.entity.pos = p;
+	enemy->base.entity.type = MeleeEnemyType;
+	
+	enemy->state = Tracking;
 
-	//archerEnemy->base.entity.type = ArcherEnemyType;
-	//archerEnemy->base.entity.pos = p;
+	enemy->hp = 100;
 
-	//archerEnemy->base.enemy.baseDamage = 10;
-	//archerEnemy->base.enemy.attackSpeed = 1;
-	//archerEnemy->base.enemy.hp = 30;
-	//archerEnemy->base.enemy.moveSpeed = 1;
-	//archerEnemy->base.enemy.detectionRadius = 20;
-	//archerEnemy->base.enemy.memory = CreateRayCastResult(archerEnemy->base.enemy.detectionRadius << 1);
-	//archerEnemy->base.enemy.memory_current_index = 0;
+	enemy->detectionRadius = 12;
+	enemy->memory = CreateRayCastResult(enemy->detectionRadius << 1);
+	enemy->memory_current_index = 0;
+	enemy->player_is_visible = false;
 
-	//archerEnemy->base.enemy.facing = Direction.north;
-	//archerEnemy->base.enemy.actCooldown = 0;
+	enemy->move_per_second = 2;
+	enemy->cant_move_until = 0;
 
-	//archerEnemy->base.enemy.attackHeight = 10;
-	//archerEnemy->base.enemy.attackWidth = 1;
+	enemy->attackDamage = 5;
+	enemy->attack_delay_small_beats = 3;
+	enemy->attack_cooldown_small_beats = 2;
+
+	enemy->small_beats_after_attack_start = 0;
+	enemy->small_beats_after_attack_end = 0;
+
+	enemy->is_frozen_until = 0;
+
+
+	// archer specifics
 
 	return archerEnemy;
 }

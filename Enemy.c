@@ -49,7 +49,7 @@ bool IsEnemyDead(Enemy* enemy) {
 	return enemy->hp <= 0;
 }
 bool IsEnemyFrozen(Enemy* enemy) {
-	return enemy->is_frozen_until < GameTime.time;
+	return GameTime.time <= enemy->is_frozen_until;
 }
 void EnemyFreezeUntil(Enemy* enemy, double GameTime) {
 	enemy->is_frozen_until = enemy->is_frozen_until > GameTime ? enemy->is_frozen_until : GameTime;

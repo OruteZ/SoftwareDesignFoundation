@@ -139,7 +139,7 @@ void PrintParticles() {
 
 		case RangeAttackParticleType:
 		case EnemyRangeAttackParticleType:
-			nowUnicode = 0x25a2; //бр 
+			nowUnicode = 0x25a1; //бр 
 			nowColor = 15;
 			break;
 
