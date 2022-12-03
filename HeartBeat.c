@@ -97,7 +97,7 @@ void UpdateHeartBeat() {
 	}
 	else isSmallBeatNow = false;
 
-	if (GetKeyDown('K')) {
+	if (GetKeyDown(VK_SPACE)) {
 		int value = IsNoteBeaten();
 
 		if		(value == 1) BPMGaugeUp();

@@ -14,7 +14,7 @@ MeleeEnemy* CreateMeleeEnemy(Point p) {
 	
 	enemy->state = Tracking;
 
-	enemy->hp = 100;
+	enemy->hp = 50;
 
 	enemy->detectionRadius = 10;
 	enemy->memory = CreateRayCastResult(enemy->detectionRadius << 1);
@@ -24,9 +24,9 @@ MeleeEnemy* CreateMeleeEnemy(Point p) {
 	enemy->move_per_second = 2;
 	enemy->cant_move_until = 0;
 
-	enemy->attackDamage = 5;
-	enemy->attack_delay_small_beats = 3;
-	enemy->attack_cooldown_small_beats = 2;
+	enemy->attackDamage = 1;
+	enemy->attack_delay_small_beats = 4;
+	enemy->attack_cooldown_small_beats = 5;
 
 	enemy->small_beats_after_attack_start = 0;
 	enemy->small_beats_after_attack_end = 0;

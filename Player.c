@@ -19,16 +19,16 @@
 #define BULLET_ID (0)
 #define POTION_ID (1)
 
-const char bulletKey = 'J';
-const char potionKey = 'U';
+const char bulletKey = 'K';
+const char potionKey = 'L';
 
-const int potionHealAmount = 10;
+const int potionHealAmount = 8;
 //--------------------------------------------------------------------------
 
 //---------------------플레이어 스텟 관련 인스펙터 창 ----------------------
-double playerBaseAttackSpeed = 1 / 1; // attack per beat
+double playerBaseAttackSpeed = 1 / 1; // attack per second
 double playerBaseMoveSpeed = 8 / 1; // block per beat
-int playerBaseAttackDamage = 10;
+int playerBaseAttackDamage = 15;
 
 int basePlayerMaxHP = 22; //플레이어 기본 최대체력
 int MaxHPUpperLinit = 44; //플레이어 최대체력 상한선
@@ -111,7 +111,7 @@ Player* CreatePlayer(Point spawnPoint)
 	}
 
 	//테스트용
-	Inventory[BULLET_ID] = 100;
+	Inventory[BULLET_ID] = 0;
 
 	return _player;
 
@@ -124,7 +124,7 @@ void UpdatePlayer() {
 	if (GetKey('S')) PlayerMove(Direction.north);
 	if (GetKey('D')) PlayerMove(Direction.east);
 
-	if (GetKeyDown(VK_SPACE)) PlayerMeleeAttack();
+	if (GetKeyDown('J')) PlayerMeleeAttack();
 
 	if (GetKeyDown(bulletKey)) UseItem(BULLET_ID);
 	if (GetKeyDown(potionKey)) UseItem(POTION_ID);
@@ -158,10 +158,10 @@ int GetScore() { return score; }
 
 //private :
 void CalculatePlayerCooldown() {
-	basePlayerAttackDelay -= GameTime.deltaTime;
+	playerAttackCooldown -= GameTime.deltaTime;
 	playerMoveCooldown -= GameTime.deltaTime;
 
-	if (basePlayerAttackDelay < 0) {
+	if (playerAttackCooldown < 0) {
 		canPlayerMeleeAttack = TRUE;
 		canPlayerRangeAttack = true;
 	}
@@ -176,7 +176,7 @@ void PlayerMove(Point dir) {
 	PointAdd(&destPos, &dir);
 
 	if (GetTile(destPos) & FLAG_COLLIDE_WITH_BODY) return;
-	
+
 	for (int i = 0; i < enemies->length; i++) {
 		Enemy* e = (Enemy*)enemies->entities[i];
 		if (PointEquals(&destPos, &e->base.entity.pos)) return;
@@ -208,7 +208,7 @@ Rect CreatePlayerAttackRect(Point middle, Point direction) {
 
 	else { //좌우공격 -> 세로라인
 		result.x = middle.x;
-		if(direction.x == -1) result.x -= (player->attackHeight / 2);
+		if (direction.x == -1) result.x -= (player->attackHeight / 2);
 		result.y = middle.y - (player->attackWidth / 2);
 
 		result.height = player->attackWidth;
@@ -218,7 +218,7 @@ Rect CreatePlayerAttackRect(Point middle, Point direction) {
 	return result;
 }
 void PlayerMeleeAttack() {
-	if (!canPlayerMeleeAttack) return;
+	if (playerAttackCooldown > 0) return;
 
 	Point attackPoint = player->base.entity.pos;
 	PointAdd(&attackPoint, &player->facing);
@@ -232,7 +232,7 @@ void PlayerMeleeAttack() {
 	Vector* hitted_enemys = QuadTreeQuery(enemiesTree, attackRect);
 
 	int len = hitted_enemys->length;
-	for (int i = 0; i < len; i++) 
+	for (int i = 0; i < len; i++)
 	{
 		Enemy* e = (Enemy*)(hitted_enemys->entities)[i];
 
@@ -262,7 +262,7 @@ void PlayerMeleeAttack() {
 	}
 
 
-	playerAttackCooldown = 1 - 1 / (player->attackSpeed);
+	playerAttackCooldown = 1 / (player->attackSpeed);
 
 	if (playerMoveCooldown < basePlayerAttackDelay) {
 		canPlayerMove = FALSE;
@@ -295,8 +295,8 @@ void CheckExpOrb(Point nowPoint) {
 }
 
 void LevelUp() {
-	if (player->exp < essentialExpToLevelUp[player->level] ||
-		player->level >= MAX_LEVEL) return;
+	/*if (player->exp < essentialExpToLevelUp[player->level] ||
+		player->level >= MAX_LEVEL) return;*/
 
 	Inventory[BULLET_ID]++;
 
@@ -313,11 +313,11 @@ void UseItem(int ID) {
 	else Inventory[ID]--;
 
 	switch (ID) {
-	case BULLET_ID: 
+	case BULLET_ID:
 		PlayerRangeAttack();
 		break;
 
-	case POTION_ID: 
+	case POTION_ID:
 		DrinkPotion();
 		break;
 
@@ -363,11 +363,11 @@ void Upgrade_AtkSpeed() {
 	playerBaseAttackSpeed += GetUpgradeAmount(AtkSpeedUpgradeType);
 	ResetPlayerStatusByBPM(GetBPM());
 }
-void Upgrade_MoveSpeed() { 
+void Upgrade_MoveSpeed() {
 	playerBaseMoveSpeed += GetUpgradeAmount(MoveSpeedUpgradeType);
 	ResetPlayerStatusByBPM(GetBPM());
 }
-void Upgrade_Bullet() { 
+void Upgrade_Bullet() {
 	Inventory[BULLET_ID] += GetUpgradeAmount(BulletUpgradeType);
 }
 
