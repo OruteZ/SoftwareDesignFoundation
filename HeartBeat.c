@@ -52,10 +52,10 @@ void InitHeartBeat()
 	heartBeat = (HeartBeat*)malloc(sizeof(HeartBeat));
 	if (heartBeat == NULL) exit(-1);
 
-	heartBeat->noteSize = 20;
+	heartBeat->noteSize = 12;
 	heartBeat->time_to_check_tempo = 0;
 
-	heartBeat->note = (short*)malloc(sizeof(short) * heartBeat->noteSize);
+	heartBeat->note = (bool*)malloc(sizeof(bool) * heartBeat->noteSize);
 	if (heartBeat->note == NULL) exit(-1);
 
 	for (int i = 0; i < heartBeat->noteSize; i++) {
@@ -77,7 +77,7 @@ void StartBeat() {
 }
 
 void UpdateHeartBeat() {
-	heartBeat->time_to_check_tempo += Time.deltaTime;
+	heartBeat->time_to_check_tempo += GameTime.deltaTime;
 
 	double BeatCheckTime = 15.0 / (double)heartBeat->BPM;
 
@@ -101,10 +101,6 @@ void UpdateHeartBeat() {
 		if		(value == 1) BPMGaugeUp();
 		else if (value == 0) BPMGaugeDown();
 	}
-
-#ifdef DEBUG
-	DebugPrint("%d %d %d", heartBeat->BPM, nowBpmLv, HeartGauge);
-#endif
 }
 
 void RealeseHeartBeat() {
@@ -169,7 +165,7 @@ int GetBPM() {
 	return heartBeat->BPM;
 }
 
-short* GetNoteInfo()
+bool* GetNoteInfo()
 {
 	return heartBeat->note;
 }
@@ -220,4 +216,8 @@ bool BeatCall() {
 
 bool SmallBeatCall() {
 	return isSmallBeatNow;
+}
+int GetNowBpmLevel()
+{
+	return nowBpmLv;
 }

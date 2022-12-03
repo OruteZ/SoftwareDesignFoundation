@@ -12,6 +12,7 @@
 #include "Camera.h"
 #include "HeartBeat.h"
 #include "ExpOrb.h"
+#include "UpgradeUI.h"
 
 //-----------------인벤토리 / 아이템 관련 인스펙터 창-----------------------
 #define KINDS_OF_ITEM (2)
@@ -25,8 +26,16 @@ const int potionHealAmount = 10;
 //--------------------------------------------------------------------------
 
 //---------------------플레이어 스텟 관련 인스펙터 창 ----------------------
-#define MAX_LEVEL (5)
+double playerBaseAttackSpeed = 1 / 1; // attack per beat
+double playerBaseMoveSpeed = 8 / 1; // block per beat
+int playerBaseAttackDamage = 10;
 
+int basePlayerMaxHP = 22; //플레이어 기본 최대체력
+int MaxHPUpperLinit = 44; //플레이어 최대체력 상한선
+//---------------------------------------------------------------------------
+
+//---------------------플레이어 레벨업 관련 인스펙터 창 ---------------------
+#define MAX_LEVEL (5)
 //각 레벨마다 레벨업을 위한 필요 경험치다.
 int essentialExpToLevelUp[MAX_LEVEL] = {
 	100,
@@ -35,12 +44,6 @@ int essentialExpToLevelUp[MAX_LEVEL] = {
 	190,
 	250,
 };
-
-double playerBaseAttackSpeed = 1 / 1; // attack per beat
-double playerBaseMoveSpeed = 8 / 1; // block per beat
-int playerBaseAttackDamage = 10;
-
-int playerMaxHP = 100;
 //---------------------------------------------------------------------------
 
 Player* player;
@@ -88,7 +91,8 @@ Player* CreatePlayer(Point spawnPoint)
 
 	_player->attackSpeed = 10.0f;
 	_player->baseDamage = 20;
-	_player->hp = playerMaxHP;
+	_player->hp = basePlayerMaxHP;
+	_player->maxHp = basePlayerMaxHP;
 	_player->moveSpeed = 12.0f;
 
 	_player->exp = 0;
@@ -101,6 +105,13 @@ Player* CreatePlayer(Point spawnPoint)
 	playerDeadFlag = false;
 	playerMoveCooldown = 0;
 	playerAttackCooldown = 0;
+
+	for (int i = 0; i < KINDS_OF_ITEM; i++) {
+		Inventory[i] = 0;
+	}
+
+	//테스트용
+	Inventory[BULLET_ID] = 100;
 
 	return _player;
 
@@ -119,6 +130,10 @@ void UpdatePlayer() {
 	if (GetKeyDown(potionKey)) UseItem(POTION_ID);
 
 	CalculatePlayerCooldown();
+
+#ifdef DEBUG
+	if (GetKeyDown('P')) LevelUp();
+#endif
 }
 Point GetPlayerPos() { return player->base.entity.pos; }
 void PlayerOnHit(int damage) {
@@ -127,7 +142,7 @@ void PlayerOnHit(int damage) {
 		playerDeadFlag = true;
 	}
 
-	CameraShake();
+	//CameraShake();
 
 #ifdef DEBUG
 	DebugPrint("Player On Hit");
@@ -154,6 +169,7 @@ void CalculatePlayerCooldown() {
 	}
 	if (playerMoveCooldown < 0) canPlayerMove = TRUE;
 }
+
 void PlayerMove(Point dir) {
 	if (!canPlayerMove) return;
 
@@ -169,6 +185,12 @@ void PlayerMove(Point dir) {
 
 	player->base.entity.pos = destPos;
 	player->facing = dir;
+
+	ExpOrb* orb = FindOrb(destPos);
+	if (orb != NULL) {
+		int exp = GetExp(orb);
+		UpExp(exp);
+	}
 
 	canPlayerMove = FALSE;
 	playerMoveCooldown = 1 / (player->moveSpeed);
@@ -228,9 +250,13 @@ void PlayerMeleeAttack() {
 		DebugPrint("%d", e);
 #endif
 		if (IsEnemyDead(e)) continue;
+		if (isEnemyDead(e)) continue;
 
 		if (RectContainsPoint(&attackRect, &e->base.entity.pos)) {
-			if (EnemyOnHit(e, player->baseDamage)) UpScore(1);
+			if (EnemyOnHit(e, player->baseDamage)) {
+				UpScore(1);
+				UpExp(10);
+			}
 		}
 	}
 
@@ -245,22 +271,6 @@ void PlayerMeleeAttack() {
 #ifdef DEBUG
 	DebugPrint("Player Attacked");
 #endif
-}
-void PlayerRangeAttack() {
-	if (!canPlayerRangeAttack) return;
-
-	CreateParticle(player->facing, player->base.entity.pos, RangeAttackParticleType, player->baseDamage);
-
-#ifdef DEBUG
-	DebugPrint("Created Range Particle");
-#endif
-
-	canPlayerRangeAttack = false;
-	playerAttackCooldown = 1 - (player->attackSpeed);
-	if (playerMoveCooldown < basePlayerAttackDelay) {
-		canPlayerMove = FALSE;
-		playerMoveCooldown = basePlayerAttackDelay;
-	}
 }
 void UpExp(int exp) {
 	player->exp += exp;
@@ -283,9 +293,13 @@ void CheckExpOrb(Point nowPoint) {
 		UpExp(exp);
 	}
 }
+
 void LevelUp() {
-	if (player->exp < essentialExpToLevelUp[player->level]) return;
-	//to do : Player 능력 뭘로할지 정하기
+	//if (player->exp < essentialExpToLevelUp[player->level]) return;
+
+	Inventory[BULLET_ID]++;
+
+	StartUpgradeUI();
 
 	player->exp -= essentialExpToLevelUp[player->level++];
 }
@@ -302,7 +316,7 @@ void UseItem(int ID) {
 		break;
 
 	case POTION_ID: 
-		
+		DrinkPotion();
 		break;
 
 	default: break;
@@ -311,7 +325,70 @@ void UseItem(int ID) {
 
 void DrinkPotion() {
 	player->hp += potionHealAmount;
-	if (player->hp > playerMaxHP) {
-		player->hp = playerMaxHP;
+	if (player->hp > player->maxHp) {
+		player->hp = player->maxHp;
+	}
+}
+
+void PlayerRangeAttack() {
+	if (!canPlayerRangeAttack) return;
+
+	CreateParticle(player->facing, player->base.entity.pos, RangeAttackParticleType, player->baseDamage);
+
+#ifdef DEBUG
+	DebugPrint("Created Range Particle");
+#endif
+
+	canPlayerRangeAttack = false;
+	playerAttackCooldown = 1 - (player->attackSpeed);
+	if (playerMoveCooldown < basePlayerAttackDelay) {
+		canPlayerMove = FALSE;
+		playerMoveCooldown = basePlayerAttackDelay;
+	}
+}
+
+//--------------레벨업 시스템------------------------
+
+void Upgrade_Potion() {
+	Inventory[POTION_ID] += GetUpgradeAmount(PotionUpgradeType);
+}
+void Upgrade_MaxHP() {
+	if (player->maxHp >= MaxHPUpperLinit) return;
+	player->maxHp += GetUpgradeAmount(MaxHPUpgradeType);
+}
+void Upgrade_Damage() {
+	player->baseDamage += GetUpgradeAmount(DamageUpgradeType);
+}
+void Upgrade_AtkSpeed() {
+	player->attackSpeed += GetUpgradeAmount(AtkSpeedUpgradeType);
+}
+void Upgrade_MoveSpeed() { player->moveSpeed += GetUpgradeAmount(MoveSpeedUpgradeType);}
+void Upgrade_Bullet() { Inventory[BULLET_ID] += GetUpgradeAmount(BulletUpgradeType); }
+
+void Upgrade(int upgrade) {
+	switch ((UpgradeType)upgrade) {
+	case PotionUpgradeType:
+		Upgrade_Potion();
+		break;
+
+	case MaxHPUpgradeType:
+		Upgrade_MaxHP();
+		break;
+
+	case DamageUpgradeType:
+		Upgrade_Damage();
+		break;
+
+	case AtkSpeedUpgradeType:
+		Upgrade_AtkSpeed();
+		break;
+
+	case MoveSpeedUpgradeType:
+		Upgrade_MoveSpeed();
+		break;
+
+	case BulletUpgradeType:
+		Upgrade_Bullet();
+		break;
 	}
 }

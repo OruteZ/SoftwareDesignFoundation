@@ -15,3 +15,4 @@ typedef struct _BomberEmemy {
 BomberEnemy* CreateBomberEnemy(Point p);
 void BomberEnemyAttack(BomberEnemy* bomberEnemy);
 
+

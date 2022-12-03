@@ -27,7 +27,7 @@ void Init()
     ScreenInit();
     InitTime();
     InitializeKeyboard();
-    InitCamera();
+    //InitCamera();
     InitHeartBeat();
 
 

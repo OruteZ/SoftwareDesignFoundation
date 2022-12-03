@@ -8,7 +8,7 @@
 #include <stdio.h> 
 
 typedef struct _HeartBeatObject {
-	short* note;
+	bool* note;
 	int BPM;
 	int noteSize;
 	double time_to_check_tempo;
@@ -18,12 +18,12 @@ void InitHeartBeat();
 void UpdateHeartBeat();
 void RealeseHeartBeat();
 void StartBeat();
-
+int GetNowBpmLevel();
 //현재 BPM을 반환합니다.
 int GetBPM();
 
 //현재 노트들의 위치를 배열로 반환합니다.
-short* GetNoteInfo();
+bool* GetNoteInfo();
 
 //노트의 길이를 반환합니다.
 int GetNoteSize();

@@ -44,6 +44,22 @@ void UpdateParticles() {
 			}
 	}
 }
+void UpdateExpOrbs() {
+	for (int i = 0; i < expOrbs->length; i++) {
+		ExpOrb* e = (ExpOrb*)expOrbs->entities[i];
+
+		if (e == NULL) {
+			VectorDeleteUnstable(expOrbs, i);
+			i--;
+		}
+
+		else if (e->isDead) {
+			free(e);
+			VectorDeleteUnstable(expOrbs, i);
+			i--;
+		}
+	}
+}
 
 void Update() {
 	UpdateTime();
@@ -56,22 +72,27 @@ void Update() {
 		UpdatePlayer();
 		UpdateEnemies();
 		UpdateParticles();
+		UpdateExpOrbs();
 
 		if (GetTile(player->base.entity.pos) & FLAG_GOAL) {
 			StartNextWorld();
 		}
 
 		if (IsPlayerDead()) {
-			DeepDeleteVector(enemies);
-			DeepDeleteVector(expOrbs);
-			DeepDeleteVector(particles);
 			free(player);
+			Point pointless = { .x = 0, .y = 0 };
+			player = CreatePlayer(pointless);
 			GameState = Menu;
+			StartVoidWorld();
 			StartGameOverMenu();
 		}
 	}
 	
 	if (GameState == Menu) {
 		UpdateMenu();
+	}
+
+	if (GameState == UpgradeMenu) {
+		UpdateUpgradeUI();
 	}
 }

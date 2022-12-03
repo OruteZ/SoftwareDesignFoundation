@@ -1,9 +1,11 @@
 #pragma once
 
+#define SCREEN_WIDTH (40 * 2)
+#define SCREEN_HEIGHT 25
 #ifdef DEBUG
-#include<Windows.h>
-HANDLE ScreenReturnBufferHandle_Unsafe();
-#endif
+#define DEBUG_SCREEN_HEIGHT 51
+#endif // DEBUG
+
 
 void ScreenInit();
 void ScreenFlipping();
@@ -14,6 +16,9 @@ void ScreenRelease();
 // 두께 2를 사용하는 정사각형 처럼 보이는 문자 (예: ■) 를 출력할때 사용한다.
 // 이 함수가 x * 2 를 하므로 미리 x 좌표를 늘리지 않도록 한다.
 void SetScreenCell(const int x, const int y, const unsigned short unicode, const unsigned short attribute);
+
+// 스크린의 좌표의 문자를 설정한다.
+void SetScreenHalfCell(const int x, const int y, const unsigned short unicode, const unsigned short attribute);
 
 // 좌표를 시작으로 문자열을 출력한다.
 // attribute는 색상 정보다. 
@@ -28,6 +33,7 @@ void SetColor(unsigned short color);
 
 #ifdef DEBUG
 #include <Windows.h>
+HANDLE ScreenReturnBufferHandle_Unsafe();
 //void FillCanvasWithRandomCells();
 //void FillCanvasWithTestString();
 #endif // DEBUG

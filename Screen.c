@@ -15,11 +15,13 @@
 	TO CHANGE 'SOMETHING', modify ScreenClear() ScreenPrintColor();
 */
 
-#define SCREEN_WIDTH (40 * 2)
-#define SCREEN_HEIGHT 51
 struct {
 	HANDLE console_handle;
+#ifdef DEBUG
+	CHAR_INFO grid[DEBUG_SCREEN_HEIGHT][SCREEN_WIDTH];
+#else
 	CHAR_INFO grid[SCREEN_HEIGHT][SCREEN_WIDTH];
+#endif // DEBUG
 	int width;
 	int height;
 	COORD origin;
@@ -30,10 +32,15 @@ struct {
 	.height = SCREEN_HEIGHT,
 	.width = SCREEN_WIDTH,
 	.origin = {.X = 0, .Y = 0},
+#ifdef DEBUG
+	.size = {.X = SCREEN_WIDTH, .Y = DEBUG_SCREEN_HEIGHT},
+#else
 	.size = {.X = SCREEN_WIDTH, .Y = SCREEN_HEIGHT},
+#endif
 
 	.attribute = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE
 };
+
 
 
 
@@ -45,53 +52,35 @@ HANDLE ScreenReturnBufferHandle_Unsafe() {
 
 void ScreenInit()
 {
-	screen.console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
-
-	CONSOLE_CURSOR_INFO cci;
-
+	// console size
 	system("mode con:cols=120 lines=50");
 
-	// 화면 버퍼 2개를 만든다.
-	//g_hScreen[0] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
-	//g_hScreen[1] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
+	// get handle
+	screen.console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	// 커서 숨기기
+	//hide cursor
+	CONSOLE_CURSOR_INFO cci;
 	cci.dwSize = 1;
 	cci.bVisible = FALSE;
 	SetConsoleCursorInfo(screen.console_handle, &cci);
-	//SetConsoleCursorInfo(g_hScreen[0], &cci);
-	//SetConsoleCursorInfo(g_hScreen[1], &cci);
 
 	ScreenClear();
 }
 
 void ScreenFlipping()
 {
-	//SetConsoleActiveScreenBuffer(g_hScreen[g_nScreenIndex]);
-	//g_nScreenIndex = !g_nScreenIndex;
-
 	SMALL_RECT write_region = {
 		.Left = screen.origin.X,
 		.Top = screen.origin.Y,
 		.Right = screen.size.X,
 		.Bottom = screen.size.Y
 	};
-	WriteConsoleOutputW(screen.console_handle, screen.grid, screen.size, screen.origin, &write_region);
+	WriteConsoleOutputW(screen.console_handle, (CHAR_INFO*)screen.grid, screen.size, screen.origin, &write_region);
 }
 
 void ScreenClear()
 {
-	//COORD Coor = { 0, 0 };
-	//DWORD dw;
-	//FillConsoleOutputCharacterW(g_hScreen[g_nScreenIndex], ' ', 100 * 50, Coor, &dw);
-	
-#ifdef DEBUG
-	const int height = 25;
-#else
-	const int height = SCREEN_HEIGHT;
-#endif // DEBUG
-
-	for (int i = 0; i < height; i++) {
+	for (int i = 0; i < SCREEN_HEIGHT; i++) {
 		for (int j = 0; j < SCREEN_WIDTH; j++) {
 			screen.grid[i][j].Attributes = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
 			screen.grid[i][j].Char.UnicodeChar = ' ';
@@ -107,25 +96,39 @@ void ScreenRelease()
 }
 
 void SetScreenCell(const int x, const int y, const unsigned short unicode, const unsigned short attribute) {
-	if (!(0 <= x && x < SCREEN_WIDTH &&
+	if (!(0 <= x && x < SCREEN_WIDTH / 2 &&
 		0 <= y && y < SCREEN_HEIGHT)) return;
-	screen.grid[y][2 * x].Attributes = attribute;
-	screen.grid[y][2 * x + 1].Attributes = attribute;
+
+	static const unsigned short background_attribute_flags_combined = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
+	const unsigned short combined_attribute = !(attribute & background_attribute_flags_combined) ? screen.grid[y][2 * x].Attributes & background_attribute_flags_combined | attribute : attribute;
+
+	screen.grid[y][2 * x].Attributes = combined_attribute;
+	screen.grid[y][2 * x + 1].Attributes = combined_attribute;
 
 	screen.grid[y][2 * x].Char.UnicodeChar = unicode;
 	screen.grid[y][2 * x + 1].Char.UnicodeChar = 0x0000;
+}
+void SetScreenHalfCell(const int x, const int y, const unsigned short unicode, const unsigned short attribute) {
+	if (!(0 <= x && x < SCREEN_WIDTH &&
+		0 <= y && y < SCREEN_HEIGHT)) return;
+	screen.grid[y][x].Attributes = attribute;
+	screen.grid[y][x].Char.UnicodeChar = unicode;
 }
 #define EUC_KR 51949
 #define CANVAS_CHAR_BUFFER_SIZE 256
 #include "wcwidth.h"
 void ScreenPrintColor(const int x, const int y, const char* str, const unsigned short attribute) {
+#ifdef DEBUG
+	if (y >= DEBUG_SCREEN_HEIGHT) return;
+#else
 	if (y >= SCREEN_HEIGHT) return;
+#endif
 	WCHAR buffer[CANVAS_CHAR_BUFFER_SIZE];
 	MultiByteToWideChar(EUC_KR, MB_PRECOMPOSED, str, -1, buffer, CANVAS_CHAR_BUFFER_SIZE);
 
 	for (int i = 0, j = x; i < CANVAS_CHAR_BUFFER_SIZE && j < SCREEN_WIDTH; i++, j++) {
 		if (buffer[i] == '\0') return;
-		screen.grid[y][j].Attributes = screen.attribute;
+		screen.grid[y][j].Attributes = attribute;
 		screen.grid[y][j].Char.UnicodeChar = buffer[i];
 
 		// if character requires more than 1 width, advance while filling canvas.grid.Char with '\0'
@@ -133,17 +136,13 @@ void ScreenPrintColor(const int x, const int y, const char* str, const unsigned 
 		for (int i = 1; i < width; i++) {
 			j++;
 			if (j >= SCREEN_WIDTH) return;
-			screen.grid[y][j].Attributes = screen.attribute;
+			screen.grid[y][j].Attributes = attribute;
 			screen.grid[y][j].Char.UnicodeChar = ' ';
 		}
 	}
 }
 void ScreenPrint(const int x, const int y, const char* str)
 {
-	//DWORD dw;
-	//COORD CursorPosition = { x, y };
-	//SetConsoleCursorPosition(g_hScreen[g_nScreenIndex], CursorPosition);
-	//WriteFile(g_hScreen[g_nScreenIndex], string, strlen(string), &dw, NULL);
 	ScreenPrintColor(x, y, str, screen.attribute);
 }
 
