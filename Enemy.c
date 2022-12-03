@@ -1,186 +1,25 @@
+#ifdef DEBUG
+#include "Debug.h"
+#endif // DEBUG
+
+#include <stdlib.h>
+#include <stdbool.h>
+
+#include "Game.h"
+#include "Time.h"
+#include "World.h"
+#include "Raycast.h"
+#include "HeartBeat.h"
+
+#include "Point.h"
 #include "Vector.h"
 #include "QuadTree.h"
 
-#include "Game.h"
-#include "World.h"
-#include "Point.h"
-#include "Time.h"
-
 #include "Entity.h"
 #include "Enemy.h"
-
-#include "Player.h"
-#include "Debug.h"
-
 #include "MeleeEnemy.h"
 #include "ArcherEnemy.h"
 #include "BomberEnemy.h"
-
-#include "HeartBeat.h"
-#include "Raycast.h"
-
-double baseStiffDuration = 0.3;
-
-bool isEnemyDead(Enemy* enemy);
-bool canEnemyAct(Enemy* enemy);
-bool isEnemy(Entity* entity);
-
-void LookAt(Enemy* enemy, Point target);
-bool IsPlayerInRange(Enemy* enemy);
-bool EnemyMove(Enemy* enemy, Point direction);
-void EnemyAttack(Enemy* enemy);
-void CalEnemyCooldown(Enemy* enemy);
-void EnemyRayCastPlayer(Enemy* enemy);
-
-void EnemyRayCastPlayer(Enemy* enemy) {
-	RayCastResult* result = CreateRayCastResult(enemy->detectionRadius * 2);
-	Point start = enemy->base.entity.pos;
-	Point dest = GetPlayerPos();
-	bool success = RayCastInCurrentWorld(result, start, dest);
-
-	if (success) { // raycast 에 성공하면 memory를 새로운 raycast 결과로 바꿔줘야 한다.
-		DeleteRayCastResult(enemy->memory);
-		enemy->memory = result;
-		enemy->memory_current_index = 0;
-	}
-	else {
-		DeleteRayCastResult(result);
-	}
-}
-
-void LookAt(Enemy* enemy, Point target) {
-	int deltaX = target.x - enemy->base.entity.pos.x;
-	int deltaY = target.y - enemy->base.entity.pos.y;
-
-	if (abs(deltaX) > abs(deltaY)) {
-		if (deltaX < 0) enemy->facing = Direction.west;
-		else enemy->facing = Direction.east;
-	}
-
-	else {
-		if (deltaY < 0) enemy->facing = Direction.south;
-		else enemy->facing = Direction.north;
-	}
-}
-
-bool IsPlayerInRange(Enemy* enemy) {
-	Point playerPos = player->base.entity.pos;
-
-	//세로범위
-	Rect verticalDetectRect = {
-		.x = enemy->base.entity.pos.x - (enemy->attackWidth / 2),
-		.y = enemy->base.entity.pos.y - enemy->attackHeight,
-		.width = enemy->attackWidth,
-		.height = enemy->attackHeight * 2 + 1
-	};
-
-	//가로범위
-	Rect horizontalDetectRect = {
-		.x = enemy->base.entity.pos.x - enemy->attackHeight,
-		.y = enemy->base.entity.pos.y - (enemy->attackWidth / 2),
-		.width = enemy->attackHeight * 2 + 1,
-		.height = enemy->attackWidth
-	};
-
-	return (bool)(
-		RectContainsPoint(&verticalDetectRect, &playerPos)||
-		RectContainsPoint(&horizontalDetectRect, &playerPos)
-		);
-}
-
-bool EnemyMove(Enemy* enemy, Point direction) {
-	Point* nextPosition = DuplicatePoint(&enemy->base.entity.pos);
-	Point playerPos = GetPlayerPos();
-	PointAdd(nextPosition, &direction);
-	Rect nextPositionRect = {
-		.x = nextPosition->x,
-		.y = nextPosition->y,
-		.width = 1,
-		.height = 1
-	};
-	
-	//Vector* vector = QuadTreeQuery(enemiesTree, nextPositionRect);
-
-	bool moveSuccess = true;
-
-	if(GetTile(*nextPosition) & FLAG_COLLIDE_WITH_BODY) moveSuccess = false;
-	if(PointEquals(nextPosition, &playerPos)) moveSuccess = false;
-	for (int i = 0; i < enemies->length; i++) {
-		if (PointEquals(&enemies->entities[i]->pos, nextPosition)) {
-			moveSuccess = false;
-		}
-
-		if (!moveSuccess) break;
-	}
-
-	if(moveSuccess) enemy->base.entity.pos = *nextPosition;
-
-	DeletePoint(nextPosition);
-	//DeleteVector(vector);
-
-	enemy->actCooldown = enemy->moveSpeed;
-	return moveSuccess;
-}
-void EnemyMoveAsMemory(Enemy* enemy) {
-	const int next_move_index = enemy->memory_current_index + 1;
-	if (next_move_index < enemy->memory->length) {
-		Point dir = enemy->memory->arr[next_move_index];
-		PointSub(&dir, &enemy->base.entity.pos);
-
-		if (EnemyMove(enemy, dir)) { // increment memory only if move is successful
-			enemy->memory_current_index++;
-		}
-	}
-}
-
-bool canEnemyAct(Enemy* enemy) {
-	return enemy->actCooldown <= 0;
-}
-
-void EnemyAttack(Enemy* enemy) {
-	switch (enemy->base.entity.type) {
-	case MeleeEnemyType:
-		MeleeEnemyAttack((MeleeEnemy*)enemy);
-		break;
-
-	case ArcherEnemyType:
-		ArcherEnemyAttack((ArcherEnemy*)enemy);
-		break;
-
-	case BomberEnemyType:
-		BomberEnemyAttack((BomberEnemy*)enemy);
-		break;
-	}
-
-	enemy->actCooldown = enemy->attackSpeed;
-}
-
-void CalEnemyCooldown(Enemy* enemy) {
-	enemy->actCooldown--;
-	enemy->stiffDuration -= GameTime.deltaTime;
-}
-
-void EnemyOnDeath(Enemy* enemy)
-{
-#ifdef DEBUG
-	DebugPrint("Enemy Dead!");
-#endif
-}
-
-bool EnemyOnHit(Enemy* enemy, int damage)
-{
-	if (enemy == NULL) return false;
-	enemy->hp -= damage;
-
-	if (!isEnemyStiff(enemy)) enemy->stiffDuration = baseStiffDuration;
-	
-
-	if (enemy->hp <= 0)	{
-		EnemyOnDeath(enemy);
-		return true;
-	}
-	return false;
-}
 
 void CreateEnemy(enum EntityType type, Point spawnPoint) {
 	Enemy* newEnemy = NULL;
@@ -200,34 +39,55 @@ void CreateEnemy(enum EntityType type, Point spawnPoint) {
 		break;
 	}
 
-	newEnemy->state = Tracking;
-	newEnemy->ReadyToAttack = false;
-
-#ifdef DEBUG
-	DebugPrint("%d %d", newEnemy->base.entity.type, type);
-#endif
 	VectorInsert(enemies, newEnemy);
-	//QuadTreeInsert(enemiesTree, newEnemy);
 }
 void DeleteEnemy(Enemy* enemy) {
 	free(enemy);
-	*(&enemy) = NULL;
 }
 
-void UpdateEnemy(Enemy* enemy) {
-	//사거리 내로 들어오면 우선 공격하기
-	/*
-	if (!isEnemyStiff(enemy)) {
-		if (IsPlayerInRange(enemy)) {
-			LookAt(enemy, GetPlayerPos());
-			EnemyAttack(enemy);
-		}
+bool IsEnemyDead(Enemy* enemy) {
+	return enemy->hp <= 0;
+}
+bool IsEnemyFrozen(Enemy* enemy) {
+	return enemy->is_frozen_until < GameTime.time;
+}
+void EnemyFreezeUntil(Enemy* enemy, double GameTime) {
+	enemy->is_frozen_until = enemy->is_frozen_until > GameTime ? enemy->is_frozen_until : GameTime;
+}
+void EnemyRayCastPlayer(Enemy* enemy) {
+	RayCastResult* result = CreateRayCastResult(enemy->detectionRadius * 2);
+	Point start = enemy->base.entity.pos;
+	Point dest = GetPlayerPos();
+	bool success = RayCastInCurrentWorld(result, start, dest);
 
-		if (canEnemyMove(enemy)) {
-			EnemyRayCastPlayer(enemy);
-		}
+	if (success) { // raycast 에 성공하면 memory를 새로운 raycast 결과로 바꿔줘야 한다.
+		DeleteRayCastResult(enemy->memory);
+		enemy->memory = result;
+		enemy->memory_current_index = 0;
+		enemy->player_is_visible = true;
 	}
-	*/
+	else {
+		DeleteRayCastResult(result);
+		enemy->player_is_visible = false;
+	}
+}
+Point EnemyDirectionToFacePlayer(Enemy* enemy) {
+	Point diff = { .x = player->base.entity.pos.x - enemy->base.entity.pos.x, .y = player->base.entity.pos.y - enemy->base.entity.pos.y };
+	if (diff.x == 0) {
+		if (diff.y >= 0) return Direction.north;
+		else return Direction.south;
+	}
+	else if (diff.x > 0) {
+		if (diff.y > 0) return Direction.north;
+		else return Direction.east;
+	}
+	else {
+
+	}
+}
+
+void EnemyUpdate(Enemy* enemy) {
+	if (IsEnemyDead(enemy)) return;
 	Rect detectionRect = {
 		.x = enemy->base.entity.pos.x - enemy->detectionRadius,
 		.y = enemy->base.entity.pos.y - enemy->detectionRadius,
@@ -240,34 +100,87 @@ void UpdateEnemy(Enemy* enemy) {
 		// raycast는 enemy가 움직이거나 공격할 수 있는지 여부와 상관없이 시행해야 한다.
 	}
 
-	if (!SmallBeatCall()) return;
+	if (IsEnemyFrozen(enemy)) return;
+	switch (enemy->base.entity.type) {
+	case MeleeEnemyType:
+		MeleeEnemyUpdate();
+		break;
+	case ArcherEnemyType:
+		ArcherEnemyUpdate();
+		break;
+	case BomberEnemyType:
+		BomberEnemyUpdate();
+		break;
+	}
+}
+bool EnemyMove(Enemy* enemy, Point direction) {
+	if (GameTime.time <= enemy->cant_move_until) return false;
+	Point nextPosition = enemy->base.entity.pos;
+	PointAdd(&nextPosition, &direction);
+	Point playerPos = GetPlayerPos();
 
-	CalEnemyCooldown(enemy);
-	if (isEnemyStiff(enemy)) return;
+	//Rect nextPositionRect = {
+	//	.x = nextPosition->x,
+	//	.y = nextPosition->y,
+	//	.width = 1,
+	//	.height = 1
+	//};
 
-	if (canEnemyAct(enemy)) {
-		if (IsPlayerInRange(enemy)) { // player in attack range!
-			LookAt(enemy, GetPlayerPos());
-			EnemyAttack(enemy);
-		}
-		else { // player is NOT in attack range!
-			EnemyMoveAsMemory(enemy);
+	if (GetTile(nextPosition) & FLAG_COLLIDE_WITH_BODY) return false;
+	if (PointEquals(&nextPosition, &playerPos)) return false;
+
+	for (int i = 0; i < enemies->length; i++) {
+		if (PointEquals(&enemies->entities[i]->pos, &nextPosition)) return false;
+	}
+	enemy->base.entity.pos = nextPosition;
+
+	enemy->cant_move_until = GameTime.time + 1 / enemy->move_per_second;
+	return true;
+}
+void EnemyMoveAsMemory(Enemy* enemy) {
+	const int next_move_index = enemy->memory_current_index + 1;
+	if (next_move_index < enemy->memory->length) {
+		Point dir = enemy->memory->arr[next_move_index];
+		PointSub(&dir, &enemy->base.entity.pos);
+
+		if (EnemyMove(enemy, dir)) { // increment memory only if move is successful
+			enemy->memory_current_index++;
 		}
 	}
-
-	enemy->ReadyToAttack = IsPlayerInRange(enemy);
 }
 
-bool isEnemyDead(Enemy* enemy) {
-	return (bool)(enemy->hp <= 0);
+void EnemyOnDeath(Enemy* enemy)
+{
+	// special behavor on death
+	switch (enemy->base.entity.type) {
+	case MeleeEnemyType:
+		break;
+	case ArcherEnemyType:
+		break;
+	case BomberEnemyType:
+		break;
+	}
 }
+bool EnemyOnHit(Enemy* enemy, int damage)
+{
+	if (enemy == NULL) return false;
+	enemy->hp -= damage;
+	enemy->is_frozen_until = GameTime.time + 0.1;
+	
+	// special behavior on damage
+	switch (enemy->base.entity.type) {
+	case MeleeEnemyType:
+		break;
+	case ArcherEnemyType:
+		break;
+	case BomberEnemyType:
+		break;
+	}
 
-bool isEnemyStiff(Enemy* enemy) {
-	return (bool)(enemy->stiffDuration > 0);
-}
-
-bool isEnemy(Entity* entity) {
-	enum EntityType type = entity->type;
-	return (bool)(MeleeEnemyType <= type && type <= BomberEnemyType);
+	if (enemy->hp <= 0)	{
+		EnemyOnDeath(enemy);
+		return true;
+	}
+	return false;
 }
 

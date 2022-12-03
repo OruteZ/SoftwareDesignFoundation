@@ -1,7 +1,11 @@
-#include "Point.h"
-#include "Time.h"
 #include "ArcherEnemy.h"
-#include "Player.h"
+
+#include "Game.h"
+#include "Time.h"
+
+#include "Point.h"
+
+#include "Enemy.h"
 #include "Particle.h"
 
 #include "RayCast.h"
@@ -36,3 +40,15 @@ void ArcherEnemyAttack(ArcherEnemy* archerEnemy) {
 
 	CreateParticle(archerEnemy->base.enemy.facing, attackPoint, EnemyRangeAttackParticleType, archerEnemy->base.enemy.baseDamage);
 }
+
+void ArcherAlignWithPlayer(ArcherEnemy* archerEnemy) {
+	
+}
+void ArcherEnemyUpdate(ArcherEnemy* archerEnemy) {
+	if (!SmallBeatCall()) return;
+
+	CalEnemyCooldown(archerEnemy);
+	if (isEnemyStiff(archerEnemy)) return;
+	archerEnemy->base.enemy.ReadyToAttack = IsPlayerInRange(archerEnemy);
+}
+

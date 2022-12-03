@@ -29,6 +29,10 @@ BomberEnemy* CreateBomberEnemy(Point p)
 	return bomberEnemy;
 }
 
+void BomberEnemyUpdate() {
+
+}
+
 void BomberEnemyAttack(BomberEnemy* bomberEnemy) {
 	Point attackPoint = bomberEnemy->base.entity.pos;
 

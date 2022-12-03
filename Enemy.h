@@ -16,31 +16,34 @@ typedef struct _Enemy {
 	} base;
 
 	EnemyState state;
-	Point facing;
 
 	int hp;
-	int baseDamage;
 
 	int detectionRadius;
 	RayCastResult* memory;
 	int memory_current_index;
-	int moveSpeed; // small beat per time
+	bool player_is_visible;
 
-	int attackSpeed; // small beat per time
-	int attackWidth;
-	int attackHeight;
-	bool ReadyToAttack;
+	double move_per_second;
+	double cant_move_until;
 
-	int actCooldown; //단위 : beat
-	double stiffDuration;
+	Point facing;
+	int attackDamage;
+	int attack_delay_small_beats; // 공격 시작 후 끝나기까지 걸리는 small_beat
+	int small_beats_after_attack_start; // (공격 시작) 후 얼마나 small_beat가 지났는지
+	int attack_cooldown_small_beats; // 공격 끝 후 다음 공격을 시작하기 전 쿨타임
+	int small_beats_after_attack_end; // 공격 끝 후 얼마나 small_beat가 지났는지
+
+	double is_frozen_until; // until gametime
 } Enemy;
-
-bool isEnemyDead(Enemy* enemy);
-bool isEnemy(Entity* entity);
-bool isEnemyStiff(Enemy* enemy);
-
-//Enemy에게 damage만큼의 피해를 가합니다. Enemy사망시 true를 반환합니다.
-bool EnemyOnHit(Enemy* enemy, int damage);
 void CreateEnemy(enum EntityType type, Point spawnPoint);
-void UpdateEnemy(Enemy* enemy);
 void DeleteEnemy(Enemy* enemy);
+
+bool IsEnemyFrozen(Enemy* enemy);
+
+Point EnemyDirectionToFacePlayer(Enemy* enemy);
+bool EnemyMove(Enemy* enemy, Point direction);
+void EnemyMoveAsMemory(Enemy* enemy);
+
+bool EnemyOnHit(Enemy* enemy, int damage);
+void EnemyUpdate(Enemy* enemy);
