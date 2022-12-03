@@ -28,7 +28,7 @@ BomberEnemy* CreateBomberEnemy(Point p)
 
 	enemy->attackDamage = 10;
 	enemy->attack_delay_small_beats = 2;
-	enemy->attack_delay_small_beats = 2;
+	enemy->attack_cooldown_small_beats = 2;
 
 	enemy->small_beats_after_attack_start = 0;
 	enemy->small_beats_after_attack_end = 0;

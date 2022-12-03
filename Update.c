@@ -69,9 +69,7 @@ void Update() {
 
 		DeleteDeadEnemies();
 
-		if (GetTile(player->base.entity.pos) & FLAG_GOAL) {
-			StartNextWorld();
-		}
+		TryWorldMaster();
 
 
 

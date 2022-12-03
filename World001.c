@@ -99,6 +99,13 @@ Tile grid_001[] = {
 
 World* world001;
 
+#include "Game.h"
+void World001Master() {
+	if (GetTile(player->base.entity.pos) & FLAG_GOAL) {
+		StartNextWorld();
+	}
+}
+
 #include "world002.h"
 void InitializeWorld001() {
 	world001 = CreateWorld(90, 89);
@@ -108,6 +115,7 @@ void InitializeWorld001() {
 	world001->playerSpawnPoint = playerSpawnPoint;
 
 	world001->startNextWorld = &StartWorld002;
+	world001->worldMaster = &World001Master;
 
 	// spawn at Gametime.time >= 0
 	SpawnSequence* seq_1 = CreateSpawnSequence(0);

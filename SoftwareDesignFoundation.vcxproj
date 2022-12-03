@@ -137,6 +137,7 @@
     <ClCompile Include="World001.c" />
     <ClCompile Include="World002.c" />
     <ClCompile Include="World003.c" />
+    <ClCompile Include="World004.c" />
     <ClCompile Include="_main.c" />
   </ItemGroup>
   <ItemGroup>
@@ -168,13 +169,14 @@
     <ClInclude Include="Time.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Update.h" />
+    <ClInclude Include="UpgradeUI.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="wcwidth.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="World001.h" />
     <ClInclude Include="World002.h" />
     <ClInclude Include="World003.h" />
-    <ClInclude Include="UpgradeUI.h" />
+    <ClInclude Include="World004.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

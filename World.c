@@ -64,26 +64,12 @@ void TrySpawnSequence() {
 		Vector* list = sequence->list;
 		for (int i = 0; i < list->length; i++) {
 			CreateEnemy(list->entities[i]->type, list->entities[i]->pos);
-			/*
-			Entity* enemy;
-			switch (list->entities[i]->type) {
-			case MeleeEnemyType:
-				enemy = CreateMeleeEnemy(list->entities[i]->pos);
-				VectorInsert(enemies, enemy);
-				break;
-			case ArcherEnemyType:
-				// todo add ArcherEnemy
-				break;
-			case BomberEnemyType:
-				// todo add BomberEnemy
-				break;
-			default:
-				break;
-			}
-			*/
 		}
 		current_world->currentSpawnSequence = sequence->next; // prime next spawn sequence
 	}
+}
+void TryWorldMaster() {
+	(*current_world->worldMaster)();
 }
 
 
@@ -105,6 +91,7 @@ World* CreateWorld(const int width, const int height) {
 	world->currentSpawnSequence = NULL;
 
 	world->startNextWorld = &voidFunc;
+	world->worldMaster = &voidFunc;
 }
 void DeleteWorld(World* world) {
 	free(world);

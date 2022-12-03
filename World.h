@@ -31,6 +31,7 @@ typedef struct _World {
 	SpawnSequence* currentSpawnSequence;
 
 	void (*startNextWorld)();
+	void (*worldMaster)();
 } World;
 
 
@@ -114,6 +115,8 @@ void SpawnSequenceInsert(SpawnSequence* seq, const int spawn_x, const int spawn_
 void WorldInsertSpawnSequence(World* world, SpawnSequence* seq);
 // "생성 단계"를 시도한다. 생성 단계가 다 떨어졌는지 확인하기 때문에 생각 없이 호출해도 된다.
 void TrySpawnSequence();
+void TryWorldMaster();
+
 
 
 

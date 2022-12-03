@@ -156,6 +156,9 @@
     <ClCompile Include="UpgradeUI.c">
       <Filter>Source Files\IO</Filter>
     </ClCompile>
+    <ClCompile Include="World004.c">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Init.h">
@@ -262,6 +265,9 @@
     </ClInclude>
     <ClInclude Include="UpgradeUI.h">
       <Filter>Header Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="World004.h">
+      <Filter>Header Files\World</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
