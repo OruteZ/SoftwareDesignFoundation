@@ -262,7 +262,7 @@ void PlayerMeleeAttack() {
 	}
 
 
-	playerAttackCooldown = 1 - (player->attackSpeed);
+	playerAttackCooldown = 1 - 1 / (player->attackSpeed);
 
 	if (playerMoveCooldown < basePlayerAttackDelay) {
 		canPlayerMove = FALSE;
@@ -342,13 +342,6 @@ void PlayerRangeAttack() {
 #ifdef DEBUG
 	DebugPrint("Created Range Particle");
 #endif
-
-	canPlayerRangeAttack = false;
-	playerAttackCooldown = 1 - (player->attackSpeed);
-	if (playerMoveCooldown < basePlayerAttackDelay) {
-		canPlayerMove = FALSE;
-		playerMoveCooldown = basePlayerAttackDelay;
-	}
 }
 
 //--------------레벨업 시스템------------------------
