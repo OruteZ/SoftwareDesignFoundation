@@ -1,5 +1,6 @@
 #include "World.h"
 #include "World004.h"
+#include "Boss.h"
 
 #define G GROUND,
 #define W WALL,
@@ -53,6 +54,10 @@ Tile grid_004[] = {
 
 World* world004;
 
+void emptyFunc() {
+
+}
+
 //#include "World003.h"
 void InitializeWorld004() {
 	world004 = CreateWorld(40, 40);
@@ -61,7 +66,7 @@ void InitializeWorld004() {
 	Point playerSpawnPoint = { .x = 20, .y = 20 };
 	world004->playerSpawnPoint = playerSpawnPoint;
 
-	//world004->startNextWorld = &StartWorld003; -> 게임 엔딩 연결 필요
+	world004->startNextWorld = &emptyFunc;
 
 	// spawn at Gametime.time >= 0
 	/*SpawnSequence* seq_1 = CreateSpawnSequence(0);
@@ -75,4 +80,7 @@ void InitializeWorld004() {
 }
 void StartWorld004() {
 	SetCurrentWorld(world004);
+
+	Point bossPoint = { 25, 25 };
+	SpawnBoss(bossPoint);
 }

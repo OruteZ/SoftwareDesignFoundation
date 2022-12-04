@@ -37,6 +37,7 @@ void Init()
     InitializeWorld001();
     InitializeWorld002();
     InitializeWorld003();
+    InitializeWorld004();
 
     // StartWorld001();
 

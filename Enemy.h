@@ -36,6 +36,7 @@ typedef struct _Enemy {
 
 	double is_frozen_until; // until gametime
 } Enemy;
+
 void CreateEnemy(enum EntityType type, Point spawnPoint);
 void DeleteEnemy(Enemy* enemy);
 

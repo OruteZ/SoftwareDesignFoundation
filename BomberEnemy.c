@@ -94,6 +94,8 @@ void BomberEnemyAttack(BomberEnemy* bEnemy) {
 	if (RectContainsPoint(&attack_rect, &playerPos)) {
 		PlayerOnHit(enemy->attackDamage);
 	}
+
+	CreateParticle(Direction.north, enemy->base.entity.pos, ExplosionParticleType1, enemy->attackDamage);
 	bEnemy->base.enemy.hp = 0;
 }
 

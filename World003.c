@@ -1,5 +1,6 @@
 #include "World.h"
 #include "World003.h"
+#include "World004.h"
 
 #define G GROUND,
 #define W WALL,
@@ -112,10 +113,6 @@ Tile grid_003[] = {
 
 World* world003;
 
-void emptyFunc() {
-
-}
-
 void InitializeWorld003() {
 	world003 = CreateWorld(100, 100);
 	world003->grid = grid_003;
@@ -123,7 +120,7 @@ void InitializeWorld003() {
 	Point playerSpawnPoint = { .x = 19, .y = 20 };
 	world003->playerSpawnPoint = playerSpawnPoint;
 
-	world003->startNextWorld = &emptyFunc;
+	world003->startNextWorld = &StartWorld004;
 
 	// spawn at Gametime.time >= 0
 	SpawnSequence* seq_1 = CreateSpawnSequence(0);
