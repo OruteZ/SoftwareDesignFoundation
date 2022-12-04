@@ -67,7 +67,7 @@ void ScreenInit()
 	ScreenClear();
 }
 
-void ScreenFlipping()
+void PrintScreen()
 {
 	SMALL_RECT write_region = {
 		.Left = screen.origin.X,

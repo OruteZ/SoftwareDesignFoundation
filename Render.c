@@ -28,6 +28,6 @@ void Render() {
 		RenderUpgradeUI();
 	} 
 
-	ScreenFlipping();
+	PrintScreen();
 }
 

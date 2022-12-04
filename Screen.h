@@ -8,7 +8,7 @@
 
 
 void ScreenInit();
-void ScreenFlipping();
+void PrintScreen();
 void ScreenClear();
 void ScreenRelease();
 
