@@ -7,66 +7,57 @@
 #define D DOWNSTAIRS,
 
 Tile grid_004[] = {
-	W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W
+	W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W
 };
 
 World* world004;
 
 //#include "World003.h"
 void InitializeWorld004() {
-	world004 = CreateWorld(50, 50);
+	world004 = CreateWorld(40, 40);
 	world004->grid = grid_004;
 
-	Point playerSpawnPoint = { .x = 25, .y = 25 };
+	Point playerSpawnPoint = { .x = 20, .y = 20 };
 	world004->playerSpawnPoint = playerSpawnPoint;
 
 	//world004->startNextWorld = &StartWorld003; -> 게임 엔딩 연결 필요
