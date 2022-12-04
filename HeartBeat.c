@@ -75,7 +75,7 @@ void InitHeartBeat()
 void StartBeat() {
 	ResetPlayerStatusByBPM(heartBeat->BPM);
 	ResetNote();
-
+	SetBPMLevel(0);
 }
 
 void UpdateHeartBeat() {
@@ -163,8 +163,16 @@ int IsNoteBeaten() {
 	else return 0;
 }
 
-void SetBPM(int BPM) {
-	heartBeat->BPM = BPM;
+void SetBPMLevel(int lv) {
+	if (lv >= BPM_MAX_LEVEL) return;
+	nowBpmLv = lv;
+	heartBeat->BPM = bpmByLevels[nowBpmLv];
+	HeartLevelUpLine = bpmByLevels[nowBpmLv] * LEVEL_UP_LINE_BY_BPM;
+
+	HeartGauge = 0;
+
+	ResetNote();
+	ResetPlayerStatusByBPM(heartBeat->BPM);
 }
 
 int GetBPM() {
