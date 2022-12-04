@@ -106,6 +106,8 @@ void PrintWorld() {
 
 		}
 	}
+
+	free(ground_grid);
 }
 
 void PrintEnemies()
