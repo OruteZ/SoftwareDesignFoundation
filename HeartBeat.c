@@ -48,6 +48,7 @@ void BPMGaugeUp();
 void BPMLevelUp();
 void BPMLevelDown();
 void BPMGaugeDown();
+void SetBPMLevel(int lv);
 
 void InitHeartBeat()
 {

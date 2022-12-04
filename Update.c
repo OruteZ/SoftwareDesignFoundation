@@ -83,6 +83,17 @@ void Update() {
 			StartGameOverMenu();
 			PlaySound(NULL, NULL, SND_ASYNC);
 		}
+
+		if (IsBossCleared()) {
+			free(player);
+			Point pointless = { .x = 0, .y = 0 };
+			player = CreatePlayer(pointless);
+
+			GameState = Menu;
+			StartVoidWorld();
+			StartGameClearMenu();
+			PlaySound(NULL, NULL, SND_ASYNC);
+		}
 	}
 	
 	if (GameState == Menu) {

@@ -169,7 +169,6 @@ void CalculatePlayerCooldown() {
 	}
 	if (playerMoveCooldown < 0) canPlayerMove = TRUE;
 }
-
 void PlayerMove(Point dir) {
 	player->facing = dir;
 	if (!canPlayerMove) return;

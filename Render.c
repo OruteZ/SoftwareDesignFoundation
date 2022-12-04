@@ -26,7 +26,7 @@ void Render() {
 
 	if (GameState == UpgradeMenu) {
 		RenderUpgradeUI();
-	}
+	} 
 
 	ScreenFlipping();
 }

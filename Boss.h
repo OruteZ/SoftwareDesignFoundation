@@ -54,5 +54,8 @@ bool BossHitEffect();
 //보스 사망여부를 반환합니다. 만약 사망했을경우 관련 상호작용을 모두 차단합니다.
 bool isBossDead();
 
+//보스 클리어 여부를 반환합니다.
+bool IsBossCleared();
+
 void SpawnBoss(Point p);
 void UpdateBoss();

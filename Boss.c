@@ -67,6 +67,7 @@ int bossShotRange = 10;
 //------------------------------------
 
 bool isBossExist = false;
+bool isBossCleared = false;
 int bossNowHP;
 Rect BossRect;
 Point BossPos;
@@ -323,6 +324,7 @@ void UpdateBoss() {
 	}
 }
 bool IsBossExist() { return isBossExist; }
+bool IsBossCleared() { return isBossCleared; }
 
 //private:
 

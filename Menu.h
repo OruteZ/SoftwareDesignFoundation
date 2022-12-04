@@ -6,3 +6,4 @@ void RenderMenu();
 void UpdateMenu();
 void StartMainMenu();
 void StartGameOverMenu();
+void StartGameClearMenu();

@@ -19,18 +19,29 @@
 #define EndButtonSelectionArrowPosY EndButtonPosY 
 
 //GaimOverMenu Keys
-#define GoToMainButtonPosX (20)
-#define GoToMainButtonPosY (24)
-#define GameOverEndButtonPosX (50)
-#define GameOverEndButtonPosY (24)
-#define GoToMainButtonSelectionArrowPosX (GoToMainButtonPosX - 4)
-#define GoToMainButtonSelectionArrowPosY GoToMainButtonPosY
-#define GameOverEndButtonSelectionArrowPosX (GameOverEndButtonPosX - 4)
-#define GameOverEndButtonSelectionArrowPosY GameOverEndButtonPosY 
+#define GAMEOVER_RETRY_BUTTON_X (20)
+#define GAMEOVER_RETRY_BUTTON_Y (24)
+#define GAMEOVER_QUIT_BUTTON_X (50)
+#define GAMEOVER_QUIT_BUTTON_Y (24)
+#define GAMEOVER_RETRY_ARROW_POS_X (GAMEOVER_RETRY_BUTTON_X - 4)
+#define GAMEOVER_RETRY_ARROW_POS_Y GAMEOVER_RETRY_BUTTON_Y
+#define GAMEOVER_QUIT_ARROW_POS_X (GAMEOVER_QUIT_BUTTON_X - 4)
+#define GAMEOVER_QUIT_ARROW_POS_Y GAMEOVER_QUIT_BUTTON_Y 
+
+//GameClearMenu Keys
+#define GAMECLEAR_RETRY_BUTTON_X (20)
+#define GAMECLEAR_RETRY_BUTTON_Y (24)
+#define GAMECLEAR_QUIT_BUTTON_X (50)
+#define GAMECLEAR_QUIT_BUTTON_Y (24)
+#define GAMECLEAR_RETRY_ARROW_POS_X (GAMECLEAR_RETRY_BUTTON_X - 4)
+#define GAMECLEAR_RETRY_ARROW_POS_Y GAMECLEAR_RETRY_BUTTON_Y
+#define GAMECLEAR_QUIT_ARROW_POS_X (GAMECLEAR_QUIT_BUTTON_X - 4)
+#define GAMECLEAR_QUIT_ARROW_POS_Y GAMECLEAR_QUIT_BUTTON_Y 
 
 enum MenuType {
 	Main,
 	GameOver,
+	GameClear
 } menuState;
 
 typedef enum ButtonType {
@@ -39,24 +50,32 @@ typedef enum ButtonType {
 
 	GameOver_RetryMainButton,
 	GameOver_QuitButton,
+
+	GameClear_RetryMainButton,
+	GameClear_QuitButton,
 }button;
 
 button nowButton = Main_StartButton;
 
 void ChangeButton_ToLeft() {
-	if		(nowButton == Main_QuitButton)
+	if (nowButton == Main_QuitButton)
 		nowButton = Main_StartButton;
 
 	else if (nowButton == GameOver_QuitButton)
 		nowButton = GameOver_RetryMainButton;
-}
 
+	else if (nowButton == GameClear_QuitButton)
+		nowButton = GameClear_RetryMainButton;
+}
 void ChangeButton_ToRight() {
 	if (nowButton == Main_StartButton)
 		nowButton = Main_QuitButton;
 
 	else if (nowButton == GameOver_RetryMainButton)
 		nowButton = GameOver_QuitButton;
+
+	else if (nowButton == GameClear_RetryMainButton)
+		nowButton = GameClear_QuitButton;
 }
 
 void SelectButton() {
@@ -65,14 +84,18 @@ void SelectButton() {
 		StartNextWorld();
 		GameState = Dungeon;
 		break;
-	case Main_QuitButton:
-	case GameOver_QuitButton:
-		GameState = Exiting;
-		break;
 	case GameOver_RetryMainButton:
+	case GameClear_RetryMainButton:
 		GameState = Menu;
 		menuState = Main;
 		nowButton = Main_StartButton;
+		break;
+
+	//--------------------------------------
+	case Main_QuitButton:
+	case GameOver_QuitButton:
+	case GameClear_QuitButton:
+		GameState = Exiting;
 		break;
 	default:
 		break;
@@ -112,24 +135,40 @@ void RenderMainTitle()
 
 //GameOvers
 void RenderGameOverButton() {
-	ScreenPrint(GoToMainButtonPosX, GoToMainButtonPosY, "Go to main menu");
-	ScreenPrint(GameOverEndButtonPosX, GameOverEndButtonPosY, "Quit");
+	ScreenPrint(GAMEOVER_RETRY_BUTTON_X, GAMEOVER_RETRY_BUTTON_Y, "RETRY");
+	ScreenPrint(GAMEOVER_QUIT_BUTTON_X, GAMEOVER_QUIT_BUTTON_Y, "QUIT");
 }
-void RenderRetryArrow() {
-	ScreenPrint(GoToMainButtonSelectionArrowPosX, GoToMainButtonSelectionArrowPosY, "->");
-
+void RenderGameOverRetryArrow() {
+	ScreenPrint(GAMEOVER_RETRY_ARROW_POS_X, GAMEOVER_RETRY_ARROW_POS_Y, "->");
 }
 void RenderGameOverEndArrow() {
-	ScreenPrint(GameOverEndButtonSelectionArrowPosX, GameOverEndButtonSelectionArrowPosY, "->");
+	ScreenPrint(GAMEOVER_QUIT_ARROW_POS_X, GAMEOVER_QUIT_ARROW_POS_Y, "->");
 }
 void RenderGameOver() {}
+
+//GAMECLEAR
+void RenderGameClearButton() {
+	ScreenPrintColor(GAMECLEAR_RETRY_BUTTON_X, GAMECLEAR_RETRY_BUTTON_Y, "MAIN MENU", 15);
+	ScreenPrintColor(GAMECLEAR_QUIT_BUTTON_X, GAMECLEAR_QUIT_BUTTON_Y, "QUIT", 15);
+}
+void RenderGameClearRetryArrow() {
+	ScreenPrintColor(GAMECLEAR_RETRY_ARROW_POS_X, GAMECLEAR_RETRY_ARROW_POS_Y, "->", 15);
+}
+void RenderGameClearEndArrow() {
+	ScreenPrint(GAMECLEAR_QUIT_ARROW_POS_X, GAMECLEAR_QUIT_ARROW_POS_Y, "->");
+}
+void RenderGameClear() {}
 
 void RenderButtonArrow()
 {
 	if (nowButton == Main_StartButton) RenderMainStartArrow();
 	else if (nowButton == Main_QuitButton) RenderMainQuitArrow();
-	else if (nowButton == GameOver_RetryMainButton) RenderRetryArrow();
+
+	else if (nowButton == GameOver_RetryMainButton) RenderGameOverRetryArrow();
 	else if (nowButton == GameOver_QuitButton) RenderGameOverEndArrow();
+
+	else if (nowButton == GameClear_RetryMainButton) RenderGameClearRetryArrow();
+	else if (nowButton == GameClear_QuitButton) RenderGameClearEndArrow();
 }
 
 void RenderMenu() {
@@ -140,6 +179,10 @@ void RenderMenu() {
 	else if (menuState == GameOver) {
 		RenderGameOver();
 		RenderGameOverButton();
+	}
+	else if (menuState == GameClear) {
+		RenderGameClear();
+		RenderGameClearButton();
 	}
 	RenderButtonArrow();
 }
@@ -152,4 +195,9 @@ void StartMainMenu() {
 void StartGameOverMenu() {
 	menuState = GameOver;
 	nowButton = GameOver_RetryMainButton;
+}
+
+void StartGameClearMenu() {
+	menuState = GameClear;
+	nowButton = GameClear_RetryMainButton;
 }
