@@ -13,6 +13,7 @@
 #include "HeartBeat.h"
 #include "ExpOrb.h"
 #include "UpgradeUI.h"
+#include "Boss.h"
 
 //-----------------인벤토리 / 아이템 관련 인스펙터 창-----------------------
 #define KINDS_OF_ITEM (2)
@@ -133,6 +134,7 @@ void UpdatePlayer() {
 
 #ifdef DEBUG
 	if (GetKeyDown('P')) LevelUp();
+	if (GetKeyDown('V')) StartNextWorld();
 #endif
 }
 Point GetPlayerPos() { return player->base.entity.pos; }
@@ -145,7 +147,7 @@ void PlayerOnHit(int damage) {
 	//CameraShake();
 
 #ifdef DEBUG
-	DebugPrint("Player On Hit");
+	//DebugPrint("Player On Hit");
 #endif
 }
 bool IsPlayerDead() { return playerDeadFlag; }
@@ -181,6 +183,9 @@ void PlayerMove(Point dir) {
 		Enemy* e = (Enemy*)enemies->entities[i];
 		if (PointEquals(&destPos, &e->base.entity.pos)) return;
 	}
+
+	Rect bossRect = GetBossRect();
+	if (RectContainsPoint(&bossRect, &destPos)) return;
 
 	player->base.entity.pos = destPos;
 
@@ -248,17 +253,26 @@ void PlayerMeleeAttack() {
 	for (int i = 0; i < enemies->length; i++) {
 		Enemy* e = (Enemy*)enemies->entities[i];
 		if (e == NULL) continue;
-#ifdef DEBUG
-		//DebugPrint("%d", e);
-#endif
 		if (IsEnemyDead(e)) continue;
 
 		if (RectContainsPoint(&attackRect, &e->base.entity.pos)) {
 			if (EnemyOnHit(e, player->baseDamage)) {
-				UpScore(1);
+				UpScore(GetBPM());
 				UpExp(10);
 			}
 		}
+	}
+	if (IsBossExist()) {
+		Rect bossRect = GetBossRect();
+		if (RectIsIntersectingRect(&attackRect, &bossRect)) {
+			BossOnHit(player->baseDamage);
+		}
+#ifdef DEBUG
+		else {
+			DebugPrint("boss is not hitted");
+		}
+#endif // DEBUG
+
 	}
 
 
@@ -281,7 +295,6 @@ void UpExp(int exp) {
 }
 void UpScore(int baseScore) {
 	score += GetBPM() * baseScore;
-
 }
 void CheckExpOrb(Point nowPoint) {
 	for (int i = 0; i < expOrbs->length; i++) {

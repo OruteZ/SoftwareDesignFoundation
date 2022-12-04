@@ -95,7 +95,10 @@ void UpdateHeartBeat() {
 
 		isSmallBeatNow = true;
 	}
-	else isSmallBeatNow = false;
+	else {
+		isSmallBeatNow = false;
+		isBeatNow = false;
+	}
 
 	if (GetKeyDown(VK_SPACE)) {
 		int value = IsNoteBeaten();

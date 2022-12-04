@@ -11,6 +11,7 @@
 #include "Debug.h"
 #include "Time.h"
 #include "ExpOrb.h"
+#include "Boss.h"
 
 struct {
 	Point pos;
@@ -126,6 +127,7 @@ void PrintParticles() {
 	int nowUnicode;
 	int nowColor;
 
+
 	for (int i = 0; i < particles->length; i++) {
 		Particle* p = (Particle*)particles->entities[i];
 		Rect camera_world_rect = CameraCellRectToWorldRect();
@@ -173,6 +175,32 @@ void PrintParticles() {
 	}
 }
 
+void PrintBoss() {
+	if (!IsBossExist()) return;
+
+	Rect bossRect = GetBossRect();
+
+	for (int i = 0; i < bossRect.height; i++) {
+		for (int j = 0; j < bossRect.width; j++) {
+
+			Point world_pos = { .x = bossRect.x + j, .y = bossRect.y + i };
+			Point screen_cell_index = WorldPosToScreenCellIndex(world_pos);
+			if (RectContainsPoint(&camera.cell_rect, &screen_cell_index)) {
+
+				SetScreenCell(screen_cell_index.x, screen_cell_index.y, ' ', BACKGROUND_BLUE | BACKGROUND_RED);
+			}
+		}
+	}
+
+	//draw eye
+	Point eyePos = GetBossPoint(), facing = GetBossFacing();
+	PointAdd(&eyePos, &facing);
+	Point screen_cell_index = WorldPosToScreenCellIndex(eyePos);
+	if (RectContainsPoint(&camera.cell_rect, &screen_cell_index)) {
+		SetScreenCell(screen_cell_index.x, screen_cell_index.y, ' ', BACKGROUND_RED);
+	}
+}
+
 void SetCameraPoint()
 {
 	camera.pos.x = player->base.entity.pos.x - camera.cell_rect.width / 2;
@@ -189,5 +217,6 @@ void RenderCamera()
 	PrintExpOrb();
 	PrintEnemies();
 	PrintPlayer();
+	PrintBoss();
 	PrintParticles();
 }

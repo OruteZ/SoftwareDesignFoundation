@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "Vector.h"
 #include "Enemy.h"
+#include "Boss.h"
 
 #include "World.h"
 
@@ -91,6 +92,12 @@ void RangeAttackDetectEnemy(Particle* particle) {
 
 			particle->isDead = true;
 			return;
+		}
+	}
+	if (IsBossExist()) {
+		Rect bossRect = GetBossRect();
+		if (RectContainsPoint(&bossRect, &particle->base.entity.pos)) {
+			BossOnHit(particle->damage);
 		}
 	}
 }

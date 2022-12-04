@@ -1,4 +1,5 @@
 #include "World.h"
+#include "HeartBeat.h"
 
 #define G GROUND,
 #define W WALL,
@@ -126,4 +127,5 @@ void InitializeWorld001() {
 #include "Game.h"
 void StartWorld001() {
 	SetCurrentWorld(world001);
+	StartBeat();
 }
