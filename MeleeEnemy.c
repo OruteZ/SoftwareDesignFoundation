@@ -116,5 +116,7 @@ void MeleeEnemyAttack(MeleeEnemy* mEnemy) {
 	if (RectContainsPoint(&attackRect, &playerPos)) {
 		PlayerOnHit(enemy->attackDamage);
 	}
+
+	CreateParticle(enemy->facing, enemy->base.entity.pos, MeleeAttackParticleType, 0);
 }
 
