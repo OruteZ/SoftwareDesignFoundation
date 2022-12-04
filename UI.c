@@ -118,11 +118,11 @@ void RenderInfo()
 	ScreenPrintColor(MeleeAttackKeyInfoPosX, MeleeAttackKeyInfoPosY, "공격", FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 	ScreenPrintColor(MeleeAttackKeyInfoPosX, MeleeAttackKeyInfoPosY + 1, "J", FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 	ScreenPrintColor(RangeAttackKeyInfoPosX, RangeAttackKeyInfoPosY, "화살", FOREGROUND_BLUE | FOREGROUND_GREEN);
-	//InfoPrint(RangeAttackKeyInfoPosX, RangeAttackKeyInfoPosY + 1, "K", /*화살 갯수*/, FOREGROUND_BLUE | FOREGROUND_GREEN);
+	InfoPrint(RangeAttackKeyInfoPosX, RangeAttackKeyInfoPosY + 1, "K ", GetPlayerItemCount(BULLET_ID), FOREGROUND_BLUE | FOREGROUND_GREEN);
 	ScreenPrintColor(BeatKeyInfoPosX,BeatKeyInfoPosY, "비트", FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 	ScreenPrintColor(BeatKeyInfoPosX, BeatKeyInfoPosY + 1, "SPACE", FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 	ScreenPrintColor(PotionKeyInfoPosX, PotionKeyInfoPosY, "포션", FOREGROUND_RED | FOREGROUND_GREEN);
-	//InfoPrint(PotionKeyInfoPosX, PotionKeyInfoPosY + 1, "L/",/*포션 갯수*/  , FOREGROUND_RED | FOREGROUND_GREEN);
+	InfoPrint(PotionKeyInfoPosX, PotionKeyInfoPosY + 1, "L ", GetPlayerItemCount(POTION_ID), FOREGROUND_RED | FOREGROUND_GREEN);
 	
 	
 }

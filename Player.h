@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Entity.h"
+#define KINDS_OF_ITEM (2)
+#define BULLET_ID (0)
+#define POTION_ID (1)
 
 typedef struct _Player {
 	union {
@@ -44,6 +47,9 @@ bool IsPlayerDead();
 
 //플레이어의 능력치를 BPM에 따라 재설정 합니다.
 void ResetPlayerStatusByBPM(int BPM);
+
+//플레이어의 아이템 개수를 반환합니다.
+int GetPlayerItemCount(int id);
 
 //------------레벨 업 관련-----------------
 

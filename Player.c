@@ -16,10 +16,6 @@
 #include "Boss.h"
 
 //-----------------인벤토리 / 아이템 관련 인스펙터 창-----------------------
-#define KINDS_OF_ITEM (2)
-#define BULLET_ID (0)
-#define POTION_ID (1)
-
 const char bulletKey = 'K';
 const char potionKey = 'L';
 
@@ -135,6 +131,9 @@ void UpdatePlayer() {
 #ifdef DEBUG
 	if (GetKeyDown('P')) LevelUp();
 	if (GetKeyDown('V')) StartNextWorld();
+	if (GetKeyDown('M')) {
+		DebugPrint("%d %d", player->base.entity.pos.x, player->base.entity.pos.y);
+	}
 #endif
 }
 Point GetPlayerPos() { return player->base.entity.pos; }
@@ -157,6 +156,9 @@ void ResetPlayerStatusByBPM(int BPM) {
 	player->moveSpeed = playerBaseMoveSpeed * (BPM / 90);
 }
 int GetScore() { return score; }
+int GetPlayerItemCount(int id) {
+	return Inventory[id];
+}
 
 //private :
 void CalculatePlayerCooldown() {

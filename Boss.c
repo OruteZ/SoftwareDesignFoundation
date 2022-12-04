@@ -58,7 +58,7 @@ int bossMeleeWidth = 5;
 int bossMeleeHeight = 3;
 
 double bossMovePerSecond = 1 / 1; //이동속도 
-double chargeMovePerSecond = 2 / 1; //돌진할 때 이동속도
+double chargeMovePerSecond = 10 / 1; //돌진할 때 이동속도
 
 //일단 보스는 플레이어를 항상 감지하고 있다는 가정하인데, RayCast에서 감지거리를 설정해야 함.
 int bossDetectionRadius = 10;
@@ -330,7 +330,7 @@ bool IsBossCleared() { return isBossCleared; }
 
 //단순 이동과 돌진시 이동속도가 다를 수 있으므로 인자로 받아옴
 bool BossMove(Point direction, double moveSpeed) { 
-	if (bossNotMoveUntil > GameTime.time) return;
+	if (bossNotMoveUntil > GameTime.time) return false;
 
 	Point dest = BossPos;
 	PointAdd(&dest, &direction);
@@ -358,7 +358,7 @@ bool BossMove(Point direction, double moveSpeed) {
 	BossRect.x = dest.x - bossWidth / 2;
 	BossRect.y = dest.y - bossHeight / 2;
 
-	bossNotMoveUntil = GameTime.time + 1 / moveSpeed;
+	bossNotMoveUntil = GameTime.time + (1 / moveSpeed);
 }
 void BossMoveAsMemory() {
 	const int nextIndex = memoryCurIdx + 1;
@@ -398,7 +398,8 @@ void UpdateBoss_Idle() {
 	BossMoveAsMemory();
 	if (!BeatCall()) return;
 
-	nextState = (enum State)(rand() % (int)StateLength);
+	//nextState = (enum State)(rand() % (int)StateLength);
+	nextState = Shot;
 	switch (nextState) {
 	case Idle:
 	case Rush:
@@ -432,10 +433,16 @@ void StartRushState() {
 	state = Rush;
 	BossRayCast();
 	LookAt(GetPlayerPos());
+#ifdef DEBUG
+	DebugPrint("Ready To Rush");
+#endif
 }
 void UpdateBoss_Rush() {
 	if (BeatCall()) bossBeatCount--;
 	if (bossBeatCount > 0) return;
+#ifdef DEBUG
+	DebugPrint("RUsh");
+#endif
 
 	canCollisionAtk = true;
 
@@ -446,10 +453,6 @@ void UpdateBoss_Rush() {
 
 		if (BossMove(dir, chargeMovePerSecond)) { // increment memory only if move is successful
 			memoryCurIdx++;
-		}
-		else { //이동 실패시 종료
-			canCollisionAtk = false;
-			ChangeState(Idle);
 		}
 	}
 	else { //RayCast 하지 않았는데 배열 초과일 경우, 돌진이 끝났다는 의미
