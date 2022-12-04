@@ -21,13 +21,24 @@
 #define PlayerHpPosX 5
 #define	PlayerHpPosY 23
 #define PlayerLevelPosX 3
-#define PlayerLevelPosY 4
+#define PlayerLevelPosY 2
 #define PlayerExpPosX 3
-#define PlayerExpPosY 5
+#define PlayerExpPosY 3
 #define PlayerBaseDamagePosX 3
-#define PlayerBaseDamagePosY 6
+#define PlayerBaseDamagePosY 4
 #define ScorePosX 3
-#define ScorePosY 8
+#define ScorePosY 6
+
+#define MoveKeyInfoPosX 3
+#define MoveKeyInfoPosY 8
+#define MeleeAttackKeyInfoPosX 3
+#define MeleeAttackKeyInfoPosY 10
+#define RangeAttackKeyInfoPosX 3
+#define RangeAttackKeyInfoPosY 12
+#define BeatKeyInfoPosX 3
+#define BeatKeyInfoPosY 14
+#define PotionKeyInfoPosX 3
+#define PotionKeyInfoPosY 16
 //const char HeartChar[] = "♥";
 //const char EmptyHeartChar[] = "♡";
 
@@ -102,6 +113,17 @@ void RenderInfo()
 	InfoPrint(PlayerExpPosX, PlayerExpPosY, "EXP:", player->exp, FOREGROUND_GREEN);
 	InfoPrint(ScorePosX, ScorePosY, "Score:", GetScore(), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 	InfoPrint(PlayerBaseDamagePosX, PlayerBaseDamagePosY, "Damage:", player->baseDamage, FOREGROUND_GREEN);
+	ScreenPrintColor(MoveKeyInfoPosX, MoveKeyInfoPosY, "이동", FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	ScreenPrintColor(MoveKeyInfoPosX, MoveKeyInfoPosY + 1, "WASD", FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	ScreenPrintColor(MeleeAttackKeyInfoPosX, MeleeAttackKeyInfoPosY, "공격", FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	ScreenPrintColor(MeleeAttackKeyInfoPosX, MeleeAttackKeyInfoPosY + 1, "J", FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	ScreenPrintColor(RangeAttackKeyInfoPosX, RangeAttackKeyInfoPosY, "화살", FOREGROUND_BLUE | FOREGROUND_GREEN);
+	//InfoPrint(RangeAttackKeyInfoPosX, RangeAttackKeyInfoPosY + 1, "K", /*화살 갯수*/, FOREGROUND_BLUE | FOREGROUND_GREEN);
+	ScreenPrintColor(BeatKeyInfoPosX,BeatKeyInfoPosY, "비트", FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	ScreenPrintColor(BeatKeyInfoPosX, BeatKeyInfoPosY + 1, "SPACE", FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	ScreenPrintColor(PotionKeyInfoPosX, PotionKeyInfoPosY, "포션", FOREGROUND_RED | FOREGROUND_GREEN);
+	//InfoPrint(PotionKeyInfoPosX, PotionKeyInfoPosY + 1, "L/",/*포션 갯수*/  , FOREGROUND_RED | FOREGROUND_GREEN);
+	
 	
 }
 

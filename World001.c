@@ -1,10 +1,12 @@
 #include "World.h"
+#include "HeartBeat.h"
 
 #define G GROUND,
 #define W WALL,
 #define P PIT,
 #define D DOWNSTAIRS,
-
+  //1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 
+  //0                10                  20                  30                  40                  50                  60                  70                  80                  90
 Tile grid_001[] = {
 	P P P P P P P W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P 
 	P P P P P P P W G G G G G G G G G G G G W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P P 
@@ -119,14 +121,14 @@ void InitializeWorld001() {
 
 	// spawn at Gametime.time >= 0
 	SpawnSequence* seq_1 = CreateSpawnSequence(0);
-	SpawnSequenceInsert(seq_1, 13, 5, MeleeEnemyType);
-	SpawnSequenceInsert(seq_1, 14, 5, ArcherEnemyType);
-	SpawnSequenceInsert(seq_1, 15, 5, BomberEnemyType);
+	SpawnSequenceInsert(seq_1, 10, 5, MeleeEnemyType);
+	SpawnSequenceInsert(seq_1, 13, 5, ArcherEnemyType);
+	SpawnSequenceInsert(seq_1, 15, 5, ArcherEnemyType);
 	WorldInsertSpawnSequence(world001, seq_1);
 
 	// spawn at GameTime.time >= 60.0
 	SpawnSequence* seq_2 = CreateSpawnSequence(60);
-	SpawnSequenceInsert(seq_2, 20, 5, MeleeEnemyType);
+
 	SpawnSequenceInsert(seq_2, 23, 5, MeleeEnemyType);
 	SpawnSequenceInsert(seq_2, 26, 5, MeleeEnemyType);
 	WorldInsertSpawnSequence(world001, seq_2);
@@ -134,4 +136,5 @@ void InitializeWorld001() {
 #include "Game.h"
 void StartWorld001() {
 	SetCurrentWorld(world001);
+	StartBeat();
 }

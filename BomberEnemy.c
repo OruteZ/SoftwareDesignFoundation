@@ -16,18 +16,18 @@ BomberEnemy* CreateBomberEnemy(Point p)
 	
 	enemy->state = Tracking;
 
-	enemy->hp = 100;
+	enemy->hp = 20;
 
 	enemy->detectionRadius = 10;
 	enemy->memory = CreateRayCastResult(enemy->detectionRadius << 1);
 	enemy->memory_current_index = 0;
 	enemy->player_is_visible = false;
 
-	enemy->move_per_second = 3;
+	enemy->move_per_second = 2;
 	enemy->cant_move_until = 0;
 
-	enemy->attackDamage = 10;
-	enemy->attack_delay_small_beats = 2;
+	enemy->attackDamage = 3;
+	enemy->attack_delay_small_beats = 4;
 	enemy->attack_cooldown_small_beats = 2;
 
 	enemy->small_beats_after_attack_start = 0;
@@ -94,6 +94,8 @@ void BomberEnemyAttack(BomberEnemy* bEnemy) {
 	if (RectContainsPoint(&attack_rect, &playerPos)) {
 		PlayerOnHit(enemy->attackDamage);
 	}
+
+	CreateParticle(Direction.north, enemy->base.entity.pos, ExplosionParticleType1, enemy->attackDamage);
 	bEnemy->base.enemy.hp = 0;
 }
 

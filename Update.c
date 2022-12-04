@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "ExpOrb.h"
+#include "Boss.h"
 
 #include "Menu.h"
 
@@ -66,17 +67,17 @@ void Update() {
 		UpdateEnemies();
 		UpdateParticles();
 		UpdateExpOrbs();
+		UpdateBoss();
 
 		DeleteDeadEnemies();
 
 		TryWorldMaster();
 
-
-
 		if (IsPlayerDead()) {
 			free(player);
 			Point pointless = { .x = 0, .y = 0 };
 			player = CreatePlayer(pointless);
+
 			GameState = Menu;
 			StartVoidWorld();
 			StartGameOverMenu();

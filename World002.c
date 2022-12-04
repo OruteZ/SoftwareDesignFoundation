@@ -5,7 +5,8 @@
 #define W WALL,
 #define P PIT,
 #define D DOWNSTAIRS,
-
+  //1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
+  //0                10                  20                  30                  40                  50
 Tile grid_002[] = {
 	W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W
 	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
@@ -97,9 +98,12 @@ void InitializeWorld002() {
 	SpawnSequenceInsert(seq_1, 25, 29, MeleeEnemyType);
 	WorldInsertSpawnSequence(world002, seq_1);
 
+	// spawn at GameTime.time >= 30.0
+	SpawnSequence* seq_2 = CreateSpawnSequence(30);	
+
 	// spawn at GameTime.time >= 60.0
-	SpawnSequence* seq_2 = CreateSpawnSequence(60);
-	WorldInsertSpawnSequence(world002, seq_2);
+	SpawnSequence* seq_3 = CreateSpawnSequence(60);
+	WorldInsertSpawnSequence(world002, seq_3);
 }
 void StartWorld002() {
 	door_open = false;

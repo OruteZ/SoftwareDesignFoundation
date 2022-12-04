@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "Vector.h"
 #include "Enemy.h"
+#include "Boss.h"
 
 #include "World.h"
 
@@ -43,13 +44,13 @@ void UpdateMeleeAttackParticle(Particle* particle) {
 
 	if (particle->facing.x == 0) { //»óÇÏ
 		for (int i = 0; i < particle->particleRect.width; i++) {
-			if (i == index) particle->particleGrid[0][i] = true;
+			if (i <= index) particle->particleGrid[0][i] = true;
 			else particle->particleGrid[0][i] = false;
 		}
 	}
 	else { //ÁÂ¿ì
 		for (int i = 0; i < particle->particleRect.height; i++) {
-			if (i == index) particle->particleGrid[i][0]  = true;
+			if (i <= index) particle->particleGrid[i][0]  = true;
 			else particle->particleGrid[i][0] = false;
 		}
 	}
@@ -91,6 +92,12 @@ void RangeAttackDetectEnemy(Particle* particle) {
 
 			particle->isDead = true;
 			return;
+		}
+	}
+	if (IsBossExist()) {
+		Rect bossRect = GetBossRect();
+		if (RectContainsPoint(&bossRect, &particle->base.entity.pos)) {
+			BossOnHit(particle->damage);
 		}
 	}
 }
