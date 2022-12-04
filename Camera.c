@@ -45,13 +45,12 @@ void PrintWorld() {
 	const int ground_grid_length = height_world * width_world;
 	if (ground_grid_length == 0) return;
 
-	//const unsigned short ground_grid_color = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
 	const unsigned short ground_grid_color = FOREGROUND_RED | FOREGROUND_GREEN;
 	int* ground_grid = malloc(sizeof(int) * ground_grid_length);
 	if (ground_grid == NULL) exit(-1);
 	srand(6);
 	for (int i = 0; i < ground_grid_length; i++) {
-		ground_grid[i] = rand() % 8;
+		ground_grid[i] = rand() % 10;
 	}
 
 	for (int i = 0; i < camera.cell_rect.height; i++) {
@@ -69,29 +68,29 @@ void PrintWorld() {
 				for (int i = 0; i < 2; i++) {
 					switch (ground_grid[tile_pos.y * height_world + tile_pos.x * 2 + i]) {
 					case 0:
+					case 7:
+					case 8:
+					case 9:
 					default:
-						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2801, ground_grid_color);
+						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2800, ground_grid_color);
 						break;
 					case 1:
-						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2802, ground_grid_color);
+						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2801, ground_grid_color);
 						break;
 					case 2:
-						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2804, ground_grid_color);
+						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2802, ground_grid_color);
 						break;
 					case 3:
-						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2808, ground_grid_color);
+						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2804, ground_grid_color);
 						break;
 					case 4:
-						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2810, ground_grid_color);
+						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2808, ground_grid_color);
 						break;
 					case 5:
-						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2820, ground_grid_color);
+						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2810, ground_grid_color);
 						break;
 					case 6:
-						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2840, ground_grid_color);
-						break;
-					case 7:
-						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2880, ground_grid_color);
+						SetScreenHalfCell(screen_cell_index.x * 2 + i, screen_cell_index.y, 0x2820, ground_grid_color);
 						break;
 					}
 				}
