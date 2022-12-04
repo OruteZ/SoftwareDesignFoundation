@@ -117,7 +117,7 @@ void InitializeWorld003() {
 	world003 = CreateWorld(100, 100);
 	world003->grid = grid_003;
 
-	Point playerSpawnPoint = { .x = 19, .y = 20 };
+	Point playerSpawnPoint = { .x = 18, .y = 20 };
 	world003->playerSpawnPoint = playerSpawnPoint;
 
 	world003->startNextWorld = &StartWorld004;

@@ -9,47 +9,36 @@
   //1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0
   //0                10                  20                  30                  40
 Tile grid_004[] = {
-	W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
-	W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W
+	W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W 
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W G G G G G G G G G G G G G G G G G G G G G G G G G G G G W
+	W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W
 };
 
 World* world004;
@@ -60,10 +49,10 @@ void emptyFunc() {
 
 //#include "World003.h"
 void InitializeWorld004() {
-	world004 = CreateWorld(40, 40);
+	world004 = CreateWorld(30, 30);
 	world004->grid = grid_004;
 
-	Point playerSpawnPoint = { .x = 20, .y = 20 };
+	Point playerSpawnPoint = { .x = 15, .y = 20 };
 	world004->playerSpawnPoint = playerSpawnPoint;
 
 	world004->startNextWorld = &emptyFunc;
@@ -81,6 +70,6 @@ void InitializeWorld004() {
 void StartWorld004() {
 	SetCurrentWorld(world004);
 
-	Point bossPoint = { 25, 25 };
+	Point bossPoint = { 15, 15 };
 	SpawnBoss(bossPoint);
 }

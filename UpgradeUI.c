@@ -35,7 +35,7 @@ int UpgradeAmount[NUMBER_OF_UPGARDES] = {
 	5, //Damage
 	10, // ATK Speed
 	5, // Move Speed
-	3, // Bullet
+	5, // Bullet
 };
 
 int currentCursor = 2;

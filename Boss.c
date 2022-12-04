@@ -38,7 +38,7 @@
 */
 
 //----------변경 변수---------------
-int bossMaxHP = 10000;
+int bossMaxHP = 1000;
 int bossBaseDamage = 10;
 
 double bossOnHitEffectDuration = 0.1f;
@@ -46,10 +46,10 @@ double bossOnHitEffectDuration = 0.1f;
 int bossWidth = 5;
 int bossHeight = 5;
 
-int chargeDmg;
-int shotDmg;
-int explosionDmg;
-int meleeDmg;
+int chargeDmg = 3;
+int shotDmg = 1;
+int explosionDmg = 4;
+int meleeDmg = 2;
 
 //패턴 관련
 const int maxExplodeCount = 10; //3번 패턴에서 폭발 몇번할지
