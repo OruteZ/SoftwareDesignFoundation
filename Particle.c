@@ -43,13 +43,13 @@ void UpdateMeleeAttackParticle(Particle* particle) {
 
 	if (particle->facing.x == 0) { //»óÇÏ
 		for (int i = 0; i < particle->particleRect.width; i++) {
-			if (i == index) particle->particleGrid[0][i] = true;
+			if (i <= index) particle->particleGrid[0][i] = true;
 			else particle->particleGrid[0][i] = false;
 		}
 	}
 	else { //ÁÂ¿ì
 		for (int i = 0; i < particle->particleRect.height; i++) {
-			if (i == index) particle->particleGrid[i][0]  = true;
+			if (i <= index) particle->particleGrid[i][0]  = true;
 			else particle->particleGrid[i][0] = false;
 		}
 	}
