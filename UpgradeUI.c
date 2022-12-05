@@ -31,7 +31,7 @@ char UpgradeText[NUMBER_OF_UPGARDES][18] = {
 
 int UpgradeAmount[NUMBER_OF_UPGARDES] = {
 	1, //Potion
-	4, //MaxHp, 무조건 2의 배수
+	12, //MaxHp, 무조건 2의 배수
 	5, //Damage
 	10, // ATK Speed
 	5, // Move Speed
@@ -139,7 +139,7 @@ void UpdateUpgradeUI() {
 	if (currentCursor < 1) currentCursor = 1;
 	if (currentCursor > 3) currentCursor = 3;
 
-	if (GetKeyDown(VK_SPACE) || GetKeyDown(VK_ACCEPT)) {
+	if (GetKeyDown(VK_TAB) || GetKeyDown(VK_ACCEPT)) {
 		AcceptUpgrade();
 		ExitUpgradeUI();
 	}
