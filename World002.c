@@ -94,16 +94,48 @@ void InitializeWorld002() {
 
 	// spawn at Gametime.time >= 0
 	SpawnSequence* seq_1 = CreateSpawnSequence(0);
-	SpawnSequenceInsert(seq_1, 25, 20, MeleeEnemyType);
-	SpawnSequenceInsert(seq_1, 25, 29, MeleeEnemyType);
+	SpawnSequenceInsert(seq_1, 25, 18, MeleeEnemyType);
+	SpawnSequenceInsert(seq_1, 25, 30, MeleeEnemyType);
 	WorldInsertSpawnSequence(world002, seq_1);
 
-	// spawn at GameTime.time >= 30.0
-	SpawnSequence* seq_2 = CreateSpawnSequence(30);	
+	// spawn at GameTime.time >= 20.0
+	SpawnSequence* seq_2 = CreateSpawnSequence(20);
+	SpawnSequenceInsert(seq_2, 21, 38, MeleeEnemyType);
+
+	SpawnSequenceInsert(seq_2, 13, 22, ArcherEnemyType);
+	WorldInsertSpawnSequence(world002, seq_2);
+
+	// spawn at GameTime.time >= 40.0
+	SpawnSequence* seq_3 = CreateSpawnSequence(40);
+	SpawnSequenceInsert(seq_3, 6, 32, ArcherEnemyType);
+	SpawnSequenceInsert(seq_3, 45, 13, ArcherEnemyType);
+
+	SpawnSequenceInsert(seq_3, 8, 15, BomberEnemyType);
+	SpawnSequenceInsert(seq_3, 44, 37, BomberEnemyType);
+	WorldInsertSpawnSequence(world002, seq_3);
 
 	// spawn at GameTime.time >= 60.0
-	SpawnSequence* seq_3 = CreateSpawnSequence(60);
-	WorldInsertSpawnSequence(world002, seq_3);
+	SpawnSequence* seq_4 = CreateSpawnSequence(60);
+	SpawnSequenceInsert(seq_4, 26, 24, MeleeEnemyType);
+
+	SpawnSequenceInsert(seq_4, 26, 26, ArcherEnemyType);
+
+	SpawnSequenceInsert(seq_4, 26, 28, BomberEnemyType);
+	SpawnSequenceInsert(seq_4, 27, 28, BomberEnemyType);
+	WorldInsertSpawnSequence(world002, seq_4);
+
+	// spawn at GameTime.time >= 80.0
+	SpawnSequence* seq_5 = CreateSpawnSequence(80);
+	SpawnSequenceInsert(seq_5, 11, 13, MeleeEnemyType);
+	SpawnSequenceInsert(seq_5, 11, 23, MeleeEnemyType);
+	SpawnSequenceInsert(seq_5, 46, 13, MeleeEnemyType);
+	SpawnSequenceInsert(seq_5, 46, 20, MeleeEnemyType);
+
+	SpawnSequenceInsert(seq_5, 11, 16, ArcherEnemyType);
+	SpawnSequenceInsert(seq_5, 11, 28, ArcherEnemyType);
+	SpawnSequenceInsert(seq_5, 46, 30, ArcherEnemyType);
+	SpawnSequenceInsert(seq_5, 46, 34, ArcherEnemyType);
+	WorldInsertSpawnSequence(world002, seq_5);
 }
 void StartWorld002() {
 	door_open = false;
