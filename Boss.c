@@ -412,8 +412,7 @@ void UpdateBoss_Idle() {
 	if (!BeatCall()) return;
 	BossMoveAsMemory();
 
-	//nextState = (enum State)(rand() % (int)StateLength);
-	nextState = Shot;
+	nextState = (enum State)((int)(Time.time * 100) % (int)StateLength);
 	switch (nextState) {
 	case Idle:
 	case Rush:
