@@ -81,28 +81,28 @@ void RenderBPM()
 	ScreenPrintColor(BPMPosX, 6, " 60", FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 	if (GetNowBpmLevel() == 4)
 	{
-		SetScreenCell(LeftArrowPosX, 1, 0x2190, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
-		SetScreenCell(RightArrowPosX, 1, 0x2190, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
-	}
-	else if(GetNowBpmLevel() == 3)
-	{
-		SetScreenCell(LeftArrowPosX, 2, 0x2192, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		SetScreenCell(LeftArrowPosX, 2, 0x2190, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 		SetScreenCell(RightArrowPosX, 2, 0x2190, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 	}
-	else if (GetNowBpmLevel() == 2)
+	else if(GetNowBpmLevel() == 3)
 	{
 		SetScreenCell(LeftArrowPosX, 3, 0x2192, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 		SetScreenCell(RightArrowPosX, 3, 0x2190, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 	}
-	else if (GetNowBpmLevel() == 1)
+	else if (GetNowBpmLevel() == 2)
 	{
 		SetScreenCell(LeftArrowPosX, 4, 0x2192, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 		SetScreenCell(RightArrowPosX, 4, 0x2190, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 	}
-	else if (GetNowBpmLevel() == 0)
+	else if (GetNowBpmLevel() == 1)
 	{
 		SetScreenCell(LeftArrowPosX, 5, 0x2192, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 		SetScreenCell(RightArrowPosX, 5, 0x2190, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	}
+	else if (GetNowBpmLevel() == 0)
+	{
+		SetScreenCell(LeftArrowPosX, 6, 0x2192, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		SetScreenCell(RightArrowPosX, 6, 0x2190, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 	}
 }
 
