@@ -256,6 +256,7 @@ Point GetBossFacing() { return bossFacing; }
 void ResetBossInfo() {
 	isBossExist = false;
 	isBossCleared = false;
+	bossNowHP = bossMaxHP;
 }
 bool BossOnHit(int damage) {
 	bossNowHP -= damage;
@@ -263,7 +264,7 @@ bool BossOnHit(int damage) {
 #ifdef DEBUG
 	DebugPrint("Boss hitted, hp left : %d", bossNowHP);
 #endif
-	if (bossNowHP) {
+	if (bossNowHP <= 0) {
 		isBossCleared = true;
 	}
 
@@ -408,8 +409,8 @@ void StartIdleState() {
 	state = Idle;
 }
 void UpdateBoss_Idle() {
-	BossMoveAsMemory();
 	if (!BeatCall()) return;
+	BossMoveAsMemory();
 
 	//nextState = (enum State)(rand() % (int)StateLength);
 	nextState = Shot;

@@ -41,17 +41,31 @@ int UpgradeAmount[NUMBER_OF_UPGARDES] = {
 int currentCursor = 2;
 
 
+int randInt(int start, int end) {
+	int length = end - start + 1;
+
+	int result = (rand() % length) + start;
+	return result;
+}
+
 //3개의 업그레이드를 골라서 반환합니다.
 void SelectRandomUpgrade() {
 	int number = -1;
 	bool isAlreadySelected;
+	Upgrades[0] = Upgrades[1] = Upgrades[2] = -1;
 	for (int i = 0; i < 3; i++) {
-		//고른적 없는 번호가 나올때까지 반복
-		do {
-			number = rand() % NUMBER_OF_UPGARDES;
-			isAlreadySelected = false;
-			for (int j = 0; j < i; j++) isAlreadySelected = (Upgrades[j] == number);
-		} while (isAlreadySelected);
+
+selectUpgrade:
+		number = rand() % NUMBER_OF_UPGARDES;
+		isAlreadySelected = false;
+		for (int j = 0; j < i; j++) {
+			if (Upgrades[i] != number) continue;
+
+			isAlreadySelected = true;
+			break;
+		}
+		if (isAlreadySelected)
+			goto selectUpgrade;
 		
 		Upgrades[i] = number;
 	}
