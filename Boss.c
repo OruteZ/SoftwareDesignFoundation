@@ -253,12 +253,20 @@ double GetBossHPPercentage() { return (double)bossNowHP / (double)bossMaxHP; }
 Rect GetBossRect() { return BossRect; }
 Point GetBossPoint() { return BossPos; }
 Point GetBossFacing() { return bossFacing; }
+void ResetBossInfo() {
+	isBossExist = false;
+	isBossCleared = false;
+}
 bool BossOnHit(int damage) {
 	bossNowHP -= damage;
 	bossOnHitEffectUntil = bossOnHitEffectDuration;
 #ifdef DEBUG
 	DebugPrint("Boss hitted, hp left : %d", bossNowHP);
 #endif
+	if (bossNowHP) {
+		isBossCleared = true;
+	}
+
 	return (bossNowHP <= 0);
 }
 bool BossHitEffect() {
@@ -288,6 +296,11 @@ void SpawnBoss(Point p) {
 }
 void UpdateBoss() {
 	if (!isBossExist) return;
+
+#ifdef DEBUG
+	if(GetKeyDown('M')) BossOnHit(10000);
+#endif // DEBUG
+
 	Rect detectionRect = {
 		.x = BossPos.x - bossDetectionRadius,
 		.y = BossPos.y - bossDetectionRadius,

@@ -59,3 +59,5 @@ bool IsBossCleared();
 
 void SpawnBoss(Point p);
 void UpdateBoss();
+
+void ResetBossInfo();

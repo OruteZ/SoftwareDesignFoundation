@@ -93,6 +93,7 @@ void Update() {
 			StartVoidWorld();
 			StartGameClearMenu();
 			PlaySound(NULL, NULL, SND_ASYNC);
+			ResetBossInfo();
 		}
 	}
 	
