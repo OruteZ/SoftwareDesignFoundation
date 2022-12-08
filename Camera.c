@@ -21,6 +21,21 @@ struct {
 	.cell_rect = {.x = 8, .y = 1, .width = 23, .height = 23}
 };
 
+const double shakingTime = 0.1;
+double shakeCooldown;
+int CameraOffsetX = 1;
+int CameraOffsetY = 0;
+void ShakeCamera() {
+	if (shakeCooldown > 0) return;
+
+#ifdef DEBUG
+	DebugPrint("Shaking Camera");
+#endif // DEBUG
+
+	shakeCooldown = shakingTime;
+}
+
+
 Point WorldPosToScreenCellIndex(Point pos) {
 	Point screen_cell = {
 		.x = pos.x - camera.pos.x + camera.cell_rect.x,
@@ -265,11 +280,18 @@ void SetCameraPoint()
 	camera.pos.x = player->base.entity.pos.x - camera.cell_rect.width / 2;
 	camera.pos.y = player->base.entity.pos.y - camera.cell_rect.height / 2;
 
+	if (shakeCooldown > 0) {
+		camera.pos.x += CameraOffsetX;
+		camera.pos.y += CameraOffsetY;
+	}
+
 	return true;
 }
 
 void RenderCamera()
 {
+	shakeCooldown -= Time.deltaTime;
+
 	SetCameraPoint();
 	PrintWorld();
 

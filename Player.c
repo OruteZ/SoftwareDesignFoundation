@@ -172,7 +172,7 @@ void PlayerOnHit(int damage) {
 		playerDeadFlag = true;
 	}
 
-	//CameraShake();
+	ShakeCamera();
 
 #ifdef DEBUG
 	//DebugPrint("Player On Hit");
