@@ -146,7 +146,22 @@ void PrintPlayer()
 		.x = player->base.entity.pos.x - camera.pos.x + camera.cell_rect.x,
 		.y = player->base.entity.pos.y - camera.pos.y + camera.cell_rect.y
 	};
-	SetScreenCell(pos.x, pos.y, 0x25a3, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	static const playerColor = FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+	if (PointEquals(&player->facing, &Direction.south)) {
+		SetScreenCell(pos.x, pos.y, 0x25b2, playerColor);
+	}
+	else if (PointEquals(&player->facing, &Direction.east)) {
+		SetScreenCell(pos.x, pos.y, 0x25b6, playerColor);
+	}
+	else if (PointEquals(&player->facing, &Direction.north)) {
+		SetScreenCell(pos.x, pos.y, 0x25bc, playerColor);
+	}
+	else if(PointEquals(&player->facing, &Direction.west)){
+		SetScreenCell(pos.x, pos.y, 0x25c0, playerColor);
+	}
+	else {
+		SetScreenCell(pos.x, pos.y, 0x25a3, playerColor);
+	}
 }
 
 void PrintExpOrb() {

@@ -128,9 +128,9 @@ void RenderInfo()
 }
 
 void RenderHealth() {
-	int max_health_indicator_height = player->maxHp / 2;
-	int health_bar_full_cell_count = player->hp / 2;
-	int health_bar_partial_cell_status = player->hp % 2;
+	int max_health_indicator_height = player->maxHp / 4;
+	int health_bar_full_cell_count = player->hp / 4;
+	int health_bar_partial_cell_status = player->hp % 4;
 
 	Point health_bar_start = { .x = 6, .y = 23 };
 
@@ -139,12 +139,16 @@ void RenderHealth() {
 	}
 
 	if (health_bar_partial_cell_status) {
-		SetScreenHalfCell(health_bar_start.x * 2, health_bar_start.y - health_bar_full_cell_count, 0x2584, FOREGROUND_RED | FOREGROUND_INTENSITY);
-		SetScreenHalfCell(health_bar_start.x * 2 + 1, health_bar_start.y - health_bar_full_cell_count, 0x2584, FOREGROUND_RED | FOREGROUND_INTENSITY);
+		SetScreenHalfCell(health_bar_start.x * 2, health_bar_start.y - health_bar_full_cell_count, 0x2580 + health_bar_partial_cell_status * 2, FOREGROUND_RED | FOREGROUND_INTENSITY);
+		SetScreenHalfCell(health_bar_start.x * 2 + 1, health_bar_start.y - health_bar_full_cell_count, 0x2580 + health_bar_partial_cell_status * 2, FOREGROUND_RED | FOREGROUND_INTENSITY);
 	}
+	//if (health_bar_partial_cell_status) {
+	//	SetScreenHalfCell(health_bar_start.x * 2, health_bar_start.y - health_bar_full_cell_count, 0x2586, FOREGROUND_RED | FOREGROUND_INTENSITY);
+	//	SetScreenHalfCell(health_bar_start.x * 2 + 1, health_bar_start.y - health_bar_full_cell_count, 0x2586, FOREGROUND_RED | FOREGROUND_INTENSITY);
+	//}
 
 	// 2661 for empty heart
-	SetScreenCell(health_bar_start.x, health_bar_start.y - max_health_indicator_height, 0x2665, FOREGROUND_RED | FOREGROUND_INTENSITY);
+	SetScreenCell(health_bar_start.x, health_bar_start.y - max_health_indicator_height - 1, 0x2665, FOREGROUND_RED | FOREGROUND_INTENSITY);
 }
 
 void RenderNote() {
