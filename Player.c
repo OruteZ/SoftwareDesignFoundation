@@ -113,13 +113,42 @@ Player* CreatePlayer(Point spawnPoint)
 	return _player;
 
 }
+char buttonBias[4] = { 'W', 'A', 'S', 'D' };
+void ChangeButtonBias(const int index) {
+	const char temp = buttonBias[index];
+	for (int i = index - 1; i >= 0; i--) { // shift everything else UP
+		buttonBias[i + 1] = buttonBias[i];
+	}
+	buttonBias[0] = temp;
+}
 void UpdatePlayer() {
 	if (player == NULL) return;
 
-	if (GetKey('W')) PlayerMove(Direction.south);
-	if (GetKey('A')) PlayerMove(Direction.west);
-	if (GetKey('S')) PlayerMove(Direction.north);
-	if (GetKey('D')) PlayerMove(Direction.east);
+	for (int i = 3; i >= 0; i--) { // get keydown in reverse order!
+		if(GetKeyDown(buttonBias[i])) ChangeButtonBias(i);
+	}
+	for (int i = 0; i < 4; i++) {
+		if (GetKey(buttonBias[i])) {
+			switch (buttonBias[i]) {
+			case 'W':
+				PlayerMove(Direction.south);
+				break;
+			case 'A':
+				PlayerMove(Direction.west);
+				break;
+			case 'S':
+				PlayerMove(Direction.north);
+				break;
+			case 'D':
+				PlayerMove(Direction.east);
+				break;
+			default:
+				break;
+			}
+			
+			break;
+		}
+	}
 
 	if (GetKeyDown('J')) PlayerMeleeAttack();
 
