@@ -10,6 +10,7 @@
 #include"KeyBoard.h"
 #include "Debug.h"
 #include "Player.h"
+#include "UI.h"
 
 #include <windows.h>
 #include <mmsystem.h>
@@ -104,7 +105,9 @@ void UpdateHeartBeat() {
 	if (GetKeyDown(VK_SPACE)) {
 		int value = IsNoteBeaten();
 
-		if		(value == 1) BPMGaugeUp();
+		ShowNoteJudge(value);
+
+		if		(value >= 1) BPMGaugeUp();
 		else if (value == 0) BPMGaugeDown();
 	}
 }
@@ -117,7 +120,7 @@ void RealeseHeartBeat() {
 void MoveNote()
 {
 	// https://learn.microsoft.com/en-us/windows/win32/multimedia/playing-wave-resources?redirectedfrom=MSDN
-	PlaySound(TEXT(".\\GameSound3.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_MEMORY);
+	PlaySound(TEXT("GameSound3.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_MEMORY);
 	bool isThereNoteInJudgeLine = heartBeat->note[0];
 
 	int i, size = heartBeat->noteSize;
