@@ -5,6 +5,7 @@
 #include "World001.h"
 #include "World002.h"
 #include "World003.h"
+#include "World004.h"
 
 #include "Game.h"
 #include "Player.h"

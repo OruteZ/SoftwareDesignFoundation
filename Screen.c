@@ -52,8 +52,6 @@ HANDLE ScreenReturnBufferHandle_Unsafe() {
 
 void ScreenInit()
 {
-	// console size
-	system("mode con:cols=120 lines=50");
 
 	// get handle
 	screen.console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -64,6 +62,7 @@ void ScreenInit()
 	cci.bVisible = FALSE;
 	SetConsoleCursorInfo(screen.console_handle, &cci);
 
+	// custom font
 	CONSOLE_FONT_INFOEX cfi;
 	cfi.cbSize = sizeof cfi;
 	cfi.nFont = 0;
@@ -73,6 +72,9 @@ void ScreenInit()
 	cfi.FontWeight = FW_NORMAL;
 	wcscpy(cfi.FaceName, L"Cascadia Mono");
 	SetCurrentConsoleFontEx(screen.console_handle, FALSE, &cfi);
+
+	// console size
+	system("mode con:cols=120 lines=50");
 
 	ScreenClear();
 }
