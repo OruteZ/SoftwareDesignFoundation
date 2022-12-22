@@ -9,6 +9,8 @@
 #include "Player.h"
 #include "HeartBeat.h"
 #include "Enemy.h"
+#include "Time.h"
+
 #ifdef DEBUG
 #include "Debug.h"
 #endif // DEBUG
@@ -151,7 +153,23 @@ void RenderHealth() {
 	SetScreenCell(health_bar_start.x, health_bar_start.y - max_health_indicator_height - 1, 0x2665, FOREGROUND_RED | FOREGROUND_INTENSITY);
 }
 
+int judgeLevel = -1;
+const char perfect[] = "Perfect!";
+const char great[] = "Great!";
+const char good[] = "Good!";
+const char miss[] = "Miss...";
+const double RenderCooldown = 0.5;
+
+double currentRenderTime = 0;
+void ShowNoteJudge(int judgement) {
+	if (judgement > -1) judgeLevel = judgement;
+	currentRenderTime = RenderCooldown;
+}
+
 void RenderNote() {
+	currentRenderTime -= Time.deltaTime;
+	if (currentRenderTime <= 0) judgeLevel = -1;
+
 	Point notePrintPos = { .x = 33, .y = 10 };
 	int noteUnicode = ' ';
 
@@ -161,6 +179,27 @@ void RenderNote() {
 	for (int j = 0; j < 4; j++) {
 		SetScreenCell(notePrintPos.x + j, notePrintPos.y + size - 1, ' ', BACKGROUND_GREEN);
 	}
+	switch (judgeLevel) {
+	case -1:
+		break;
+	case 0:
+		ScreenPrintColor(notePrintPos.x * 2, notePrintPos.y + size, miss, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_INTENSITY);
+		break;
+
+	case 1:
+		ScreenPrintColor(notePrintPos.x * 2, notePrintPos.y + size, good, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_INTENSITY);
+		break;
+
+	case 2:
+		ScreenPrintColor(notePrintPos.x * 2, notePrintPos.y + size, great, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_INTENSITY);
+		break;
+
+	case 3:
+		ScreenPrintColor(notePrintPos.x * 2, notePrintPos.y + size, perfect, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_INTENSITY);
+		break;
+	}
+	
+
 
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < 4; j++) {
@@ -168,7 +207,6 @@ void RenderNote() {
 			if (note[size - i - 1]) {
 				SetScreenCell(notePrintPos.x + j, notePrintPos.y + i, ' ', BACKGROUND_BLUE);
 			}
-
 		}
 	}
 }

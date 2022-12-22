@@ -164,6 +164,7 @@ void RenderUpgradeUI() {
 		DrawButtonFrame(i);
 		DrawUpgradeText(i);
 	}
+	ScreenPrintColor(20, 20, "Press Enter to select upgrade", FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 }
 
 void ExitUpgradeUI() {
