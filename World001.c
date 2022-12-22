@@ -109,7 +109,9 @@ void World001Master() {
 }
 
 #include "world002.h"
+#include "Time.h"
 void InitializeWorld001() {
+	ResetCumulativeGameTime();
 	world001 = CreateWorld(90, 89);
 	world001->grid = grid_001;
 	

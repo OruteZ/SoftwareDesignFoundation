@@ -12,6 +12,7 @@ struct {
 } Time;
 
 struct {
+	double cumulative_time;
 	double time;
 	double deltaTime;
 } GameTime;
@@ -21,6 +22,7 @@ void InitTime() {
 	Time.time = 0;
 	Time.deltaTime = 0;
 
+	GameTime.cumulative_time = 0;
 	GameTime.time = 0;
 	GameTime.deltaTime = 0;
 }
@@ -39,7 +41,11 @@ void UpdateTime() {
 		GameTime.deltaTime = parsedDelta;
 	}
 }
+void ResetCumulativeGameTime() {
+	GameTime.cumulative_time = 0;
+}
 void ResetGameTime() {
+	GameTime.cumulative_time += GameTime.time;
 	GameTime.time = 0;
 	GameTime.deltaTime = 0;
 }
