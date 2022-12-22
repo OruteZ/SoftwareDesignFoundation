@@ -7,6 +7,7 @@
 #include "Screen.h"
 #include "Game.h"
 #include "Debug.h"
+#include "Player.h"
 
 //MainMenu Keys
 #define StartButtonPosX (20)
@@ -157,7 +158,13 @@ void RenderGameClearRetryArrow() {
 void RenderGameClearEndArrow() {
 	ScreenPrint(GAMECLEAR_QUIT_ARROW_POS_X, GAMECLEAR_QUIT_ARROW_POS_Y, "->");
 }
-void RenderGameClear() {}
+void RenderGameClear() {
+	char scoreBuffer[10];
+	_itoa(GetScore(), scoreBuffer, 10);
+
+	ScreenPrintColor(20, 12, "Game Clear with Score : ", FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	ScreenPrintColor(45, 12, scoreBuffer, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+}
 
 void RenderButtonArrow()
 {
