@@ -73,6 +73,12 @@ void World002Master() {
 			SetTile(door, GROUND);
 		}
 	}
+	else {
+		if (enemies->length > 0) {
+			door_open = false;
+			SetTile(door, WALL);
+		}
+	}
 
 	if (door_open) {
 		if (GetTile(player->base.entity.pos) & FLAG_GOAL) {
@@ -95,7 +101,7 @@ void InitializeWorld002() {
 	// spawn at Gametime.time >= 0
 	SpawnSequence* seq_1 = CreateSpawnSequence(0);
 	SpawnSequenceInsert(seq_1, 25, 18, MeleeEnemyType);
-	SpawnSequenceInsert(seq_1, 25, 30, MeleeEnemyType);
+	SpawnSequenceInsert(seq_1, 25, 35, MeleeEnemyType);
 	WorldInsertSpawnSequence(world002, seq_1);
 
 	// spawn at GameTime.time >= 20.0
