@@ -16,6 +16,16 @@
 
 const char noteImg[] = "ⓣⓣⓣⓣ";
 const char lineImg[] = "--------";
+
+const char perfect[] = "Perfect!";
+const char great[] = "Great!";
+const char good[] = "Good";
+const char Miss[] = "Miss..";
+int judgeLevel = -1;
+void ShowNoteJudge(int judgement) {
+	if (judgement > -1) judgeLevel = judgement;
+}
+
 void RenderHeatBeatNote() {
 	const short* note = GetNoteInfo();
 	const int size = GetNoteSize();
@@ -24,6 +34,13 @@ void RenderHeatBeatNote() {
 		if(note[size - 1 - y]) ScreenPrint(HEARTBEAT_NOTE_POSITION_X, HEARTBEAT_NOTE_POSITION_Y + y, noteImg);
 	}
 	ScreenPrint(HEARTBEAT_NOTE_POSITION_X, HEARTBEAT_NOTE_POSITION_Y + size - 1, lineImg);
+
+	switch (judgeLevel) {
+	case -1:
+		break;
+	case 0:
+		ScreenPrintColor(HEARTBEAT_NOTE_POSITION_X, HEARTBEAT_NOTE_POSITION_Y + size, Miss, );
+	}
 }
 
 const char HeartChar[] = "♥";
@@ -76,7 +93,6 @@ void PrintBuffer(int x, int y, const char* format, ...) {
 	va_end(args);
 
 	ScreenPrint(x, y, buffer);
-
 }
 
 
