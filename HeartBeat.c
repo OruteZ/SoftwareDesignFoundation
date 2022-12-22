@@ -117,7 +117,7 @@ void RealeseHeartBeat() {
 void MoveNote()
 {
 	// https://learn.microsoft.com/en-us/windows/win32/multimedia/playing-wave-resources?redirectedfrom=MSDN
-	PlaySound(TEXT(".\\GameSound3.wav"), NULL, SND_FILENAME | SND_ASYNC);
+	PlaySound(TEXT(".\\GameSound3.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_MEMORY);
 	bool isThereNoteInJudgeLine = heartBeat->note[0];
 
 	int i, size = heartBeat->noteSize;
@@ -143,7 +143,11 @@ void ResetNote() {
 }
 
 //노트의 판정 여부를 반환합니다. 
-//판정할 노트가 근처에 없으면 -1, miss판정일 경우 0, 적합 판정이 났을 경우 1이 반환 됩니다.
+//판정할 노트가 근처에 없으면 -1, 판정이 났을 경우 판정에 맞는 정수가 반환 됩니다.
+//Miss = 0;
+//Good = 1;
+//Great = 2;
+//Perfect = 3;
 int IsNoteBeaten() {
 	double time_per_beat = (((double)60) / (double)heartBeat->BPM);
 
@@ -159,9 +163,11 @@ int IsNoteBeaten() {
 	heartBeat->note[notePosition] = false;
 
 	double correct_time = time_per_beat * notePosition;
-	double time_differece = abs(correct_time - heartBeat->time_to_check_tempo);
+	double time_difference = abs(correct_time - heartBeat->time_to_check_tempo);
 
-	if (time_differece < time_per_beat / 4) return 1;
+	if (time_difference < time_per_beat / 6) return 3;
+	else if (time_difference < time_per_beat / 5) return 2;
+	else if (time_difference < time_per_beat / 4) return 1;
 	else return 0;
 }
 
