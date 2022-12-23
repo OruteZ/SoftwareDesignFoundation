@@ -35,7 +35,6 @@ void ShakeCamera() {
 	shakeCooldown = shakingTime;
 }
 
-
 Point WorldPosToScreenCellIndex(Point pos) {
 	Point screen_cell = {
 		.x = pos.x - camera.pos.x + camera.cell_rect.x,

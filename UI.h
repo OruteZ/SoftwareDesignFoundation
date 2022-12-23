@@ -2,3 +2,4 @@
 void RenderUI();
 
 void ShowNoteJudge(int judgement);
+void ShowClearStage();

@@ -120,7 +120,7 @@ void RealeseHeartBeat() {
 void MoveNote()
 {
 	// https://learn.microsoft.com/en-us/windows/win32/multimedia/playing-wave-resources?redirectedfrom=MSDN
-	PlaySound(TEXT("GameSound3.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_MEMORY);
+	PlaySound(TEXT("GameSound3.wav"), NULL, SND_ASYNC || SND_NOWAIT);
 	bool isThereNoteInJudgeLine = heartBeat->note[0];
 
 	int i, size = heartBeat->noteSize;

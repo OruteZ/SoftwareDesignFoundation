@@ -113,7 +113,13 @@ void RenderInfo()
 	InfoPrint(PlayerHpPosX, PlayerHpPosY, "HP:",player->hp, FOREGROUND_RED);
 	InfoPrint(PlayerLevelPosX, PlayerLevelPosY, "Level:", player->level, FOREGROUND_GREEN);
 	InfoPrint(PlayerExpPosX, PlayerExpPosY, "EXP:", player->exp, FOREGROUND_GREEN);
-	InfoPrint(ScorePosX, ScorePosY, "Score:", GetScore(), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+
+	//score print
+	char arr[20];
+	sprintf(arr, "%d", GetScore());
+	ScreenPrintColor(ScorePosX, ScorePosY, "Score", FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	ScreenPrintColor(ScorePosX, ScorePosY+1, arr, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+
 	InfoPrint(PlayerBaseDamagePosX, PlayerBaseDamagePosY, "Damage:", player->baseDamage, FOREGROUND_GREEN);
 	ScreenPrintColor(MoveKeyInfoPosX, MoveKeyInfoPosY, "이동", FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 	ScreenPrintColor(MoveKeyInfoPosX, MoveKeyInfoPosY + 1, "WASD", FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
@@ -125,8 +131,6 @@ void RenderInfo()
 	ScreenPrintColor(BeatKeyInfoPosX, BeatKeyInfoPosY + 1, "SPACE", FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 	ScreenPrintColor(PotionKeyInfoPosX, PotionKeyInfoPosY, "포션", FOREGROUND_RED | FOREGROUND_GREEN);
 	InfoPrint(PotionKeyInfoPosX, PotionKeyInfoPosY + 1, "L ", GetPlayerItemCount(POTION_ID), FOREGROUND_RED | FOREGROUND_GREEN);
-	
-	
 }
 
 void RenderHealth() {
@@ -160,15 +164,23 @@ const char good[] = "Good!";
 const char miss[] = "Miss...";
 const double RenderCooldown = 0.5;
 
-double currentRenderTime = 0;
+double currentNoteRenderTime = 0;
 void ShowNoteJudge(int judgement) {
 	if (judgement > -1) judgeLevel = judgement;
-	currentRenderTime = RenderCooldown;
+	currentNoteRenderTime = RenderCooldown;
+}
+
+double currentStageRenderTime = 0;
+bool stageClearMsgTrigger = false;
+int stageNum = 0;
+void ShowClearStage() {
+	stageClearMsgTrigger = true;
+	currentStageRenderTime = 1;
 }
 
 void RenderNote() {
-	currentRenderTime -= Time.deltaTime;
-	if (currentRenderTime <= 0) judgeLevel = -1;
+	currentNoteRenderTime -= Time.deltaTime;
+	if (currentNoteRenderTime <= 0) judgeLevel = -1;
 
 	Point notePrintPos = { .x = 33, .y = 10 };
 	int noteUnicode = ' ';
@@ -217,4 +229,11 @@ void RenderUI() {
 	RenderBPM();
 	RenderInfo();
 	RenderNote();
+
+	if (stageClearMsgTrigger) {
+		ScreenPrintColor(31, 12, "Stage Clear!!!", FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+
+		currentStageRenderTime -= Time.deltaTime;
+		if (currentStageRenderTime <= 0) stageClearMsgTrigger = false;
+	}
 }

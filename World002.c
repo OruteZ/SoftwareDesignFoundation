@@ -1,5 +1,6 @@
 #include "World.h"
 #include "World002.h"
+#include "Time.h"
 
 #define G GROUND,
 #define W WALL,
@@ -68,7 +69,7 @@ bool door_open = false;
 #include "Game.h"
 void World002Master() {
 	if (!door_open) {
-		if (enemies->length <= 0) {
+		if (enemies->length <= 0 && GameTime.time >= 80) {
 			door_open = true;
 			SetTile(door, GROUND);
 		}
@@ -144,6 +145,7 @@ void InitializeWorld002() {
 	WorldInsertSpawnSequence(world002, seq_5);
 }
 void StartWorld002() {
+	ShowClearStage();
 	door_open = false;
 	SetTile(door, WALL);
 	SetCurrentWorld(world002);

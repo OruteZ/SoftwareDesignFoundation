@@ -170,7 +170,7 @@ bool EnemyOnHit(Enemy* enemy, int damage)
 {
 	if (enemy == NULL) return false;
 	enemy->hp -= damage;
-	enemy->is_frozen_until = GameTime.time + 0.1;
+	enemy->is_frozen_until = GameTime.time + 0.05;
 	
 	// special behavior on damage
 	switch (enemy->base.entity.type) {

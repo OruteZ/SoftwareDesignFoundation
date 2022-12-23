@@ -62,6 +62,7 @@ void InitializeWorld004() {
 	world004->worldMaster = &World004Master;
 }
 void StartWorld004() {
+	ShowClearStage();
 	SetCurrentWorld(world004);
 
 	Point bossPoint = { 15, 15 };

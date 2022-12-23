@@ -15,4 +15,3 @@ void InitTime();
 void UpdateTime();
 void ResetCumulativeGameTime();
 void ResetGameTime();
-

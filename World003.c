@@ -164,5 +164,6 @@ void InitializeWorld003() {
 	WorldInsertSpawnSequence(world003, seq_1);
 }
 void StartWorld003() {
+	ShowClearStage();
 	SetCurrentWorld(world003);
 }

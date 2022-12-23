@@ -4,6 +4,7 @@
 #include "Point.h"
 #include "Entity.h"
 #include "HeartBeat.h"
+#include "UI.h"
 
 World* current_world;
 World* void_world;
