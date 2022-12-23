@@ -153,7 +153,7 @@ void UpdateUpgradeUI() {
 	if (currentCursor < 1) currentCursor = 1;
 	if (currentCursor > 3) currentCursor = 3;
 
-	if (GetKeyDown(VK_TAB) || GetKeyDown(VK_ACCEPT)) {
+	if (GetKeyDown(VK_RETURN)) {
 		AcceptUpgrade();
 		ExitUpgradeUI();
 	}
