@@ -214,6 +214,8 @@ void PrintParticles() {
 			else
 				nowUnicode = 0x2502;
 			nowColor = 15;
+			if (p->damage == -1)
+				nowColor = FOREGROUND_RED;
 			break;
 
 		case RangeAttackParticleType:

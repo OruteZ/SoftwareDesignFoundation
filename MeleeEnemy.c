@@ -119,6 +119,6 @@ void MeleeEnemyAttack(MeleeEnemy* mEnemy) {
 
 	Point p = enemy->base.entity.pos;
 	PointAdd(&p, &enemy->facing);
-	CreateParticle(enemy->facing, p, MeleeAttackParticleType, 0);
+	CreateParticle(enemy->facing, p, MeleeAttackParticleType, -1);
 }
 
