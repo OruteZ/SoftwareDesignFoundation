@@ -27,19 +27,24 @@ double playerBaseAttackSpeed = 1 / 1; // attack per second
 double playerBaseMoveSpeed = 8 / 1; // block per beat
 int playerBaseAttackDamage = 15;
 
-int basePlayerMaxHP = 22; //플레이어 기본 최대체력
-int MaxHPUpperLinit = 44; //플레이어 최대체력 상한선
+int basePlayerMaxHP = 44; //플레이어 기본 최대체력
+int MaxHPUpperLinit = 88; //플레이어 최대체력 상한선
 //---------------------------------------------------------------------------
 
 //---------------------플레이어 레벨업 관련 인스펙터 창 ---------------------
-#define MAX_LEVEL (5)
+#define MAX_LEVEL (10)
 //각 레벨마다 레벨업을 위한 필요 경험치다.
 int essentialExpToLevelUp[MAX_LEVEL] = {
 	30,
 	70,
 	110,
 	160,
-	250,
+	210,
+	260,
+	310,
+	460,
+	510,
+	560,
 };
 //---------------------------------------------------------------------------
 

@@ -11,10 +11,13 @@ World* void_world;
 Tile void_grid[] = { GROUND };
 
 #include "World001.h"
+#include "World002.h"
+#include "World003.h"
+#include "World004.h"
 void InitializeWorld() {
 	void_world = CreateWorld(1, 1);
 	void_world->grid = void_grid;
-	void_world->startNextWorld = &StartWorld001;
+	void_world->startNextWorld = &StartWorld002;
 	SetCurrentWorld(void_world);
 }
 

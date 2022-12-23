@@ -103,17 +103,19 @@ void InitializeWorld002() {
 	SpawnSequence* seq_1 = CreateSpawnSequence(0);
 	SpawnSequenceInsert(seq_1, 25, 18, MeleeEnemyType);
 	SpawnSequenceInsert(seq_1, 25, 35, MeleeEnemyType);
+	SpawnSequenceInsert(seq_1, 25, 35, MeleeEnemyType);
+	SpawnSequenceInsert(seq_1, 25, 35, MeleeEnemyType);
 	WorldInsertSpawnSequence(world002, seq_1);
 
-	// spawn at GameTime.time >= 20.0
-	SpawnSequence* seq_2 = CreateSpawnSequence(20);
+	// spawn at GameTime.time >= 15.0
+	SpawnSequence* seq_2 = CreateSpawnSequence(15);
 	SpawnSequenceInsert(seq_2, 21, 38, MeleeEnemyType);
 
 	SpawnSequenceInsert(seq_2, 13, 22, ArcherEnemyType);
 	WorldInsertSpawnSequence(world002, seq_2);
 
-	// spawn at GameTime.time >= 40.0
-	SpawnSequence* seq_3 = CreateSpawnSequence(40);
+	// spawn at GameTime.time >= 30.0
+	SpawnSequence* seq_3 = CreateSpawnSequence(30);
 	SpawnSequenceInsert(seq_3, 6, 32, ArcherEnemyType);
 	SpawnSequenceInsert(seq_3, 45, 13, ArcherEnemyType);
 
@@ -121,8 +123,8 @@ void InitializeWorld002() {
 	SpawnSequenceInsert(seq_3, 44, 37, BomberEnemyType);
 	WorldInsertSpawnSequence(world002, seq_3);
 
-	// spawn at GameTime.time >= 60.0
-	SpawnSequence* seq_4 = CreateSpawnSequence(60);
+	// spawn at GameTime.time >= 45.0
+	SpawnSequence* seq_4 = CreateSpawnSequence(45);
 	SpawnSequenceInsert(seq_4, 26, 24, MeleeEnemyType);
 
 	SpawnSequenceInsert(seq_4, 26, 26, ArcherEnemyType);
@@ -131,8 +133,8 @@ void InitializeWorld002() {
 	SpawnSequenceInsert(seq_4, 27, 28, BomberEnemyType);
 	WorldInsertSpawnSequence(world002, seq_4);
 
-	// spawn at GameTime.time >= 80.0
-	SpawnSequence* seq_5 = CreateSpawnSequence(80);
+	// spawn at GameTime.time >=60.0
+	SpawnSequence* seq_5 = CreateSpawnSequence(60);
 	SpawnSequenceInsert(seq_5, 11, 13, MeleeEnemyType);
 	SpawnSequenceInsert(seq_5, 11, 23, MeleeEnemyType);
 	SpawnSequenceInsert(seq_5, 46, 13, MeleeEnemyType);
