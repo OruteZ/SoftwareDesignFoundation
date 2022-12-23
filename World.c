@@ -39,6 +39,8 @@ SpawnSequence* CreateSpawnSequence(double gameTime) {
 	seq->gameTime = gameTime;
 	seq->list = CreateVector();
 	seq->next = NULL;
+
+	return seq;
 }
 void SpawnSequenceInsert(SpawnSequence* seq, const int spawn_x, const int spawn_y, const enum EntityType entityType) {
 	Entity* entity = (Entity*)malloc(sizeof(Entity));
@@ -96,6 +98,8 @@ World* CreateWorld(const int width, const int height) {
 
 	world->startNextWorld = &voidFunc;
 	world->worldMaster = &voidFunc;
+
+	return world;
 }
 void DeleteWorld(World* world) {
 	free(world);

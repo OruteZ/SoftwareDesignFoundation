@@ -89,7 +89,6 @@ void ArcherEnemyUpdate(ArcherEnemy* aEnemy) {
 }
 
 void ArcherEnemyAttack(ArcherEnemy* aEnemy) {
-	DebugPrint("SHOOT ARROW NOW");
 	// TODO: spawn arrow 
 	Point arrawSpawnPoint = aEnemy->base.entity.pos;
 	PointAdd(&arrawSpawnPoint, &aEnemy->base.enemy.facing);
