@@ -17,7 +17,7 @@ Tile void_grid[] = { GROUND };
 void InitializeWorld() {
 	void_world = CreateWorld(1, 1);
 	void_world->grid = void_grid;
-	void_world->startNextWorld = &StartWorld002;
+	void_world->startNextWorld = &StartWorld001;
 	SetCurrentWorld(void_world);
 }
 

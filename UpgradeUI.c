@@ -33,7 +33,7 @@ int UpgradeAmount[NUMBER_OF_UPGARDES] = {
 	1, //Potion
 	12, //MaxHp, 무조건 2의 배수
 	5, //Damage
-	2, // ATK Speed
+	1, // ATK Speed
 	5, // Move Speed
 	5, // Bullet
 };
