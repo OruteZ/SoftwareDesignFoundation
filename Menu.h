@@ -7,3 +7,4 @@ void UpdateMenu();
 void StartMainMenu();
 void StartGameOverMenu();
 void StartGameClearMenu();
+void SetClearScore(int score);

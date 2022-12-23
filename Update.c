@@ -85,6 +85,8 @@ void Update() {
 		}
 
 		if (IsBossCleared()) {
+			SetClearScore(GetScore());
+
 			free(player);
 			Point pointless = { .x = 0, .y = 0 };
 			player = CreatePlayer(pointless);
